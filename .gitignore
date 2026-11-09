@@ -29,3 +29,9 @@ main.pdf
 # Arquivos temporários do sistema
 Thumbs.db
 .DS_Store
+
+*.idx
+*.ilg
+*.ind
+*.loq
+*.synctex(busy)
