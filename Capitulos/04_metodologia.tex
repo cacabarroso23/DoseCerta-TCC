@@ -1,0 +1,34 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Metodologia}
+\section{Natureza e abordagem}
+Trata-se de um desenvolvimento tecnológico aplicado, organizado por requisitos, implementação incremental e verificação por níveis de evidência. O material de trabalho compreende o modelo FEI fornecido, o artigo, o pré-relatório, as planilhas, a proposta/contrato e os documentos técnicos do acervo. A redação distingue plano de projeto, observação relatada, teste automatizado, implantação e ensaio físico.
+\section{Organização das frentes e responsabilidades}
+A distribuição informada pela autora é: Nicolas (Nick), aplicativo; Vinicius (Vini), visão computacional; Thiago (Thi), agente de IA; Rafael (Toca), elétrica e mecânica; Caroline, revisão bibliográfica e consolidação editorial. Essa divisão não implica que todos os procedimentos de ensaio já tenham sido executados ou aprovados.
+\pendencia{MET01-ACEITE}{Cada responsável deverá fornecer os instrumentos, condições, calibração, protocolo e evidências da sua frente. Identificar quem executou e quem conferiu os ensaios; não inferir autoria ou aceite apenas da divisão de tarefas.}
+\section{Procedimento de consolidação documental}
+Primeiro foram examinados os documentos enviados; depois, consultados os registros do acervo e fontes públicas para complementar conceitos e especificações. Na existência de divergência, preservou-se a data e o alcance da fonte. O artigo é útil para o conceito e as figuras, mas não substitui o registro posterior da montagem e do servidor.
+A unidade de rastreabilidade é o vínculo entre requisito, revisão do componente, procedimento, observação e evidência original. Alterações de firmware, CAD, configuração ou protocolo exigem identificação para que o resultado não seja atribuído a uma versão diferente.
+\section{Etapas de desenvolvimento}
+\begin{itemize}
+\item Consolidar problema, objetivos e requisitos formais.
+\item Definir responsabilidades e interfaces entre as frentes.
+\item Modelar, fabricar e conferir os componentes mecânicos e sua relação com o mecanismo.
+\item Montar circuitos e conferir continuidade, polaridade, níveis e alimentação antes da energização funcional.
+\item Implementar controle, comunicação, persistência e integração por serviços.
+\item Verificar componentes isolados, integrações e cenários de falha com evidência própria para cada nível.
+\item Executar avaliação de sistema e consolidar resultados, discussão e conclusão apenas após a obtenção dos dados.
+\end{itemize}
+\section{Ferramentas de desenvolvimento e documentação}
+O acervo identifica CAD e impressão 3D, firmware na plataforma ESP32, execução Python/Linux na Raspberry Pi, FastAPI, React/TypeScript, PostgreSQL/Supabase, SQLite local e serviços Azure/Microsoft Foundry. A mera existência dessas tecnologias não define versões exatas da configuração final. \cite{DC_COMPILADO,DC_FOUNDRY}
+Microsoft Copilot Studio aparece como escolha inicial nos materiais. A documentação de novembro descreve Foundry, Voice Live e MCP em papéis mais recentes; por isso, ambas as tecnologias são registradas, mas não como se estivessem simultaneamente em uso no mesmo fluxo final. \cite{DC_ARTIGO,DC_FOUNDRY}
+\section{Uso de inteligência artificial no desenvolvimento}
+A autora solicitou declarar todas as ferramentas utilizadas, incluindo Copilot, Copilot Studio e OpenAI. Registra-se também o apoio do Glean na busca, organização e redação desta revisão. O acervo menciona sessões com assistentes e o uso de modelos de linguagem, mas não oferece inventário completo e verificável de produtos, versões, datas e tarefas de todos os integrantes. O uso de um serviço com modelo não comprova uso direto de outro produto do mesmo fornecedor. \cite{DC_COMPILADO,DC_FOUNDRY}
+As contribuições geradas por IA devem ser conferidas pelos autores; não constituem dados experimentais, evidência de funcionamento ou fonte científica primária por si. Não foram executadas chamadas operacionais ao dispensador ou gravações no servidor durante esta consolidação.
+\pendencia{MET03-IA}{Completar a declaração por integrante: Copilot (especificar produto), Copilot Studio, OpenAI (produto/API e modelo), Claude e demais ferramentas efetivamente usadas; tarefas, datas/versões quando disponíveis, partes aproveitadas e revisão humana realizada. Não atribuir uso a uma pessoa sem confirmação.}
+\pendencia{MET02-VERSOES}{Informar software e revisão CAD final, impressora/fatiador, versões das bibliotecas, compiladores, dependências e releases efetivamente apresentados. Distinguir ambiente de desenvolvimento, teste e produção.}
+\section{Método de verificação e critérios}
+Os testes serão organizados em inspeção documental, análise estática, testes automatizados de software, execução em placa, integração física e avaliação de uso. Para cada caso, registrar condição inicial, entrada, resultado esperado, observado, falha, versão e evidência. Uma captura de tela ou contagem de testes de outra frente não será convertida em aceite do sistema completo.
+\pendencia{MET02-PROTOCOLO}{Fechar com a orientação o protocolo final, repetições, amostragem, instrumentos e critérios quantitativos. Não há base documental suficiente para inventar tolerâncias de taxa de erro, corrente, latência ou desempenho.}
+\section{Aspectos éticos, privacidade e segurança}
+A redação não afirma realização de pesquisa clínica nem participação de pessoas idosas. Antes de qualquer estudo com participantes, definir com a orientação as autorizações e o enquadramento ético aplicável. Empregar dados de teste, proteger credenciais e minimizar imagens ou dados de saúde identificáveis.
+\pendencia{MET-ETICA}{Informar se haverá participantes, coleta de imagens ou dados pessoais; documentar autorizações, consentimento e avaliação institucional aplicáveis. Não inserir número de parecer ou dispensa não fornecidos.}

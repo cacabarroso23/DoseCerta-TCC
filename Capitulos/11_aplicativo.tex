@@ -1,0 +1,16 @@
+% Interface Care: capítulo próprio, sem duplicação do servidor.
+\chapter{Aplicativo Care}
+
+\section{Papel, tecnologias e tarefas}
+O Care é a interface web de configuração e acompanhamento do DoseCerta. A documentação identifica React e TypeScript, com acesso às operações de cuidado por meio da FastAPI. Os materiais descrevem pacientes, dispositivos, medicamentos, estoque, agendas, atividades, observações e histórico; cada tarefa deve ser confirmada na versão entregue. Telas ilustrativas não demonstram sucesso de integração autenticada ou execução no hardware. \cite{DC_APP}
+\section{Login e fluxo de informação}
+O login é obrigatório, conforme confirmação da autora. A documentação associa Supabase à autenticação e descreve JWT; as operações de cuidado passam pela API. A monografia não presume acesso direto da interface às tabelas de cuidado, autorização individual por paciente ou proteção multiusuário não demonstrada. \cite{DC_APP,DC_COMPILADO}
+\section{Estados e tratamento de falhas}
+A interface deve diferenciar plano, comando enviado, confirmação do dispositivo, observação e resultado inconclusivo. Repetir uma ação após falha de rede pode produzir efeito duplicado, motivo pelo qual confirmação e reconciliação precisam corresponder ao contrato do servidor. O modo palco e a simulação devem ser identificados como tais, sem se confundirem com dispensação física. \cite{DC_APP,DC_ANALISE}
+\section{Evidências e avaliação da interface}
+A documentação do aplicativo esclarece que as contagens históricas de outras suítes não incluem resultados próprios do Care. É necessário testar interface, API autenticada, dispositivo e acessibilidade de forma separada e depois integrar os fluxos. Avaliação de uso com pessoas exige protocolo e autorizações aplicáveis. \cite{DC_APP}
+\pendencia{APP01}{Nicolas: a autora enviará a versão e as telas do aplicativo. Inserir release/hash, ambiente, navegação e tarefas efetivamente disponíveis, além de capturas sanitizadas.}
+\pendencia{APP02}{Login obrigatório confirmado: inserir telas e evidências do fluxo real, emissão/validação e renovação de sessão, expiração, logout, acesso negado e mensagens de erro, sem expor credenciais.}
+\pendencia{APP03}{Conferir a autorização na versão final, especialmente se as visões de paciente/cuidador usam conta única. Não declarar isolamento de dados sem teste.}
+\pendencia{APP04}{Fornecer resultados próprios da suíte Care, integração autenticada, estados de erro/sem rede, atualização de histórico e comunicação com o aparelho. Identificar o que foi simulado.}
+\pendencia{APP05}{Inserir fotos/capturas atualizadas das tarefas principais e avaliação de acessibilidade/usabilidade: método, participantes quando houver, critérios, problemas e correções. Não inferir qualidade de uso pelo desenho das telas.}

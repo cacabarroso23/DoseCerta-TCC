@@ -1,0 +1,21 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Integração e testes}
+\section{Estratégia e níveis de evidência}
+A verificação do DoseCerta é organizada por requisito e por nível: inspeção documental, análise de software, testes automatizados, execução em placa, integração física e avaliação de uso. Cada nível responde a perguntas diferentes. Esta seção descreve o plano e o estado documental das evidências; a apresentação final dos resultados permanece reservada no capítulo 15.
+\section{Preparação e identificação da configuração}
+Antes de uma campanha, registrar revisão mecânica, disco, tipo de comprimido de teste, firmware de cada placa, runtime, API, aplicativo, agente, configuração e condições ambientais. Conferir continuidade e alimentação antes dos movimentos e verificar prontidão, tempo, associação e calibração. O registro de novembro ainda contém bloqueios de agenda e estado de motor incerto; ele não é autorização para iniciar nova operação sem reconciliação. \cite{DC_ANALISE}
+\section{Verificação mecânica e elétrica}
+O roteiro contempla dimensões, massa, inclinação, folgas, retenção, encaixe e percurso do comprimido; alimentação em repouso e movimento; corrente, aquecimento, níveis e integridade do barramento; leitura do sensor e sinalização por posição. A aceitação de remoção energizada exige ensaio específico, pois comunicação logicamente robusta não garante segurança elétrica dos contatos.
+\pendencia{TST01}{Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final.}
+\section{Firmware, execução local e comunicação}
+Os cenários incluem comando válido/inválido, CRC, endereço e site, duplicata, reinício, resultado pendente, interrupção de comunicação, atualização corrompida/interrompida e recuperação. Testes com dublês devem declarar qual dependência foi simulada. Ensaios de sensores e atuação devem apresentar a observação independente do resultado físico.
+\pendencia{TST02}{Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente.}
+\section{Integração Care--API--dispositivo}
+O fluxo deve começar em sessão autenticada e associar solicitação, resposta da API, comando no dispositivo, efeito observado, persistência e retorno ao Care. Repetir o cenário com perda de conexão, sessão expirada, comando duplicado e reconciliação. A operação sem rede requer agenda válida, tempo confiável e hardware pronto, não apenas a existência de SQLite.
+\pendencia{TST03}{Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais.}
+\section{Agente e visão}
+A visão requer referência independente e avaliação própria; o agente requer diálogos, chamadas, aprovação, efeitos e tratamento de falhas. A resposta de um modelo não é evidência do mundo físico. As definições e dados da visão serão fornecidos por Vinicius, e os do agente por Thiago.
+\pendencia{TST04}{Completar os protocolos e relatórios de visão e agente com versões, dados, métricas e falhas. Distinguir servidor MCP, seleção de ferramentas, qualidade de resposta, voz e integração com o Care.}
+\section{Registro e consolidação}
+A ficha de cada caso deve conter: identificador, requisito, responsável, versão, data, condição inicial, entrada, esperado, observado, evidência e limitação. A conclusão de atendimento depende do critério, não apenas da ausência de exceção no programa.
+\pendencia{TST05}{Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado ao capítulo 15; não antecipar discussão ou conclusão.}

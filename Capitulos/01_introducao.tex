@@ -1,0 +1,24 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Introdução}
+\section{Contextualização e problema}
+A administração de vários medicamentos exige organizar horários, quantidades, disponibilidade e registros. No envelhecimento, a complexidade terapêutica torna pertinente investigar tecnologias de apoio ao cuidado, sem reduzir a adesão a um problema exclusivamente de memória. A polifarmácia tem definições heterogêneas na literatura; o uso simultâneo de cinco ou mais medicamentos é frequente, mas não constitui definição clínica universal. \cite{MASNOON2017}
+Dispensadores podem apoiar a organização e o acesso às doses, mas seus benefícios dependem do contexto, do usuário e do desenho da intervenção. Uma revisão de 2025 reuniu resultados de 25 estudos originais e encontrou evidência moderada para alguns desfechos clínicos e evidência limitada ou ausente em outros domínios; portanto, a existência de um dispensador não comprova, por si, eficácia, economia ou melhora de adesão. \cite{SALMENSUU2025}
+O DoseCerta é desenvolvido como um sistema integrado de dispensação modular, acompanhamento digital, visão computacional e interação por agente de inteligência artificial. A documentação reúne unidade central Raspberry Pi Zero 2 W, módulos ESP32, mecanismos dosadores, aplicativo Care e serviços de servidor. Essas frentes integram o escopo formal; a disponibilidade de evidência varia por componente. \cite{DC_COMPILADO,DC_ARTIGO}
+\section{Objetivo geral}
+Desenvolver e documentar um sistema modular para dispensação de medicamentos e apoio à verificação e ao acompanhamento da rotina de cuidado, integrando mecanismos físicos, controle embarcado, servidor, aplicativo, visão computacional e agente de IA, com rastreabilidade entre requisitos, implementação e verificação.
+\section{Objetivos específicos}
+\begin{itemize}
+\item Estruturar submódulos removíveis, cada qual associado a um medicamento, e um mecanismo de separação unitária por disco rotativo.
+\item Projetar a alimentação, as interfaces e a sinalização, distinguindo níveis de potência de 5 V e lógica de 3,3 V.
+\item Implementar controle local, comunicação com os módulos, persistência de estados e tratamento de falhas sem repetição indevida de movimento.
+\item Integrar aplicativo e API para configuração e acompanhamento, com autenticação obrigatória.
+\item Integrar visão computacional e agente de IA ao fluxo de cuidado, preservando incertezas, confirmação de ações e limites clínicos.
+\item Definir e executar verificações por requisito, sem substituir ensaios físicos por testes de software nem atribuir ingestão a um comando de motor.
+\end{itemize}
+\section{Justificativa}
+A proposta concentra-se na integração entre o planejamento do cuidado, o controle do mecanismo e a rastreabilidade das observações. Isso exige tratar falhas de alimentação, comunicação, posicionamento, interface e interpretação, e não somente a atuação de um motor. A revisão disponível recomenda cautela ao transferir achados de outras soluções para um novo protótipo. \cite{SALMENSUU2025}
+\section{Escopo do trabalho}
+São partes formais do trabalho: mecânica, elétrica, firmware dos microcontroladores, execução na Raspberry Pi, comunicação e atualização, servidor, Care, visão e agente. A inclusão no escopo não equivale a uma declaração de conclusão. A monografia distingue requisito, descrição documental, implantação relatada e verificação experimental. O fornecimento futuro do texto de visão e dos resultados permanece identificado.
+\pendencia{EA04}{Definir população, amostra, contexto de avaliação e desfechos do estudo empírico. Não há dados finais para afirmar melhora de adesão, usabilidade, segurança clínica ou redução de erros.}
+\section{Organização do texto}
+O capítulo 2 apresenta fundamentos; o capítulo 3 discute o estado da arte; o capítulo 4 define o método; e o capítulo 5 formaliza os requisitos. Os capítulos 6 a 13 apresentam as frentes técnicas e suas interfaces. O capítulo 14 organiza a integração e os testes. Resultados, discussão e conclusão, nos capítulos 15 a 17, permanecem reservados até o fornecimento dos dados finais.

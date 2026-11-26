@@ -1,0 +1,21 @@
+﻿# Arquivos temporarios do LaTeX
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.loq
+*.idx
+*.ilg
+*.ind
+*.synctex.gz
+*.synctex(busy)
+
+# Arquivos temporarios do editor
+*.bak
+*.swp

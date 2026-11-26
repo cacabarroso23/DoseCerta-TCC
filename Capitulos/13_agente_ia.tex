@@ -1,0 +1,43 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Agente de inteligência artificial}
+\section{Papel no sistema e evolução}
+O agente busca apoiar a consulta e a interação com o cuidado em linguagem natural, sem prescrever ou tomar decisões clínicas. O artigo registra uma proposta inicial com Microsoft Copilot Studio; a documentação verificada em novembro descreve Microsoft Foundry, pesquisa em arquivos e uma cópia com MCP. As etapas são registradas cronologicamente, não como uma única implementação simultânea. \cite{DC_ARTIGO,DC_FOUNDRY}
+\section{Agentes e versões documentadas}
+O registro de 03/11 identifica \texttt{tcc-agent} v17 e \texttt{tcc-agent-mcp-teste} v8, ambos de tipo prompt. O rótulo de modelo registrado é \texttt{gpt-5.6-luna}; ele é reproduzido como configuração daquele ambiente, não como confirmação pública de disponibilidade ou especificação de modelo. A API de voz permanece fixada na v5 do agente de conversa, sem MCP. Publicar nova versão no Foundry não altera automaticamente a versão chamada pelo aplicativo. \cite{DC_FOUNDRY}
+\section{Recuperação de contexto e ferramentas}
+O agente de conversa utiliza \texttt{file\_search}. O conteúdo efetivo do armazenamento vetorial não foi integralmente inspecionado no documento de referência. O agente MCP acrescenta ferramentas de consulta e escrita ao fluxo de cuidado, por conexão autenticada ao serviço. Não são incluídos segredos ou chaves nesta monografia. \cite{DC_FOUNDRY}
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.44\textwidth}p{0.12\textwidth}p{0.32\textwidth}}\caption{Ferramentas da cópia MCP do agente, documentadas em novembro}\label{tab:13-1}\\
+\hline
+\textbf{Ferramenta documental} & \textbf{Tipo} & \textbf{Papel}\\\hline
+\endfirsthead\hline
+\textbf{Ferramenta documental} & \textbf{Tipo} & \textbf{Papel}\\\hline
+\endhead
+\texttt{get\_care\_context} & Leitura & Contexto de cuidado\\\hline
+\texttt{list\_care\_records} & Leitura & Registros de cuidado e histórico\\\hline
+\texttt{create\_medication\_schedule} & Escrita & Criação de rotina\\\hline
+\texttt{update\_medication\_schedule} & Escrita & Alteração de rotina\\\hline
+\texttt{update\_medication} & Escrita & Alteração de medicamento\\\hline
+\texttt{add\_care\_observation} & Escrita & Registro de observação\\\hline
+\texttt{create\_daily\_activity} & Escrita & Criação de atividade\\\hline
+\texttt{update\_daily\_activity} & Escrita & Alteração de atividade\\\hline
+\end{longtable}}{\small\noindent Fonte: Documento 10-agentes-foundry.md, conferido em 03/11/2026.\par}
+
+
+\section{Aprovação, efeito e autorização}
+As duas leituras estão configuradas sem aprovação; as seis escritas exigem aprovação no Foundry, com nome e argumentos visíveis. Antes de criar ou alterar uma rotina, devem ser esclarecidos medicamento, quantidade por tomada, horários e dias. Uma aprovação de ferramenta, a validação do servidor, a persistência e um eventual efeito físico são etapas diferentes. \cite{DC_FOUNDRY}
+A conexão do MCP utiliza autenticação própria e o documento alerta que quem possui a chave pode chamar o serviço diretamente. Portanto, a instrução de confirmar antes de escrever não é, isoladamente, uma barreira de segurança, e a aprovação do Foundry não deve ser atribuída ao protocolo inteiro. \cite{DC_FOUNDRY}
+\section{Limites clínicos e interpretação}
+O agente deve consultar antes de afirmar rotinas, estoque ou eventos; falha de consulta não significa ausência de dados. Deve reconhecer paginação e respostas parciais, preservar estados distintos e esclarecer ambiguidades entre dosagem textual e número de unidades. Textos livres são dados, não instruções para mudar a política do sistema. \cite{DC_FOUNDRY}
+A política documental proíbe prescrever, sugerir doses ou compensação de dose esquecida. Confiança visual não é certeza clínica. Uma ação com resultado incerto exige consulta antes de repetição; a interface deve informar claramente o que foi ou não realizado. Essas regras devem ser avaliadas com cenários próprios, e não assumidas por estarem no prompt. \cite{DC_FOUNDRY}
+\section{Voz e integração com o aplicativo}
+O relay de voz não responde aos pedidos de aprovação MCP no registro consultado, justificando manter um agente separado para ferramentas. A análise de 12/11 confirma v5 sem acesso aos dados atuais de paciente pelo MCP. Não se afirma que o usuário já possa executar as oito ferramentas pela voz no Care. \cite{DC_FOUNDRY,DC_ANALISE}
+\section{Plano de avaliação e lacunas}
+A avaliação deve separar escolha da ferramenta, argumentos, confirmação, autorização, efeito, recuperação de erro, segurança clínica e clareza da resposta. Testar o servidor MCP isoladamente não avalia a qualidade do modelo ou o fluxo de voz completo.
+\pendencia{AG01}{Thiago: confirmar modelo/rótulo, versão publicada e versão efetivamente chamada, parâmetros, instruções e ambiente na data final. Anexar definição sanitizada e hashes quando aplicáveis.}
+\pendencia{AG02}{Fornecer evidências das oito ferramentas, aprovação e recusa de escritas, validação do servidor, tratamento de duplicatas e falhas ambíguas. Não executar gravações de teste em dados reais.}
+\pendencia{AG03}{Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir file\_search.}
+\pendencia{AG04}{Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.}
+\pendencia{AG05}{Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.}
+\pendencia{AG06}{Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.}
+\pendencia{AG07}{Comprovar eventual integração posterior MCP--voz--Care e tratamento de aprovação na interface. Na ausência de prova, manter a distinção v5 sem MCP e agente de teste com ferramentas.}

@@ -1,0 +1,21 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Programação embarcada}
+\section{Organização do firmware e papéis}
+A documentação separa dois perfis: intermediário e submódulo. O primeiro administra sinalização e posição; o segundo controla motor e sensor. Bibliotecas e constantes compartilhadas descrevem o protocolo, estados e validações. O mesmo número de GPIO pode ter função diferente entre os papéis, motivo pelo qual configuração e firmware precisam estar associados à placa correta. \cite{DC_COMPILADO,DC_CIRCUITOS}
+\section{Inicialização e configuração persistente}
+O firmware documentado utiliza configuração persistente com papel, instância, endereço e identificador do local de operação, além de mecanismos de integridade e leitura de retorno. O registro de inicialização distingue um novo boot de uma resposta antiga. Parâmetros gravados e lidos na placa são a evidência pertinente; um arquivo-fonte isolado não comprova o que está instalado. \cite{DC_COMPILADO}
+\section{Comunicação e estado}
+O protocolo DC1 utiliza quadros de 32 bytes, marcadores, versão, identificadores, campos reservados e CRC-8 de polinômio 0x07. A validação deve preceder o efeito físico. CRC correto não equivale a autorização criptográfica e não substitui as condições de segurança locais. O ACK de aplicação no protocolo também deve ser distinguido do reconhecimento elétrico do I²C. \cite{DC_COMPILADO}
+\section{Controle do motor e tratamento de duplicatas}
+Os GPIO27/26/25/33 comandam o driver segundo a sequência configurada; a conversão entre fases e deslocamento precisa ser calibrada na montagem. A documentação exige limite local de fases e duração, manutenção de resultado pendente e recuperação após perda de resposta. Um resultado desconhecido exige reconciliação, não o reenvio cego de um novo movimento. \cite{DC_COMPILADO}
+\section{Leitura e calibração óptica}
+O GPIO32/ADC1 recebe a leitura reflexiva. A avaliação exige referência de cavidade vazia/ocupada, associação com fase, condições de iluminação e verificação independente. O material relata evolução para localização e verificação de cavidades, mas isso não permite presumir calibração válida após troca de disco, reinício ou intervenção mecânica. \cite{DC_COMPILADO}
+\section{Atualização das ESP32}
+O acervo descreve atualização pelo barramento, com transmissão segmentada, conferência de integridade, ativação e recuperação. Há diferença entre testes do atualizador, transmissão à placa, reinício e confirmação da nova versão. Atualização bem-sucedida de uma placa não demonstra aceitação de todas as unidades. \cite{DC_COMPILADO}
+\section{Versões e evidências necessárias}
+No registro de 12/11 constam INT-01 0.3.1 e SUB-01 0.6.1. Esse registro é posterior aos firmwares iniciais e deve ser conservado como evidência datada, sem declarar que continua sendo a configuração atual. \cite{DC_ANALISE}
+\pendencia{EMB01}{Fornecer código/release final, hashes, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.}
+\pendencia{EMB02}{Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação.}
+\pendencia{EMB03}{Anexar parâmetros e registros de calibração e localização do disco utilizado: fases por volta, intervalo, leituras, limiares, dispersão, falhas e restauração após desligamento.}
+\pendencia{EMB04}{Fornecer relatórios de bancada de motor/sensor, duplicatas, perda de comunicação, reinício durante movimento, falha de persistência e recuperação. Separar teste simulado de execução física e identificar denominadores.}
+\pendencia{EMB05}{Comprovar atualização pelo barramento e recuperação de interrupção/corrupção com logs sanitizados. Não assumir assinatura, rollback ou persistência preservada sem evidência da versão.}

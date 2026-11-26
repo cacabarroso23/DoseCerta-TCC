@@ -1,0 +1,34 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Servidor e execução local}
+\section{Responsabilidades e persistência}
+A Raspberry Pi mantém a coordenação local entre agenda, firmware, periféricos e servidor. A documentação descreve persistência em SQLite, filas de eventos e sincronização pela API. Essa organização busca tolerar indisponibilidade de rede, mas a ativação da agenda depende de identidade, associação física, tempo confiável e comissionamento. \cite{DC_COMPILADO}
+\section{Agenda, comandos e reconciliação}
+Um comando digital deve ser vinculado à intenção, às pré-condições, à execução e ao resultado. Receber um comando não demonstra dispensação; finalizar um giro não demonstra saída; observação visual não demonstra ingestão sem critério definido. A documentação separa estados e impede repetição automática quando o resultado do mecanismo permanece incerto. \cite{DC_COMPILADO}
+\section{Rede e provisionamento}
+O projeto prevê configuração da rede por Bluetooth pelo celular e recuperação quando não há Wi-Fi utilizável, além de fluxos de reinício e recadastramento sem botão físico. As credenciais e a identidade do dispositivo devem ser protegidas e preservadas conforme o tipo de operação. O ensaio precisa identificar o telefone, navegador, versão, rede e respostas observadas. \cite{DC_COMPILADO}
+\section{Sinalização e modo de demonstração}
+Os LEDs e o buzzer são saídas locais; suas convenções precisam corresponder às mensagens no aplicativo. O registro de novembro descreve também modo palco, com cenas de luz e som sem motor. Esse modo deve ser identificado como demonstração de sinalização, não como ensaio de dispensação ou de agenda automática. \cite{DC_ANALISE}
+\section{Atualização e rastreabilidade}
+A execução local evoluiu por pacotes e instalações registradas. O relatório de novembro identifica runtime 0.7.12 na Pi, enquanto o checkout do servidor ainda indicava 0.7.7. Isso evidencia a necessidade de registrar a origem e o hash da versão instalada, sem usar o número do checkout como substituto automático do estado da Pi. \cite{DC_ANALISE}
+\section{Limitações de operação local}
+O mesmo relatório informa relógio confiável por NTP, sem RTC, \texttt{hardware\_ready=false} e bloqueios de agenda ligados a comissionamento, localização e perfil. Portanto, a monografia não afirma funcionamento automático offline aceito. O objetivo RNF01 continua formalmente exigido, mas seu atendimento precisa de teste específico. \cite{DC_ANALISE}
+\pendencia{BE01-RUNTIME}{Confirmar release e hash instalados na data de fechamento, manifesto, dependências, serviços e configuração efetiva. Documentar o provisionamento ativo e a diferença entre fonte no servidor e instalação local.}
+\pendencia{BE02-AGENDA}{Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação.}
+\pendencia{BE03-REDE}{Anexar roteiros e logs de pareamento, configuração/troca de Wi-Fi, senha incorreta, perda de conexão, reset e recadastramento, sem expor segredos.}
+\pendencia{BE04-LOCAL}{Comprovar persistência de filas e idempotência, tratamento de resultado incerto, sincronização após falha e atualização segura da Pi com interrupção controlada.}
+
+\section{Serviços e fluxo de cuidado}
+A API FastAPI concentra regras e intermedia os dados usados pelo Care e pela Raspberry Pi. O acervo descreve PostgreSQL/Supabase para os dados centrais e autenticação, enquanto o dispositivo mantém sua persistência local. A arquitetura isola a atuação do motor da interface web e de respostas do agente. \cite{DC_COMPILADO,DC_APP}
+\section{Modelo lógico e eventos}
+Os documentos descrevem pacientes, medicamentos, estoque, rotinas, atividades, observações, dispositivos, comandos e eventos. Esses conceitos não são equivalentes: uma rotina é um plano; uma observação pode ser um relato; e um evento deve indicar origem e instante. Campos de dosagem textual e quantidade física por tomada também têm significados distintos. \cite{DC_COMPILADO,DC_FOUNDRY}
+\section{Autenticação e autorização}
+O login do aplicativo é obrigatório, conforme confirmação da autora. Os materiais descrevem JWT e autenticação do dispositivo, mas a documentação também registra uma conta de cuidado compartilhada em determinada versão. Não se presume segregação multiusuário ou autorização por paciente apenas pela existência de telas denominadas cuidador e paciente. \cite{DC_APP,DC_COMPILADO}
+\section{Idempotência e sincronização}
+O servidor recebe comandos e eventos e deve preservar identificadores e resultados. Em falhas ambíguas, a aplicação precisa consultar o estado antes de reenviar uma intenção que possa produzir efeito físico ou nova gravação. Hashes e normalização dos dados devem ser equivalentes entre os participantes e vinculados à versão do contrato. \cite{DC_COMPILADO}
+\section{Implantação, manutenção e limites}
+O relatório de 12/11 descreve serviços ativos, porém registra ocupação de disco de 98\%, crescimento associado à telemetria, ausência de purga confirmada e checkout com alterações não versionadas. Esses números são históricos e não constituem medição desta revisão. A disponibilidade naquele instante não demonstra disponibilidade contínua nem recuperação de desastre. \cite{DC_ANALISE}
+\pendencia{BE01-API}{Fornecer versão e hash da API, migrações aplicadas, esquema do banco, configuração sanitizada e manifesto dos serviços na versão final. Não atribuir versão do runtime à API.}
+\pendencia{BE02-CONTRATO}{Conferir os contratos atuais API--Pi, normalização de payload/hash, estados, paginação e migrações. O compilado indica uso de cancelled em fluxos de demonstração; confirmar que o tipo/coluna de produção o aceita e registrar a migração.}
+\pendencia{BE03-SEGURANCA}{Documentar autorização real por usuário/paciente, expiração/renovação de sessão, rotação de segredos, retenção e purga. Fornecer teste de backup/restauração e política para imagens/eventos.}
+\pendencia{BE04-TESTES}{Anexar resultados próprios do servidor, migrações e integração autenticada: data, ambiente, versões, comandos, aprovados, falhas e limites de simulação. Não converter relatórios históricos em aceite final.}
+

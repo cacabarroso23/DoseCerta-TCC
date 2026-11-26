@@ -1,0 +1,66 @@
+% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
+\chapter{Requisitos e especificações do sistema}
+\section{Origem e organização}
+A autora confirmou a linha de base de requisitos e definiu que todas as frentes compõem o escopo formal. Mantêm-se os identificadores RF01 a RF12 e RNF01 a RNF08 do compilado; os identificadores complementares explicitam aplicativo, visão, agente e rastreabilidade, sem renumerar os anteriores. As descrições abaixo formalizam obrigações, não resultados de conformidade. \cite{DC_COMPILADO}
+\section{Requisitos funcionais}
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.09\textwidth}p{0.49\textwidth}p{0.3\textwidth}}\caption{Requisitos funcionais da linha de base}\label{tab:05-1}\\
+\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
+\endfirsthead\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
+\endhead
+RF01 & Armazenar cada medicamento em submódulo removível e liberar a quantidade programada; o fluxo de demonstração documenta 1 a 3 unidades por ciclo. & Ensaio com contagem independente e versão do disco.\\\hline
+RF02 & Indicar luminosamente a posição e solicitar confirmação humana da associação do submódulo. & Conferência de cada posição e associação registrada.\\\hline
+RF03 & Avisar o horário por luz e som e aguardar confirmação de presença antes de dispensar. & Roteiro da sequência e das recusas sem confirmação.\\\hline
+RF04 & Reler opticamente a cavidade após a liberação para avaliar seu retorno ao estado vazio. & Comparação da leitura com inspeção independente.\\\hline
+RF05 & Calibrar o disco e localizar a próxima cavidade vazia após encaixe ou reinício. & Casos de inserção, reinício e referência inválida.\\\hline
+RF06 & Registrar comandos, resultados e eventos com origem identificada e sincronizá-los. & Auditoria local/servidor e reconexão.\\\hline
+RF07 & Configurar a rede pelo celular via Bluetooth, sem periféricos de console. & Pareamento e provisionamento autenticado.\\\hline
+RF08 & Permitir recuperação de rede e gestão das redes conhecidas sem desconfigurar o aparelho. & Casos sem Wi-Fi, troca, lista, inclusão e exclusão.\\\hline
+RF09 & Reiniciar e recadastrar por software, sem depender de botão físico. & Fluxos autorizados e preservação de identidade.\\\hline
+RF10 & Atualizar firmware das ESP32 pelo barramento. & Imagem válida, inválida e interrupção.\\\hline
+RF11 & Atualizar remotamente a execução da Raspberry Pi com verificação de autenticidade. & Assinatura/hash, instalação e recuperação.\\\hline
+RF12 & Sinalizar processamento, sucesso, erro e atenção com convenções consistentes. & Matriz de sinais e comportamento observado.\\\hline
+\end{longtable}}{\small\noindent Fonte: RF01 a RF12 do compilado da equipe, formalizados nesta revisão.\par}
+
+
+\section{Requisitos não funcionais}
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.09\textwidth}p{0.49\textwidth}p{0.3\textwidth}}\caption{Requisitos não funcionais da linha de base}\label{tab:05-2}\\
+\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
+\endfirsthead\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
+\endhead
+RNF01 & Executar a agenda local durante indisponibilidade da rede ou do servidor, quando todas as pré-condições de tempo e hardware forem válidas. & Perda de rede e reinício sem NTP; RTC e aceite pendentes.\\\hline
+RNF02 & Não repetir movimento físico em razão de reenvio ou de resultado desconhecido. & Duplicata, perda de resposta e reconciliação.\\\hline
+RNF03 & Aplicar limites locais de fases e duração independentes da rede. & Ensaios de limites e travamento do controlador.\\\hline
+RNF04 & Preservar identidade, calibração e registros em atualização e reinício. & Comparação de estado e recuperação.\\\hline
+RNF05 & Proteger credenciais por autenticação, canal protegido e menor privilégio. & Inspeção e testes negativos por interface.\\\hline
+RNF06 & Rastrear versões instaladas e alterações por identificadores e hashes. & Manifestos e registros de implantação.\\\hline
+RNF07 & Permitir modularidade e remoção/encaixe sem ferramenta e com aparelho energizado, mediante segurança e integridade verificadas. & Ciclos de encaixe, continuidade e integridade do barramento.\\\hline
+RNF08 & Ser compreensível para o público pretendido, sem depender exclusivamente de cor. & Inspeção de acessibilidade e avaliação de tarefas.\\\hline
+\end{longtable}}{\small\noindent Fonte: RNF01 a RNF08 do compilado da equipe, formalizados nesta revisão.\par}
+
+
+\section{Requisitos complementares das frentes digitais}
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.13\textwidth}p{0.45\textwidth}p{0.3\textwidth}}\caption{Requisitos complementares das frentes digitais}\label{tab:05-3}\\
+\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
+\endfirsthead\hline
+\textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
+\endhead
+RF13-APP & Exigir login e disponibilizar configuração e acompanhamento pelo Care via API. & Sessões válidas/expiradas e tarefas por tela.\\\hline
+RF14-VIS & Produzir observações visuais rastreáveis, distinguindo tomada, ausência de tomada e inconclusão. & Protocolo e dados a fornecer por Vini.\\\hline
+RF15-AG & Consultar contexto e solicitar ações de cuidado por ferramentas autorizadas com confirmação de escrita. & Roteiro de leituras, aprovação, recusa e erros.\\\hline
+RNF09-IA & Não prescrever, decidir doses nem converter incerteza em confirmação clínica. & Casos adversariais e avaliação humana.\\\hline
+RNF10-DADOS & Preservar origem, instante, versão e limitações de cada observação e restringir seu acesso. & Auditoria e matriz de acesso/retenção.\\\hline
+\end{longtable}}{\small\noindent Fonte: Formalização editorial do escopo confirmado pela autora.\par}
+
+
+\section{Critérios quantitativos e condições de aceitação}
+Os critérios da última coluna indicam o tipo de evidência a produzir. Não são uma tabela de aprovação e não contêm resultados de ensaio. Requisito confirmado não equivale a requisito atendido. Em particular, operação local sem rede depende de tempo confiável, calibração e prontidão do hardware, condições ainda não encerradas no registro de novembro. \cite{DC_ANALISE}
+\pendencia{REQ02}{Definir os limites quantitativos de aceitação: taxa de separação correta e dose extra, tempo por unidade, capacidade útil, repetibilidade, tensão mínima em carga, correntes, latência, disponibilidade, número de ciclos e critérios de visão/agente. Registrar justificativa e unidade; não inventar metas.}
+\pendencia{REQ03-MATRIZ}{Preencher a matriz final requisito--teste--evidência--resultado após a campanha. Todas as frentes permanecem no escopo; o estado de atendimento continua pendente.}
