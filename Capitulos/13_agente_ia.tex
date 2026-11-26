@@ -1,11 +1,26 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Agente de inteligência artificial}
-\section{Papel no sistema e evolução}
-O agente busca apoiar a consulta e a interação com o cuidado em linguagem natural, sem prescrever ou tomar decisões clínicas. O artigo registra uma proposta inicial com Microsoft Copilot Studio; a documentação verificada em novembro descreve Microsoft Foundry, pesquisa em arquivos e uma cópia com MCP. As etapas são registradas cronologicamente, não como uma única implementação simultânea. \cite{DC_ARTIGO,DC_FOUNDRY}
-\section{Agentes e versões documentadas}
-O registro de 03/11 identifica \texttt{tcc-agent} v17 e \texttt{tcc-agent-mcp-teste} v8, ambos de tipo prompt. O rótulo de modelo registrado é \texttt{gpt-5.6-luna}; ele é reproduzido como configuração daquele ambiente, não como confirmação pública de disponibilidade ou especificação de modelo. A API de voz permanece fixada na v5 do agente de conversa, sem MCP. Publicar nova versão no Foundry não altera automaticamente a versão chamada pelo aplicativo. \cite{DC_FOUNDRY}
-\section{Recuperação de contexto e ferramentas}
-O agente de conversa utiliza \texttt{file\_search}. O conteúdo efetivo do armazenamento vetorial não foi integralmente inspecionado no documento de referência. O agente MCP acrescenta ferramentas de consulta e escrita ao fluxo de cuidado, por conexão autenticada ao serviço. Não são incluídos segredos ou chaves nesta monografia. \cite{DC_FOUNDRY}
+\chapter{Agente de inteligência artificial}\label{cap:agente}
+O agente oferece uma forma de consultar informações e solicitar ações do cuidado em linguagem natural. Sua função é complementar o aplicativo, não prescrever, escolher doses ou substituir o responsável pelo tratamento. A execução das solicitações permanece sujeita às regras da API e às permissões do contexto.
+
+\section{Evolução e organização}
+A proposta inicial utilizou Microsoft Copilot Studio. O desenvolvimento posterior passou a utilizar Microsoft Foundry, com um agente de conversa e uma configuração separada de teste para ferramentas MCP. Essa evolução alterou o modo de integrar voz, contexto e operações de escrita. \cite{DC_ARTIGO,DC_FOUNDRY}
+
+Na configuração de referência de 3 de novembro de 2026, o aplicativo utilizava o agente de conversa na versão 5, sem MCP. A configuração de teste utilizava \texttt{tcc-agent-mcp-teste} na versão 8. A Figura~\ref{fig:agente_arquitetura} apresenta os dois caminhos. A separação evita atribuir à interface de voz funções disponíveis apenas no ambiente de teste.
+
+\begin{figure}[htbp]
+\centering
+\caption{Separação entre o assistente do aplicativo e o agente de teste com MCP}\label{fig:agente_arquitetura}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/agente_arquitetura.png}
+\fonte{Elaboração dos autores. Configuração de referência de 3 nov. 2026.}
+\end{figure}
+
+
+\section{Contexto e recuperação de informações}
+O agente de conversa utiliza pesquisa em arquivos para recuperar contexto. A utilidade desse recurso depende da seleção, da revisão e da atualização do conteúdo disponibilizado. A existência de um índice não garante que o manual esteja completo ou que os registros atuais do cuidado sejam consultados.
+
+As respostas devem distinguir conhecimento de referência e dados obtidos por ferramenta. Quando uma consulta falha ou retorna informação parcial, o agente precisa informar esse limite antes de afirmar rotina, estoque ou histórico. Textos recuperados são tratados como dados de contexto, não como instruções para alterar a política de operação.
+
+\section{Ferramentas e operações}
+A configuração MCP reúne duas ferramentas de leitura e seis de escrita. As leituras consultam contexto e registros; as escritas alteram cadastros, rotinas, atividades ou observações. A Tabela~\ref{tab:13-1} apresenta os identificadores da configuração de referência. \cite{DC_FOUNDRY}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.44\textwidth}p{0.12\textwidth}p{0.32\textwidth}}\caption{Ferramentas da cópia MCP do agente, documentadas em novembro}\label{tab:13-1}\\
 \hline
@@ -21,22 +36,39 @@ O agente de conversa utiliza \texttt{file\_search}. O conteúdo efetivo do armaz
 \texttt{add\_care\_observation} & Escrita & Registro de observação\\\hline
 \texttt{create\_daily\_activity} & Escrita & Criação de atividade\\\hline
 \texttt{update\_daily\_activity} & Escrita & Alteração de atividade\\\hline
-\end{longtable}}{\small\noindent Fonte: Documento 10-agentes-foundry.md, conferido em 03/11/2026.\par}
+\end{longtable}}{\small\noindent Fonte: Configuração do agente em 3 nov. 2026.\par}
+
+As operações de escrita requerem esclarecimento dos dados necessários e aprovação antes da execução. Uma frase ambígua sobre dosagem ou horário não deve ser convertida diretamente em alteração. A confirmação apresenta a ação e seus argumentos, permitindo ao usuário revisar o pedido.
+
+\section{Aprovação e segurança}
+O fluxo da Figura~\ref{fig:agente_aprovacao} começa pela consulta do contexto e pela verificação da clareza do pedido. A negação da aprovação encerra a ação sem escrita. A aprovação, por sua vez, permite prosseguir para o servidor, mas não elimina a validação das regras de negócio e das permissões.
+
+\begin{figure}[htbp]
+\centering
+\caption{Solicitação, esclarecimento, aprovação e execução de uma operação de escrita}\label{fig:agente_aprovacao}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/agente_aprovacao.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
 
 
-\section{Aprovação, efeito e autorização}
-As duas leituras estão configuradas sem aprovação; as seis escritas exigem aprovação no Foundry, com nome e argumentos visíveis. Antes de criar ou alterar uma rotina, devem ser esclarecidos medicamento, quantidade por tomada, horários e dias. Uma aprovação de ferramenta, a validação do servidor, a persistência e um eventual efeito físico são etapas diferentes. \cite{DC_FOUNDRY}
-A conexão do MCP utiliza autenticação própria e o documento alerta que quem possui a chave pode chamar o serviço diretamente. Portanto, a instrução de confirmar antes de escrever não é, isoladamente, uma barreira de segurança, e a aprovação do Foundry não deve ser atribuída ao protocolo inteiro. \cite{DC_FOUNDRY}
-\section{Limites clínicos e interpretação}
-O agente deve consultar antes de afirmar rotinas, estoque ou eventos; falha de consulta não significa ausência de dados. Deve reconhecer paginação e respostas parciais, preservar estados distintos e esclarecer ambiguidades entre dosagem textual e número de unidades. Textos livres são dados, não instruções para mudar a política do sistema. \cite{DC_FOUNDRY}
-A política documental proíbe prescrever, sugerir doses ou compensação de dose esquecida. Confiança visual não é certeza clínica. Uma ação com resultado incerto exige consulta antes de repetição; a interface deve informar claramente o que foi ou não realizado. Essas regras devem ser avaliadas com cenários próprios, e não assumidas por estarem no prompt. \cite{DC_FOUNDRY}
-\section{Voz e integração com o aplicativo}
-O relay de voz não responde aos pedidos de aprovação MCP no registro consultado, justificando manter um agente separado para ferramentas. A análise de 12/11 confirma v5 sem acesso aos dados atuais de paciente pelo MCP. Não se afirma que o usuário já possa executar as oito ferramentas pela voz no Care. \cite{DC_FOUNDRY,DC_ANALISE}
-\section{Plano de avaliação e lacunas}
-A avaliação deve separar escolha da ferramenta, argumentos, confirmação, autorização, efeito, recuperação de erro, segurança clínica e clareza da resposta. Testar o servidor MCP isoladamente não avalia a qualidade do modelo ou o fluxo de voz completo.
-\pendencia{AG01}{Thiago: confirmar modelo/rótulo, versão publicada e versão efetivamente chamada, parâmetros, instruções e ambiente na data final. Anexar definição sanitizada e hashes quando aplicáveis.}
+A segurança é distribuída entre identificação do usuário, autorização do serviço e validação na API. Instruções no prompt complementam esses controles, mas não os substituem. Chaves e credenciais não integram o texto nem as capturas públicas.
+
+Quando o retorno de uma ferramenta é incerto, o agente deve consultar o estado antes de solicitar repetição. O mesmo cuidado se aplica à comunicação do resultado: preparar uma chamada, obter aprovação, persistir a alteração e produzir eventual efeito físico são etapas diferentes.
+
+\section{Voz e integração com o Care}
+A interface de voz utiliza um relay no backend. Na configuração apresentada, esse caminho não processa as aprovações exigidas pelas ferramentas MCP, motivo pelo qual foi mantido separado do agente de teste. A resposta conversacional disponível no Care não é, portanto, apresentada como execução automática das oito ferramentas. \cite{DC_FOUNDRY,DC_ANALISE}
+
+A integração deve conservar os caminhos manuais do aplicativo e informar o que foi efetivamente realizado. O agente pode esclarecer uma solicitação, consultar e apresentar um retorno, mas não deve transformar uma falha de acesso em afirmação de ausência de dados.
+
+\section{Avaliação}
+A avaliação diferencia recuperação de contexto, escolha da ferramenta, argumentos, confirmação, autorização e efeito persistido. Também considera respostas a ambiguidades, recusa de pedidos clínicos e tratamento de falhas. O teste funcional do servidor MCP avalia uma parte dessa cadeia; não representa, isoladamente, a qualidade do modelo ou da experiência de voz.
+
+Os procedimentos são relacionados à estratégia de integração do capítulo seguinte. Os resultados do agente devem manter a versão, o ambiente e os casos utilizados, permitindo interpretar o alcance de cada evidência.
+
+\section*{\textcolor{red}{Complementações necessárias}}
+\pendencia{AG01}{Confirmar modelo, parâmetros e versões finais do agente publicado e do agente chamado pelo aplicativo. O rótulo interno gpt-5.6-luna precisa de identificação verificável e não deve ser tratado como especificação pública do modelo.}
 \pendencia{AG02}{Fornecer evidências das oito ferramentas, aprovação e recusa de escritas, validação do servidor, tratamento de duplicatas e falhas ambíguas. Não executar gravações de teste em dados reais.}
-\pendencia{AG03}{Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir file\_search.}
+\pendencia{AG03}{Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \texttt{file\_search}.}
 \pendencia{AG04}{Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.}
 \pendencia{AG05}{Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.}
 \pendencia{AG06}{Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.}

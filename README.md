@@ -5,9 +5,12 @@
 * `main.tex`: entrada principal da monografia, com 17 capítulos.
 * `classe/`: classe e estilos fornecidos. Em `USPSC.cls`, a única alteração em relação ao original é `\include{FEI-pre-textual}` para `\input{FEI-pre-textual}`, evitando os efeitos de inclusão de páginas e auxiliares no carregamento dos metadados.
 * `FEI-pre-textual.tex`, `PreTextual/` e `PosTextual/`: metadados e elementos de abertura/fechamento. Não foram produzidas aprovação, banca ou assinaturas fictícias.
-* `FEI-bib/dosecerta-referencias.bib`: bibliografia ativa, com 16 chaves citadas.
+* `FEI-bib/dosecerta-referencias.bib`: base bibliográfica, com 16 chaves citadas e uma entrada de apoio não citada.
+* `referencias.tex`: referências autor-data incorporadas ao LaTeX; não depende de `main.bbl`, BibTeX ou Biber.
+* `gerar_referencias.py`: atualiza `referencias.tex` com Python 3 quando a base bibliográfica ou as citações forem alteradas. Não é necessário executá-lo para compilar a entrega.
 * `FEI-bib/modelo-references.bib`: bibliografia original recebida, preservada sem inclusão automática das referências de exemplo no texto.
-* `Figuras/Artigo/`: sete imagens documentais preservadas; quatro são incluídas no texto. As demais ficam como material de apoio, não como prova de implementação final.
+* `Figuras/SharePoint/`: 37 figuras incluídas e chamadas no texto, sendo 35 recuperadas dos documentos e dois diagramas do agente.
+* `Figuras/Artigo/`: sete imagens documentais preservadas como apoio, sem inclusão automática nem uso como prova de implementação final.
 * `pendencias_dosecerta.tex`, `pendencias.json` e `PERGUNTAS_PARA_CONTRIBUIDORES.md`: macro vermelha e roteiro dos 87 campos atuais.
 * `VALIDACAO_E_COMPILACAO.md`: conferências executadas e instruções para compilar.
 
@@ -19,6 +22,8 @@
 * Ferramentas de desenvolvimento e IA tratadas na metodologia, com confirmação pendente de produto, versão e uso por integrante quando faltam dados.
 * Campos pré-textuais não preenchidos mantidos em vermelho. Somente a ficha catalográfica foi omitida.
 * Resultados, discussão e conclusão continuam pendentes, em vermelho, sem afirmações antecipadas.
+* Texto revisto com transições entre seções; os 87 IDs de pendência foram preservados.
+* Paginação digital com `oneside` e `openany`, sem páginas vazias impostas pela paridade. A aparência final deve ser conferida após compilar.
 
 ## Limite da entrega
 
@@ -34,10 +39,11 @@ Localmente, com TeX Live/MiKTeX e os pacotes usados pelo modelo, executar na pas
 
 ```sh
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
-bibtex main
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
 pdflatex -interaction=nonstopmode -halt-on-error main.tex
 ```
+
+Não executar BibTeX/Biber nesta versão: as referências estão em `referencias.tex`. Se alterar citações ou a base `.bib`, executar `python3 gerar_referencias.py` antes das passagens de pdfLaTeX.
 
 Antes de fechar, conferir o vermelho das pendências, capa/folha de rosto, lista de figuras e tabelas, sumário, legendas, quebras e referências. Corrigir erros e avisos relevantes do log. Após completar os dados, resolver cada ID; não ocultar pendências apenas para aparentar conclusão.
 

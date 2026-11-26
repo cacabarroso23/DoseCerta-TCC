@@ -1,34 +1,52 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Metodologia}
-\section{Natureza e abordagem}
-Trata-se de um desenvolvimento tecnológico aplicado, organizado por requisitos, implementação incremental e verificação por níveis de evidência. O material de trabalho compreende o modelo FEI fornecido, o artigo, o pré-relatório, as planilhas, a proposta/contrato e os documentos técnicos do acervo. A redação distingue plano de projeto, observação relatada, teste automatizado, implantação e ensaio físico.
-\section{Organização das frentes e responsabilidades}
-A distribuição informada pela autora é: Nicolas (Nick), aplicativo; Vinicius (Vini), visão computacional; Thiago (Thi), agente de IA; Rafael (Toca), elétrica e mecânica; Caroline, revisão bibliográfica e consolidação editorial. Essa divisão não implica que todos os procedimentos de ensaio já tenham sido executados ou aprovados.
-\pendencia{MET01-ACEITE}{Cada responsável deverá fornecer os instrumentos, condições, calibração, protocolo e evidências da sua frente. Identificar quem executou e quem conferiu os ensaios; não inferir autoria ou aceite apenas da divisão de tarefas.}
-\section{Procedimento de consolidação documental}
-Primeiro foram examinados os documentos enviados; depois, consultados os registros do acervo e fontes públicas para complementar conceitos e especificações. Na existência de divergência, preservou-se a data e o alcance da fonte. O artigo é útil para o conceito e as figuras, mas não substitui o registro posterior da montagem e do servidor.
-A unidade de rastreabilidade é o vínculo entre requisito, revisão do componente, procedimento, observação e evidência original. Alterações de firmware, CAD, configuração ou protocolo exigem identificação para que o resultado não seja atribuído a uma versão diferente.
-\section{Etapas de desenvolvimento}
-\begin{itemize}
-\item Consolidar problema, objetivos e requisitos formais.
-\item Definir responsabilidades e interfaces entre as frentes.
-\item Modelar, fabricar e conferir os componentes mecânicos e sua relação com o mecanismo.
-\item Montar circuitos e conferir continuidade, polaridade, níveis e alimentação antes da energização funcional.
-\item Implementar controle, comunicação, persistência e integração por serviços.
-\item Verificar componentes isolados, integrações e cenários de falha com evidência própria para cada nível.
-\item Executar avaliação de sistema e consolidar resultados, discussão e conclusão apenas após a obtenção dos dados.
-\end{itemize}
-\section{Ferramentas de desenvolvimento e documentação}
-O acervo identifica CAD e impressão 3D, firmware na plataforma ESP32, execução Python/Linux na Raspberry Pi, FastAPI, React/TypeScript, PostgreSQL/Supabase, SQLite local e serviços Azure/Microsoft Foundry. A mera existência dessas tecnologias não define versões exatas da configuração final. \cite{DC_COMPILADO,DC_FOUNDRY}
-Microsoft Copilot Studio aparece como escolha inicial nos materiais. A documentação de novembro descreve Foundry, Voice Live e MCP em papéis mais recentes; por isso, ambas as tecnologias são registradas, mas não como se estivessem simultaneamente em uso no mesmo fluxo final. \cite{DC_ARTIGO,DC_FOUNDRY}
-\section{Uso de inteligência artificial no desenvolvimento}
-A autora solicitou declarar todas as ferramentas utilizadas, incluindo Copilot, Copilot Studio e OpenAI. Registra-se também o apoio do Glean na busca, organização e redação desta revisão. O acervo menciona sessões com assistentes e o uso de modelos de linguagem, mas não oferece inventário completo e verificável de produtos, versões, datas e tarefas de todos os integrantes. O uso de um serviço com modelo não comprova uso direto de outro produto do mesmo fornecedor. \cite{DC_COMPILADO,DC_FOUNDRY}
-As contribuições geradas por IA devem ser conferidas pelos autores; não constituem dados experimentais, evidência de funcionamento ou fonte científica primária por si. Não foram executadas chamadas operacionais ao dispensador ou gravações no servidor durante esta consolidação.
+\chapter{Metodologia}\label{cap:metodologia}
+\section{Abordagem do desenvolvimento}
+O trabalho caracteriza-se como desenvolvimento tecnológico aplicado, organizado pela definição de requisitos, construção incremental e verificação das interfaces. A decomposição do problema partiu da sequência de uso: configurar a rotina, identificar o medicamento, disponibilizar a quantidade solicitada e registrar os eventos. Essa sequência orientou a divisão entre mecanismo, controle embarcado e serviços digitais.
+
+O processo foi estruturado em ciclos de especificação, implementação e revisão. Cada alteração passou a integrar uma configuração identificável, permitindo relacionar modelos mecânicos, circuitos e programas. A comparação entre versões foi utilizada para separar decisões substituídas das que compõem a solução apresentada.
+
+\section{Organização das frentes}
+O desenvolvimento foi distribuído entre frentes complementares: Nicolas Kuhnast, aplicativo; Vinicius Renan de Lima e Silva Grec, visão computacional; Thiago Luppi Blumer, agente de inteligência artificial; Rafael Simões Israel, mecânica e elétrica; e Caroline Alves Barroso, revisão bibliográfica e consolidação do trabalho. As interfaces entre as frentes foram tratadas como parte do projeto, especialmente nos vínculos entre aplicativo, API e dispositivo.
+
+Essa divisão permitiu conduzir atividades em paralelo, mantendo pontos comuns de integração: identificação dos módulos, formato dos comandos, origem dos eventos, autenticação e apresentação do resultado ao usuário. As verificações do sistema relacionam essas interfaces às funções esperadas, conforme o Capítulo~\ref{cap:testes}.
+
+\section{Etapas de projeto e construção}
+O desenvolvimento mecânico compreendeu a organização modular, a definição do percurso do medicamento e a associação entre reservatório, disco e motor. A fabricação por impressão 3D permitiu trabalhar com peças substituíveis e ajustar a geometria de captura. A avaliação dimensional deve relacionar a revisão do arquivo utilizado à peça efetivamente ensaiada.
+
+A etapa elétrica reuniu a seleção dos componentes, a distribuição da alimentação e a interface de quatro vias. O circuito foi organizado por unidade, separando o acionamento do motor, a leitura óptica e a sinalização. Antes da energização funcional, a verificação de continuidade, polaridade e referência comum constitui uma condição de preparação da montagem.
+
+No software, o desenvolvimento foi dividido entre firmware das ESP32, execução local na Raspberry Pi, API e aplicativo. A comunicação entre central e módulos foi definida por protocolo próprio sobre I²C. Nas camadas superiores, a persistência local e central, a identificação das operações e a sincronização foram tratadas em conjunto com os cenários de interrupção.
+
+A Figura~\ref{fig:fluxo_desenvolvimento} apresenta a separação entre desenvolvimento, conferência e implantação. Essa organização distingue a aprovação de uma alteração em ambiente de teste de sua instalação no servidor ou no aparelho.
+
+\begin{figure}[htbp]
+\centering
+\caption{Etapas de desenvolvimento, revisão e implantação do software}\label{fig:fluxo_desenvolvimento}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/fluxo_desenvolvimento.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+\section{Ferramentas e ambientes}
+A modelagem e a impressão 3D foram utilizadas na construção mecânica. O controle dos módulos emprega ESP32, enquanto a central executa serviços Python em Linux na Raspberry Pi Zero 2 W. A API utiliza FastAPI, o Care utiliza React e TypeScript, e a persistência combina PostgreSQL no servidor com SQLite na central.
+
+A interface percorreu etapas de prototipação no Google Stitch e no Google AI Studio antes da implementação integrada. No agente, a proposta inicial com Microsoft Copilot Studio evoluiu para a organização em Microsoft Foundry, com recursos de voz e uma configuração separada para ferramentas MCP. Essas tecnologias correspondem a etapas e papéis específicos, não a produtos intercambiáveis. \cite{DC_ARTIGO,DC_FOUNDRY}
+
+\section{Uso de inteligência artificial}
+Foram utilizadas ferramentas de inteligência artificial como apoio à programação, à consulta e à preparação do texto, sob responsabilidade dos autores. Os registros de desenvolvimento incluem Codex e Claude Code, e a elaboração desta versão contou com apoio do Glean na recuperação e organização do material. As sugestões produzidas por essas ferramentas não foram consideradas dados experimentais nem fontes científicas independentes.
+
+O uso de IA no desenvolvimento é distinto do agente integrado ao DoseCerta. No primeiro caso, a ferramenta auxilia o trabalho da equipe; no segundo, compõe a interação oferecida pelo protótipo. Em ambos os casos, a responsabilidade sobre código, referências, interpretação e redação permanece com os autores.
+
+\section{Estratégia de verificação}
+A verificação foi organizada em níveis: inspeção de projeto, testes de software, execução em placa, integração física e avaliação de uso. Essa divisão permite escolher evidências adequadas a cada requisito. Um teste automatizado verifica o comportamento modelado no software; a separação de um comprimido exige observação da execução física.
+
+Para cada caso, o registro reúne configuração, condição inicial, entrada, comportamento esperado, comportamento observado e evidência. Versões de firmware, aplicativo e componentes devem acompanhar o resultado, de forma que uma alteração posterior não seja confundida com a configuração ensaiada. Os critérios quantitativos e a matriz de correspondência são apresentados junto aos requisitos e ao plano de testes.
+
+\section{Privacidade e aspectos éticos}
+As demonstrações do aplicativo utilizam dados fictícios. Credenciais, chaves e dados pessoais não integram a documentação pública do projeto. O tratamento de imagens e de informações de saúde exige delimitar finalidade, acesso e retenção. Uma eventual avaliação com participantes deve seguir as autorizações e o enquadramento definidos pela instituição antes da coleta.
+
+\section*{\textcolor{red}{Complementações necessárias}}
+\pendencia{MET01-ACEITE}{Identificar executores e revisores dos ensaios, instrumentos, condições e evidências por frente.}
 \pendencia{MET03-IA}{Completar a declaração por integrante: Copilot (especificar produto), Copilot Studio, OpenAI (produto/API e modelo), Claude e demais ferramentas efetivamente usadas; tarefas, datas/versões quando disponíveis, partes aproveitadas e revisão humana realizada. Não atribuir uso a uma pessoa sem confirmação.}
 \pendencia{MET02-VERSOES}{Informar software e revisão CAD final, impressora/fatiador, versões das bibliotecas, compiladores, dependências e releases efetivamente apresentados. Distinguir ambiente de desenvolvimento, teste e produção.}
-\section{Método de verificação e critérios}
-Os testes serão organizados em inspeção documental, análise estática, testes automatizados de software, execução em placa, integração física e avaliação de uso. Para cada caso, registrar condição inicial, entrada, resultado esperado, observado, falha, versão e evidência. Uma captura de tela ou contagem de testes de outra frente não será convertida em aceite do sistema completo.
 \pendencia{MET02-PROTOCOLO}{Fechar com a orientação o protocolo final, repetições, amostragem, instrumentos e critérios quantitativos. Não há base documental suficiente para inventar tolerâncias de taxa de erro, corrente, latência ou desempenho.}
-\section{Aspectos éticos, privacidade e segurança}
-A redação não afirma realização de pesquisa clínica nem participação de pessoas idosas. Antes de qualquer estudo com participantes, definir com a orientação as autorizações e o enquadramento ético aplicável. Empregar dados de teste, proteger credenciais e minimizar imagens ou dados de saúde identificáveis.
 \pendencia{MET-ETICA}{Informar se haverá participantes, coleta de imagens ou dados pessoais; documentar autorizações, consentimento e avaliação institucional aplicáveis. Não inserir número de parecer ou dispensa não fornecidos.}

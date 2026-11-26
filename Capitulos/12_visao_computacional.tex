@@ -1,14 +1,14 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Visão computacional}
-\section{Escopo}
-\pendencia{VIS01}{Texto a fornecer por Vinicius. Inserir objetivo específico, evento observado e limites; não preencher método por inferência de telas ou contratos de integração.}
-\section{Arquitetura e processamento}
-\pendencia{VIS02}{INSERIR arquitetura implementada, aquisição, preparação, algoritmo/modelo, saídas, erros, versões e evidência de implantação.}
-\section{Dados e método de avaliação}
-\pendencia{VIS03}{INSERIR origem e autorização dos dados, anonimização, classes, rotulagem, composição e separação dos conjuntos, protocolo e referência independente.}
-\section{Métricas e critérios}
-\pendencia{VIS04}{INSERIR métricas justificadas, limiares, cenários, repetições, condições e critérios de aceitação, distinguindo confiança do modelo de certeza clínica.}
-\section{Resultados}
-\pendencia{VIS05}{SEM DADOS FINAIS: inserir resultados reais somente após recebimento dos registros do responsável.}
-\section{Limitações}
-\pendencia{VIS06}{INSERIR limites observados e fatores de generalização, falhas e condições em que o sistema deve declarar inconclusão.}
+\chapter{Visão computacional}\label{cap:visao}
+A visão computacional compõe a observação associada à tomada, em complemento aos registros do mecanismo e aos relatos do cuidado. Sua função é produzir uma saída rastreável sobre as imagens analisadas, preservando a condição inconclusiva quando não houver informação suficiente. Uma observação visual não é tratada como comprovação clínica de ingestão.
+
+A integração com a central compartilha o recurso de câmera e precisa delimitar aquisição, processamento e devolução do resultado. O registro deve conservar o evento de referência, a versão do método e as condições da captura, de forma que a saída possa ser relacionada à rotina apresentada no aplicativo.
+
+\section{Método de aquisição e processamento}
+\pendencia{VIS01}{Completar a descrição técnica da frente de visão com o objetivo operacional e o evento observado. Responsável: Vinicius.}
+\pendencia{VIS02}{Inserir a arquitetura implementada: aquisição, preparação, algoritmo ou modelo, saídas, erros, versões e implantação. Acrescentar o diagrama e as imagens do método utilizado.}
+\section{Dados e avaliação}
+\pendencia{VIS03}{Informar origem e autorização dos dados, anonimização, classes, rotulagem, composição e separação dos conjuntos e referência independente.}
+\pendencia{VIS04}{Definir métricas, limiares, cenários, repetições, condições e critérios de aceitação. Distinguir a pontuação do modelo de certeza clínica.}
+\section{Resultados e limitações}
+\pendencia{VIS05}{Inserir somente os resultados experimentais efetivamente obtidos, com versões, denominadores e registros correspondentes.}
+\pendencia{VIS06}{Descrever as falhas observadas, fatores de generalização e condições em que o método deve declarar resultado inconclusivo.}

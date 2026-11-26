@@ -1,12 +1,45 @@
 {
   "erros": [],
   "avisos": [],
-  "arquivos_tex": 30,
+  "arquivos_tex": 31,
   "figuras_incluidas": [
-    "Figuras/Artigo/arquitetura_artigo.png",
-    "Figuras/Artigo/cad_funil_artigo.jpeg",
-    "Figuras/Artigo/cad_modulo_artigo.jpeg",
-    "Figuras/Artigo/conjunto_completo_artigo.jpeg"
+    "Figuras/SharePoint/i2c_dreno_aberto.png",
+    "Figuras/SharePoint/i2c_temporizacao.png",
+    "Figuras/SharePoint/fluxo_desenvolvimento.png",
+    "Figuras/SharePoint/blocos_fisicos.png",
+    "Figuras/SharePoint/barramento_compartilhado.png",
+    "Figuras/SharePoint/arquitetura_borda_nuvem.png",
+    "Figuras/SharePoint/prototipo_montado.png",
+    "Figuras/SharePoint/cad_v75.png",
+    "Figuras/SharePoint/dosador_explodido.png",
+    "Figuras/SharePoint/distribuicao_alimentacao.png",
+    "Figuras/SharePoint/circuito_central.png",
+    "Figuras/SharePoint/buzzer.png",
+    "Figuras/SharePoint/circuito_submodulo.png",
+    "Figuras/SharePoint/circuito_intermediario.png",
+    "Figuras/SharePoint/encaixes_intermediario.png",
+    "Figuras/SharePoint/transacao_dc1.png",
+    "Figuras/SharePoint/firmware_estrutura.png",
+    "Figuras/SharePoint/estados_motor.png",
+    "Figuras/SharePoint/consulta_adc.png",
+    "Figuras/SharePoint/ota_blocos.png",
+    "Figuras/SharePoint/ota_sequencia.png",
+    "Figuras/SharePoint/runtime_processos.png",
+    "Figuras/SharePoint/sinalizacao_posicao.png",
+    "Figuras/SharePoint/provisionamento_ble.png",
+    "Figuras/SharePoint/implantacao_servidor.png",
+    "Figuras/SharePoint/comando_ponta_a_ponta.png",
+    "Figuras/SharePoint/estados_comando.png",
+    "Figuras/SharePoint/app_stitch.png",
+    "Figuras/SharePoint/app_etapas.png",
+    "Figuras/SharePoint/app_piloto.png",
+    "Figuras/SharePoint/app_camadas.png",
+    "Figuras/SharePoint/app_dados.png",
+    "Figuras/SharePoint/app_evolucao.png",
+    "Figuras/SharePoint/app_rotina_historico.png",
+    "Figuras/SharePoint/app_manual_assistente.png",
+    "Figuras/SharePoint/agente_arquitetura.png",
+    "Figuras/SharePoint/agente_aprovacao.png"
   ],
   "referencias_citadas": [
     "ADI_DS3231M",
@@ -18,15 +51,17 @@
     "DC_CONTRATO",
     "DC_FOUNDRY",
     "DC_LISTA",
-    "DC_PREREL",
     "DC_PROPOSTA",
+    "DC_VISUAL",
     "MASNOON2017",
     "NXP_I2C",
     "SALMENSUU2025",
     "VISHAY_TCRT",
     "WCAG22"
   ],
-  "referencias_nao_citadas": [],
+  "referencias_nao_citadas": [
+    "DC_PREREL"
+  ],
   "pendencias": 87,
   "includes": [
     [
@@ -161,6 +196,11 @@
     ],
     [
       "main.tex",
+      "referencias",
+      true
+    ],
+    [
+      "main.tex",
       "PosTextual/apendices",
       true
     ],
@@ -170,5 +210,16 @@
       true
     ]
   ],
-  "compilacao_pdf": "não executada: compilador LaTeX indisponível"
+  "compilacao_pdf": "não executada: compilador LaTeX indisponível",
+  "figuras_com_chamada_textual": 37,
+  "imagens_verificadas": 37,
+  "chaves_autor_data_incorporadas": 16,
+  "pendencias_ids_preservados": 87,
+  "totais_orcamento_conferidos": {
+    "XLSX": "2494.305",
+    "XLSM": "2499.890"
+  },
+  "modo_paginacao": "digital; oneside e openany; sem páginas de paridade forçadas",
+  "bibliografia": "referencias.tex incorporado; sem dependência de main.bbl ou execução de BibTeX",
+  "pdf_novo_compilado": false
 }

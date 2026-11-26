@@ -1,32 +1,75 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Fundamentação teórica}
-\section{Polifarmácia, adesão e rastreabilidade}
-O número de medicamentos é uma forma frequente de caracterizar polifarmácia, mas não descreve sozinho a adequação da prescrição, a complexidade do regime nem as necessidades individuais. A revisão de Masnoon e colaboradores identifica variação importante nas definições. Neste trabalho, polifarmácia contextualiza o público pretendido, sem constituir critério de inclusão de participantes ainda não definidos. \cite{MASNOON2017}
-Adesão, disponibilidade de uma dose, retirada de um recipiente e ingestão são eventos diferentes. O registro de uma etapa não autoriza assumir as demais. A avaliação deve definir precisamente qual evento foi observado, por qual instrumento, em que janela temporal e com qual incerteza. Essa distinção orienta a separação de eventos do dispositivo e inferências visuais na documentação do DoseCerta. \cite{DC_COMPILADO}
-\section{Dispensação unitária e mecanismos rotativos}
-Um mecanismo de disco com cavidades busca capturar unidades, transportá-las e liberá-las por uma abertura de saída. A geometria precisa conciliar dimensões do comprimido, tolerância de fabricação, retenção durante o percurso e liberação na posição desejada. O modelo recuperado do DoseCerta descreve disco com cinco cavidades, reservatório e placa de apoio. A correspondência entre geometria digital e peça fabricada exige medição. \cite{DC_COMPILADO}
-A inclinação adotada nesta revisão é 35\ensuremath{^{\circ}}, conforme decisão da autora e pré-relatório. Ela é um parâmetro de projeto, não um resultado de ensaio. A documentação identifica outra inclinação no modelo V75; por isso, o CAD recuperado não deve ser apresentado automaticamente como geometria final. \cite{DC_PREREL,DC_COMPILADO}
-\section{Motor de passo e estágio de potência}
-A sequência de excitação das bobinas produz deslocamentos discretos. A redução mecânica e o regime de acionamento afetam velocidade, torque, folga e repetibilidade. Contar fases comandadas não demonstra que o eixo ou o comprimido percorreu o movimento esperado. No projeto, o conjunto documentado é 28BYJ-48 de 5 V com placa ULN2003, alimentado por ramal próprio e não por GPIO. \cite{DC_CIRCUITOS}
-A conversão entre fases e ângulo requer referência do conjunto instalado e medição de uma volta, sem assumir uma razão nominal como calibração. Limites locais de duração e de número de fases reduzem a dependência do servidor para interromper uma operação, mas não substituem a verificação do mecanismo. \cite{DC_COMPILADO}
-\section{Sensor óptico reflexivo}
-O TCRT5000 integra emissor infravermelho e fototransistor, com resposta dependente da distância e da refletância do alvo. A folha de dados o caracteriza como sensor reflexivo, não como instrumento de identificação química ou de confirmação clínica. Cor, material, posição e luz ambiente interferem na interpretação de leituras. \cite{VISHAY_TCRT}
-Na topologia descrita para o DoseCerta, o coletor é elevado a 3,3 V por resistor e o emissor é ligado ao terra; maior reflexão tende a reduzir a tensão no ADC. Essa leitura serve à observação da cavidade. Não se pode rebatizá-la como barreira óptica na saída, nem usar uma cavidade vazia como prova isolada de ingestão. \cite{DC_CIRCUITOS,DC_COMPILADO}
-\section{Arquitetura distribuída e comunicação I²C}
-A comunicação I²C utiliza sinais de dados e relógio compartilhados, com saídas de dreno/coletor aberto e elevação de nível apropriada. Endereçamento distinto, capacitância, resistores equivalentes e tempos de subida condicionam o funcionamento elétrico; o tamanho físico da montagem e seus contatos fazem parte dessa análise. \cite{NXP_I2C}
-O CRC detecta determinadas corrupções acidentais, mas não autentica a origem de uma mensagem. Identificadores de comando, estados de inicialização e resultados persistidos atendem a outra necessidade: reconhecer reenvios e impedir que uma perda de resposta provoque um segundo movimento. A documentação do protocolo DC1 aplica esses mecanismos em quadros de tamanho fixo. \cite{DC_COMPILADO}
-\section{Persistência, idempotência e operação local}
-Idempotência significa que a repetição de uma solicitação não deve produzir novo efeito indevido. No controle físico, uma resposta perdida pode deixar o resultado desconhecido; repetir o movimento não é uma estratégia segura de confirmação. O projeto prevê consulta de estado e reconciliação, além de persistência local e central. Operar sem rede depende também de relógio confiável, agenda válida, calibração e prontidão física. \cite{DC_COMPILADO,DC_ANALISE}
-\section{Relógio de tempo real e alimentação}
-Um RTC com alimentação de reserva pode manter a contagem de tempo quando a alimentação principal é interrompida. Isso não alimenta a Raspberry Pi ou os motores. As variantes DS3231 e DS3231M não devem ter suas especificações confundidas; a documentação fotográfica do projeto menciona DS3231M em placa HW-084. O circuito do módulo e o tipo de bateria precisam ser identificados antes da instalação. \cite{ADI_DS3231M,DC_COMPILADO}
-Capacidade nominal de uma fonte não corresponde ao consumo do equipamento. Corrente, queda de tensão, aquecimento e comportamento nos transitórios devem ser medidos na montagem final; a previsão de 5 V/10 A não demonstra suficiência elétrica por si só. \cite{DC_CIRCUITOS}
-\section{Aplicativo, servidor e autenticação}
-A separação entre interface, API e execução local permite identificar quem valida uma ação e quem a realiza fisicamente. No DoseCerta, Care utiliza React/TypeScript; a API FastAPI intermedeia as regras de cuidado e a coordenação com o dispositivo. O material descreve JWT e Supabase, mas a configuração efetiva deve ser vinculada à versão demonstrada. \cite{DC_APP}
-\section{Acessibilidade e interação}
-As WCAG 2.2 oferecem critérios para conteúdo web perceptível, operável, compreensível e robusto. Entre os pontos pertinentes estão contraste, uso por teclado, identificação de controles e não depender exclusivamente de cor. Referenciar as diretrizes não equivale a atestar conformidade; é preciso delimitar páginas, estados e critérios efetivamente avaliados. \cite{WCAG22}
-\section{Visão computacional e interpretação de eventos}
-A arquitetura reserva a visão para a observação associada à tomada. Uma pontuação produzida por algoritmo não deve ser interpretada automaticamente como probabilidade clínica calibrada. O método, o conjunto de dados, os limiares e as métricas específicos do DoseCerta serão descritos pelo responsável no capítulo 12. \cite{DC_COMPILADO}
-\section{Agentes de IA e ferramentas}
-O agente conversacional interpreta solicitações e pode consultar contexto ou solicitar ações por ferramentas. Instruções ao modelo, regras do servidor e mecanismos de aprovação são camadas distintas. No projeto, a documentação do Foundry separa o agente de voz e a cópia com MCP, pois o fluxo de voz ainda não atende aos pedidos de aprovação de escrita. \cite{DC_FOUNDRY}
-\section{Prototipagem e limitações de materiais}
-A aquisição de PLA não comprova o material de cada peça, nem a adequação sanitária de superfícies em contato com medicamentos. O processo de impressão, o acabamento, a limpeza, o desgaste e a estabilidade devem ser documentados para a configuração ensaiada. Não se declara biocompatibilidade, esterilizabilidade ou certificação do protótipo com base apenas na denominação do polímero. \cite{DC_COMPILADO,DC_LISTA}
+\chapter{Fundamentação teórica}\label{cap:fundamentacao}
+A concepção do DoseCerta combina um mecanismo de separação de unidades com recursos de controle, comunicação e acompanhamento. Este capítulo apresenta os princípios necessários para compreender essas escolhas. A aplicação de cada princípio ao protótipo é desenvolvida nos capítulos técnicos.
+
+\section{Polifarmácia e organização da rotina medicamentosa}
+A polifarmácia é um conceito heterogêneo: além de critérios numéricos, sua caracterização pode considerar duração e adequação do uso dos medicamentos. Essa diversidade exige cuidado ao comparar populações e interpretar resultados de intervenções. Neste trabalho, o termo caracteriza o contexto que motiva o desenvolvimento, e não uma avaliação clínica da prescrição. \cite{MASNOON2017}
+
+A rotina medicamentosa pode ser decomposta em planejamento, disponibilização, retirada e tomada. Essa separação é importante porque cada etapa produz um tipo de informação. Um horário programado informa o que se pretende realizar; o acionamento de um motor informa uma ação do controlador; uma observação do cuidador registra seu relato. O acompanhamento torna-se mais preciso quando essas informações conservam sua origem em vez de serem reunidas em uma confirmação genérica.
+
+\section{Dispensação por disco de cavidades}
+Na dispensação unitária, o reservatório armazena várias unidades de um mesmo medicamento, e o mecanismo procura selecionar a quantidade solicitada. Um disco com cavidades executa essa seleção por movimento relativo ao reservatório e à abertura de saída. A cavidade recebe uma unidade, transporta-a apoiada pela estrutura e alcança uma região em que ocorre a liberação.
+
+O funcionamento depende da relação entre a geometria do comprimido e a do disco. Cavidades excessivamente grandes favorecem capturas múltiplas; cavidades pequenas podem impedir a entrada ou reter a unidade. Folgas, acabamento e alinhamento também influenciam o percurso. A inclinação do conjunto auxilia o deslocamento por gravidade, mas sua contribuição precisa ser considerada em conjunto com atrito e formato das unidades.
+
+A separação do medicamento e a verificação de sua saída são, portanto, problemas relacionados, mas distintos. O mecanismo deve permitir observar sua condição antes e depois do movimento. Essa necessidade fundamenta a associação entre disco, acionamento e sensor óptico adotada no DoseCerta.
+
+\section{Motor de passo e interface de potência}
+O motor de passo transforma uma sequência de excitações elétricas em deslocamentos discretos. A ordem das fases determina o sentido de rotação, enquanto o intervalo entre elas influencia a velocidade. No conjunto com redução mecânica, a relação entre fases comandadas e ângulo no eixo de saída também depende da transmissão e das folgas.
+
+Os pinos de um microcontrolador não devem alimentar diretamente as bobinas. O estágio de potência recebe os sinais de controle e chaveia a corrente fornecida ao motor. No DoseCerta, essa função é atribuída à placa ULN2003 associada ao motor 28BYJ-48. A contagem das fases representa o movimento solicitado; a confirmação da condição mecânica exige uma referência independente, obtida pelo sensor e pela inspeção do conjunto.
+
+Essa característica motiva duas proteções complementares: limites locais de tempo e de fases, para restringir a atuação, e verificação do estado observado, para avaliar o resultado. Um limite impede movimento indefinido, mas não demonstra que o comprimido percorreu corretamente o trajeto.
+
+\section{Leitura óptica reflexiva}
+O TCRT5000 reúne emissor infravermelho e fototransistor. O sinal recebido varia com a reflexão do alvo e com a distância entre sensor e superfície. Sua utilização requer considerar geometria, cor, acabamento e iluminação, pois esses fatores alteram a leitura elétrica. \cite{VISHAY_TCRT}
+
+Na configuração do projeto, o sensor observa a região do disco. Com o coletor elevado a 3,3 V por resistor e o emissor ligado ao terra, o aumento da condução do fototransistor tende a reduzir a tensão lida pelo conversor analógico-digital. A interpretação depende da comparação entre estados de referência da cavidade e não de um valor universal atribuído ao componente.
+
+A calibração relaciona leitura e posição do disco. Ao localizar as transições entre material e cavidade, o controle pode definir referências para o movimento e para a avaliação de ocupação. A troca do disco ou a alteração da posição do sensor modifica essa relação, tornando necessária a validade explícita do perfil utilizado.
+
+\section{Sistemas distribuídos e barramento I²C}
+A distribuição do controle permite manter a geração das fases e a leitura do sensor próximas ao mecanismo, enquanto a central cuida de agenda, persistência e rede. Essa organização reduz a quantidade de sinais que percorrem o conjunto, mas exige uma interface de comunicação definida entre as unidades.
+
+O I²C utiliza duas linhas compartilhadas: SDA, para dados, e SCL, para relógio. As linhas são liberadas para o nível alto por resistores de elevação e podem ser conduzidas ao nível baixo pelos dispositivos. A Figura~\ref{fig:i2c_dreno_aberto} apresenta esse princípio. O dimensionamento dos resistores e o comportamento dos contatos influenciam os tempos de subida e a integridade dos sinais. \cite{NXP_I2C}
+
+\begin{figure}[htbp]
+\centering
+\caption{Princípio elétrico das linhas SDA e SCL em dreno aberto}\label{fig:i2c_dreno_aberto}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/i2c_dreno_aberto.png}
+\fonte{Elaboração dos autores, com base em NXP Semiconductors (2021).}
+\end{figure}
+
+
+Uma transferência reúne condição de início, endereço, direção, dados e reconhecimentos. Na leitura, o controlador encerra a recepção com o reconhecimento negativo final e a condição de parada. A Figura~\ref{fig:i2c_temporizacao} mostra a aplicação dessas etapas a uma transferência de 32 bytes. O reconhecimento elétrico indica participação na transferência; não equivale à conclusão de uma operação física. \cite{NXP_I2C}
+
+\begin{figure}[htbp]
+\centering
+\caption{Escrita e leitura I²C de um quadro de 32 bytes no submódulo}\label{fig:i2c_temporizacao}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/i2c_temporizacao.png}
+\fonte{Elaboração dos autores, com base em NXP Semiconductors (2021).}
+\end{figure}
+
+
+Acima da transferência elétrica, o protocolo da aplicação identifica comandos, versões e resultados. O CRC auxilia a detecção de corrupção acidental do quadro, enquanto os identificadores permitem relacionar uma resposta à solicitação correta. Nenhum desses mecanismos, isoladamente, oferece autenticação criptográfica.
+
+\section{Persistência, idempotência e reconciliação}
+Em uma comunicação sujeita a interrupções, a ausência de resposta pode significar tanto que o comando não chegou quanto que foi executado e sua resposta se perdeu. Repetir um movimento para descobrir o resultado pode liberar uma unidade adicional. Por isso, o tratamento de falhas precisa considerar o efeito físico, e não apenas a repetição da mensagem.
+
+A idempotência associa as tentativas de uma mesma operação a uma identidade estável, evitando que sejam interpretadas como novos pedidos. A persistência conserva essa associação durante reinícios. Quando o estado permanece desconhecido, a reconciliação consulta os registros e a condição do dispositivo antes de admitir uma nova atuação.
+
+Na arquitetura borda--nuvem, a central conserva uma cópia operacional das configurações e uma fila dos registros a transmitir. O servidor concentra o histórico compartilhado e as regras de acesso. A operação local exige agenda válida, referência de tempo e condições físicas de prontidão; a presença de um banco de dados local, por si só, não satisfaz essas condições.
+
+\section{Referência temporal e alimentação}
+Um relógio de tempo real com alimentação de reserva mantém a contagem durante a interrupção da fonte principal. A bateria do relógio não mantém o restante do aparelho em funcionamento. Também é necessário identificar a variante do componente e o circuito do módulo, pois a folha de dados do DS3231M não deve ser aplicada indiscriminadamente a outras variantes. \cite{ADI_DS3231M}
+
+A alimentação do conjunto deve suportar correntes permanentes e transitórias dos diferentes ramais. A capacidade nominal da fonte é um limite de fornecimento, não o consumo do sistema. Quedas de tensão nos condutores e nos contatos podem afetar a comunicação ou reiniciar os controladores; por isso, a avaliação elétrica deve acompanhar o funcionamento dos atuadores.
+
+\section{Interface, acessibilidade e assistência por IA}
+A interface apresenta o planejamento e os retornos do sistema, enquanto a API concentra validações e acesso aos dados. Essa separação permite tratar sessão, autorização e execução como responsabilidades próprias. O usuário deve conseguir distinguir uma solicitação recebida de uma ação concluída, inclusive quando houver perda de conexão.
+
+As WCAG 2.2 oferecem critérios para conteúdo perceptível, operável, compreensível e robusto. Entre os pontos pertinentes ao DoseCerta estão identificação de controles, contraste, navegação por teclado e comunicação que não dependa somente de cor. A adoção dessas referências orienta o projeto da interface; a conformidade depende de avaliação específica. \cite{WCAG22}
+
+O agente de IA acrescenta uma forma de interação em linguagem natural. Entretanto, interpretar um pedido, consultar dados e executar uma escrita são etapas diferentes. As regras de negócio permanecem na API, e ações que alteram o cuidado precisam de contexto suficiente e de confirmação. De forma semelhante, a visão computacional produz observações sobre imagens, não comprovação clínica de ingestão. Essas distinções orientam as interfaces apresentadas nos Capítulos~\ref{cap:visao} e~\ref{cap:agente}.
+
+\section*{\textcolor{red}{Complementações necessárias}}
+

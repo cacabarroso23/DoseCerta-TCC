@@ -1,57 +1,91 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Desenvolvimento elétrico e eletrônico}
-\section{Critérios e configuração documental}
-A configuração de referência utiliza potência em 5 V, lógica em 3,3 V e terra comum. A alimentação dos motores deriva da fonte antes da Raspberry Pi; não passa por seus GPIO nem pelo regulador de 3,3 V das ESP32. O mapa de setembro deve ser confrontado com os reparos posteriores antes de ser considerado esquema da montagem final. \cite{DC_CIRCUITOS}
-\section{Alimentação e proteção}
-A lista de aquisição prevê fonte regulada de 5 V/10 A. Esse valor é capacidade nominal prevista, não corrente medida. O pré-relatório de 5 V/5 A é uma referência anterior. No mapa de montagem, a Pi recebe 5 V no pino físico 2 e GND no 6, com atenção à polaridade e sem alimentação simultânea por outra entrada nessa configuração. Os ramais de motores e buzzer saem da fonte separadamente. \cite{DC_LISTA,DC_CIRCUITOS,DC_PREREL}
-\pendencia{ELE01}{Informar marca/modelo da fonte instalada, etiqueta, regulação, fusíveis, aterramento, proteção e cabeamento. Medir tensão na Pi e nos módulos, queda de tensão, corrente em repouso/atuação e aquecimento. Não tratar 10 A como consumo.}
-\section{Contatos e barramento}
-As quatro vias funcionais são +5 V, GND, SDA e SCL. O padrão documental de cores é vermelho, preto, azul e amarelo, respectivamente. A lógica de 3,3 V, quando identificada por vermelho com marca branca, constitui rede diferente dos 5 V. A posição física dos contatos precisa ser testada com os módulos encaixados, inclusive espelhamento entre faces. \cite{DC_CIRCUITOS}
+\chapter{Desenvolvimento elétrico e eletrônico}\label{cap:eletrica}
+A organização elétrica acompanha a divisão modular do aparelho. A central distribui alimentação e coordena o barramento; o intermediário controla a sinalização; e o submódulo reúne o acionamento e a leitura óptica. O projeto separa os ramais de potência de 5 V da lógica de 3,3 V e mantém referência de terra comum.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.14\textwidth}p{0.28\textwidth}p{0.46\textwidth}}\caption{Ligações funcionais de alimentação e barramento}\label{tab:08-1}\\
-\hline
-\textbf{Função} & \textbf{Raspberry Pi} & \textbf{ESP32 e distribuição}\\\hline
-\endfirsthead\hline
-\textbf{Função} & \textbf{Raspberry Pi} & \textbf{ESP32 e distribuição}\\\hline
-\endhead
-+5 V & p2 na Pi, em ramal próprio & 5V/VIN e driver pelo ramal da fonte.\\\hline
-GND & p6 e referências comuns & GND comum das placas, sensores e drivers.\\\hline
-SDA & p3 / BCM2 & GPIO13 em cada ESP32; nó compartilhado.\\\hline
-SCL & p5 / BCM3 & GPIO14 em cada ESP32; nó compartilhado.\\\hline
-\end{longtable}}{\small\noindent Fonte: Handoff de circuitos de 27/09/2026.\par}
+\section{Distribuição da alimentação}
+Foi prevista uma fonte regulada de 5 V com capacidade nominal de 10 A. A distribuição utiliza ramais para a Raspberry Pi, o buzzer e a cadeia de módulos. No submódulo, a alimentação atende à ESP32 e à placa de acionamento do motor, enquanto o circuito óptico utiliza a referência de 3,3 V. A Figura~\ref{fig:distribuicao_alimentacao} apresenta a organização funcional. \cite{DC_CIRCUITOS}
+
+\begin{figure}[htbp]
+\centering
+\caption{Distribuição funcional da alimentação de 5 V e da referência comum}\label{fig:distribuicao_alimentacao}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/distribuicao_alimentacao.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
 
 
-\pendencia{ELE02}{Conferir ordem, orientação e continuidade real de cada pogo, comprimentos, bitolas e retornos. Completar esquema elétrico pós-reparos e identificar conectores por modelo ou desenho cotado.}
-\pendencia{ELE03}{Medir pull-ups equivalentes, capacitância/tempos de subida e níveis do I²C com os módulos e os motores; verificar colisão de endereços, taxas de erro e comportamento no encaixe/retirada energizados. O mapa funcional não atesta integridade elétrica.}
-\section{Submódulo: motor e sensor}
-Por unidade, o mapa descreve ESP32-WROOM-32, 28BYJ-48 de 5 V com placa ULN2003 e TCRT5000 de quatro terminais. As entradas IN1--IN4 recebem GPIO27, 26, 25 e 33; a leitura usa GPIO32/ADC1. O emissor IR recebe 3,3 V por 220 \ensuremath{\Omega}; o coletor é ligado ao ADC e elevado a 3,3 V por 10 k\ensuremath{\Omega}, com cátodo e emissor no terra. Não há LED indicador no submódulo, além do emissor do sensor. \cite{DC_CIRCUITOS}
-O GPIO12 fica livre no mapa, evitando o conflito de partida discutido na documentação. Os capacitores de 470 \ensuremath{\mu}F e 100 nF apareceram como sugestões anteriores, mas o handoff não os confirma instalados. Não se devem acrescentar esses itens como fato consumado. \cite{DC_CIRCUITOS}
-\pendencia{ELE04}{Conferir pinagem do TCRT5000 físico, resistores, alimentação e faixa ADC; obter leituras em cavidade vazia/ocupada e sob diferentes condições. Medir comportamento do motor, driver e sensor em conjunto, sem confundir leitura da cavidade com sensor de saída.}
-\section{Intermediário: quatro posições e sinalização}
-Cada intermediário é descrito com ESP32, quatro RGB 5050 comuns de seis terminais, doze resistores iniciais de 330 \ensuremath{\Omega} e dois ULN2003A para os canais. Esses LEDs não são WS2812B endereçáveis. A correspondência por posição está no mapa abaixo; polaridade, corrente e brilho dependem do componente real. \cite{DC_CIRCUITOS}
+A corrente nominal da fonte não corresponde ao consumo do aparelho. A avaliação do fornecimento considera queda de tensão e corrente durante repouso, comunicação e atuação. O retorno comum também precisa manter referência adequada entre os sinais, evitando que o acionamento do motor comprometa as leituras e o barramento.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.13\textwidth}p{0.3\textwidth}p{0.45\textwidth}}\caption{GPIO dos RGB por posição do intermediário}\label{tab:08-2}\\
-\hline
-\textbf{Posição} & \textbf{R / G / B (GPIO)} & \textbf{Acionamento documental}\\\hline
-\endfirsthead\hline
-\textbf{Posição} & \textbf{R / G / B (GPIO)} & \textbf{Acionamento documental}\\\hline
-\endhead
-1 & 27 / 26 / 25 & ULN A, canais 1/2/3\\\hline
-2 & 33 / 32 / 23 & ULN A, canais 4/5/6\\\hline
-3 & 22 / 21 / 19 & ULN B, canais 1/2/3\\\hline
-4 & 18 / 17 / 16 & ULN B, canais 4/5/6\\\hline
-\end{longtable}}{\small\noindent Fonte: Handoff de circuitos de 27/09/2026; ligação a conferir na montagem.\par}
+\section{Unidade central}
+A Raspberry Pi Zero 2 W utiliza GPIO2 para SDA e GPIO3 para SCL, com lógica de 3,3 V. A central também reúne o relógio de tempo real, o buzzer e os sinais luminosos. A Figura~\ref{fig:circuito_central} apresenta as ligações por função. A interface de quatro vias deve ser identificada por continuidade, pois uma relação textual de sinais não determina sua ordem física no conector.
+
+\begin{figure}[htbp]
+\centering
+\caption{Ligações funcionais da unidade central}\label{fig:circuito_central}
+\includegraphics[width=0.98\textwidth,height=0.73\textheight,keepaspectratio]{Figuras/SharePoint/circuito_central.png}
+\fonte{Elaboração dos autores (set. 2026). Distribuição funcional, sem definição da ordem física dos contatos.}
+\end{figure}
 
 
-\pendencia{ELE05}{Confirmar LED adquirido/instalado, terminais A/K, corrente e brilho por cor, resistores e dissipação dos drivers. Fornecer fotos e testes de todas as posições; não assumir funcionamento dos dois intermediários a partir de uma unidade.}
-\section{Central: LEDs, buzzer e RTC}
-Os dois RGB centrais usam resistores iniciais de 1 k\ensuremath{\Omega} por cor. No mapa, o LED de dispensação usa BCM27, BCM22 e BCM10 (pinos físicos 13, 15 e 19); o LED de câmera usa BCM23, BCM24 e BCM25 (16, 18 e 22). O BCM10 não deve ser simultaneamente utilizado pelo SPI nessa configuração. \cite{DC_CIRCUITOS}
-O buzzer de 5 V é comutado no retorno por 2N7000, com gate no BCM17 (pino físico 11) e resistor de 10 k\ensuremath{\Omega} entre gate e source. Não há resistor de 1 k\ensuremath{\Omega} em série com a carga: essa proposta anterior silenciou o buzzer. O limiar do MOSFET não comprova condução adequada a 3,3 V; é necessário medir a carga e o desligamento. O diodo de proteção depende de confirmar que a carga é indutiva. \cite{DC_CIRCUITOS}
-A placa HW-084 utiliza 3,3 V, GND, SDA e SCL nos pinos físicos 1, 9, 3 e 5. O compilado identifica DS3231M pela marcação; é necessário verificar o circuito da placa, seus pull-ups e possível circuito de carga antes de escolher uma bateria primária. No registro de novembro, o tempo confiável vinha de NTP, sem RTC funcional. \cite{DC_CIRCUITOS,DC_COMPILADO,DC_ANALISE}
-\pendencia{ELE06}{Identificar RTC e bateria realmente instalados; conferir carga e compatibilidade da placa, habilitação no Linux, leitura de /dev/rtc0 e teste após desligamento sem rede. A bateria do RTC não alimenta a Pi.}
-\pendencia{ELE07}{Fechar ensaios de buzzer, LEDs centrais, chaveamento, aquecimento, reinício e interferência em conjunto. Inserir esquema final, registros dos instrumentos e condições; confirmar capacitores/proteções acrescentados nos reparos.}
-\section{Componentes e orçamento por fonte}
-As planilhas foram lidas como dados, sem execução de macros. Mantêm-se seus valores separados: a lista XLSX e a proposta XLSM diferem em preços e na rubrica diversos. Quantidade cotada não comprova quantidade instalada; preço orçado não é despesa realizada. Na aba Custo Total do XLSM, o campo Realizado dos materiais está vazio. \cite{DC_LISTA,DC_PROPOSTA}
+O buzzer é alimentado pelo ramal de 5 V e chaveado pelo transistor 2N7000. O GPIO17 atua na porta, e o resistor de 10 k\ensuremath{\Omega} entre porta e fonte mantém a condição de desligamento. A Figura~\ref{fig:buzzer} detalha esse estágio. A identificação dos terminais e a condução com 3,3 V devem ser conferidas para o componente instalado.
+
+\begin{figure}[htbp]
+\centering
+\caption{Estágio de acionamento do buzzer com transistor 2N7000}\label{fig:buzzer}
+\includegraphics[width=0.91\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/buzzer.png}
+\fonte{Elaboração dos autores (set. 2026). Terminais e condição de acionamento dependem da peça utilizada.}
+\end{figure}
+
+
+\section{Submódulo dosador}
+No submódulo, a ESP32 controla o 28BYJ-48 por meio da placa ULN2003 e lê o TCRT5000 no ADC1. Os sinais do motor utilizam GPIO27, GPIO26, GPIO25 e GPIO33, e a leitura óptica utiliza GPIO32. O barramento chega aos GPIO13 e GPIO14. A Figura~\ref{fig:circuito_submodulo} reúne essas ligações.
+
+\begin{figure}[htbp]
+\centering
+\caption{Ligações funcionais do submódulo dosador}\label{fig:circuito_submodulo}
+\includegraphics[width=0.98\textwidth,height=0.70\textheight,keepaspectratio]{Figuras/SharePoint/circuito_submodulo.png}
+\fonte{Elaboração dos autores (set. 2026). Prancha anterior às correções finais de bancada.}
+\end{figure}
+
+
+O emissor infravermelho utiliza resistor de 220\ensuremath{\Omega}; o fototransistor é lido com resistor de 10 k\ensuremath{\Omega} para 3,3 V. A leitura é interpretada em conjunto com o movimento e a calibração, não como um detector independente de ingestão. O acionamento do motor utiliza a alimentação de potência, sem retirar corrente das saídas lógicas do microcontrolador.
+
+\section{Intermediário e sinalização}
+O intermediário utiliza quatro LEDs RGB 5050, associados aos canais L1 a L4. Os sinais são chaveados por dois ULN2003A, com resistores de 330\ensuremath{\Omega} nos canais de cor. A Figura~\ref{fig:circuito_intermediario} apresenta a topologia funcional, e a Tabela~\ref{tab:eletrica-gpio} relaciona os GPIO. \cite{DC_CIRCUITOS}
+
+\begin{figure}[htbp]
+\centering
+\caption{Ligações funcionais dos LEDs e dos drivers do intermediário}\label{fig:circuito_intermediario}
+\includegraphics[width=0.98\textwidth,height=0.70\textheight,keepaspectratio]{Figuras/SharePoint/circuito_intermediario.png}
+\fonte{Elaboração dos autores (set. 2026). Topologia a conferir na montagem final.}
+\end{figure}
+
+
+{\small\begin{longtable}{p{0.22\textwidth}p{0.22\textwidth}p{0.22\textwidth}p{0.22\textwidth}}
+\caption{GPIO dos canais luminosos do intermediário}\label{tab:eletrica-gpio}\\
+\hline\textbf{Canal} & \textbf{Vermelho} & \textbf{Verde} & \textbf{Azul}\\\hline\endfirsthead
+\hline\textbf{Canal} & \textbf{Vermelho} & \textbf{Verde} & \textbf{Azul}\\\hline\endhead
+L1 & 27 & 26 & 25\\\hline
+L2 & 33 & 32 & 23\\\hline
+L3 & 22 & 21 & 19\\\hline
+L4 & 18 & 5 & 4\\\hline
+\end{longtable}\noindent Fonte: projeto elétrico dos autores.\par}
+
+A disposição dos encaixes e dos canais é mostrada na Figura~\ref{fig:encaixes_intermediario}. Cada posição fica entre dois LEDs, permitindo identificá-la pelo par adjacente. Assim, a confirmação visual de uma posição não depende de um LED instalado no submódulo.
+
+\begin{figure}[htbp]
+\centering
+\caption{Disposição funcional dos encaixes e canais luminosos do intermediário}\label{fig:encaixes_intermediario}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/encaixes_intermediario.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+\section{Barramento, contatos e verificações}
+As vias de alimentação e comunicação atravessam os encaixes no mesmo nó elétrico. Os níveis das linhas SDA e SCL devem permanecer compatíveis com a lógica de 3,3 V; resistores em paralelo e capacitância da montagem alteram os tempos de subida. O ensaio dos contatos inclui continuidade, resistência e estabilidade durante inserção e remoção, especialmente porque o requisito prevê modularidade com o equipamento energizado.
+
+A seleção de capacitores, proteções e condutores deve considerar a montagem final. A avaliação de tensão no ponto de carga e de comportamento durante o motor fornece a base para esses ajustes. As pranchas apresentadas descrevem a distribuição funcional e devem permanecer vinculadas à revisão da fiação ensaiada.
+
+\section{Orçamento dos componentes}
+As planilhas de aquisição e de proposta utilizam bases distintas. A lista XLSX totaliza R\$ 2.494,305, mantidas três casas decimais para rastreabilidade; a proposta XLSM e o contrato registram R\$ 2.499,89. A Tabela~\ref{tab:08-3} apresenta os totais por item de cada planilha. Esses valores são orçamentos, não despesas comprovadas. \cite{DC_LISTA,DC_PROPOSTA,DC_CONTRATO}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.43\textwidth}p{0.07\textwidth}p{0.17\textwidth}p{0.17\textwidth}}\caption{Lista de aquisição: valores totais por item em cada planilha}\label{tab:08-3}\\
 \hline
@@ -75,8 +109,15 @@ Fretes & 1 & 94,910 & 94,000\\\hline
 Diversos & 1 & 226,755 & 200,000\\\hline
 \end{longtable}}{\small\noindent Fonte: Planilhas XLSX e XLSM fornecidas pela equipe; totais orçados, três casas decimais para rastreabilidade.\par}
 
+A diferença entre as bases decorre de preços e arredondamentos presentes nos arquivos de origem. O custo da configuração efetivamente construída deve considerar quantidade instalada, substituições e comprovantes, sem converter automaticamente o orçamento em custo final.
 
-A lista XLSX totaliza R\$ 2.494,305, mantidos os valores originais com três casas decimais para rastreabilidade. A proposta XLSM totaliza R\$ 2.499,89. As três casas da tabela preservam a rubrica diversos de R\$ 226,755 da lista. São totais orçados, não valores pagos. \cite{DC_LISTA,DC_PROPOSTA}
-O contrato/proposta assinado fornecido informa R\$ 2.499,89 como valor do projeto, coerente com a proposta XLSM. O compilado anterior também menciona R\$ 2.512,55 em outro registro; esse número não será atribuído ao contrato anexado. A conciliação exige identificar revisão, aprovação e comprovantes de aquisição. \cite{DC_CONTRATO,DC_PROPOSTA,DC_COMPILADO}
-\pendencia{BOM01}{Conciliar lista XLSX, proposta/contrato e eventual registro de R\$ 2.512,55: revisão, data, aprovação, compras, doações, fretes e comprovantes. Não preencher custo realizado com orçamento ou campo vazio.}
+\section*{\textcolor{red}{Complementações necessárias}}
+\pendencia{ELE01}{Informar marca/modelo da fonte instalada, etiqueta, regulação, fusíveis, aterramento, proteção e cabeamento. Medir tensão na Pi e nos módulos, queda de tensão, corrente em repouso/atuação e aquecimento. Não tratar 10 A como consumo.}
+\pendencia{ELE02}{Conferir ordem, orientação e continuidade real de cada pogo, comprimentos, bitolas e retornos. Completar esquema elétrico pós-reparos e identificar conectores por modelo ou desenho cotado.}
+\pendencia{ELE03}{Medir pull-ups equivalentes, capacitância/tempos de subida e níveis do I²C com os módulos e os motores; verificar colisão de endereços, taxas de erro e comportamento no encaixe/retirada energizados. O mapa funcional não atesta integridade elétrica.}
+\pendencia{ELE04}{Conferir pinagem do TCRT5000 físico, resistores, alimentação e faixa ADC; obter leituras em cavidade vazia/ocupada e sob diferentes condições. Medir comportamento do motor, driver e sensor em conjunto, sem confundir leitura da cavidade com sensor de saída.}
+\pendencia{ELE05}{Confirmar LED adquirido/instalado, terminais A/K, corrente e brilho por cor, resistores e dissipação dos drivers. Fornecer fotos e testes de todas as posições; não assumir funcionamento dos dois intermediários a partir de uma unidade.}
+\pendencia{ELE06}{Identificar RTC e bateria realmente instalados; conferir carga e compatibilidade da placa, habilitação no Linux, leitura de /dev/rtc0 e teste após desligamento sem rede. A bateria do RTC não alimenta a Pi.}
+\pendencia{ELE07}{Fechar ensaios de buzzer, LEDs centrais, chaveamento, aquecimento, reinício e interferência em conjunto. Inserir esquema final, registros dos instrumentos e condições; confirmar capacitores/proteções acrescentados nos reparos.}
+\pendencia{BOM01}{Conciliar lista XLSX, proposta/contrato e eventual registro de R$ 2.512,55: revisão, data, aprovação, compras, doações, fretes e comprovantes. Não preencher custo realizado com orçamento ou campo vazio.}
 \pendencia{BOM02}{Completar a lista técnica instalada com sensores, conectores pogo, resistores, drivers de LEDs, buzzer/MOSFET, RTC, bateria, cabos, proteções e demais itens. Conferir a troca de WS2812B cotado pelo RGB comum documentado.}

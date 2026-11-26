@@ -1,24 +1,36 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Introdução}
+\chapter{Introdução}\label{cap:introducao}
 \section{Contextualização e problema}
-A administração de vários medicamentos exige organizar horários, quantidades, disponibilidade e registros. No envelhecimento, a complexidade terapêutica torna pertinente investigar tecnologias de apoio ao cuidado, sem reduzir a adesão a um problema exclusivamente de memória. A polifarmácia tem definições heterogêneas na literatura; o uso simultâneo de cinco ou mais medicamentos é frequente, mas não constitui definição clínica universal. \cite{MASNOON2017}
-Dispensadores podem apoiar a organização e o acesso às doses, mas seus benefícios dependem do contexto, do usuário e do desenho da intervenção. Uma revisão de 2025 reuniu resultados de 25 estudos originais e encontrou evidência moderada para alguns desfechos clínicos e evidência limitada ou ausente em outros domínios; portanto, a existência de um dispensador não comprova, por si, eficácia, economia ou melhora de adesão. \cite{SALMENSUU2025}
-O DoseCerta é desenvolvido como um sistema integrado de dispensação modular, acompanhamento digital, visão computacional e interação por agente de inteligência artificial. A documentação reúne unidade central Raspberry Pi Zero 2 W, módulos ESP32, mecanismos dosadores, aplicativo Care e serviços de servidor. Essas frentes integram o escopo formal; a disponibilidade de evidência varia por componente. \cite{DC_COMPILADO,DC_ARTIGO}
+A organização de um tratamento medicamentoso envolve mais do que lembrar um horário. É necessário identificar cada medicamento, separar a quantidade prescrita, manter o estoque disponível e acompanhar o que ocorreu em cada tomada. Quando essas tarefas se repetem ao longo do dia e envolvem diferentes medicamentos, a rotina passa a exigir atenção tanto da pessoa em tratamento quanto de quem participa do cuidado.
+
+No envelhecimento, a coexistência de condições de saúde pode ampliar essa complexidade. A polifarmácia é frequentemente caracterizada pelo uso simultâneo de cinco ou mais medicamentos, embora não exista uma definição numérica única que represente todas as situações clínicas. O número de medicamentos, portanto, ajuda a contextualizar o problema, mas não substitui a avaliação da adequação do tratamento e das necessidades de cada pessoa. \cite{MASNOON2017}
+
+Os dispensadores automáticos procuram apoiar essa rotina ao organizar o acesso às doses e oferecer lembretes ou registros. Seus efeitos, entretanto, dependem do mecanismo adotado, da forma de utilização e do acompanhamento oferecido. A revisão de \citeonline{SALMENSUU2025} mostra que os benefícios não são uniformes entre os diferentes domínios avaliados. Essa heterogeneidade reforça a necessidade de delimitar a contribuição técnica de cada sistema e avaliar suas funções sem pressupor eficácia clínica.
+
+Nesse contexto, foi desenvolvido o DoseCerta, um sistema modular que associa dispensação unitária, controle embarcado, acompanhamento por aplicativo, visão computacional e interação por inteligência artificial. A proposta conecta o planejamento da rotina à execução no aparelho e ao registro dos eventos. Para isso, diferencia o pedido de uma dose, a atuação do mecanismo, a observação da cavidade e as informações produzidas pelo usuário ou pela câmera.
+
+O problema de engenharia consiste em integrar essas etapas sem depender continuamente da internet e sem transformar uma falha de comunicação em repetição indevida de movimento. A solução também precisa permitir o reabastecimento dos reservatórios, a identificação dos módulos, a configuração pelo celular e a manutenção do software. Assim, o foco do trabalho está na integração entre o mecanismo físico e as camadas digitais que coordenam e acompanham seu funcionamento.
+
 \section{Objetivo geral}
-Desenvolver e documentar um sistema modular para dispensação de medicamentos e apoio à verificação e ao acompanhamento da rotina de cuidado, integrando mecanismos físicos, controle embarcado, servidor, aplicativo, visão computacional e agente de IA, com rastreabilidade entre requisitos, implementação e verificação.
+Desenvolver um protótipo modular de dispensação de medicamentos e acompanhamento da rotina de cuidado, integrando mecanismo dosador, controle embarcado, servidor, aplicativo, visão computacional e agente de inteligência artificial.
+
 \section{Objetivos específicos}
 \begin{itemize}
-\item Estruturar submódulos removíveis, cada qual associado a um medicamento, e um mecanismo de separação unitária por disco rotativo.
-\item Projetar a alimentação, as interfaces e a sinalização, distinguindo níveis de potência de 5 V e lógica de 3,3 V.
-\item Implementar controle local, comunicação com os módulos, persistência de estados e tratamento de falhas sem repetição indevida de movimento.
-\item Integrar aplicativo e API para configuração e acompanhamento, com autenticação obrigatória.
-\item Integrar visão computacional e agente de IA ao fluxo de cuidado, preservando incertezas, confirmação de ações e limites clínicos.
-\item Definir e executar verificações por requisito, sem substituir ensaios físicos por testes de software nem atribuir ingestão a um comando de motor.
+\item Projetar uma estrutura com reservatórios removíveis, cada um destinado a um medicamento, e um mecanismo de separação unitária por disco rotativo.
+\item Integrar alimentação, sensores, atuadores e sinalização em uma interface modular de quatro vias.
+\item Implementar comunicação entre a central e os microcontroladores, com identificação de comandos, registro de estado e tratamento de falhas.
+\item Manter agenda e registros na unidade central, permitindo a continuidade da operação local nas condições previstas de prontidão.
+\item Disponibilizar configuração e acompanhamento pelo aplicativo Care, mediante autenticação.
+\item Incorporar observação visual e interação em linguagem natural, preservando a origem das informações e os limites das inferências produzidas.
+\item Estabelecer procedimentos de verificação das partes e da integração, relacionando os resultados aos requisitos do sistema.
 \end{itemize}
-\section{Justificativa}
-A proposta concentra-se na integração entre o planejamento do cuidado, o controle do mecanismo e a rastreabilidade das observações. Isso exige tratar falhas de alimentação, comunicação, posicionamento, interface e interpretação, e não somente a atuação de um motor. A revisão disponível recomenda cautela ao transferir achados de outras soluções para um novo protótipo. \cite{SALMENSUU2025}
-\section{Escopo do trabalho}
-São partes formais do trabalho: mecânica, elétrica, firmware dos microcontroladores, execução na Raspberry Pi, comunicação e atualização, servidor, Care, visão e agente. A inclusão no escopo não equivale a uma declaração de conclusão. A monografia distingue requisito, descrição documental, implantação relatada e verificação experimental. O fornecimento futuro do texto de visão e dos resultados permanece identificado.
+
+\section{Justificativa e delimitação}
+A principal motivação do DoseCerta é reunir, em um mesmo fluxo, a organização do tratamento, a liberação das unidades e o acompanhamento do que ocorreu. A modularidade permite associar um reservatório a cada medicamento e alterar a composição do aparelho conforme a rotina atendida. O controle local reduz a dependência da conexão externa, enquanto o aplicativo oferece um ponto de acesso às informações do cuidado.
+
+O protótipo destina-se a medicamentos sólidos compatíveis com o mecanismo de cavidades. O trabalho abrange mecânica, elétrica, firmware, execução local, comunicação, servidor, aplicativo, visão computacional e agente de IA. A avaliação técnica dessas frentes é distinta de uma investigação clínica sobre adesão ou eficácia terapêutica. Por essa razão, a liberação de um comprimido, a observação de um gesto e a confirmação de ingestão não são tratadas como eventos equivalentes.
+
+\section{Organização do trabalho}
+Os Capítulos~\ref{cap:fundamentacao} e~\ref{cap:estadoarte} apresentam os fundamentos e a relação da proposta com a literatura. Os Capítulos~\ref{cap:metodologia} e~\ref{cap:requisitos} descrevem a metodologia e os requisitos. A arquitetura geral é apresentada no Capítulo~\ref{cap:arquitetura}; em seguida, os Capítulos~\ref{cap:mecanica} a~\ref{cap:agente} detalham as frentes técnicas e suas interfaces. O Capítulo~\ref{cap:testes} reúne a estratégia de integração e verificação. Os capítulos finais são destinados aos resultados, à discussão e à conclusão.
+
+\section*{\textcolor{red}{Complementações necessárias}}
 \pendencia{EA04}{Definir população, amostra, contexto de avaliação e desfechos do estudo empírico. Não há dados finais para afirmar melhora de adesão, usabilidade, segurança clínica ou redução de erros.}
-\section{Organização do texto}
-O capítulo 2 apresenta fundamentos; o capítulo 3 discute o estado da arte; o capítulo 4 define o método; e o capítulo 5 formaliza os requisitos. Os capítulos 6 a 13 apresentam as frentes técnicas e suas interfaces. O capítulo 14 organiza a integração e os testes. Resultados, discussão e conclusão, nos capítulos 15 a 17, permanecem reservados até o fornecimento dos dados finais.

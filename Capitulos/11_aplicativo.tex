@@ -1,14 +1,107 @@
-% Interface Care: capítulo próprio, sem duplicação do servidor.
-\chapter{Aplicativo Care}
+\chapter{Aplicativo Care}\label{cap:aplicativo}
+O Care reúne configuração e acompanhamento da rotina de cuidado. Seu desenvolvimento buscou manter as tarefas principais acessíveis pela interface, sem tornar cadastro, consulta ou registro dependentes da conversação com o agente. A aplicação se comunica com a API e apresenta os estados recebidos, preservando a diferença entre planejamento e ocorrência. \cite{DC_APP}
 
-\section{Papel, tecnologias e tarefas}
-O Care é a interface web de configuração e acompanhamento do DoseCerta. A documentação identifica React e TypeScript, com acesso às operações de cuidado por meio da FastAPI. Os materiais descrevem pacientes, dispositivos, medicamentos, estoque, agendas, atividades, observações e histórico; cada tarefa deve ser confirmada na versão entregue. Telas ilustrativas não demonstram sucesso de integração autenticada ou execução no hardware. \cite{DC_APP}
-\section{Login e fluxo de informação}
-O login é obrigatório, conforme confirmação da autora. A documentação associa Supabase à autenticação e descreve JWT; as operações de cuidado passam pela API. A monografia não presume acesso direto da interface às tabelas de cuidado, autorização individual por paciente ou proteção multiusuário não demonstrada. \cite{DC_APP,DC_COMPILADO}
-\section{Estados e tratamento de falhas}
-A interface deve diferenciar plano, comando enviado, confirmação do dispositivo, observação e resultado inconclusivo. Repetir uma ação após falha de rede pode produzir efeito duplicado, motivo pelo qual confirmação e reconciliação precisam corresponder ao contrato do servidor. O modo palco e a simulação devem ser identificados como tais, sem se confundirem com dispensação física. \cite{DC_APP,DC_ANALISE}
-\section{Evidências e avaliação da interface}
-A documentação do aplicativo esclarece que as contagens históricas de outras suítes não incluem resultados próprios do Care. É necessário testar interface, API autenticada, dispositivo e acessibilidade de forma separada e depois integrar os fluxos. Avaliação de uso com pessoas exige protocolo e autorizações aplicáveis. \cite{DC_APP}
+\section{Da referência visual ao protótipo navegável}
+A primeira etapa utilizou o Google Stitch para elaborar a composição visual. A Figura~\ref{fig:app_stitch} apresenta essa referência, com destaque para próxima dose e indicadores do painel. Os nomes, estoques e percentuais exibidos pertencem ao desenho demonstrativo, não aos resultados de uso.
+
+\begin{figure}[htbp]
+\centering
+\caption{Referência inicial de interface criada no Google Stitch}\label{fig:app_stitch}
+\includegraphics[width=0.94\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/app_stitch.png}
+\fonte{Acervo dos autores. Protótipo visual com nomes, estoque e indicadores demonstrativos.}
+\end{figure}
+
+
+Em seguida, o Google AI Studio foi utilizado para experimentar navegação, animações e respostas da interface. A sequência da Figura~\ref{fig:app_etapas} resume a passagem do desenho à aplicação integrada. O piloto permitiu discutir alertas e estados antes da implementação da persistência e das regras no servidor.
+
+\begin{figure}[htbp]
+\centering
+\caption{Evolução do desenvolvimento: desenho, navegação e implementação}\label{fig:app_etapas}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/app_etapas.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+A Figura~\ref{fig:app_piloto} mostra a experimentação dos alertas e da próxima dose. O relógio acelerado e as ocorrências simuladas serviram ao desenvolvimento da interação. A implementação posterior precisou substituir os estados em memória por operações autenticadas e tratar os casos de falha de rede e ausência de dados.
+
+\begin{figure}[htbp]
+\centering
+\caption{Experimentação da navegação e dos alertas no Google AI Studio}\label{fig:app_piloto}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/app_piloto.png}
+\fonte{Acervo dos autores. Doses, relógio e alertas de simulação.}
+\end{figure}
+
+
+\section{Implementação e autenticação}
+O frontend foi implementado em React e TypeScript. A interface organiza componentes e estados de apresentação, enquanto a API FastAPI concentra as regras e a persistência. A Figura~\ref{fig:app_camadas} apresenta a separação entre essas responsabilidades e as interfaces do aparelho e do assistente. \cite{DC_VISUAL}
+
+\begin{figure}[htbp]
+\centering
+\caption{Responsabilidades da interface, da API e da persistência}\label{fig:app_camadas}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/app_camadas.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+O acesso ao cuidado exige login. A sessão fornece o token utilizado nas solicitações à API, mas não substitui a autorização de cada ação. A interface precisa tratar sessão expirada, recusa de acesso e falha de conexão de forma explícita, sem apresentar dados antigos como confirmação de uma operação atual.
+
+Nas operações de escrita, a identificação da tentativa permite reconhecer reenvios. Quando uma resposta se perde, a aplicação deve acompanhar o estado da solicitação antes de criar outra. Essa relação entre interface e servidor aplica ao uso cotidiano o tratamento de idempotência descrito no Capítulo~\ref{cap:backend}.
+
+\section{Organização dos dados}
+O modelo preserva o vínculo entre paciente, medicamento, agenda e evento. Atividades e observações do cuidado possuem registros próprios, e o inventário associa medicamento e compartimento. A Figura~\ref{fig:app_dados} apresenta um recorte conceitual dessa organização, sem representar todas as relações físicas do banco.
+
+\begin{figure}[htbp]
+\centering
+\caption{Organização conceitual dos dados de cuidado}\label{fig:app_dados}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/app_dados.png}
+\fonte{Elaboração dos autores. Agrupamento conceitual, não diagrama completo de chaves estrangeiras.}
+\end{figure}
+
+
+A distinção entre planejar e registrar evita que uma alteração de horário seja interpretada como tomada realizada. Também permite conservar a autoria de um relato e a origem de uma verificação do aparelho. O mesmo princípio é utilizado na apresentação do histórico.
+
+\section{Painel e rotina diária}
+A evolução do painel priorizou próxima dose, resumo dos horários e observações. Recursos complementares foram distribuídos entre rotinas, relatos, manual e configurações. A Figura~\ref{fig:app_evolucao} apresenta etapas dessa reorganização e o guia de primeiro acesso.
+
+\begin{figure}[htbp]
+\centering
+\caption{Reorganização do painel e introdução do guia de primeiro acesso}\label{fig:app_evolucao}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/app_evolucao.png}
+\fonte{Acervo dos autores. A e B: reconstruções e simulações; C: captura do guia publicado em 12 out. 2026.}
+\end{figure}
+
+
+A simplificação visual buscou reduzir a concentração de informações na abertura. Essa escolha de projeto não é apresentada como melhora quantitativa de usabilidade, pois exige avaliação própria. O guia introduz a navegação e orienta o acesso às funções, sem substituir mensagens de estado durante a operação.
+
+O plano diário apresenta as atividades programadas, enquanto o histórico reúne ocorrências com resultado e origem. A Figura~\ref{fig:app_rotina_historico} mostra essas duas tarefas com dados fictícios. Um resultado inconclusivo permanece identificado como tal, sem ser convertido em dose confirmada.
+
+\begin{figure}[htbp]
+\centering
+\caption{Plano diário e histórico com identificação da origem dos registros}\label{fig:app_rotina_historico}
+\includegraphics[width=0.88\textwidth,height=0.70\textheight,keepaspectratio]{Figuras/SharePoint/app_rotina_historico.png}
+\fonte{Acervo dos autores. Capturas de demonstração com dados fictícios.}
+\end{figure}
+
+
+\section{Manual e assistente}
+O manual tridimensional relaciona a representação do aparelho aos componentes e à manutenção. O carregamento dos recursos é separado da abertura do painel, evitando associar toda a navegação inicial à carga do modelo. A Figura~\ref{fig:app_manual_assistente} apresenta o manual e uma conversa de demonstração. \cite{DC_VISUAL}
+
+\begin{figure}[htbp]
+\centering
+\caption{Manual tridimensional e interface de conversa}\label{fig:app_manual_assistente}
+\includegraphics[width=0.88\textwidth,height=0.69\textheight,keepaspectratio]{Figuras/SharePoint/app_manual_assistente.png}
+\fonte{Acervo dos autores. Manual reconstruído e conversa identificada como demonstração.}
+\end{figure}
+
+
+O acesso ao assistente complementa as funções manuais. Sua presença na interface não significa que todas as ferramentas do agente de teste estejam disponíveis na conversa publicada. A separação entre voz e MCP é apresentada no Capítulo~\ref{cap:agente}, juntamente com o fluxo de aprovação das escritas.
+
+\section{Tratamento de falhas e acessibilidade}
+A interface deve indicar carregamento, conclusão, recusa e resultado desconhecido. Uma consulta vazia não é equivalente à comprovação de estoque físico zero; uma resposta de texto não é confirmação de alteração persistida. Essas distinções mantêm o usuário informado sobre o alcance de cada retorno.
+
+A avaliação de acessibilidade considera contraste, identificação dos controles, navegação e compreensão das confirmações, tomando as WCAG 2.2 como referência. O uso de texto junto às cores também é aplicado à comunicação dos estados do dispositivo. \cite{WCAG22}
+
+\section*{\textcolor{red}{Complementações necessárias}}
 \pendencia{APP01}{Nicolas: a autora enviará a versão e as telas do aplicativo. Inserir release/hash, ambiente, navegação e tarefas efetivamente disponíveis, além de capturas sanitizadas.}
 \pendencia{APP02}{Login obrigatório confirmado: inserir telas e evidências do fluxo real, emissão/validação e renovação de sessão, expiração, logout, acesso negado e mensagens de erro, sem expor credenciais.}
 \pendencia{APP03}{Conferir a autorização na versão final, especialmente se as visões de paciente/cuidador usam conta única. Não declarar isolamento de dados sem teste.}

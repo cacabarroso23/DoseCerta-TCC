@@ -1,6 +1,6 @@
-% DoseCerta — cópia de leitura consolidada. Modelo FEI fornecido pela equipe.
-% Compilar na raiz deste projeto com pdfLaTeX + BibTeX.
-\documentclass[12pt,openright,twoside,a4paper,chapter=TITLE,english,brazil]{classe/USPSC}
+% DoseCerta — monografia. Modelo FEI; paginação digital sem versos vazios.
+% Compilar na raiz com pdfLaTeX; repetir até resolver sumário, listas e referências.
+\documentclass[12pt,openany,oneside,a4paper,chapter=TITLE,english,brazil]{classe/USPSC}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{times}
@@ -14,9 +14,19 @@
 \captionsetup[table]{justification=raggedright,singlelinecheck=false,width=\textwidth}
 \captionsetup[figure]{justification=raggedright,singlelinecheck=false,width=\textwidth}
 \usepackage[alf,abnt-emphasize=bf,abnt-thesis-year=both,abnt-repeated-author-omit=no,abnt-last-names=abnt,abnt-etal-cite=3,abnt-etal-list=3,abnt-etal-text=it,abnt-and-type=e,abnt-doi=doi,abnt-url-package=none,abnt-verbatim-entry=no]{abntex2cite}
-\bibliographystyle{classe/abntex2-alf-USPSC}
 \usepackage{classe/ABNT6023-10520}
 \input{pendencias_dosecerta}
+% A edição digital não insere páginas de paridade vazias.
+\let\cleardoublepage\clearpage
+% Distribuição de figuras sem forçar uma página inteira para cada uma.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+\raggedbottom
 \renewcommand{\footnotesize}{\small}
 \renewcommand{\ABNTEXchapterfont}{\rmfamily}
 \setlength{\parindent}{1.3cm}
@@ -69,7 +79,7 @@
 \include{Capitulos/16_discussao}
 \include{Capitulos/17_conclusao}
 \postextual
-\bibliography{FEI-bib/dosecerta-referencias}
+\input{referencias}
 \begin{apendicesenv}
 \include{PosTextual/apendices}
 \end{apendicesenv}

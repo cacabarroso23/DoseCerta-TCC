@@ -1,34 +1,95 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Servidor e execução local}
-\section{Responsabilidades e persistência}
-A Raspberry Pi mantém a coordenação local entre agenda, firmware, periféricos e servidor. A documentação descreve persistência em SQLite, filas de eventos e sincronização pela API. Essa organização busca tolerar indisponibilidade de rede, mas a ativação da agenda depende de identidade, associação física, tempo confiável e comissionamento. \cite{DC_COMPILADO}
-\section{Agenda, comandos e reconciliação}
-Um comando digital deve ser vinculado à intenção, às pré-condições, à execução e ao resultado. Receber um comando não demonstra dispensação; finalizar um giro não demonstra saída; observação visual não demonstra ingestão sem critério definido. A documentação separa estados e impede repetição automática quando o resultado do mecanismo permanece incerto. \cite{DC_COMPILADO}
-\section{Rede e provisionamento}
-O projeto prevê configuração da rede por Bluetooth pelo celular e recuperação quando não há Wi-Fi utilizável, além de fluxos de reinício e recadastramento sem botão físico. As credenciais e a identidade do dispositivo devem ser protegidas e preservadas conforme o tipo de operação. O ensaio precisa identificar o telefone, navegador, versão, rede e respostas observadas. \cite{DC_COMPILADO}
-\section{Sinalização e modo de demonstração}
-Os LEDs e o buzzer são saídas locais; suas convenções precisam corresponder às mensagens no aplicativo. O registro de novembro descreve também modo palco, com cenas de luz e som sem motor. Esse modo deve ser identificado como demonstração de sinalização, não como ensaio de dispensação ou de agenda automática. \cite{DC_ANALISE}
-\section{Atualização e rastreabilidade}
-A execução local evoluiu por pacotes e instalações registradas. O relatório de novembro identifica runtime 0.7.12 na Pi, enquanto o checkout do servidor ainda indicava 0.7.7. Isso evidencia a necessidade de registrar a origem e o hash da versão instalada, sem usar o número do checkout como substituto automático do estado da Pi. \cite{DC_ANALISE}
-\section{Limitações de operação local}
-O mesmo relatório informa relógio confiável por NTP, sem RTC, \texttt{hardware\_ready=false} e bloqueios de agenda ligados a comissionamento, localização e perfil. Portanto, a monografia não afirma funcionamento automático offline aceito. O objetivo RNF01 continua formalmente exigido, mas seu atendimento precisa de teste específico. \cite{DC_ANALISE}
+\chapter{Servidor e execução local}\label{cap:backend}
+A execução local e o servidor atendem a responsabilidades complementares. A central precisa coordenar o aparelho com os recursos disponíveis na borda; o servidor precisa validar operações e manter o histórico compartilhado. A comunicação entre ambos utiliza identidades e registros duráveis para conservar a continuidade do fluxo.
+
+\section{Serviços da central}
+Na Raspberry Pi, o runtime coordena agenda, comunicação com os módulos, sinalização e sincronização. Serviços específicos tratam provisionamento, câmera e interface com a visão. A Figura~\ref{fig:runtime_processos} apresenta esses processos e os pontos de troca. A separação permite controlar o acesso aos recursos compartilhados, especialmente barramento e câmera.
+
+\begin{figure}[htbp]
+\centering
+\caption{Serviços e fluxos de execução da unidade central}\label{fig:runtime_processos}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/runtime_processos.png}
+\fonte{Elaboração dos autores a partir da arquitetura do runtime 0.7.7. Versão de referência do desenho.}
+\end{figure}
+
+
+As tarefas de tempo mais restrito permanecem nas ESP32. A central decide quando solicitar uma operação e acompanha seu resultado, enquanto cada placa aplica os limites locais. Essa divisão evita depender do escalonamento do Linux ou da conexão externa para produzir cada fase do motor.
+
+\section{Persistência e continuidade local}
+O SQLite conserva configuração, agenda e registros da operação. As caixas de entrada e saída separam o recebimento de comandos da transmissão dos eventos. O registro local permite retomar a sincronização após a reconexão, mantendo a identidade das solicitações já conhecidas.
+
+A execução de uma agenda sem internet exige referência temporal confiável, configuração válida, módulos associados e mecanismo pronto. A central deve bloquear a atuação quando essas condições não forem satisfeitas. A continuidade local, portanto, é uma condição do sistema completo, e não uma propriedade obtida apenas pela presença do banco embarcado.
+
+\section{Sinalização e identificação da posição}
+A sinalização combina canais da central e do intermediário. No intermediário, cada encaixe é indicado por dois LEDs adjacentes: a posição 1 utiliza L1 e L2; a posição 2, L2 e L3; a posição 3, L3 e L4; e a posição 4, L4 e L1. A Figura~\ref{fig:sinalizacao_posicao} apresenta o exemplo da segunda posição.
+
+\begin{figure}[htbp]
+\centering
+\caption{Identificação de um encaixe pelo par de LEDs adjacentes}\label{fig:sinalizacao_posicao}
+\includegraphics[width=0.87\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/sinalizacao_posicao.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+A associação é confirmada pelo usuário e registrada no sistema. O estado luminoso auxilia a identificação, mas a interface deve apresentar instrução textual equivalente. Processamento, sucesso, atenção e falha precisam conservar significados consistentes entre as etapas da operação.
+
+\section{Configuração de rede por Bluetooth}
+O provisionamento permite configurar o aparelho pelo celular, sem teclado ou monitor conectados à central. O fluxo associa aplicativo, API e dispositivo para estabelecer o contexto autorizado de configuração. A sequência da Figura~\ref{fig:provisionamento_ble} separa abertura do canal, desafio, verificação e transmissão da credencial de rede.
+
+\begin{figure}[htbp]
+\centering
+\caption{Autenticação do canal Bluetooth para configuração de rede}\label{fig:provisionamento_ble}
+\includegraphics[width=0.80\textwidth,height=0.74\textheight,keepaspectratio]{Figuras/SharePoint/provisionamento_ble.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+A senha da rede não deve ser enviada antes da verificação prevista no fluxo. A recuperação das redes conhecidas também precisa preservar a identidade e os registros do aparelho. Essas operações pertencem à manutenção da conectividade e não devem produzir, por consequência, novo comando de dispensação.
+
+\section{API, autenticação e persistência central}
+A API FastAPI concentra validação de entrada, autorização e regras do cuidado. O PostgreSQL mantém os vínculos entre paciente, medicamento, agenda, inventário e eventos. O Supabase oferece os serviços de identidade e persistência utilizados pela aplicação. A autenticação inicia a sessão; a autorização determina quais operações são permitidas naquele contexto.
+
+A publicação utiliza HTTPS e serviços em contêineres. O proxy recebe as conexões externas e as encaminha ao gateway do projeto, que distribui os caminhos para aplicativo e API. A Figura~\ref{fig:implantacao_servidor} mostra essa organização e as redes internas. O banco não é acessado diretamente pelo aparelho.
+
+\begin{figure}[htbp]
+\centering
+\caption{Organização dos serviços e redes de implantação do servidor}\label{fig:implantacao_servidor}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/implantacao_servidor.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+\section{Ciclo de um comando}
+Uma solicitação admitida na API recebe identidade e estado próprios. A central obtém o comando, registra-o na caixa de entrada e realiza as verificações locais antes da execução. O retorno é conservado na caixa de saída e enviado ao servidor, permitindo ao aplicativo acompanhar o desfecho. A Figura~\ref{fig:comando_ponta_a_ponta} apresenta o percurso completo.
+
+\begin{figure}[htbp]
+\centering
+\caption{Percurso de um comando entre aplicativo, API, persistência e dispositivo}\label{fig:comando_ponta_a_ponta}
+\includegraphics[width=0.84\textwidth,height=0.74\textheight,keepaspectratio]{Figuras/SharePoint/comando_ponta_a_ponta.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+O acompanhamento distingue solicitação enfileirada, entrega, reconhecimento e aplicação. Falha, expiração e cancelamento também possuem significado próprio. A Figura~\ref{fig:estados_comando} mostra as transições utilizadas para representar esse ciclo. O recebimento de uma solicitação na API, portanto, não deve ser apresentado ao usuário como conclusão da ação física.
+
+\begin{figure}[htbp]
+\centering
+\caption{Estados de acompanhamento de um comando do dispositivo}\label{fig:estados_comando}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/estados_comando.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+\section{Reconciliação e integração}
+A perda de conexão pode ocorrer depois de uma operação local e antes da confirmação no servidor. A reconciliação utiliza identidade, registros e estado do dispositivo para resolver essa condição sem repetir o movimento. Uma resposta tardia deve ser relacionada ao comando original, e não registrada como evento independente.
+
+Essa organização fornece ao Care uma interface de acompanhamento consistente com o dispositivo. O capítulo seguinte apresenta como planejamento, histórico, manual e assistente são organizados para o usuário.
+
+\section*{\textcolor{red}{Complementações necessárias}}
 \pendencia{BE01-RUNTIME}{Confirmar release e hash instalados na data de fechamento, manifesto, dependências, serviços e configuração efetiva. Documentar o provisionamento ativo e a diferença entre fonte no servidor e instalação local.}
 \pendencia{BE02-AGENDA}{Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação.}
 \pendencia{BE03-REDE}{Anexar roteiros e logs de pareamento, configuração/troca de Wi-Fi, senha incorreta, perda de conexão, reset e recadastramento, sem expor segredos.}
 \pendencia{BE04-LOCAL}{Comprovar persistência de filas e idempotência, tratamento de resultado incerto, sincronização após falha e atualização segura da Pi com interrupção controlada.}
-
-\section{Serviços e fluxo de cuidado}
-A API FastAPI concentra regras e intermedia os dados usados pelo Care e pela Raspberry Pi. O acervo descreve PostgreSQL/Supabase para os dados centrais e autenticação, enquanto o dispositivo mantém sua persistência local. A arquitetura isola a atuação do motor da interface web e de respostas do agente. \cite{DC_COMPILADO,DC_APP}
-\section{Modelo lógico e eventos}
-Os documentos descrevem pacientes, medicamentos, estoque, rotinas, atividades, observações, dispositivos, comandos e eventos. Esses conceitos não são equivalentes: uma rotina é um plano; uma observação pode ser um relato; e um evento deve indicar origem e instante. Campos de dosagem textual e quantidade física por tomada também têm significados distintos. \cite{DC_COMPILADO,DC_FOUNDRY}
-\section{Autenticação e autorização}
-O login do aplicativo é obrigatório, conforme confirmação da autora. Os materiais descrevem JWT e autenticação do dispositivo, mas a documentação também registra uma conta de cuidado compartilhada em determinada versão. Não se presume segregação multiusuário ou autorização por paciente apenas pela existência de telas denominadas cuidador e paciente. \cite{DC_APP,DC_COMPILADO}
-\section{Idempotência e sincronização}
-O servidor recebe comandos e eventos e deve preservar identificadores e resultados. Em falhas ambíguas, a aplicação precisa consultar o estado antes de reenviar uma intenção que possa produzir efeito físico ou nova gravação. Hashes e normalização dos dados devem ser equivalentes entre os participantes e vinculados à versão do contrato. \cite{DC_COMPILADO}
-\section{Implantação, manutenção e limites}
-O relatório de 12/11 descreve serviços ativos, porém registra ocupação de disco de 98\%, crescimento associado à telemetria, ausência de purga confirmada e checkout com alterações não versionadas. Esses números são históricos e não constituem medição desta revisão. A disponibilidade naquele instante não demonstra disponibilidade contínua nem recuperação de desastre. \cite{DC_ANALISE}
 \pendencia{BE01-API}{Fornecer versão e hash da API, migrações aplicadas, esquema do banco, configuração sanitizada e manifesto dos serviços na versão final. Não atribuir versão do runtime à API.}
 \pendencia{BE02-CONTRATO}{Conferir os contratos atuais API--Pi, normalização de payload/hash, estados, paginação e migrações. O compilado indica uso de cancelled em fluxos de demonstração; confirmar que o tipo/coluna de produção o aceita e registrar a migração.}
 \pendencia{BE03-SEGURANCA}{Documentar autorização real por usuário/paciente, expiração/renovação de sessão, rotação de segredos, retenção e purga. Fornecer teste de backup/restauração e política para imagens/eventos.}
 \pendencia{BE04-TESTES}{Anexar resultados próprios do servidor, migrações e integração autenticada: data, ambiente, versões, comandos, aprovados, falhas e limites de simulação. Não converter relatórios históricos em aceite final.}
-

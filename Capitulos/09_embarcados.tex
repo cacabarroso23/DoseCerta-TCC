@@ -1,19 +1,89 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
-\chapter{Programação embarcada}
-\section{Organização do firmware e papéis}
-A documentação separa dois perfis: intermediário e submódulo. O primeiro administra sinalização e posição; o segundo controla motor e sensor. Bibliotecas e constantes compartilhadas descrevem o protocolo, estados e validações. O mesmo número de GPIO pode ter função diferente entre os papéis, motivo pelo qual configuração e firmware precisam estar associados à placa correta. \cite{DC_COMPILADO,DC_CIRCUITOS}
-\section{Inicialização e configuração persistente}
-O firmware documentado utiliza configuração persistente com papel, instância, endereço e identificador do local de operação, além de mecanismos de integridade e leitura de retorno. O registro de inicialização distingue um novo boot de uma resposta antiga. Parâmetros gravados e lidos na placa são a evidência pertinente; um arquivo-fonte isolado não comprova o que está instalado. \cite{DC_COMPILADO}
-\section{Comunicação e estado}
-O protocolo DC1 utiliza quadros de 32 bytes, marcadores, versão, identificadores, campos reservados e CRC-8 de polinômio 0x07. A validação deve preceder o efeito físico. CRC correto não equivale a autorização criptográfica e não substitui as condições de segurança locais. O ACK de aplicação no protocolo também deve ser distinguido do reconhecimento elétrico do I²C. \cite{DC_COMPILADO}
-\section{Controle do motor e tratamento de duplicatas}
-Os GPIO27/26/25/33 comandam o driver segundo a sequência configurada; a conversão entre fases e deslocamento precisa ser calibrada na montagem. A documentação exige limite local de fases e duração, manutenção de resultado pendente e recuperação após perda de resposta. Um resultado desconhecido exige reconciliação, não o reenvio cego de um novo movimento. \cite{DC_COMPILADO}
-\section{Leitura e calibração óptica}
-O GPIO32/ADC1 recebe a leitura reflexiva. A avaliação exige referência de cavidade vazia/ocupada, associação com fase, condições de iluminação e verificação independente. O material relata evolução para localização e verificação de cavidades, mas isso não permite presumir calibração válida após troca de disco, reinício ou intervenção mecânica. \cite{DC_COMPILADO}
-\section{Atualização das ESP32}
-O acervo descreve atualização pelo barramento, com transmissão segmentada, conferência de integridade, ativação e recuperação. Há diferença entre testes do atualizador, transmissão à placa, reinício e confirmação da nova versão. Atualização bem-sucedida de uma placa não demonstra aceitação de todas as unidades. \cite{DC_COMPILADO}
-\section{Versões e evidências necessárias}
-No registro de 12/11 constam INT-01 0.3.1 e SUB-01 0.6.1. Esse registro é posterior aos firmwares iniciais e deve ser conservado como evidência datada, sem declarar que continua sendo a configuração atual. \cite{DC_ANALISE}
+\chapter{Programação embarcada}\label{cap:embarcados}
+O firmware executa as funções locais do intermediário e do submódulo. A divisão foi adotada para manter acionamento, leitura e limites de segurança independentes da disponibilidade do servidor. A Raspberry Pi coordena as operações, mas não transmite individualmente cada fase do motor.
+
+\section{Organização e inicialização}
+Os programas compartilham definições de comunicação e utilizam perfis específicos para cada papel. O intermediário administra os canais luminosos; o submódulo administra motor e sensor. A inicialização recupera a configuração persistente e estabelece a identidade da unidade, incluindo papel, instância, endereço e local de operação.
+
+Um identificador de inicialização permite distinguir uma resposta do ciclo atual de um estado anterior ao reinício. Essa distinção é necessária porque um comando antigo não deve ser admitido automaticamente após a perda da continuidade do processo. O estado persistente complementa a identificação de comandos e sustenta a recuperação.
+
+\section{Protocolo DC1}
+O protocolo DC1 utiliza quadros de 32 bytes sobre I²C, com marcadores, versão, identificadores, campos de operação e CRC-8 de polinômio 0x07. A validação do quadro precede sua admissão. Além da integridade dos bytes, são verificadas as condições de papel, identidade e estado que permitem executar a operação. \cite{DC_COMPILADO}
+
+A Figura~\ref{fig:transacao_dc1} apresenta a sequência coordenada pela central. A intenção é registrada antes do envio; em seguida, o controle acompanha o token no estado da placa e registra o desfecho. A perda da resposta não autoriza repetir um novo movimento: primeiro é necessário consultar e reconciliar a operação.
+
+\begin{figure}[htbp]
+\centering
+\caption{Reserva durável, envio e acompanhamento de um comando DC1}\label{fig:transacao_dc1}
+\includegraphics[width=0.86\textwidth,height=0.72\textheight,keepaspectratio]{Figuras/SharePoint/transacao_dc1.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+O reconhecimento elétrico do I²C apenas participa da transferência. A admissão do comando e a conclusão do mecanismo são respostas da aplicação. Essa separação permite informar falha de comunicação, recusa por estado e resultado físico desconhecido sem reuni-los em um único erro.
+
+\section{Execução e publicação de estado}
+As rotinas de comunicação recebem e disponibilizam quadros, enquanto o laço principal processa comandos e atualiza as saídas. A Figura~\ref{fig:firmware_estrutura} mostra a organização entre fila, núcleos de decisão, persistência e fotografia do estado. Dessa forma, o processamento da aplicação não precisa ocorrer integralmente dentro da rotina de retorno do barramento.
+
+\begin{figure}[htbp]
+\centering
+\caption{Organização do firmware: comunicação, processamento e atuação}\label{fig:firmware_estrutura}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/firmware_estrutura.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+A cópia publicada do estado permite que a central consulte uma resposta preparada. No submódulo, o controle do prazo do movimento também dispõe de temporização local. Contadores de quadros inválidos, descartes e falhas de persistência apoiam o diagnóstico, mas não substituem os ensaios de comunicação e atuação na montagem.
+
+\section{Controle do movimento e recuperação}
+O executor organiza a sequência de fases, os limites e a parada. Antes da atuação, verifica se há operação anterior pendente. O resultado conserva a identidade do movimento para que a central possa reconhecê-lo mesmo quando a comunicação for interrompida. A Figura~\ref{fig:estados_motor} apresenta as transições entre prontidão, execução e resultados retidos.
+
+\begin{figure}[htbp]
+\centering
+\caption{Estados do submódulo para execução e reconhecimento de movimentos}\label{fig:estados_motor}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/estados_motor.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+Os estados de término, aborto, erro e interrupção são mantidos até o reconhecimento pertinente. Esse comportamento impede que uma nova solicitação apague o contexto necessário para interpretar o movimento anterior. A recuperação combina leitura da placa e registros duráveis; quando não há evidência suficiente, o estado continua incerto em vez de ser convertido em sucesso.
+
+\section{Leitura óptica e calibração}
+A leitura do TCRT5000 é relacionada à posição do disco. O procedimento de calibração utiliza a variação do sinal entre material e cavidade para definir referências de busca. A validade do perfil depende do conjunto utilizado, incluindo sensor, disco e alinhamento. A contagem de fases descreve o movimento comandado e não elimina a necessidade de observar o efeito físico.
+
+A consulta do ADC utiliza uma sequência própria de seleção, leitura e restauração do estado, apresentada na Figura~\ref{fig:consulta_adc}. O controle conserva a exclusão do barramento durante essa troca, de modo que a leitura não seja confundida com a resposta de outra operação.
+
+\begin{figure}[htbp]
+\centering
+\caption{Sequência de consulta de amostra do ADC pelo controlador da central}\label{fig:consulta_adc}
+\includegraphics[width=0.86\textwidth,height=0.70\textheight,keepaspectratio]{Figuras/SharePoint/consulta_adc.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+\section{Atualização pelo barramento}
+A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação.
+
+\begin{figure}[htbp]
+\centering
+\caption{Estrutura de atualização das ESP32 pelo barramento I²C}\label{fig:ota_blocos}
+\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/ota_blocos.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+A sequência da Figura~\ref{fig:ota_sequencia} separa preparação, envio, finalização, reinício e confirmação. Ativar uma imagem e comprovar sua inicialização são etapas diferentes. A retenção do estado de manutenção evita que a interrupção da sessão seja interpretada como liberação para uma operação incompatível.
+
+\begin{figure}[htbp]
+\centering
+\caption{Transferência, ativação e confirmação de uma atualização de firmware}\label{fig:ota_sequencia}
+\includegraphics[width=0.77\textwidth,height=0.76\textheight,keepaspectratio]{Figuras/SharePoint/ota_sequencia.png}
+\fonte{Elaboração dos autores (2026).}
+\end{figure}
+
+
+A configuração instalada deve ser identificada por versão e manifesto de gravação. Essa identificação conecta o firmware às rotinas da central, apresentadas no capítulo seguinte, e aos testes de interrupção, duplicata e recuperação.
+
+\section*{\textcolor{red}{Complementações necessárias}}
 \pendencia{EMB01}{Fornecer código/release final, hashes, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.}
 \pendencia{EMB02}{Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação.}
 \pendencia{EMB03}{Anexar parâmetros e registros de calibração e localização do disco utilizado: fases por volta, intervalo, leituras, limiares, dispersão, falhas e restauração após desligamento.}
