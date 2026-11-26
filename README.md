@@ -27,7 +27,7 @@
 
 ## Limite da entrega
 
-Esta é uma versão de trabalho editável, não a versão acadêmica final. Não houve compilação LaTeX: nenhum executável pdfLaTeX, LuaLaTeX ou Tectonic foi encontrado. Não foi gerado PDF integral novo nem realizada revisão visual da paginação.
+Esta é uma versão de trabalho editável, não a versão acadêmica final. 
 
 A checagem estática de arquivos incluídos, chaves/ambientes, figuras, citações, rótulos e IDs de pendência não encontrou erros nos controles executados. Ela não substitui compilação, leitura crítica, revisão de referências ou aprovação do orientador. Nenhum ensaio do protótipo foi executado nesta etapa.
 
