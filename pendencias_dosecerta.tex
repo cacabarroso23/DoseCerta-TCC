@@ -1,3 +1,5 @@
-% Pendências editoriais visíveis na cópia de leitura.
-\definecolor{DCPendente}{RGB}{190,0,0}
-\newcommand{\pendencia}[2]{\par\begingroup\color{DCPendente}\noindent\textbf{PENDENTE [#1] -- }#2\par\endgroup\medskip}
+% Somente comandos de pendência: NÃO inserir bibliografia no preâmbulo.
+% As pendências existentes nos arquivos originais continuam visíveis.
+\providecommand{\pendencia}[2]{%
+  \par\noindent{\color{red}\textbf{[Pendência #1]} #2}\par
+}

@@ -1,0 +1,252 @@
+% Adaptação estrutural não destrutiva para a monografia DoseCerta.
+% Requer LaTeX com expl3/xparse (incluídos nas distribuições atuais).
+% Os fontes técnicos NÃO são regravados. A conversão ocorre durante a leitura.
+\RequirePackage{expl3}
+\RequirePackage{xparse}
+\ExplSyntaxOn
+\prop_new:N \g__dosecerta_lidos_prop
+\tl_new:N \l__dosecerta_arquivo_tl
+\tl_new:N \l__dosecerta_fonte_tl
+\tl_new:N \l__dosecerta_prefixo_tl
+\tl_new:N \l__dosecerta_sufixo_tl
+\tl_new:N \l__dosecerta_descartado_tl
+\seq_new:N \l__dosecerta_org_seq
+\seq_new:N \l__dosecerta_resto_seq
+\cs_generate_variant:Nn \prop_if_in:NnTF { NV }
+\cs_generate_variant:Nn \prop_gput:Nnn { NVn }
+\cs_generate_variant:Nn \file_if_exist:nTF { V }
+\cs_generate_variant:Nn \file_get:nnN { VnN }
+\cs_generate_variant:Nn \seq_set_split:Nnn { NnV }
+\cs_generate_variant:Nn \tl_put_right:Nn { NV }
+% Capturar os comandos originais antes de adaptar os títulos de cada arquivo.
+\cs_new_eq:NN \DoseCertaTituloSecao \section
+\cs_new_eq:NN \DoseCertaTituloSubsecao \subsection
+\cs_new_eq:NN \DoseCertaTituloSubsubsecao \subsubsection
+\cs_new_eq:NN \DoseCertaTituloParagrafo \paragraph
+\cs_new_eq:NN \DoseCertaTituloSubparagrafo \subparagraph
+
+\cs_new_protected:Npn \__dosecerta_referencias:
+  {
+    \regex_replace_all:nnN
+      { Capítulos [\s\x{7E}]* \c{ref} \{ ( cap:(?:fundamentacao|estadoarte|metodologia|requisitos|arquitetura|mecanica|eletrica|embarcados|backend|aplicativo|visao|agente|testes|resultados|discussao) ) \} }
+      { Seções\c{nobreakspace}\c{ref}\cB\{\1\cE\} } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulos [\s\x{7E}]* \c{ref} \{ ( cap:(?:fundamentacao|estadoarte|metodologia|requisitos|arquitetura|mecanica|eletrica|embarcados|backend|aplicativo|visao|agente|testes|resultados|discussao) ) \} }
+      { seções\c{nobreakspace}\c{ref}\cB\{\1\cE\} } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]* \c{ref} \{ ( cap:(?:fundamentacao|estadoarte|metodologia|requisitos|arquitetura|mecanica|eletrica|embarcados|backend|aplicativo|visao|agente|testes|resultados|discussao) ) \} }
+      { Seção\c{nobreakspace}\c{ref}\cB\{\1\cE\} } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]* \c{ref} \{ ( cap:(?:fundamentacao|estadoarte|metodologia|requisitos|arquitetura|mecanica|eletrica|embarcados|backend|aplicativo|visao|agente|testes|resultados|discussao) ) \} }
+      { seção\c{nobreakspace}\c{ref}\cB\{\1\cE\} } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 2 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:fundamentacao\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 2 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:fundamentacao\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 3 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:estadoarte\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 3 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:estadoarte\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 4 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:metodologia\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 4 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:metodologia\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 5 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:requisitos\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 5 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:requisitos\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 6 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:arquitetura\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 6 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:arquitetura\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 7 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:mecanica\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 7 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:mecanica\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 8 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:eletrica\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 8 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:eletrica\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 9 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:embarcados\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 9 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:embarcados\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 10 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:backend\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 10 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:backend\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 11 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:aplicativo\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 11 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:aplicativo\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 12 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:visao\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 12 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:visao\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 13 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:agente\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 13 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:agente\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 14 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:testes\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 14 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:testes\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 15 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:resultados\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 15 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:resultados\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { Capítulo [\s\x{7E}]+ 16 ( [^0-9] | \Z ) }
+      { Seção\c{nobreakspace}\c{ref}\cB\{cap:discussao\cE\}\1 } \l__dosecerta_fonte_tl
+    \regex_replace_all:nnN
+      { capítulo [\s\x{7E}]+ 16 ( [^0-9] | \Z ) }
+      { seção\c{nobreakspace}\c{ref}\cB\{cap:discussao\cE\}\1 } \l__dosecerta_fonte_tl
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {no~Seção} {na~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {do~Seção} {da~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {pelo~Seção} {pela~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {nos~Seções} {nas~Seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {dos~Seções} {das~Seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {no~seção} {na~seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {do~seção} {da~seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {nos~seções} {nas~seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {dos~seções} {das~seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {O~Seção} {A~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {o~seção} {a~seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {os~Seções} {as~Seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {Os~Seções} {As~Seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {o~Seção} {a~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {O~Seção} {A~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {os~seções} {as~seções}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {o~seção} {a~seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {deste~Seção} {desta~Seção}
+    \tl_replace_all:Nnn \l__dosecerta_fonte_tl {nesse~Seção} {nessa~Seção}
+  }
+
+\cs_new_protected:Npn \__dosecerta_organizacao:
+  {
+    % Trocar somente o parágrafo de organização, preservando o restante da introdução.
+    \regex_replace_once:nnN
+      { \c{section} \{ Organização \s+ do \s+ [Tt]rabalho \} }
+      { \c{DoseCertaInicioOrganizacao} } \l__dosecerta_fonte_tl
+    \tl_if_in:NnTF \l__dosecerta_fonte_tl {\DoseCertaInicioOrganizacao}
+      {
+        \seq_set_split:NnV \l__dosecerta_org_seq
+          {\DoseCertaInicioOrganizacao} \l__dosecerta_fonte_tl
+        \seq_pop_left:NN \l__dosecerta_org_seq \l__dosecerta_prefixo_tl
+        \seq_pop_left:NN \l__dosecerta_org_seq \l__dosecerta_sufixo_tl
+        \seq_set_split:NnV \l__dosecerta_resto_seq
+          {\section} \l__dosecerta_sufixo_tl
+        \seq_pop_left:NN \l__dosecerta_resto_seq \l__dosecerta_descartado_tl
+        \tl_set_eq:NN \l__dosecerta_fonte_tl \l__dosecerta_prefixo_tl
+        \tl_put_right:Nn \l__dosecerta_fonte_tl
+          {
+            \section{Organização~do~trabalho}
+            O~trabalho~está~organizado~em~cinco~capítulos.
+            O~Capítulo~\ref{cap:introducao}~apresenta~o~problema,~os~objetivos,
+            a~justificativa~e~a~delimitação.
+            O~Capítulo~\ref{cap:base_teorica}~reúne~a~fundamentação~teórica~e~o~estado~da~arte.
+            O~Capítulo~\ref{cap:metodo_integrado}~descreve~a~metodologia,~os~requisitos,
+            a~arquitetura,~as~frentes~técnicas~e~os~procedimentos~de~integração~e~testes.
+            O~Capítulo~\ref{cap:resultados_discussao}~reúne~os~resultados~e~sua~discussão.
+            O~Capítulo~\ref{cap:conclusao}~apresenta~as~considerações~finais~e~as~possibilidades~de~continuidade.
+            As~referências~e~os~elementos~pós-textuais~complementam~a~monografia.
+          }
+        \seq_map_inline:Nn \l__dosecerta_resto_seq
+          { \tl_put_right:Nn \l__dosecerta_fonte_tl {\section ##1} }
+      }
+      {
+        \PackageWarning{dosecerta-estrutura}
+          {Titulo~Organizacao~do~trabalho~nao~localizado;~conferir~introducao}
+      }
+  }
+
+\cs_new_protected:Npn \__dosecerta_rebaixar:
+  {
+    % Se o arquivo já começa como seção, não rebaixá-lo novamente.
+    \tl_if_in:NnT \l__dosecerta_fonte_tl {\chapter}
+      {
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\subparagraph} {\DoseCertaTituloSubparagrafo}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\paragraph} {\DoseCertaTituloSubparagrafo}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\subsubsection} {\DoseCertaTituloParagrafo}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\subsection} {\DoseCertaTituloSubsubsecao}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\section} {\DoseCertaTituloSubsecao}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\chapter} {\DoseCertaTituloSecao}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {Este~capítulo} {Esta~seção}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {este~capítulo} {esta~seção}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {O~capítulo~seguinte} {A~seção~seguinte}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {no~capítulo~seguinte} {na~seção~seguinte}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {nos~capítulos~seguintes} {nas~seções~seguintes}
+        \tl_replace_all:Nnn \l__dosecerta_fonte_tl {nos~capítulos~técnicos} {nas~seções~técnicas}
+      }
+  }
+
+\cs_new_protected:Npn \__dosecerta_ler:nn #1#2
+  {
+    \group_begin:
+    \tl_set:Nn \l__dosecerta_arquivo_tl {#2}
+    \regex_replace_once:nnN { \A \./ } {} \l__dosecerta_arquivo_tl
+    \regex_replace_once:nnN { \.tex \Z } {} \l__dosecerta_arquivo_tl
+    \tl_put_right:Nn \l__dosecerta_arquivo_tl {.tex}
+    \prop_if_in:NVTF \g__dosecerta_lidos_prop \l__dosecerta_arquivo_tl
+      { \PackageInfo{dosecerta-estrutura}{Inclusao~repetida~ignorada:~#2} }
+      {
+        \file_if_exist:VTF \l__dosecerta_arquivo_tl
+          {
+            \prop_gput:NVn \g__dosecerta_lidos_prop \l__dosecerta_arquivo_tl {lido}
+            % Ler com catcodes normais para preservar espaços, comentários e comandos.
+            \file_get:VnN \l__dosecerta_arquivo_tl {\ExplSyntaxOff} \l__dosecerta_fonte_tl
+            \__dosecerta_referencias:
+            \str_if_eq:nnT {#2} {Capitulos/01_introducao}
+              { \__dosecerta_organizacao: }
+            \str_if_eq:nnT {#1} {secao}
+              { \__dosecerta_rebaixar: }
+            % Inclusões internas passam pela mesma guarda (tabelas, 10b e desenhos).
+            \str_if_eq:nnTF {#1} {secao}
+              {
+                \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\input} {\DoseCertaSecaoArquivo}
+                \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\include} {\DoseCertaSecaoArquivo}
+              }
+              {
+                \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\input} {\DoseCertaArquivoIntegral}
+                \tl_replace_all:Nnn \l__dosecerta_fonte_tl {\include} {\DoseCertaArquivoIntegral}
+              }
+            \tl_use:N \l__dosecerta_fonte_tl
+          }
+          {
+            \PackageError{dosecerta-estrutura}{Arquivo~necessario~ausente:~#2}
+              {Este~ZIP~e~de~substituicao.~Mantenha~os~fontes~tecnicos~do~projeto~original.}
+          }
+      }
+    \group_end:
+  }
+\NewDocumentCommand \DoseCertaSecaoArquivo {m} {\__dosecerta_ler:nn {secao}{#1}}
+\NewDocumentCommand \DoseCertaArquivoIntegral {m} {\__dosecerta_ler:nn {integral}{#1}}
+\ExplSyntaxOff

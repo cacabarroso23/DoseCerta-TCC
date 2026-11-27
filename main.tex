@@ -8,30 +8,28 @@
 \usepackage{indentfirst}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{pdfpages}
 \usepackage{microtype}
 \usepackage{array,longtable}
-\usepackage{float,pdfpages,xurl,needspace}
-\usepackage{amsmath}
 \usepackage{url}
 \usepackage{caption}
-\captionsetup[table]{justification=raggedright,singlelinecheck=false}
-\captionsetup[figure]{justification=raggedright,singlelinecheck=false}
+\captionsetup[table]{justification=raggedright,singlelinecheck=false,width=\textwidth}
+\captionsetup[figure]{justification=raggedright,singlelinecheck=false,width=\textwidth}
 \usepackage[alf,abnt-emphasize=bf,abnt-thesis-year=both,abnt-repeated-author-omit=no,abnt-last-names=abnt,abnt-etal-cite=3,abnt-etal-list=3,abnt-etal-text=it,abnt-and-type=e,abnt-doi=doi,abnt-url-package=none,abnt-verbatim-entry=no]{abntex2cite}
 \usepackage{classe/ABNT6023-10520}
 \usepackage{hyphenat}
 \input{pendencias_dosecerta}
+\input{dosecerta_estrutura_capitulos}
 \makeatletter
-% Usar argumento opcional do ambiente; não imprimir o rótulo do marcador.
-\renewcommand{\imprimirfolhaderostostar}[1]{%
-\begin{folhaderosto*}[#1]\folhaderostocontent\end{folhaderosto*}}
-\renewcommand{\imprimirfolhaderostonostar}[1]{%
-\begin{folhaderosto}[#1]\folhaderostocontent\end{folhaderosto}}
 \renewcommand{\imprimirfolhaderosto}[1][\folhaderostoname]{%
-\@ifstar{\imprimirfolhaderostostar{#1}}{\imprimirfolhaderostonostar{#1}}}
+\@ifstar
+{\imprimirfolhaderostostar{#1}}
+{\imprimirfolhaderostonostar{#1}}%
+}
 \makeatother
 % A edição digital não insere páginas de paridade vazias.
 \let\cleardoublepage\clearpage
-% Figuras ancoradas entre parágrafos completos; imagens limitadas à área útil.
+% Distribuição de figuras sem forçar uma página inteira para cada uma.
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.8}
 \renewcommand{\textfraction}{0.08}
@@ -44,22 +42,6 @@
 \renewcommand{\ABNTEXchapterfont}{\rmfamily}
 \setlength{\parindent}{1.3cm}
 \setlength{\emergencystretch}{2em}
-% Controle de largura e paginação: não desabilitar hifenização.
-\emergencystretch=3em
-\setcounter{tocdepth}{2}
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.12}
-\setlength{\LTleft}{0pt}
-\setlength{\LTright}{0pt}
-% Mantém chamada e primeiro trecho da figura após parágrafo completo.
-\newcommand{\chamadafigura}[1]{\par\Needspace{8\baselineskip}#1\par}
-% Evita títulos de listas em inglês ou variantes dependentes do ambiente.
-\addto\captionsbrazil{\renewcommand{\contentsname}{SUMÁRIO}\renewcommand{\listfigurename}{LISTA DE FIGURAS}\renewcommand{\listtablename}{LISTA DE TABELAS}}
-\setcounter{secnumdepth}{3}
-\counterwithout{figure}{chapter}
-\counterwithout{table}{chapter}
-\setlength{\LTcapwidth}{\textwidth}
-\renewcommand{\ABNTEXfontereduzida}{\small}
 \hypersetup{pdftitle={DoseCerta: Sistema Inteligente de Dispensação e Verificação de Medicamentos},pdfauthor={Caroline Alves Barroso e equipe DoseCerta},pdfsubject={Trabalho de Conclusão de Curso em Engenharia de Robôs},colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black,bookmarksdepth=4}
 \begin{document}
 \selectlanguage{brazil}
@@ -90,16 +72,19 @@
 \tableofcontents*
 \cleardoublepage
 \textual
-\include{Capitulos/01_introducao}
+% Cinco capítulos. Os arquivos técnicos são lidos pelos organizadores abaixo.
+\DoseCertaArquivoIntegral{Capitulos/01_introducao}
 \include{Capitulos/02_base_teorica}
 \include{Capitulos/03_metodo_integrado}
 \include{Capitulos/04_resultados_discussao}
-\include{Capitulos/05_consideracoes_finais}
+\DoseCertaArquivoIntegral{Capitulos/17_conclusao}
 \postextual
 \input{referencias}
 \begin{apendicesenv}
-\include{PosTextual/apendices}
-\include{PosTextual/desenhos_v75}
+\DoseCertaArquivoIntegral{PosTextual/apendices}
+\DoseCertaArquivoIntegral{PosTextual/desenhos_v75}
 \end{apendicesenv}
-
+\begin{anexosenv}
+\DoseCertaArquivoIntegral{PosTextual/anexos}
+\end{anexosenv}
 \end{document}

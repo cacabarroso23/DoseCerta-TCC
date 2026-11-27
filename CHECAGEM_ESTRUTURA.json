@@ -1,0 +1,202 @@
+{
+  "tipo": "Verificação textual e modelo Python da adaptação; NÃO é compilação LaTeX",
+  "compilacao_latex_executada": false,
+  "pdf_atualizado_gerado": false,
+  "fontes_da_simulacao": "Arquivos textuais de consulta disponíveis do repositório DoseCerta-TCC/main; não substituem os fontes técnicos do usuário",
+  "capitulos_no_modelo": [
+    "Introdução",
+    "Fundamentação teórica e estado da arte",
+    "Metodologia",
+    "Resultados e discussão",
+    "Considerações finais"
+  ],
+  "fontes_tecnicos_sobrescritos": [],
+  "quantidade_testes": 45,
+  "testes": [
+    {
+      "teste": "Chaves balanceadas: main.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Chaves balanceadas: dosecerta_estrutura_capitulos.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Chaves balanceadas: pendencias_dosecerta.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Chaves balanceadas: Capitulos/02_base_teorica.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Chaves balanceadas: Capitulos/03_metodo_integrado.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Chaves balanceadas: Capitulos/04_resultados_discussao.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Chaves balanceadas: PosTextual/desenhos_v75.tex",
+      "aprovado": true
+    },
+    {
+      "teste": "Exatamente os cinco destinos principais previstos",
+      "aprovado": true
+    },
+    {
+      "teste": "Nenhuma inclusão direta dos antigos capítulos técnicos no main",
+      "aprovado": true
+    },
+    {
+      "teste": "Sem includeonly que exclua parte do trabalho",
+      "aprovado": true
+    },
+    {
+      "teste": "Suporte a PDF de desenhos carregado",
+      "aprovado": true
+    },
+    {
+      "teste": "Arquivo de desenhos incluído uma única vez diretamente",
+      "aprovado": true
+    },
+    {
+      "teste": "PDF dos desenhos preservado byte a byte",
+      "aprovado": true
+    },
+    {
+      "teste": "Leitura com catcodes normais declarada",
+      "aprovado": true
+    },
+    {
+      "teste": "Guarda global de inclusão presente",
+      "aprovado": true
+    },
+    {
+      "teste": "Arquivos já convertidos não são rebaixados novamente",
+      "aprovado": true
+    },
+    {
+      "teste": "Grupos de argumentos TeX explícitos nos novos ref",
+      "aprovado": true
+    },
+    {
+      "teste": "Pendências não contêm bibliografia no preâmbulo",
+      "aprovado": true
+    },
+    {
+      "teste": "34 regras de referência localizadas",
+      "aprovado": true
+    },
+    {
+      "teste": "Referência singular por rótulo",
+      "aprovado": true
+    },
+    {
+      "teste": "Referência plural por rótulo",
+      "aprovado": true
+    },
+    {
+      "teste": "Referência numérica antiga",
+      "aprovado": true
+    },
+    {
+      "teste": "Não alterar referência à conclusão",
+      "aprovado": true
+    },
+    {
+      "teste": "Não interpretar 150 como capítulo 15",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 2 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 3 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 4 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 5 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 6 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 7 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 8 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 9 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 10 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 11 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 12 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 13 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 14 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 15 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Número antigo 16 convertido ao rótulo certo",
+      "aprovado": true
+    },
+    {
+      "teste": "Modelo de expansão gera exatamente cinco capítulos",
+      "aprovado": true
+    },
+    {
+      "teste": "Nenhum rótulo cap duplicado no modelo",
+      "aprovado": true
+    },
+    {
+      "teste": "Dados/rastreabilidade 10b permanece na árvore",
+      "aprovado": true
+    },
+    {
+      "teste": "Capítulos técnicos de 02 a 16 presentes uma única vez",
+      "aprovado": true
+    },
+    {
+      "teste": "Guarda ignora segunda leitura de 10b",
+      "aprovado": true
+    },
+    {
+      "teste": "ZIP não substitui visão, resultados ou demais fontes técnicos",
+      "aprovado": true
+    }
+  ],
+  "limites": [
+    "Não executa nem certifica o mecanismo expl3 no compilador.",
+    "Não valida paginação, sumário renderizado, margens, figuras ou bibliografia do projeto completo.",
+    "Os arquivos originais do projeto devem permanecer nos destinos atuais."
+  ]
+}

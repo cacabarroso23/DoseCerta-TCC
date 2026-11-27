@@ -1,0 +1,85 @@
+DOSECERTA — ARQUIVOS DE SUBSTITUIÇÃO / CINCO CAPÍTULOS
+
+APLICAÇÃO
+Este ZIP é um pacote de substituição para o projeto LaTeX existente. Não é uma
+cópia autônoma da monografia: mantenha as pastas de fontes técnicos, classe,
+pré-textuais, bibliografia, figuras e dados do seu projeto.
+
+1. Faça uma cópia de segurança do projeto atual.
+2. Extraia o conteúdo deste ZIP NA RAIZ do projeto, ao lado do main.tex atual.
+   Aceite substituir arquivos com o mesmo caminho. Mescle as pastas: não apague
+   uma pasta inteira para colocar a versão reduzida deste ZIP no lugar.
+   Adicione também os arquivos novos que ainda não existirem.
+3. Selecione main.tex como documento principal e pdfLaTeX como compilador.
+4. No Overleaf, escolha “Recompilar do zero” para renovar o sumário e as listas.
+   Não é necessário executar Python nem editar manualmente os capítulos.
+
+DESTINOS EXATOS
+Substituir ou adicionar, mantendo estes caminhos:
+  main.tex
+  dosecerta_estrutura_capitulos.tex
+  pendencias_dosecerta.tex
+  Capitulos/02_base_teorica.tex
+  Capitulos/03_metodo_integrado.tex
+  Capitulos/04_resultados_discussao.tex
+  PosTextual/desenhos_v75.tex
+  Documentacao/DC-V75_desenhos.pdf
+
+ESTRUTURA RESULTANTE
+  1. Introdução
+  2. Fundamentação teórica e estado da arte
+  3. Metodologia
+  4. Resultados e discussão
+  5. Considerações finais
+Referências, apêndices e anexos continuam fora dessa contagem.
+O quinto capítulo continua usando Capitulos/17_conclusao.tex.
+
+COMO OS TEXTOS SÃO PRESERVADOS
+Não incluí cópias antigas dos seus capítulos técnicos para sobrescrever os textos
+que você já atualizou. O novo organizador lê os arquivos existentes e adapta seus
+títulos durante a compilação:
+  capítulo -> seção; seção -> subseção; subseção -> subsubseção.
+Arquivos que já estão em nível de seção não são rebaixados novamente.
+As chamadas aos antigos capítulos 2 a 16 passam a apontar para as respectivas
+seções. Os rótulos existentes continuam sendo utilizados. A organização do
+trabalho na introdução é ajustada para cinco capítulos durante a leitura.
+O arquivo 10b_dados_rastreabilidade permanece incluído na metodologia.
+
+EVITAR DUPLICATAS — NÃO APAGUE OS ARQUIVOS TÉCNICOS
+Não é necessário excluir capítulos de conteúdo. Eles continuam sendo lidos
+pelos organizadores. Apagá-los causará erro de arquivo ausente.
+
+- Substitua main.tex: não cole as novas inclusões ao lado das antigas.
+- Não inclua diretamente no main os arquivos 02_fundamentacao até 16_discussao.
+- Não use 05_consideracoes_finais.tex em paralelo com 17_conclusao.tex. Se existir
+  uma cópia antiga, pode permanecer guardada, sem inclusão no documento.
+- Não acrescente outra inclusão dos desenhos V75: ela já está no main fornecido.
+- A nova leitura ignora uma segunda inclusão do mesmo arquivo pelos caminhos
+  normalizados (com ou sem .tex e ./), inclusive 10b e os desenhos em apêndice.
+- Se o sumário ainda mostrar a numeração antiga, use “Recompilar do zero”.
+  Localmente, podem ser apagados os auxiliares .aux, .toc, .lof, .lot e .out,
+  inclusive os .aux nas subpastas. São arquivos gerados, não fontes.
+- Não apague .tex de conteúdo, .bib, classe/, Figuras/, Dados/ ou Documentacao/.
+- Não reaplique main.tex de ZIPs anteriores depois deste pacote.
+
+OUTROS AJUSTES
+O pacote restaura pendencias_dosecerta.tex como arquivo de comandos; ele não
+carrega bibliografia no preâmbulo. As pendências dos conteúdos permanecem visíveis
+em vermelho. A bibliografia continua sendo carregada por referencias.tex.
+O PDF dos desenhos incluído é o desenho existente, preservado sem alteração;
+não é um novo PDF compilado da monografia.
+
+VALIDAÇÃO E LIMITE DA ENTREGA
+Foram aprovados 45 testes de estrutura e do modelo de transformação de texto:
+cinco capítulos no modelo, rótulos principais sem repetição, inclusão de 10b,
+conversão das referências, grupos de comandos e guarda de inclusão.
+Detalhes em CHECAGEM_ESTRUTURA.json. Trata-se de inspeção textual e simulação
+Python, NÃO de execução do LaTeX. O código expl3 não foi testado em compilador.
+Não há compilador LaTeX neste ambiente; nenhum PDF atualizado foi gerado.
+Após compilar, confira o log, o sumário, as listas, as referências e a paginação.
+
+ESCOPO
+Esta entrega aplica a reorganização estrutural. Não preenche dados experimentais
+faltantes nem faz uma nova revisão do conteúdo técnico existente. Os arquivos
+mais recentes de visão, agente, aplicativo, resultados e demais frentes que já
+estiverem no seu projeto permanecem como fontes da compilação.
