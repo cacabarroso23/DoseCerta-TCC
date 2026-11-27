@@ -7,7 +7,7 @@ A matriz abaixo relaciona evidências disponíveis e lacunas de aceite. ``Parcia
 \caption{Requisitos, evidências recebidas e aceite ainda necessário}\label{tab:ap-matriz}\\
 \hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endfirsthead
 \hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endhead
-RF01 & Disco, sensor e 12 ciclos registrados & Contagem independente, unidade extra e retenção\\\hline
+RF01 & Disco, 12 ciclos e oito registros vinculados, com lacunas & Campanha independente, unidade extra e retenção\\\hline
 RF02 & Associação e sinais descritos; montagem fotografada & Conferência física de cada posição e associação\\\hline
 RF03 & Fluxo e sinais documentados & Agenda real desligada; falta comissionamento e sequência automática\\\hline
 RF04 & Dez ciclos com releitura, de 12 registrados & Confrontar leitura com inspeção do disco e contagem no copo\\\hline
@@ -27,15 +27,59 @@ RNF05 & JWT e credenciais documentados & Menor privilégio, chaves e testes nega
 RNF06 & Inventário de releases e versões & Manifesto sanitizado da configuração final e dependências\\\hline
 RNF07 & Fotos dos encaixes e quatro contatos & Inserção energizada, continuidade e integridade do barramento\\\hline
 RNF08 & Interface Care e sinais com apoio de texto & Tarefas autorizadas, acessibilidade e compreensão\\\hline
-RF13-APP & Care implementado e suítes registradas & Sessão válida/expirada e tarefas autenticadas por tela\\\hline
+RF13-APP & Care, suítes históricas e 16 capturas demonstrativas & Sessão válida/expirada, versão e tarefas autenticadas\\\hline
 RF14-VIS & Método de visão documentado & Reconciliar versões e avaliar sequências rotuladas\\\hline
-RF15-AG & Configuração histórica e relatos posteriores & Confirmar agente atual, ferramentas e aprovação de escrita\\\hline
+RF15-AG & Histórico e proposta v28 ainda a confirmar & Aprovação técnica, paciente correto e efeitos persistidos\\\hline
 RNF09-IA & Limites de finalidade descritos & Casos adversariais e avaliação humana do agente e da visão\\\hline
 RNF10-DADOS & Registros locais e centrais com origem & Matriz de acesso, retenção e auditoria de todas as observações\\\hline
 \end{longtable}\noindent Fonte: elaboração dos autores a partir das evidências recebidas. \cite{DC_VALIDACAO2026}\par}
 
+\section{Situação do protocolo recebido}
+O protocolo de 27 de novembro é uma \textbf{proposta} a aprovar antes da coleta, não campanha executada. As metas abaixo pertencem à proposta do contribuinte e não são metas clínicas nem critérios já aprovados pela orientação. O PDF de prévia emprega em alguns trechos verbos no passado; a presente consolidação os corrige para evitar afirmar experimentos sem fichas. \cite{DC_NICOLAS2026}
+
+Não se deverão realizar ensaios de ingestão com medicamentos ou participantes a partir deste plano de bancada. Unidades de ensaio, montagem segura e autorizações devem ser definidos previamente. Interrupções de alimentação ou rede exigem procedimento supervisionado e aprovado; a proposta não é autorização para intervenção em produção.
+
+\section{Proposta de campanha: configuração antes de cada bloco}
+Antes do primeiro ensaio de cada bloco deverão ser registrados: o ambiente do servidor e a política de travas da central; as versões do runtime, dos firmwares do intermediário e do submódulo, do aplicativo e da API; o submódulo e a posição utilizados; o comprimido de teste (tipo, diâmetro, espessura e massa medidos); a revisão do disco e a inclinação montada; o estoque inicial contado manualmente; os responsáveis pela operação, pela contagem e pelas fotografias. A montagem deverá ser fotografada com escala; não há fichas preenchidas dessa campanha no pacote.
+
+\section{Procedimento de um ensaio de dispensação}
+\begin{enumerate}
+\item Identificação do ensaio em papel visível junto ao copo coletor.
+\item Pedido pelo fluxo de dispensação vinculada do aplicativo, com a quantidade definida para o bloco.
+\item Espera pelo resultado do aparelho, sem repetir o pedido.
+\item Contagem manual das unidades no copo, adotada como referência.
+\item Fotografia do copo com a identificação do ensaio e fotografia da tela com o resultado e o identificador da operação.
+\item Registro da observação no aplicativo, que debita o estoque somente pela quantidade observada.
+\item Separação das unidades liberadas, sem devolvê-las ao reservatório durante o bloco.
+\item Conferência do estoque físico com o estoque do aplicativo a cada dez ensaios.
+\end{enumerate}
+
+Três travamentos consecutivos interrompem o bloco; após qualquer ajuste mecânico, inicia-se novo bloco identificado, preservando todos os resultados e motivos de interrupção do anterior. Reiniciar não autoriza apagar as tentativas desfavoráveis. Ensaios sem contagem ou sem fotografia são considerados inválidos e reportados como tal.
+
+\section{Blocos e critérios de aceitação}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.06\textwidth}p{0.4\textwidth}p{0.07\textwidth}p{0.37\textwidth}}
+\caption{Blocos e critérios propostos, ainda não aprovados nem executados}\label{tab:ap-blocos}\\
+\hline\textbf{Bloco} & \textbf{Ensaio} & \textbf{N} & \textbf{Critério}\\\hline\endfirsthead
+\hline\textbf{Bloco} & \textbf{Ensaio} & \textbf{N} & \textbf{Critério}\\\hline\endhead
+A & Dispensação de uma unidade & 50 & Pelo menos 90\% com exatamente uma unidade; nenhuma dose extra\\\hline
+B & Dispensação de duas unidades & 20 & Pelo menos 85\% com exatamente duas; nenhuma dose extra\\\hline
+C & Falhas controladas, com procedimento seguro aprovado (rede, reinício e alimentação) & 20 & Nenhum movimento repetido; estado incerto sinalizado\\\hline
+D & Leitura do sensor com cavidade vazia e ocupada & 60 & Faixas sem sobreposição; pelo menos 95\% corretas\\\hline
+E & Sinalização luminosa por posição e cor & 12 & Todas corretas\\\hline
+F & Agenda sem internet (RTC ativo, energia de retenção e comissionamento) & 5 & Todas no horário\\\hline
+\end{longtable}}{\small\noindent Fonte: proposta de campanha recebida em 27 nov. 2026. \cite{DC_NICOLAS2026}\par}
+
+Em todos os blocos, o estoque do aplicativo deve coincidir com a contagem física. Caso a amostragem e a independência sejam justificadas, as proporções deverão ser acompanhadas de intervalo de Wilson de 95\%, com numerador, denominador, exclusões e inconclusivos explícitos. Esses intervalos não corrigem viés de seleção, ajuste durante o teste ou repetição dependente no mesmo conjunto. Zero eventos observados não significa risco nulo.
+
+\section{Ficha de ensaio}
+Cada ensaio gera uma linha com: bloco, número, data e hora, identificador da operação, quantidade pedida, quantidade contada no copo, resultado do aparelho, leituras do sensor antes e depois do giro, estoque do aplicativo antes e depois, estoque físico contado, tempo de resposta, nomes das fotografias, responsável pela contagem, validade e observações. Os campos de operação, resultado, sensor, estoque e tempo poderão ser extraídos do banco de dados; a contagem, as fotografias e as observações são preenchidas manualmente.
+
+
+\section{Vínculo entre blocos e requisitos}
+Os blocos A e B fornecem dados para RF01 e RF04; D complementa RF04; E verifica RF02 e parte de RF12. As tentativas da preparação caracterizam RF05. C informa RNF02 e RNF03; F se refere à continuidade de RNF01, condicionada ao comissionamento temporal. RF06 e RF13-APP requerem também registros de origem, autenticação e acompanhamento. Os demais requisitos da matriz permanecem sujeitos a ensaios específicos; a campanha não encerra automaticamente todos os 25 requisitos.
+
 \section{Inventário e integridade}
-O diretório \texttt{Dados/validacao\_20261126} conserva tabelas de sessões, ciclos, calibração, comunicação, servidor e software. O histórico de observações foi preservado com sua proveniência; o projeto distribuído não inclui bancos brutos nem scripts executáveis do arquivo recebido. O mapa \texttt{mapa\_fotos\_20261126.json} relaciona cada painel às imagens de origem. As pranchas fotográficas foram compostas e redimensionadas para a monografia, sem reconstrução de conteúdo.
+O diretório \texttt{Dados/validacao\_20261126} conserva tabelas de sessões, ciclos, calibração, comunicação, servidor e software. O histórico de observações foi preservado com sua proveniência; o projeto distribuído não inclui bancos brutos nem scripts executáveis do arquivo recebido. O diretório \texttt{Dados/entrega\_Nicolas\_20261127} conserva os CSVs e o protocolo proposto, além da síntese de segurança. As tabelas-fonte recebidas não foram alteradas. O mapa \texttt{mapa\_fotos\_20261126.json} relaciona cada painel às imagens de origem. As pranchas fotográficas foram compostas e redimensionadas para a monografia, sem reconstrução de conteúdo.
 
 \section{Protocolos ainda não executados}
 O plano de caixa preta recebido propõe blocos de localização com disco vazio, dispensação com contagem independente e comunicação/energia. Seu executor aprovado em testes de software não transforma o plano em experimento executado. A ficha de referência, versões e condições devem acompanhar cada tentativa; falhas e interrupções precisam permanecer no denominador. \cite{DC_VALIDACAO2026}

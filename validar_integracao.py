@@ -85,7 +85,30 @@ if reqids!=set(matrixids) or len(matrixids)!=len(set(matrixids)):
 photos=json.loads((R/'mapa_fotos_20261126.json').read_text())
 photo_names=[x['foto'] for group in photos.values() for x in group]
 if len(photo_names)!=35 or len(set(photo_names))!=35: errors.append('Mapa fotográfico sem as 35 imagens únicas')
-summary={'arquivos_tex_incluidos':len(seen),'rotulos':len(labels),'referencias_internas':len(refs),'figuras':len(images),'citacoes_distintas':len(cites),'pendencias':len(pending),'erros':errors,'avisos':warnings,'compilacao_pdf':'NAO_EXECUTADA_COMPILADOR_INDISPONIVEL','calibracao_media':statistics.mean(intervals),'calibracao_desvio_amostral':statistics.stdev(intervals),'ciclos_por_resultado':dict(co)}
+# Round 2 evidence controls. CSVs are source data, never executed.
+N=R/'Dados/entrega_Nicolas_20261127'
+def incoming_csv(name):
+ with (N/name).open(encoding='utf-8-sig',newline='') as f:return list(csv.DictReader(f,delimiter=';'))
+oficial=incoming_csv('ensaios_dispensacao.csv');simulado=incoming_csv('ensaios_dispensacao_simulado.csv')
+assert len(oficial)==8 and len(simulado)==7
+assert len({r['operation_id'] for r in oficial+simulado})==15
+assert sum(not r['qtd_observada'] for r in oficial)==1
+assert sum(not r['estoque_depois'] for r in oficial)==1
+eligible=[r for r in oficial if r['ensaio']!='1' and r['qtd_observada']!='' and r['estoque_depois']!='']
+assert len(eligible)==6
+assert all(int(r['estoque_antes'])-int(r['estoque_depois'])==int(r['qtd_observada']) for r in eligible)
+closures=collections.Counter(r['fechamento'] for r in simulado)
+assert closures=={'presentation_policy':4,'human_report':2,'sem fechamento':1}
+assert sum(not r['qtd_observada'] for r in simulado)==5
+for q in json.loads((R/'historico_pendencias_antes_rodada2.json').read_text()):
+ if q['id'] not in counts:errors.append('Pendência da rodada 1 desapareceu: '+q['id'])
+if len(list((R/'Figuras/App').glob('*.jpg')))<16:errors.append('Capturas incompletas')
+for f in seen:
+ if f.exists():
+  txt=f.read_text()
+  if any(ord(c)<32 and c not in '\n\r' for c in txt):errors.append('Controle inesperado no texto: '+str(f.relative_to(R)))
+if 'generalmotors-my.sharepoint.com' in (R/'referencias.tex').read_text():errors.append('URL corporativa exposta nas referências geradas')
+summary={'arquivos_tex_incluidos':len(seen),'rotulos':len(labels),'referencias_internas':len(refs),'figuras':len(images),'citacoes_distintas':len(cites),'pendencias':len(pending),'erros':errors,'avisos':warnings,'compilacao_pdf':'NAO_EXECUTADA_COMPILADOR_INDISPONIVEL','calibracao_media':statistics.mean(intervals),'calibracao_desvio_amostral':statistics.stdev(intervals),'ciclos_por_resultado':dict(co),'registros_vinculados_oficial':len(oficial),'registros_vinculados_simulado':len(simulado),'oficial_consistencia_contabil':{'linhas_elegiveis':len(eligible),'nao_equivale_a_estoque_fisico':True},'simulado_fechamentos':dict(closures)}
 (R/'pendencias.json').write_text(json.dumps(sorted(pending,key=lambda x:x['arquivo']),ensure_ascii=False,indent=2)+'\n')
 (R/'validacao_estatica.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(summary,ensure_ascii=False,indent=2))

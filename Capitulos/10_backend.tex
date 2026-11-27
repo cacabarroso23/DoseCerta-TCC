@@ -91,6 +91,8 @@ O servidor distingue o reconhecimento do comando, o estado de uma sessão de mot
 
 A documentação de segurança registra ainda o uso, pela API, de papel que pode ignorar as políticas RLS e a autenticação do MCP por chave estática. Assim, a proteção efetiva depende de validação no servidor e de controle dos segredos; a existência de RLS no banco não autoriza afirmar segregação de ponta a ponta. Os testes de recusa de token inválido e os testes locais não equivalem a auditoria de todas as permissões em produção. Retenção, restauração, privacidade e acesso a observações reservadas continuam sujeitos à verificação específica. \cite{DC_VALIDACAO2026}
 
+\input{Capitulos/10b_dados_rastreabilidade}
+
 \section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{BE01-RUNTIME}{Versão e configuração de 26/11 incorporadas; complementar hash, manifesto e dependências da apresentação, sem atribuir a essa configuração todos os ensaios históricos.}
 \pendencia{BE02-AGENDA}{Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação.}

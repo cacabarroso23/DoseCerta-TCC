@@ -1,5 +1,5 @@
-# Pendências da versão integrada
-Gerado do LaTeX atual em 27/11/2026. Alguns itens pedem confirmação ou complementação, não implementação nova. O guia anterior está preservado com sufixo ANTES_DA_INTEGRACAO.
+# Pendências da versão unificada — rodada 2
+Gerado do LaTeX atual em 27/11/2026. Todos os 88 IDs anteriores foram mantidos; uma pendência pode pedir confirmação/comprovação de algo já implementado.
 
 ## Capitulos/01_introducao.tex
 
@@ -111,15 +111,15 @@ Gerado do LaTeX atual em 27/11/2026. Alguns itens pedem confirmação ou complem
 
 ## Capitulos/11_aplicativo.tex
 
-- **APP01** — Nicolas: a autora enviará a versão e as telas do aplicativo. Inserir release/hash, ambiente, navegação e tarefas efetivamente disponíveis, além de capturas sanitizadas.
+- **APP01** — Dezesseis capturas incorporadas com identificação de perfil, dados fictícios e respostas roteirizadas. Confirmar release/hash publicado do webapp e da API. A entrega cita webapp 2aa391ad e API 2d07bd78 em 18/11 e republicação posterior; não assumir esses hashes como finais.
 
-- **APP02** — Login obrigatório confirmado: inserir telas e evidências do fluxo real, emissão/validação e renovação de sessão, expiração, logout, acesso negado e mensagens de erro, sem expor credenciais.
+- **APP02** — Login fotografado sem credenciais. Completar evidências autenticadas de emissão, validação, renovação, expiração, logout e acesso negado; os prints da Demonstração não comprovam esses caminhos.
 
-- **APP03** — Conferir a autorização na versão final, especialmente se as visões de paciente/cuidador usam conta única. Não declarar isolamento de dados sem teste.
+- **APP03** — Conferir autorização final com dois pacientes no mesmo aparelho e conta operadora compartilhada. Testar telas, observações reservadas e assistente; a entrega aponta paciente fixo no MCP apesar da seleção na interface.
 
-- **APP04** — Fornecer resultados próprios da suíte Care, integração autenticada, estados de erro/sem rede, atualização de histórico e comunicação com o aparelho. Identificar o que foi simulado.
+- **APP04** — Corrigir ou justificar as falhas remanescentes e registrar versão/log final. Não substituir 363 casos de 25/11 por 359 de um recorte anterior nem somar suítes com escopos sobrepostos. Completar integração autenticada e falhas de rede.
 
-- **APP05** — Inserir fotos/capturas atualizadas das tarefas principais e avaliação de acessibilidade/usabilidade: método, participantes quando houver, critérios, problemas e correções. Não inferir qualidade de uso pelo desenho das telas.
+- **APP05** — Capturas das funções principais incorporadas; permanecem a avaliação de usabilidade/acessibilidade com método, autorizações, tarefas e achados, e a eventual captura de voz real sem roteirização.
 
 ## Capitulos/12_visao_computacional.tex
 
@@ -137,9 +137,9 @@ Gerado do LaTeX atual em 27/11/2026. Alguns itens pedem confirmação ou complem
 
 ## Capitulos/13_agente_ia.tex
 
-- **AG01** — Confirmar modelo, parâmetros e versões finais do agente publicado e do agente chamado pelo aplicativo. O rótulo interno gpt-5.6-luna precisa de identificação verificável e não deve ser tratado como especificação pública do modelo.
+- **AG01** — Confirmar com Thiago modelo, parâmetros, exportação sanitizada e versão efetivamente chamada pelo aplicativo. A proposta cita v28 desde 25/11 e usa rótulo interno gpt-6-luna, diferente de gpt-5.6-luna no registro anterior; nenhum deles foi promovido a identificação pública de modelo sem comprovação.
 
-- **AG02** — Fornecer evidências das oito ferramentas, aprovação e recusa de escritas, validação do servidor, tratamento de duplicatas e falhas ambíguas. Não executar gravações de teste em dados reais.
+- **AG02** — Conferir as oito ferramentas e o caminho de aprovação: proposta de 27/11 relata escrita sem confirmação na v24 e relay sem tratamento de aprovação. Obter evidências de aprovação/recusa e autorização no servidor; usar apenas dados fictícios em ambiente autorizado.
 
 - **AG03** — Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \texttt{file\_search}.
 
@@ -149,7 +149,7 @@ Gerado do LaTeX atual em 27/11/2026. Alguns itens pedem confirmação ou complem
 
 - **AG06** — Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.
 
-- **AG07** — Reconciliar a configuração histórica de 03/11 com o relato posterior de Voice Live e ferramenta de contexto somente de leitura; identificar versão ativa, protocolo, permissões e evidência no Care antes de afirmar a integração atual.
+- **AG07** — Revisar a proposta recebida com Thiago: reconciliar configuração de 03/11, relato anterior de Voice Live somente de leitura e nova indicação de v28 com MCP. Conferir encaminhamento do paciente selecionado, paciente fixo no MCP e correções implantadas, sem presumir que o risco foi resolvido.
 
 ## Capitulos/14_testes.tex
 

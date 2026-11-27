@@ -64,6 +64,9 @@ A UART sugerida na qualificação foi avaliada como alternativa de ligação pon
 
 O controlador escreve um comando DC1 e consulta o resultado enquanto a ESP32 gera o movimento localmente. Assim, não mantém o barramento reservado durante todo o giro. A serialização de um único giro por vez é uma política do runtime, que também reduz a sobreposição de picos de corrente e mantém a rastreabilidade; não é uma impossibilidade elétrica de um barramento atender mais de um endereço. A expansão para vários submódulos permanece sem aceite físico. \cite{DC_VALIDACAO2026}
 
+\section{Divergência de versão na entrega de 27 de novembro}
+O LEIA-ME da frente de aplicativo indica runtime 0.8.0 como instalado, enquanto o relatório anterior identifica uma leitura de 26 de novembro, 22h10, com 0.9.2 e release \texttt{2026.11.25-cam-3}. A nova entrega não inclui manifesto do aparelho que demonstre alteração posterior. Assim, mantém-se a referência de leitura datada, registra-se a divergência e solicita-se confirmação final. Não se retrocede a versão por simples substituição textual. \cite{DC_NICOLAS2026,DC_VALIDACAO2026}
+
 \section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{ARQ01}{Conferir os diagramas inseridos com a configuração final; atualizar módulos, interfaces e versões que tenham sido alterados desde o desenho de referência.}
 \pendencia{ARQ02}{Fornecer esquema da montagem pós-reparos, orientação de cada pogo, continuidade e fotografias identificadas. O mapa funcional disponível não comprova ordem física nem estado atual de todos os módulos.}

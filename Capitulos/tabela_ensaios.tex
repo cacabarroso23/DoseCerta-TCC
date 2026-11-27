@@ -1,0 +1,37 @@
+% Gerado em 26/11/2026 a partir do banco de produção (eventos bound_dispense e comandos dc1_motor).
+% Só ensaios do ambiente Oficial (política "rigoroso"), 29/10 a 08/11/2026. Desde 14/11 o aparelho está no
+% ambiente Simulado (banco tcc_simulado, política "apresentacao"); esses ensaios estão em ensaios_dispensacao_simulado.csv.
+% Estilo igual às longtables da monografia (Capitulos/05_requisitos.tex).
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.035\textwidth}p{0.105\textwidth}p{0.04\textwidth}p{0.05\textwidth}p{0.155\textwidth}p{0.18\textwidth}p{0.13\textwidth}p{0.105\textwidth}}
+\caption{Ensaios de dispensação integrada no submódulo SUB01 (aplicativo, API, central e ESP32)}\label{tab:ensaios-dispensacao}\\
+\hline
+\textbf{N.} & \textbf{Início} & \textbf{Qtd.} & \textbf{Ciclos} & \textbf{Sensor antes/depois} & \textbf{Resultado do aparelho} & \textbf{Observação humana} & \textbf{Estoque}\\\hline
+\endfirsthead\hline
+\textbf{N.} & \textbf{Início} & \textbf{Qtd.} & \textbf{Ciclos} & \textbf{Sensor antes/depois} & \textbf{Resultado do aparelho} & \textbf{Observação humana} & \textbf{Estoque}\\\hline
+\endhead
+1 & 29/10 13h34 & 1 & 0 & -- & Falha antes do ciclo (leitura do ADC alterada) & Saída de 1 (registrada em 07/11) & 13 $\rightarrow$ 12\\\hline
+2 & 07/11 23h25 & 2 & 0 & -- & Recusa: estado inicial ambíguo & Sem saída & 12 $\rightarrow$ 12\\\hline
+3 & 08/11 09h37 & 1 & 1 & 154 ocupado / 223 ocupado & Unidade retida & Sem saída & 12 $\rightarrow$ 12\\\hline
+4 & 08/11 13h26 & 1 & 1 & 108,5 ocupado / 1916,5 vazio & Saída concluída & Saída de 1 & 12 $\rightarrow$ 11\\\hline
+5 & 08/11 13h27 & 2 & 1 & 139 ocupado / 144 ocupado & Unidade retida (2 tentativas de desobstrução) & Não observado & 11 / pós ausente\\\hline
+6 & 08/11 21h32 & 1 & 0 & -- & Recusa: estado inicial ambíguo & Sem saída & 11 $\rightarrow$ 11\\\hline
+7 & 08/11 21h32 & 1 & 0 & -- & Recusa: estado inicial ambíguo & Sem saída & 11 $\rightarrow$ 11\\\hline
+8 & 08/11 21h38 & 1 & 1 & 388 ocupado / -- & Ciclo interrompido; exige reconciliação & Saída de 1 & 11 $\rightarrow$ 10\\\hline
+\end{longtable}}{\small\noindent Fonte: registros do banco de dados do sistema (eventos \texttt{bound\_dispense} e comandos \texttt{dc1\_motor}), elaborado pelos autores. Sensor: mediana de 20 amostras do ADC de 12 bits; 820 fases por ciclo documentado. Campo pós-estoque ausente no ensaio 5; observação tardia inconsistente no ensaio 1. \cite{DC_NICOLAS2026}\par}
+
+
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.65\textwidth}p{0.25\textwidth}}
+\caption{Qualidade e elegibilidade dos oito registros do Oficial}\label{tab:indicadores-dispensacao}\\
+\hline\textbf{Critério de leitura} & \textbf{Registros}\\\hline\endfirsthead
+\hline\textbf{Critério de leitura} & \textbf{Registros}\\\hline\endhead
+Total de linhas no CSV & 8\\\hline
+Quantidade observada preenchida & 7/8\\\hline
+Observação tardia incompatível com o ciclo & 1 (ensaio 1)\\\hline
+Sem quantidade observada e sem estoque posterior & 1 (ensaio 5)\\\hline
+Linhas com quantidade e estoque antes/depois, excluído o caso tardio & 6 (2, 3, 4, 6, 7 e 8)\\\hline
+Nessas seis, redução do estoque registrado igual à quantidade relatada & 6/6; consistência contábil\\\hline
+Saídas unitárias relatadas sem a inconsistência temporal do ensaio 1 & 2 (4 e 8)\\\hline
+Recusas antes de mover com relato de zero saída & 3 (2, 6 e 7)\\\hline
+Ciclo retido com relato de zero saída & 1 (3)\\\hline
+\end{longtable}\noindent Fonte: releitura dos CSVs recebidos; consistência do registro não é contagem independente do estoque físico. \cite{DC_NICOLAS2026}\par}

@@ -6,6 +6,9 @@ A leitura com o reservatório montado alterou substancialmente a referência óp
 
 A coincidência da média dos intervalos com o nominal decorre do fechamento dos perfis em uma volta de 4.096 fases. Sem referência angular independente, a dispersão desses intervalos descreve a distribuição no modelo, mas não demonstra precisão mecânica ou repetibilidade entre ensaios controlados. Uma amostra de duas localizações posteriores bem-sucedidas é um indício exploratório, não comprovação estatística de 98\% de acerto.
 
+\subsection{O que muda com os registros vinculados}
+O novo material acrescenta relatos humanos e identificadores a oito casos do Oficial, mas revela uma observação muito tardia e outra não realizada. Há saídas relatadas e recusas antes do movimento; os campos de estoque permitem verificar consistência contábil em seis linhas sem a inconsistência temporal. Isso melhora a rastreabilidade, sem sustentar ``estoque físico correto em 8/8'' ou taxa final de acerto. Os sete casos do Simulado têm quatro fechamentos automáticos, dois relatos de apresentação e um caso aberto; não substituem contagem independente. \cite{DC_NICOLAS2026}
+
 \section{Comparação com a literatura}
 A literatura discutida no Capítulo~\ref{cap:estadoarte} situa a integração de organização, dispensação e acompanhamento; os achados deste protótipo não permitem afirmar superioridade em adesão, segurança clínica, autonomia ou exatidão de dose. Comparações quantitativas exigem método, unidade experimental, amostra e condições equivalentes.
 \pendencia{DIS02}{Completar a comparação após fechar a campanha e o quadro de soluções: utilizar grandezas efetivamente medidas e fontes primárias, sem comparar reconhecimento de comando com acerto físico de outro equipamento.}
@@ -16,6 +19,8 @@ Os dados reúnem versões diferentes e sessões de desenvolvimento, não uma cam
 A arquitetura de continuidade local depende de relógio confiável, referência mecânica e comissionamento. Como o RTC não está ativo e a dispensação agendada permanece desligada, a operação autônoma sem rede não foi demonstrada. O fato de o enlace recuperar comunicação não comprova que a agenda execute uma dose corretamente após reinício. \cite{DC_VALIDACAO2026}
 
 Na visão, a divergência de versões impede combinar escores históricos com o método vision-v3. Mesmo após reconciliá-la, a identificação de uma sequência visual não comprova deglutição. Na segurança dos dados, conta operadora compartilhada, privilégios que contornam RLS e limites da aprovação no caminho do agente impedem afirmar isolamento individual ou conformidade integral apenas pela existência de autenticação. \cite{DC_VISAO2026,DC_COMPILADO,DC_VALIDACAO2026}
+
+A proposta do agente descreve aprovação dependente de instrução e possível uso de paciente fixo no MCP. Enquanto a configuração não for reconciliada e testada, as funções de escrita devem ser apresentadas como risco a controlar, não como benefício seguro comprovado. A síntese de armazenamento também evidencia que anexos e conversas podem ser processados no Azure, embora os resultados detalhados da câmera permaneçam locais; isso exige políticas distintas de finalidade e retenção. \cite{DC_NICOLAS2026,DC_SEGURANCA2026}
 
 \section{Implicações e continuidade}
 A prioridade é fechar o vínculo entre configuração, pedido, movimento, contagem física e registro. A campanha deve manter falhas e interrupções no denominador, caracterizar retenção e unidade extra, medir energia durante movimento e verificar recuperação sem repetir o efeito. Depois do comissionamento, cabem ensaios sem rede e sem NTP com RTC, avaliação rotulada da visão e do agente e tarefas de uso autorizadas. Esses itens são validação ainda necessária, não benefícios já entregues.

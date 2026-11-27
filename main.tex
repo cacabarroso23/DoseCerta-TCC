@@ -20,11 +20,13 @@
 \usepackage{hyphenat}
 \input{pendencias_dosecerta}
 \makeatletter
+% Usar argumento opcional do ambiente; não imprimir o rótulo do marcador.
+\renewcommand{\imprimirfolhaderostostar}[1]{%
+\begin{folhaderosto*}[#1]\folhaderostocontent\end{folhaderosto*}}
+\renewcommand{\imprimirfolhaderostonostar}[1]{%
+\begin{folhaderosto}[#1]\folhaderostocontent\end{folhaderosto}}
 \renewcommand{\imprimirfolhaderosto}[1][\folhaderostoname]{%
-\@ifstar
-{\imprimirfolhaderostostar{#1}}
-{\imprimirfolhaderostonostar{#1}}%
-}
+\@ifstar{\imprimirfolhaderostostar{#1}}{\imprimirfolhaderostonostar{#1}}}
 \makeatother
 % A edição digital não insere páginas de paridade vazias.
 \let\cleardoublepage\clearpage

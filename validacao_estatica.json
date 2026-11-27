@@ -1,9 +1,9 @@
 {
-  "arquivos_tex_incluidos": 31,
-  "rotulos": 81,
-  "referencias_internas": 93,
-  "figuras": 47,
-  "citacoes_distintas": 18,
+  "arquivos_tex_incluidos": 34,
+  "rotulos": 95,
+  "referencias_internas": 111,
+  "figuras": 59,
+  "citacoes_distintas": 19,
   "pendencias": 88,
   "erros": [],
   "avisos": [],
@@ -15,5 +15,16 @@
     "slot_verified_empty": 4,
     "slot_cycle_intent": 2,
     "slot_dropped_refilled": 2
+  },
+  "registros_vinculados_oficial": 8,
+  "registros_vinculados_simulado": 7,
+  "oficial_consistencia_contabil": {
+    "linhas_elegiveis": 6,
+    "nao_equivale_a_estoque_fisico": true
+  },
+  "simulado_fechamentos": {
+    "presentation_policy": 4,
+    "human_report": 2,
+    "sem fechamento": 1
   }
 }

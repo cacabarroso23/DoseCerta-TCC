@@ -1,0 +1,4 @@
+bloco;ensaio;data_hora;operation_id;qtd_pedida;qtd_contada_no_copo;resultado_aparelho;sensor_antes;sensor_depois;estoque_app_antes;estoque_app_depois;estoque_fisico_contado;tempo_s;foto_copo;foto_tela;quem_contou;valido_s_n;observacoes
+A;A-01;;;1;;;;;;;;;A-01_1.jpg;A-01_2.jpg;;;
+A;A-02;;;1;;;;;;;;;A-02_1.jpg;A-02_2.jpg;;;
+A;A-03;;;1;;;;;;;;;A-03_1.jpg;A-03_2.jpg;;;

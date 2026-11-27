@@ -63,6 +63,22 @@ A Figura~\ref{fig:result-ciclos} sintetiza as categorias de registro, sem equipa
 \fonte{Elaboração a partir das tabelas do pacote de validação. \cite{DC_VALIDACAO2026}}
 \end{figure}
 
+\section{Dispensação vinculada: registros acrescentados em 27 de novembro}
+O novo CSV do Oficial contém oito registros iniciados entre 29 de outubro e 8 de novembro, não oito execuções homogêneas bem-sucedidas. Três pedidos (2, 6 e 7) foram recusados antes de mover e têm relato de zero saída. Há três ciclos completos com veredito: no 3, o sensor indica retenção e o relato é zero; no 4, leitura vazia e relato de uma unidade; no 5, retenção e resposta ``não observado''. O 8 requer reconciliação, com relato de uma unidade. O 1 recebe relato de saída cerca de nove dias depois do pedido, apesar de zero ciclos associados; permanece identificado como inconsistente. \cite{DC_NICOLAS2026}
+
+\input{Capitulos/tabela_ensaios}
+
+Não se adota a síntese ``estoque correto em 8/8'': a linha 5 não tem estoque posterior nem quantidade observada, e a linha 1 não serve como correspondência temporal confiável. Nas seis linhas restantes, a redução registrada corresponde à quantidade relatada, mas isso comprova apenas consistência contábil dos registros. Não há contagem física independente do reservatório que demonstre integridade em todas as linhas. Da mesma forma, a ausência de unidade extra nos relatos completos não é garantia de ausência de dose dupla nos oito casos. As proporções 3/8, 8/8 e 0/8 da proposta não são usadas como estimativas de eficácia ou segurança. \cite{DC_NICOLAS2026}
+
+A Tabela~\ref{tab:ensaios-simulado} contém sete linhas de 14 de novembro. O campo \texttt{fechamento} registra quatro encerramentos automáticos, dois relatos humanos de demonstração e uma linha sem fechamento. Portanto, cinco casos estão sem quantidade humana, mas apenas quatro estão explicitamente encerrados automaticamente. Nos dois relatos de demonstração, foram informadas duas unidades, com retenção indicada pelo sensor e estoque registrado 10 para 10. Não se mistura essa política com as travas do Oficial. \cite{DC_NICOLAS2026}
+
+\input{Capitulos/tabela_ensaios_simulado}
+
+Esses registros não se somam às 15 sessões nem aos 12 ciclos apresentados anteriormente: há sobreposição temporal e funcional entre as extrações. O novo CSV acrescenta identificação de operação e observação humana a parte do histórico, não uma campanha independente. Os intervalos de ADC das capturas históricas (vazio 2.755--2.952; ocupado 104--157), citados no memorial, também não substituem as faixas do perfil ativo nem incorporam as leituras intermediárias de todos os ciclos. \cite{DC_NICOLAS2026,DC_VALIDACAO2026}
+
+\subsection{Contagens e critérios que permanecem divergentes}
+A proposta resume localização em 4/9, enquanto a extração por fase do pacote anterior contém 1/12, 3/7 e 2/2; sem filtro e conjunto de identificadores equivalentes, essas proporções não foram intercambiadas. O resumo 3/26 de calibração refere-se à operação \texttt{calibrate\_slot}; a sessão distinta \texttt{calibrate\_five} continua separada. Indicadores de disponibilidade derivados de número de sinais por dia (91--94\% na entrega) não são a mesma métrica que a estimativa por lacunas de 98,90\% do relatório anterior. Nenhum deles mede acurácia física. \cite{DC_NICOLAS2026,DC_VALIDACAO2026}
+
 \section{Telemetria passiva da central}
 A janela das 22h11 às 22h40 contém 1.725 tentativas de consulta e uma falha HTTP do runtime, restando 1.724 amostras válidas por placa. As 1.614 leituras distintas por placa totalizam 3.228 sem indicação de erro ou troca de boot nas amostras válidas. A latência da consulta local foi mediana 183,4 ms, percentil 95 de 277,7 ms e máximo de 7.932,1 ms; não se trata da latência de uma dose ou de um comando remoto. \cite{DC_VALIDACAO2026}
 
@@ -91,10 +107,12 @@ Executor da campanha, 26/11 & 42 & 42 & 0 & 0 & 0\\\hline
 O erro do runtime pertence ao teste legado \texttt{test\_can\_hardware}; a API registra dois erros antigos de ambiente. O app de 25 de novembro apresenta 12 falhas e quatro ignorados mesmo na execução isolada; ``nenhuma falha nova'' não significa aprovação integral. A rodada de provisionamento é dc8, não demonstra por si a validação completa da versão instalada dc9. Os testes não foram reexecutados nesta consolidação. \cite{DC_VALIDACAO2026}
 \pendencia{RES04}{Vincular versões e logs completos do servidor e aplicativo apresentados na defesa; resolver ou justificar erros e falhas remanescentes. Completar testes autenticados de ponta a ponta e tarefas, sem somar rodadas.}
 
+A entrega de aplicativo também menciona a cópia de 18 de novembro, com 224/240 casos aprovados na suíte geral e 341/359 no Care, incluindo quatro ignorados. Não se trata de reexecução posterior à rodada de 25 de novembro; por isso, esses valores são históricos e não substituem a tabela de rodadas acima. As capturas demonstram a interface, não a aprovação dos testes ou o isolamento do paciente. \cite{DC_NICOLAS2026}
+
 \section{Visão, agente e avaliação de uso}
 O DOCX de visão fornece método, parâmetros e limites, não métricas experimentais. Os cinco eventos históricos originados pelo dispositivo e o evento manual de demonstração não compõem um conjunto de referência independente. A divergência entre regressão logística e vision-v3 está preservada no Capítulo~\ref{cap:visao}. \cite{DC_VALIDACAO2026,DC_VISAO2026}
 
-Para o agente, os novos relatos de integração e latência ainda exigem confirmação da frente responsável. Não foi localizada, nos materiais conferidos, campanha com casos, denominadores e efeitos persistidos que permita calcular desempenho do modelo. Não se infere ausência de testes do agente pela falta dessa campanha.
+Para o agente, a proposta de 27 de novembro detalha versões até v28, latências exploratórias de cerca de 11 s em voz e 15 s na leitura de receita e riscos de aprovação e contexto do paciente. São relatos ainda sujeitos à conferência da frente, não uma série de desempenho. \cite{DC_NICOLAS2026} Não foi localizada, nos materiais conferidos, campanha com casos, denominadores e efeitos persistidos que permita calcular desempenho do modelo. Não se infere ausência de testes do agente pela falta dessa campanha.
 \pendencia{RES05}{Completar os resultados de visão e agente separadamente, com método/versionamento reconciliados, conjunto de referência, falhas e denominadores.}
 \pendencia{RES06}{Inserir avaliação de usabilidade e acessibilidade, caso realizada: protocolo, autorizações aplicáveis, participantes, tarefas e achados. Não há base para afirmar melhoria de adesão ou eficácia clínica.}
 

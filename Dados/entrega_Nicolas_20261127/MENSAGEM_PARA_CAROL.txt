@@ -1,0 +1,20 @@
+Carol, segue minha parte e o material para os resultados. Está tudo numa pasta, com um LEIA-ME explicando cada arquivo e uma prévia em PDF da monografia já com tudo aplicado (compila sem erro no repositório).
+
+O que mandei:
+1. Cap. 11 (aplicativo) reescrito, com 16 prints novos (só dados fictícios).
+2. Uma seção nova para o cap. 10: camada de dados e rastreabilidade (banco da Pi, banco central, os dois ambientes oficial/simulado).
+3. Cap. 15 com todos os dados reais que temos hoje, em tabela, com taxa e intervalo de confiança, e as seções da campanha reservadas.
+4. Apêndice A: protocolo de ensaio, ficha por ensaio e matriz requisito x ensaio.
+5. Proposta de correção do cap. 13 (o agente mudou: hoje é a v28, com acesso aos dados, mas a aprovação das escritas não é garantida). Precisa passar pelo Thi.
+6. Base do cap. 12 para o Vini completar.
+
+Sendo honesto sobre os números: no ambiente oficial temos 8 dispensações, com 3 saídas confirmadas, 3 recusas seguras (o sistema não girou porque não teve certeza) e 2 comprimidos que ficaram presos. Nenhuma dose a mais, estoque sempre certo. A calibração do disco só fechou 3 vezes em 26. Ou seja: o software segura bem os casos duvidosos, mas a mecânica ainda é o gargalo. Com 8 ensaios não dá para afirmar acurácia.
+
+Para fechar a validação precisamos:
+- aprovar com o orientador os critérios ANTES de testar (proposta: pelo menos 90% de acerto em 50 ensaios, zero dose a mais, estoque 100% certo, zero movimento repetido em 20 falhas forçadas);
+- rodar a campanha com contagem e foto de cada ensaio. O app já grava sozinho pedido, resultado, sensor e estoque; eu exporto a tabela direto do banco;
+- decidir o ambiente: desde 14/11 a Pi está no Simulado, que fecha alguns ensaios sozinho, sem contagem. Para validar, o ideal é o Oficial.
+
+Também vale ver: as referências internas têm links de um OneDrive da GM que a banca não abre, e tem 13 referências acadêmicas no dosecerta_adicionais.bib que não estão sendo citadas.
+
+Qual é a data de entrega da monografia e da defesa? Com isso a gente planeja a campanha.

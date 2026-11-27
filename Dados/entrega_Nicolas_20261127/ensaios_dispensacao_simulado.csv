@@ -1,0 +1,8 @@
+﻿ensaio;inicio_brasilia;operation_id;qtd_solicitada;ciclos_motor;sensor_antes_mediana;sensor_antes_classe;sensor_depois_mediana;sensor_depois_classe;codigo_resultado_aparelho;status_comando;politica_travas;fechamento;observacao_humana;qtd_observada;estoque_antes;estoque_depois
+1;14/11/2026 17:02;cmd_857f2f53b8a54fc184b09acf08f6ce9b;1;1;122.0;OCCUPIED;;;slot_adc_identity_or_freshness_changed;failed;apresentacao;presentation_policy;presentation_auto_closed;;10;
+2;14/11/2026 18:15;cmd_d14b880c97ba4ff78f1ea25027edf40c;1;1;147.0;OCCUPIED;1872.0;EMPTY;slot_quantity_completed;applied;apresentacao;presentation_policy;presentation_auto_closed;;10;
+3;14/11/2026 18:17;cmd_0ef6a29a93ec422690a4526c4e869ab0;2;1;161.0;OCCUPIED;1807.0;EMPTY;slot_insufficient_candidates;applied;apresentacao;presentation_policy;presentation_auto_closed;;10;
+4;14/11/2026 18:20;cmd_871b96e2d9e44cba8fa4391e9744de96;1;1;272.0;OCCUPIED;1646.0;EMPTY;slot_quantity_completed;applied;apresentacao;presentation_policy;presentation_auto_closed;;10;
+5;14/11/2026 20:51;cmd_45ee2864833d4153b768cc0953cba6ea;2;1;220.5;OCCUPIED;923.0;OCCUPIED;slot_unit_retained;applied;apresentacao;human_report;demonstration_exit;2;10;10
+6;14/11/2026 20:52;cmd_7b60b6d0727e4ca98c06b8b54fe30c8e;2;1;125.5;OCCUPIED;445.0;OCCUPIED;slot_unit_retained;applied;apresentacao;human_report;demonstration_exit;2;10;10
+7;14/11/2026 23:04;cmd_3dea7a318d8e4b4f98559f528d083469;2;2;154.0;OCCUPIED;880.0;OCCUPIED;slot_quantity_completed;applied;apresentacao;sem fechamento;;;;

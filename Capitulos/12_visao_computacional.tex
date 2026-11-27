@@ -72,6 +72,11 @@ Há divergência entre as fontes: o relatório do pacote de validação descreve
 
 Os riscos identificados na análise do método incluem confirmação em um único quadro, oclusão dos lábios pela mão, contornos sem identidade farmacológica, limiares fixos em pixels e perda de movimentos rápidos. Ausência de pontos faciais não deve ser confundida com boca fechada. São limitações e hipóteses para ensaio, não frequências de falha já medidas. \cite{DC_VISAO2026}
 
+\subsection{Registro histórico da versão 2}
+A base remetida em 27 de novembro descreve testes exploratórios de 28 de outubro com webcam e uma pessoa. Na primeira rodada, três de quatro sequências simuladas receberam escore de 0,946 a 0,992 e uma, 0,884, ficou inconclusiva. Em outra, seis sessões receberam rótulo positivo, incluindo mão apoiada na bochecha com cabeça inclinada, um falso positivo identificado no próprio desenvolvimento. Um gesto de espreguiçar também levou a escore positivo e à revisão das regras. \cite{DC_NICOLAS2026}
+
+Esse histórico descreve ajuste de uma versão anterior, não teste independente da vision-v3. Os limiares da versão 2 (positivo a partir de 0,90, negativo até 0,15 e permanência mínima de 0,4 s) e sua janela de 20 s não foram transferidos para a máquina de estados com janela de 30 s do memorial do responsável. É necessário vincular cada registro a código, configuração e modelo antes de comparar resultados; um escore não calibrado não é probabilidade clínica. \cite{DC_NICOLAS2026,DC_VISAO2026}
+
 \section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{VIS01}{Confirmar com o responsável a correspondência entre vision-v3 3.0.0, código, release instalada e método ativo. Resolver a divergência com a regressão logística de 16 medidas do pacote.}
 \pendencia{VIS02}{Anexar figuras reais da aquisição, landmarks, ROI e interface; conferir versões das bibliotecas e execução dos mecanismos de câmera/cancelamento no aparelho. O DOCX não possui imagens incorporadas.}

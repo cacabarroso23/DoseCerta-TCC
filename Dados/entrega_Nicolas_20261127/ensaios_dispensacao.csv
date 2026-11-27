@@ -1,0 +1,9 @@
+﻿ensaio;inicio_brasilia;operation_id;qtd_solicitada;ciclos_motor;fases_por_ciclo;sensor_antes_mediana;sensor_antes_classe;sensor_depois_mediana;sensor_depois_classe;tentativas_desobstrucao;codigo_resultado_aparelho;status_comando;observacao_humana;qtd_observada;estoque_antes;estoque_depois;confirmado_em_brasilia;categoria
+1;29/10/2026 13:34;cmd_0eb06525f2114c57a9cb42bcd882fc73;1;0;;;;;;;slot_adc_identity_or_freshness_changed;failed;exit_confirmed;1;13;12;07/11/2026 18:57;falha antes do ciclo (registro humano tardio, inconsistente)
+2;07/11/2026 23:25;cmd_137a725b72c544378e184dd2240aa309;2;0;;;;;;;slot_pre_ambiguous;applied;no_exit;0;12;12;07/11/2026 23:25;recusa segura antes de mover
+3;08/11/2026 09:37;cmd_df20afacc21a4f23a26c69506c28f706;1;1;820;154.0;OCCUPIED;223.0;OCCUPIED;;slot_unit_retained;applied;no_exit;0;12;12;08/11/2026 09:38;ciclo completo com veredito do sensor
+4;08/11/2026 13:26;cmd_f217744846e04ad28b8fd4087534efb1;1;1;820;108.5;OCCUPIED;1916.5;EMPTY;;slot_quantity_completed;applied;exit_confirmed;1;12;11;08/11/2026 13:27;ciclo completo com veredito do sensor
+5;08/11/2026 13:27;cmd_537789d32e0446a5bd005566681ea71c;2;1;820;139.0;OCCUPIED;144.0;OCCUPIED;2;slot_unit_retained;applied;not_observed;;11;;08/11/2026 21:32;ciclo completo com veredito do sensor
+6;08/11/2026 21:32;cmd_fc4b6766f97246e8951959c092ac2eb8;1;0;;;;;;;slot_pre_ambiguous;applied;no_exit;0;11;11;08/11/2026 21:32;recusa segura antes de mover
+7;08/11/2026 21:32;cmd_1683e1c52d354f5881544e43eed6e263;1;0;;;;;;;slot_pre_ambiguous;applied;no_exit;0;11;11;08/11/2026 21:33;recusa segura antes de mover
+8;08/11/2026 21:38;cmd_4438a098c7fa4dbd93b037884c8b96ee;1;1;820;388.0;OCCUPIED;;;;slot_requires_reconciliation;failed;exit_confirmed;1;11;10;08/11/2026 21:38;ciclo interrompido - reconciliacao
