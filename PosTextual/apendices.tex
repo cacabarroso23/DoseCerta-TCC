@@ -1,2 +1,42 @@
 \chapter{Protocolos e rastreabilidade dos ensaios}\label{ap:ensaios}
-\pendencia{AP-A}{Inserir os protocolos, a matriz requisito--teste--evidência e as fichas de ensaio produzidos pelos autores. Identificar versão, configuração e vínculo com os resultados, sem incluir credenciais ou duplicar o texto principal.}
+\section{Critério de leitura}
+A matriz abaixo relaciona evidências disponíveis e lacunas de aceite. ``Parcial'' não é atendimento integral nem porcentagem de conclusão. Os critérios de aceitação discutidos no Capítulo~\ref{cap:requisitos} permanecem dependentes de protocolo e aprovação; a matriz usa os mesmos identificadores e conserva a diferença entre operação registrada e saída física. \cite{DC_VALIDACAO2026}
+
+{\small\setlength{\tabcolsep}{3pt}
+\begin{longtable}{p{0.12\textwidth}p{0.37\textwidth}p{0.40\textwidth}}
+\caption{Requisitos, evidências recebidas e aceite ainda necessário}\label{tab:ap-matriz}\\
+\hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endfirsthead
+\hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endhead
+RF01 & Disco, sensor e 12 ciclos registrados & Contagem independente, unidade extra e retenção\\\hline
+RF02 & Associação e sinais descritos; montagem fotografada & Conferência física de cada posição e associação\\\hline
+RF03 & Fluxo e sinais documentados & Agenda real desligada; falta comissionamento e sequência automática\\\hline
+RF04 & Dez ciclos com releitura, de 12 registrados & Confrontar leitura com inspeção do disco e contagem no copo\\\hline
+RF05 & Perfil ativo e sessões de localização & Referência independente e restauração após perda de posição\\\hline
+RF06 & Ledger DC1 e relatórios no servidor & Sincronização por evento em reconexão e preservação da origem\\\hline
+RF07 & Provisionamento e testes de software & Ensaio autenticado completo com celular real\\\hline
+RF08 & dc9 instalado e políticas de rede descritas & Reconexão, portal cativo e troca de rede em bancada\\\hline
+RF09 & Fluxos de manutenção documentados & Recadastro e reinício autorizados com preservação da identidade\\\hline
+RF10 & Quatro atualizações ESP32 aceitas & Corrupção, interrupção e reversão em ensaio controlado\\\hline
+RF11 & Instalações e uma reversão da Raspberry & Ensaios controlados de assinatura inválida e perda de energia\\\hline
+RF12 & Fotos e registros de sinalização & Roteiro visual completo; âmbar confundido com vermelho\\\hline
+RNF01 & SQLite e arquitetura de continuidade & RTC não ativo; falta partida sem rede e execução sem NTP\\\hline
+RNF02 & Identificadores únicos e política de reconciliação & Perda de resposta e duplicata com referência física independente\\\hline
+RNF03 & Limites e respostas de parada documentados & Medição física dos limites e injeção controlada de falhas\\\hline
+RNF04 & Atualizações e estado persistido & Comparação de identidade/calibração na recuperação controlada\\\hline
+RNF05 & JWT e credenciais documentados & Menor privilégio, chaves e testes negativos por interface\\\hline
+RNF06 & Inventário de releases e versões & Manifesto sanitizado da configuração final e dependências\\\hline
+RNF07 & Fotos dos encaixes e quatro contatos & Inserção energizada, continuidade e integridade do barramento\\\hline
+RNF08 & Interface Care e sinais com apoio de texto & Tarefas autorizadas, acessibilidade e compreensão\\\hline
+RF13-APP & Care implementado e suítes registradas & Sessão válida/expirada e tarefas autenticadas por tela\\\hline
+RF14-VIS & Método de visão documentado & Reconciliar versões e avaliar sequências rotuladas\\\hline
+RF15-AG & Configuração histórica e relatos posteriores & Confirmar agente atual, ferramentas e aprovação de escrita\\\hline
+RNF09-IA & Limites de finalidade descritos & Casos adversariais e avaliação humana do agente e da visão\\\hline
+RNF10-DADOS & Registros locais e centrais com origem & Matriz de acesso, retenção e auditoria de todas as observações\\\hline
+\end{longtable}\noindent Fonte: elaboração dos autores a partir das evidências recebidas. \cite{DC_VALIDACAO2026}\par}
+
+\section{Inventário e integridade}
+O diretório \texttt{Dados/validacao\_20261126} conserva tabelas de sessões, ciclos, calibração, comunicação, servidor e software. O histórico de observações foi preservado com sua proveniência; o projeto distribuído não inclui bancos brutos nem scripts executáveis do arquivo recebido. O mapa \texttt{mapa\_fotos\_20261126.json} relaciona cada painel às imagens de origem. As pranchas fotográficas foram compostas e redimensionadas para a monografia, sem reconstrução de conteúdo.
+
+\section{Protocolos ainda não executados}
+O plano de caixa preta recebido propõe blocos de localização com disco vazio, dispensação com contagem independente e comunicação/energia. Seu executor aprovado em testes de software não transforma o plano em experimento executado. A ficha de referência, versões e condições devem acompanhar cada tentativa; falhas e interrupções precisam permanecer no denominador. \cite{DC_VALIDACAO2026}
+\pendencia{AP-A}{Matriz e inventário incorporados. Aprovar critérios e anexar fichas preenchidas, instrumentos, executores, dados físicos e evidências finais. Não arquivar dados pessoais, segredos ou resultados simulados como observação real.}

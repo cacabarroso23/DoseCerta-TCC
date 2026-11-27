@@ -1,16 +1,103 @@
-% Revisão consolidada: 25/11/2026. Não antecipa resultados finais.
 \chapter{Resultados}\label{cap:resultados}
-\section{Configuração avaliada}
-\pendencia{RES01}{SEM DADOS FINAIS: inserir configuração efetivamente avaliada, versões, montagem, data, instrumentos e condições.}
-\section{Mecânica e elétrica}
-\pendencia{RES02}{SEM DADOS: inserir dimensões medidas, alimentação, corrente, aquecimento e ensaios/fotografias finais.}
-\section{Dispensação e controle embarcado}
-\pendencia{RES03}{SEM DADOS: inserir tentativas, denominadores, saída observada, falhas, doses extras, repetibilidade e recuperação.}
-\section{Servidor e aplicativo}
-\pendencia{RES04}{SEM DADOS FINAIS: inserir resultados próprios de software, integração autenticada, latência e tarefas da versão avaliada.}
-\section{Visão e agente}
-\pendencia{RES05}{SEM DADOS: inserir avaliação real de cada módulo separadamente, método, conjunto, métricas, falhas e limites.}
-\section{Usabilidade e acessibilidade}
-\pendencia{RES06}{SEM DADOS: inserir protocolo, autorizações aplicáveis, participantes, tarefas e achados, caso a avaliação seja realizada.}
+Os resultados deste capítulo provêm do pacote técnico de 26 de novembro de 2026, analisado com os registros históricos. As contagens descrevem amostras e configurações delimitadas; não constituem validação clínica ou prova geral de segurança. As tabelas-fonte foram preservadas em \texttt{Dados/validacao\_20261126} no projeto editável. \cite{DC_VALIDACAO2026}
+
+\section{Configuração registrada}
+Às 22h10 de 26 de novembro, a central registrava runtime 0.9.2, release \texttt{2026.11.25-cam-3}, INT01 0.3.1 e SUB01 0.6.1, em ambiente Simulado. O provisionamento documentado é 0.1.0+dc9. As duas placas respondiam na coleta posterior, superando o relato de indisponibilidade de 25 de novembro, mas sem demonstrar a correção da causa. O RTC não estava habilitado no Linux e a dispensação agendada permanecia desligada. As fotos do Capítulo~\ref{cap:mecanica} documentam a montagem, sem medições dimensionais. \cite{DC_VALIDACAO2026}
+\pendencia{RES01}{Acrescentar os hashes e o manifesto sanitizado da configuração que será apresentada, instrumentos e condição de comissionamento. A configuração lida em 26/11 não reúne todos os ensaios históricos deste capítulo.}
+
+\section{Mecânica, calibração e elétrica}
+As três calibrações salvas têm 15 intervalos, média de 819,2 fases, desvio-padrão amostral de aproximadamente 11,2, mínimo 806 e máximo 846. Cada perfil fecha 4.096 fases por construção da representação; a média coincide com $4.096/5$ e não comprova precisão angular absoluta. Não há encoder nem conferência independente de repetibilidade angular. \cite{DC_VALIDACAO2026}
+
+O perfil ativo de 7 de novembro, 23h24, apresenta centros em 0, 814, 1.639, 2.451 e 3.266 fases e intervalos 814, 825, 812, 815 e 830. A faixa de vazio é 1.556--2.920 e a de ocupado 1--1.139. A separação de 417 contagens entre as faixas do perfil ativo não é taxa de classificação: a maior leitura ocupada entre os três perfis é 1.148, portanto a síntese ``ocupado até 1.139 nas três calibrações'' seria imprecisa. \cite{DC_VALIDACAO2026}
+
+A influência óptica do reservatório e a intervenção com fita preta estão descritas no Capítulo~\ref{cap:mecanica}. Não foram fornecidas medições dimensionais da peça fabricada, corrente em atuação ou tensão transitória no SUB01. A queda de alimentação é diagnóstico confirmado em uma ocorrência de brownout; não foi demonstrada como causa única de todos os reinícios. \cite{DC_VALIDACAO2026}
+\pendencia{RES02}{Completar dimensões físicas, inclinação, corrente e tensão sob carga, aquecimento dos componentes e ensaios pós-reparo. Não converter temperatura da central em caracterização térmica de todo o aparelho.}
+
+As faixas salvas são comparadas na Figura~\ref{fig:result-faixas}; representam perfis, não uma distribuição de erros de classificação.
+
+\begin{figure}[htbp]
+\centering
+\caption{Faixas ADC de ocupado e vazio nos três perfis salvos}\label{fig:result-faixas}
+\includegraphics[width=0.98\textwidth,keepaspectratio]{Figuras/Validacao20261126/faixas_calibracao.png}
+\fonte{Elaboração a partir das tabelas do pacote de validação. \cite{DC_VALIDACAO2026}}
+\end{figure}
+
+\section{Comunicação e controle embarcado}
+O registro DC1 contém 3.430 comandos entre 17 de outubro e 26 de novembro, em 17 dias de uso: 2.669 para INT01 e 761 para SUB01. Os identificadores registrados são únicos e contíguos por placa. Isso caracteriza o banco examinado; não prova ausência de toda tentativa de transmissão ou duplicação física não registrada. Das entradas, 3.071 estão em \texttt{ACKNOWLEDGED} e 359 em \texttt{MOTION\_ACKNOWLEDGED}. Estados capturados como \texttt{BUSY} não equivalem a movimentos concluídos. \cite{DC_VALIDACAO2026}
+
+Há 39 comandos ABORT com resposta de parada e 303 giros \texttt{BENCH\_JOG} concluídos, somando 139.244 fases. São respostas do firmware, não 39 medições independentes de tempo físico de parada nem 303 dispensações contadas. A telemetria posterior distingue leituras de estado das operações de motor. \cite{DC_VALIDACAO2026}
+
+{\small\setlength{\tabcolsep}{3pt}
+\begin{longtable}{p{0.35\textwidth}p{0.17\textwidth}p{0.17\textwidth}p{0.17\textwidth}}
+\caption{Localização e calibração por fase do software}\label{tab:result-sessoes}\\
+\hline\textbf{Ação} & \textbf{Até dc8-3} & \textbf{dc8-4/5} & \textbf{dc8-6 em diante}\\\hline\endfirsthead
+\hline\textbf{Ação} & \textbf{Até dc8-3} & \textbf{dc8-4/5} & \textbf{dc8-6 em diante}\\\hline\endhead
+Localização concluída / sessões & 1/12 & 3/7 & 2/2\\\hline
+Calibração \texttt{calibrate\_slot} concluída / sessões & 1/18 & 2/5 & 0/3\\\hline
+\end{longtable}
+\noindent Fonte: \texttt{sessoes\_do\_disco\_por\_fase.csv}. \cite{DC_VALIDACAO2026}\par}
+A operação distinta \texttt{calibrate\_five} tem uma sessão concluída e não foi somada à linha de \texttt{calibrate\_slot}. O resultado 2/2 de localização pertence ao grupo histórico dc8-6 em diante; não é amostra específica da release 0.9.2 nem comprova a meta proposta de 98\%.
+
+\subsection{Dispensação: sessão, ciclo e quantidade física}
+As 15 sessões \texttt{simulate\_quantity} totalizam 21 unidades solicitadas. Doze sessões têm estado de software concluído, mas apenas quatro possuem motivo final \texttt{slot\_quantity\_completed}; outras foram encerradas por retenção ou impedimento de prosseguir. Os 12 ciclos com registro por cavidade são classificados na Tabela~\ref{tab:result-ciclos}. Nenhuma dessas grandezas fornece, por si, a quantidade contada no copo. \cite{DC_VALIDACAO2026}
+
+{\small\begin{longtable}{p{0.64\textwidth}p{0.23\textwidth}}
+\caption{Desfechos registrados dos 12 ciclos de dispensação}\label{tab:result-ciclos}\\
+\hline\textbf{Classificação do registro} & \textbf{Ciclos}\\\hline\endfirsthead
+\hline\textbf{Classificação do registro} & \textbf{Ciclos}\\\hline\endhead
+Cavidade verificada vazia após retorno & 4\\\hline
+Saída com reabastecimento, segundo o controlador & 2\\\hline
+Unidade retida & 4\\\hline
+Intenção de ciclo sem releitura & 2\\\hline
+\end{longtable}\noindent Fonte: \texttt{dispensacao\_ciclos\_por\_bolso.csv}. \cite{DC_VALIDACAO2026}\par}
+
+Quatro dos dez ciclos com releitura foram classificados como retenção. Essa proporção descreve a pequena amostra disponível, não a taxa de erro final do produto. Os dois casos de reabastecimento terminam com leitura ocupada ou ambígua, de modo que a interpretação do controlador precisa permanecer separada da observação física. Sem contagem humana por ciclo, não se calcula taxa pedido = saída nem se demonstra ausência de dose dupla. \cite{DC_VALIDACAO2026}
+\pendencia{RES03}{Executar a campanha com contagem independente, referência física, versões e denominadores: acerto, ausência, unidade extra, retenção, travamento, tempo e recuperação. Preservar tentativas interrompidas.}
+
+A Figura~\ref{fig:result-ciclos} sintetiza as categorias de registro, sem equipará-las à saída observada no coletor.
+
+\begin{figure}[htbp]
+\centering
+\caption{Categorias dos ciclos registrados, sem contagem física independente}\label{fig:result-ciclos}
+\includegraphics[width=0.98\textwidth,keepaspectratio]{Figuras/Validacao20261126/desfechos_ciclos.png}
+\fonte{Elaboração a partir das tabelas do pacote de validação. \cite{DC_VALIDACAO2026}}
+\end{figure}
+
+\section{Telemetria passiva da central}
+A janela das 22h11 às 22h40 contém 1.725 tentativas de consulta e uma falha HTTP do runtime, restando 1.724 amostras válidas por placa. As 1.614 leituras distintas por placa totalizam 3.228 sem indicação de erro ou troca de boot nas amostras válidas. A latência da consulta local foi mediana 183,4 ms, percentil 95 de 277,7 ms e máximo de 7.932,1 ms; não se trata da latência de uma dose ou de um comando remoto. \cite{DC_VALIDACAO2026}
+
+O ADC parado teve média 143,4, desvio-padrão 1,21 e extremos 138--148 em 1.724 amostras. A temperatura da Raspberry, em 173 leituras, variou de 53,692 a 57,458 graus Celsius, média 56,0; o indicador \texttt{throttled} foi zero nessas leituras. Há 121 amostras com fila não vazia no resumo, portanto não se afirma que todas as filas estiveram vazias durante a janela. A coleta sem movimento não avalia ruído e alimentação durante atuação. \cite{DC_VALIDACAO2026}
+
+\section{Servidor, enlace e atualização}
+No Simulado, o relatório registra 98.722 relatórios de estado no intervalo de 14 a 26 de novembro, mediana entre relatórios de 10,53 s e 29 lacunas maiores que 60 s. A disponibilidade estimada do enlace é 98,90\% em 293,60 h, com 3,22 h de lacunas. Inclui desligamentos deliberados e não mede a proporção de eventos corretamente sincronizados; não pode ser comparada diretamente à meta de 99\% de sincronização. \cite{DC_VALIDACAO2026}
+
+No Oficial, os 40 comandos de LED foram aplicados, com mediana de 1,26 s até reconhecimento. Esse recorte não caracteriza a latência do motor. O histórico de instalação contém 46 releases da Raspberry; o relatório identifica 27 instalações pelo atualizador desde 24 de outubro, três recusas antes da troca e uma reversão automática. Para ESP32 há quatro atualizações aceitas e três tentativas iniciais canceladas mantendo a imagem anterior. Não se generaliza esse histórico para toda corrupção ou interrupção possível. \cite{DC_VALIDACAO2026}
+
+\subsection{Suítes automatizadas}
+A Tabela~\ref{tab:result-software} reproduz rodadas identificadas na tabela histórica, sem somá-las. Suíte completa, grupo focado, teste de navegador e interação humana são unidades diferentes.
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.28\textwidth}p{0.13\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}}
+\caption{Rodadas de software e seus desfechos}\label{tab:result-software}\\
+\hline\textbf{Suíte / data} & \textbf{Casos} & \textbf{Aprov.} & \textbf{Falhas} & \textbf{Erros} & \textbf{Ignor.}\\\hline\endfirsthead
+\hline\textbf{Suíte / data} & \textbf{Casos} & \textbf{Aprov.} & \textbf{Falhas} & \textbf{Erros} & \textbf{Ignor.}\\\hline\endhead
+Runtime 0.7.7, 03/11 & 712 & 711 & 0 & 1 & 0\\\hline
+Runtime 0.9.2, 25/11 & 824 & 823 & 0 & 1 & 0\\\hline
+API, 25/11 & 297 & 295 & 0 & 2 & 0\\\hline
+Provisionamento dc8, 03/11 & 227 & 227 & 0 & 0 & 0\\\hline
+Care, 07/11 & 293 & 279 & 14 & 0 & 0\\\hline
+App com isolamento, 25/11 & 363 & 347 & 12 & 0 & 4\\\hline
+Executor da campanha, 26/11 & 42 & 42 & 0 & 0 & 0\\\hline
+\end{longtable}\noindent Fonte: linhas T052, T101, T102, T053, T063 e T104 de \texttt{testes\_software\_por\_rodada.csv}, mais log do executor. \cite{DC_VALIDACAO2026}\par}
+
+O erro do runtime pertence ao teste legado \texttt{test\_can\_hardware}; a API registra dois erros antigos de ambiente. O app de 25 de novembro apresenta 12 falhas e quatro ignorados mesmo na execução isolada; ``nenhuma falha nova'' não significa aprovação integral. A rodada de provisionamento é dc8, não demonstra por si a validação completa da versão instalada dc9. Os testes não foram reexecutados nesta consolidação. \cite{DC_VALIDACAO2026}
+\pendencia{RES04}{Vincular versões e logs completos do servidor e aplicativo apresentados na defesa; resolver ou justificar erros e falhas remanescentes. Completar testes autenticados de ponta a ponta e tarefas, sem somar rodadas.}
+
+\section{Visão, agente e avaliação de uso}
+O DOCX de visão fornece método, parâmetros e limites, não métricas experimentais. Os cinco eventos históricos originados pelo dispositivo e o evento manual de demonstração não compõem um conjunto de referência independente. A divergência entre regressão logística e vision-v3 está preservada no Capítulo~\ref{cap:visao}. \cite{DC_VALIDACAO2026,DC_VISAO2026}
+
+Para o agente, os novos relatos de integração e latência ainda exigem confirmação da frente responsável. Não foi localizada, nos materiais conferidos, campanha com casos, denominadores e efeitos persistidos que permita calcular desempenho do modelo. Não se infere ausência de testes do agente pela falta dessa campanha.
+\pendencia{RES05}{Completar os resultados de visão e agente separadamente, com método/versionamento reconciliados, conjunto de referência, falhas e denominadores.}
+\pendencia{RES06}{Inserir avaliação de usabilidade e acessibilidade, caso realizada: protocolo, autorizações aplicáveis, participantes, tarefas e achados. Não há base para afirmar melhoria de adesão ou eficácia clínica.}
+
 \section{Atendimento dos requisitos}
-\pendencia{RES07}{SEM DADOS FINAIS: relacionar requisito, critério, teste, evidência, resultado e limitação; não marcar atendimento automaticamente.}
+As evidências sustentam implementação e operação parcial de interfaces, comunicação, manutenção e coleta de dados; não sustentam aceite integral do fluxo autônomo. O Apêndice~\ref{ap:ensaios} relaciona requisitos e evidências sem declarar cumprimento por simples reconhecimento de comando.
+\pendencia{RES07}{Aprovar a matriz final requisito--teste--evidência e os critérios quantitativos; executar os casos físicos ainda ausentes e conferir o atendimento das outras frentes.}

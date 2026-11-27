@@ -1,126 +1,46 @@
+# DoseCerta — versão integrada para revisão, 27/11/2026
 
-# DoseCerta — Trabalho de Conclusão de Curso
+Esta é uma versão de trabalho, não a monografia final nem a validação do produto.
 
-## Sobre o projeto
+## Abrir e compilar
 
-O **DoseCerta** é um projeto de Trabalho de Conclusão de Curso em Engenharia de Robôs do Centro Universitário FEI. Consiste no desenvolvimento de um dispenser inteligente de medicamentos voltado a idosos em regime de polifarmácia, com o objetivo de auxiliar na organização e no gerenciamento dos horários de administração dos medicamentos.
+Importe o ZIP completo em um projeto separado do Overleaf. Selecione `main.tex` como principal e pdfLaTeX. Compile do zero e repita até estabilizar sumário, listas e referências. Não execute BibTeX/Biber: `referencias.tex` já está incluído. Se alterar citações ou a base `.bib`, execute `python3 gerar_referencias.py` antes de recompilar.
 
-Este repositório reúne os arquivos relacionados à elaboração da monografia, incluindo textos, capítulos, referências bibliográficas, imagens, documentos técnicos e materiais auxiliares.
+Localmente, com TeX Live/MiKTeX, execute três vezes:
 
-## Objetivo do repositório
-
-O GitHub é utilizado como ambiente central de armazenamento, organização e controle de versões do trabalho.
-
-Na prática, isso significa que os integrantes da equipe podem acessar os arquivos do projeto, acompanhar as alterações realizadas e compartilhar atualizações sem depender de diferentes cópias dos documentos.
-
-O histórico de versões permite identificar o que foi alterado, quando a modificação ocorreu e quais arquivos foram atualizados. Dessa forma, o repositório contribui para a rastreabilidade do desenvolvimento da monografia e para a colaboração entre os integrantes.
-
-Os arquivos-fonte permanecem disponíveis para edição, enquanto o PDF compilado permite consultar a versão mais recente do documento.
-
-## Organização dos arquivos
-
-A estrutura do repositório foi organizada para separar o documento principal, os capítulos e os materiais utilizados durante o desenvolvimento.
-
-| Arquivo ou diretório | Descrição |
-|---|---|
-| `main.tex` | Arquivo principal da monografia. Organiza a estrutura do documento e inclui os capítulos e demais elementos. |
-| `Capitulos/` | Contém os arquivos individuais dos capítulos da monografia. |
-| `PreTextual/` | Reúne os elementos pré-textuais, como resumo, abstract e outros elementos iniciais. |
-| `PosTextual/` | Contém os elementos pós-textuais, como apêndices e anexos. |
-| `classe/` | Armazena a classe LaTeX e os arquivos de formatação utilizados no modelo acadêmico. |
-| `FEI-pre-textual.tex` | Arquivo de configurações dos elementos pré-textuais. |
-| `FEI-bib/` | Reúne os arquivos relacionados à base bibliográfica. |
-| `Figuras/` | Armazena imagens, diagramas, fotografias e demais recursos visuais do trabalho. |
-| `referencias.tex` | Contém as referências bibliográficas formatadas utilizadas no documento. |
-| `gerar_referencias.py` | Script utilizado para gerar ou atualizar o arquivo de referências. |
-| `pendencias_dosecerta.tex` | Define a formatação visual das pendências destacadas na monografia. |
-| `pendencias.json` | Registra os identificadores e dados associados às pendências do documento. |
-| `PERGUNTAS_PARA_CONTRIBUIDORES.md` | Reúne questões e informações que precisam ser confirmadas ou fornecidas pelos integrantes. |
-| `VALIDACAO_E_COMPILACAO.md` | Documenta os procedimentos de validação e as instruções de compilação. |
-| `main.pdf` | Versão compilada da monografia, disponibilizada para consulta. |
-
-### Organização das figuras
-
-O diretório `Figuras/` possui materiais separados por finalidade:
-
-- `Figuras/SharePoint/`: reúne 37 figuras utilizadas na documentação e no desenvolvimento da monografia.
-- `Figuras/Artigo/`: preserva sete imagens documentais utilizadas como material de apoio.
-
-A inclusão de uma imagem no repositório não significa necessariamente que ela já esteja incorporada à versão final do documento.
-
-## Diretrizes de desenvolvimento
-
-Para manter a consistência e a rastreabilidade do trabalho, são adotadas as seguintes diretrizes:
-
-- Os capítulos são mantidos em arquivos separados, facilitando a edição, revisão e divisão de responsabilidades.
-- Informações ainda não confirmadas são identificadas como pendências.
-- Especificações técnicas devem ser verificadas antes de serem apresentadas como definições consolidadas.
-- Resultados experimentais devem corresponder aos testes efetivamente realizados.
-- Decisões de projeto devem ser diferenciadas de resultados de implementação e validação.
-- Elementos institucionais, como aprovação e informações da banca, não devem ser preenchidos com dados fictícios.
-
-### Decisões de projeto documentadas
-
-Entre as definições registradas até o momento estão:
-
-- Inclinação de projeto de 35°.
-- Autenticação obrigatória para acesso ao sistema.
-- CARE documentado em capítulo próprio.
-- Capítulo de visão computacional reservado ao conteúdo sob responsabilidade de Vini.
-- Ferramentas de desenvolvimento e inteligência artificial documentadas na metodologia.
-
-As definições ainda sujeitas à confirmação permanecem identificadas como pendências.
-
-## Situação atual
-
-A monografia encontra-se em desenvolvimento. O repositório contém a estrutura do documento, os capítulos elaborados, os materiais técnicos e os arquivos necessários à compilação.
-
-Ainda existem informações que dependem de confirmação dos integrantes, validações do protótipo, realização de testes, análise de resultados e revisão acadêmica.
-
-As pendências são identificadas ao longo do documento para facilitar seu acompanhamento. Atualmente, os arquivos de controle preservam 87 identificadores de pendências.
-
-O arquivo `main.pdf` corresponde à versão compilada disponibilizada no repositório. Os arquivos `.tex` são os documentos-fonte utilizados para sua elaboração.
-
-## Como colaborar
-
-Os integrantes podem acessar o repositório, consultar os documentos e contribuir com as partes sob sua responsabilidade.
-
-O fluxo recomendado para atualização é:
-
-1. Atualizar a cópia local do repositório antes de começar a trabalhar.
-2. Editar os arquivos correspondentes à sua responsabilidade.
-3. Salvar as alterações e verificar se o documento continua compilando corretamente.
-4. Registrar as modificações utilizando um commit com uma mensagem que descreva o que foi alterado.
-5. Enviar as atualizações ao GitHub por meio do comando `git push`.
-
-É importante evitar alterações simultâneas no mesmo arquivo sem alinhamento prévio entre os integrantes, reduzindo a possibilidade de conflitos durante a integração.
-
-## Como compilar a monografia
-
-O documento utiliza LaTeX e pode ser compilado localmente com MiKTeX ou TeX Live, desde que os pacotes necessários estejam instalados.
-
-O arquivo de entrada é `main.tex`.
-
-No terminal, dentro da pasta raiz do projeto, executar:
-
-```bash
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
-pdflatex -interaction=nonstopmode -halt-on-error main.tex
+```sh
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
 ```
 
-As três passagens permitem atualizar elementos como sumário, referências cruzadas e paginação.
+**Não foi possível compilar neste ambiente. Não há PDF novo neste pacote.** Não confundir `main.pdf` enviado com um PDF desta revisão. A inspeção visual das pranchas e gráficos não é revisão da paginação integral.
 
-Na configuração atual, as referências são incorporadas por meio do arquivo `referencias.tex`, sem necessidade de executar BibTeX ou Biber.
+## O que mudou
 
-Caso seja necessário atualizar as referências bibliográficas, executar:
+- Metodologia, autoria das frentes e declaração de apoio de IA do GitHub preservadas/conciliadas.
+- Arquitetura e configuração de 26/11; Oficial, Simulado com aparelho real e Demonstração sem hardware separados.
+- Erratas da mecânica, inclinação 30/35 graus não resolvida, leitura com reservatório e posição persistida.
+- RTC não ativo, alimentação sob carga, L4 18/17/16, LEDs comuns versus item WS2812B do orçamento e hash versus assinatura nas atualizações ESP32.
+- Trinta e cinco fotos em oito pranchas, com mapa dos arquivos de origem; dois gráficos a partir dos CSVs.
+- Visão com aquisição, landmarks, ROI, equações, limiares, máquina de estados e protocolo. Divergência com regressão logística mantida em aberto; sem métricas inventadas.
+- Conta compartilhada, privilégios/RLS e diferença entre aprovação do Foundry e autorização do serviço explicitadas.
+- Agente: arquitetura histórica preservada; relatos posteriores de Voice Live identificados como sujeitos à confirmação da frente.
+- Resultados, discussão e conclusão agora têm redação baseada nos dados disponíveis, não apenas campos vazios.
+- Resumo/abstract atualizados, matriz dos 25 requisitos e fontes de dados no apêndice.
+- Os 87 IDs de pendência anteriores foram preservados e delimitados; ARM01 acrescentado para conservação fora do blister. São 88 pendências, não 88 ausências de implementação.
 
-```bash
-python gerar_referencias.py
-```
+## Roteiro da sua leitura
 
-Após a compilação, recomenda-se conferir o PDF gerado, especialmente a organização dos capítulos, as figuras, as tabelas, as referências e as pendências destacadas.
+1. Leia `ALTERACOES_20261127.md` e as ressalvas de compilação.
+2. Confira primeiro os capítulos 12, 15, 16 e 17, depois os capítulos técnicos 4–10 e 13.
+3. Verifique com os responsáveis a inclinação, o método de visão instalado e o agente atual.
+4. Confira as fontes e notas de cada tabela. Sessão concluída, ACK, leitura vazia e contagem física não são equivalentes.
+5. Revise as fotos/legendas, a macro vermelha, capa, folha de rosto, sumário, listas e quebras após compilar.
+6. Use `PERGUNTAS_PARA_CONTRIBUIDORES.md` para resolver as lacunas; não remova o vermelho sem evidência.
 
----
+## Organização
 
-**Este repositório é a base compartilhada de desenvolvimento e documentação do TCC DoseCerta, permitindo que a equipe mantenha o trabalho organizado, atualizado e rastreável durante todas as etapas do projeto.**
+`Capitulos/`, `PreTextual/`, `PosTextual/`, `classe/` e `FEI-pre-textual.tex` compõem o modelo. A classe foi preservada nesta integração. `FEI-bib/dosecerta-referencias.bib` e `referencias.tex` guardam as referências. `Dados/validacao_20261126/` contém tabelas e documentos-fonte selecionados, não bancos brutos ou scripts do ZIP recebido. `Figuras/Validacao20261126/` contém os novos elementos. `mapa_fotos_20261126.json` vincula os painéis aos originais.
+
+A conferência SharePoint fornecida pela autora foi preservada em `CONFERENCIA_SHAREPOINT_REFERENCIA.md`; o guia antigo em `PERGUNTAS_PARA_CONTRIBUIDORES_ANTES_DA_INTEGRACAO.md` é histórico. O guia atual é gerado do inventário de pendências desta versão.
+
+Nenhum teste físico ou suíte do produto foi executado, nenhum comando foi enviado ao aparelho e nenhum commit/push foi feito. Os testes estáticos locais não provam compilação, aceite, conformidade ou completude bibliográfica.

@@ -52,7 +52,19 @@ A agenda somente deve produzir atuação quando houver referência temporal, con
 
 A arquitetura conecta, assim, requisitos de rastreabilidade e recuperação às decisões de implementação. O Capítulo~\ref{cap:mecanica} apresenta o mecanismo; o Capítulo~\ref{cap:eletrica}, sua interface elétrica; e o Capítulo~\ref{cap:embarcados}, o protocolo e o controle que executam essa sequência.
 
-\section*{\textcolor{red}{Complementações necessárias}}
+\section{Configuração de referência e ambientes de operação}
+Na coleta de 26 de novembro de 2026, a central registrava runtime 0.9.2, release \texttt{2026.11.25-cam-3}; o intermediário e o submódulo mantinham, respectivamente, firmware 0.3.1 em \texttt{0x20} e 0.6.1 em \texttt{0x30}. O provisionamento era 0.1.0+dc9. Essa referência substitui a indicação antiga de runtime 0.7.6 e de instalação pendente da 0.7.7. O inventário registra 46 releases; sua contagem não equivale a 46 ensaios independentes de recuperação por falha. \cite{DC_VALIDACAO2026}
+
+Desde novembro, o sistema distingue três ambientes. O Oficial utiliza a política rigorosa de validação. O Simulado tem API, autenticação e banco próprios e pode comandar o mesmo protótipo físico, sob política de apresentação. A Demonstração utiliza dados fictícios e aparelho representado no navegador, sem comandar o hardware. Portanto, ``Simulado'' não significa necessariamente hardware simulado. \cite{DC_VALIDACAO2026}
+
+A troca administrativa entre Oficial e Simulado mantém vínculo e estado local; a configuração do destino é republicada com uma revisão superior. Na coleta final, o aparelho apontava para o Simulado e informava configuração local na versão 1076. Esse número identifica o estado recebido pelo aparelho, não comprova o aceite físico de todas as rotinas. A dispensação agendada real continuava desabilitada; comandos manuais e a simulação completa não devem ser apresentados como execução autônoma da agenda. \cite{DC_VALIDACAO2026}
+
+\section{Alternativa de comunicação e serialização do movimento}
+A UART sugerida na qualificação foi avaliada como alternativa de ligação ponto a ponto. Para os encaixes intercambiáveis, uma implantação multiponto exigiria multiplexação ou transceptores e um protocolo de endereçamento adicional. Manteve-se o I²C de duas linhas compartilhadas, mas a decisão não elimina seus limites de capacitância, distância e integridade elétrica. A frequência nominal do barramento não substitui medição na montagem. \cite{DC_VALIDACAO2026,NXP_I2C}
+
+O controlador escreve um comando DC1 e consulta o resultado enquanto a ESP32 gera o movimento localmente. Assim, não mantém o barramento reservado durante todo o giro. A serialização de um único giro por vez é uma política do runtime, que também reduz a sobreposição de picos de corrente e mantém a rastreabilidade; não é uma impossibilidade elétrica de um barramento atender mais de um endereço. A expansão para vários submódulos permanece sem aceite físico. \cite{DC_VALIDACAO2026}
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{ARQ01}{Conferir os diagramas inseridos com a configuração final; atualizar módulos, interfaces e versões que tenham sido alterados desde o desenho de referência.}
 \pendencia{ARQ02}{Fornecer esquema da montagem pós-reparos, orientação de cada pogo, continuidade e fotografias identificadas. O mapa funcional disponível não comprova ordem física nem estado atual de todos os módulos.}
-\pendencia{ARQ04}{Atualizar a configuração na data de fechamento. O registro de 12/11/2026 informa runtime 0.7.12, INT01 0.3.1 e SUB01 0.6.1, sem RTC funcional, agenda automática desligada e motor a reconciliar. Confirmar comissionamento e versões antes de apresentar operação integrada.}
+\pendencia{ARQ04}{Configuração de 26/11 incorporada: runtime 0.9.2, INT01 0.3.1 e SUB01 0.6.1, Simulado, RTC não ativo e agenda desligada. Acrescentar hashes e comissionamento da configuração apresentada; não reutilizar a antiga referência sem fonte a 12/11.}

@@ -1,0 +1,18 @@
+﻿acao;fase_do_software;concluidas;falhas;paradas;total
+calibrate_five;ate dc8-3 (antes de 07/11 20:37);1;0;0;1
+calibrate_slot;ate dc8-3 (antes de 07/11 20:37);1;16;1;18
+calibrate_slot;dc8-4 e dc8-5 (07/11 20:37 a 08/11 11:20);2;3;0;5
+calibrate_slot;dc8-6 em diante (desde 08/11 11:20);0;3;0;3
+capture_empty;ate dc8-3 (antes de 07/11 20:37);4;0;0;4
+capture_occupied;ate dc8-3 (antes de 07/11 20:37);3;0;0;3
+check_occupancy;ate dc8-3 (antes de 07/11 20:37);1;0;0;1
+dispense_test;ate dc8-3 (antes de 07/11 20:37);1;0;0;1
+index_next;ate dc8-3 (antes de 07/11 20:37);1;1;2;4
+localize_slot;ate dc8-3 (antes de 07/11 20:37);1;11;0;12
+localize_slot;dc8-4 e dc8-5 (07/11 20:37 a 08/11 11:20);3;4;0;7
+localize_slot;dc8-6 em diante (desde 08/11 11:20);2;0;0;2
+simulate_quantity;ate dc8-3 (antes de 07/11 20:37);0;1;0;1
+simulate_quantity;dc8-4 e dc8-5 (07/11 20:37 a 08/11 11:20);2;0;0;2
+simulate_quantity;dc8-6 em diante (desde 08/11 11:20);10;2;0;12
+verify_empty;ate dc8-3 (antes de 07/11 20:37);1;2;0;3
+wiring_test;ate dc8-3 (antes de 07/11 20:37);20;2;0;22

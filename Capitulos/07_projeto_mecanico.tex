@@ -28,11 +28,11 @@ O reservatório mantém várias unidades de um mesmo medicamento sobre o disco. 
 \centering
 \caption{Vista explodida do reservatório e do disco dosador do modelo V75}\label{fig:dosador_explodido}
 \includegraphics[width=0.72\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/dosador_explodido.png}
-\fonte{Elaboração dos autores a partir dos modelos STL V75. Revisão geométrica anterior à definição final de inclinação.}
+\fonte{Elaboração dos autores a partir dos modelos STL V75. Plano do disco a 30 graus da horizontal; não foi localizada revisão posterior vinculada à peça fabricada.}
 \end{figure}
 
 
-Foi adotada inclinação de 35\ensuremath{^{\circ}} para o projeto. A inclinação auxilia o deslocamento das unidades por gravidade, mas sua escolha não dispensa a verificação de atrito, retenção e captura múltipla. A geometria da cavidade deve ser compatível com o medicamento de teste; por isso, o disco é tratado como peça personalizável, e não como solução universal para todos os formatos.
+A equipe registra inclinação de projeto de 35\ensuremath{^{\circ}}, enquanto o modelo V75 apresenta 30\ensuremath{^{\circ}}. Não foram localizadas revisão do CAD a 35\ensuremath{^{\circ}} nem medição da peça impressa que encerrem essa divergência. \cite{DC_VALIDACAO2026} A inclinação auxilia o deslocamento das unidades por gravidade, mas sua escolha não dispensa a verificação de atrito, retenção e captura múltipla. A geometria da cavidade deve ser compatível com o medicamento de teste; por isso, o disco é tratado como peça personalizável, e não como solução universal para todos os formatos.
 
 \section{Referência dimensional}
 O modelo V75 foi utilizado para identificar dimensões e regiões críticas antes da conferência física. A Tabela~\ref{tab:mecanica-dimensoes} reúne essas referências. Os valores descrevem o arquivo digital e não substituem as medidas das peças impressas. \cite{DC_COMPILADO}
@@ -46,7 +46,8 @@ O modelo V75 foi utilizado para identificar dimensões e regiões críticas ante
 Disco & Diâmetro de 57,3 mm; placa de 6,0 mm & Seleção e transporte\\\hline
 Cavidades & Cinco furos de 11,0 mm em círculo de 39,6 mm & Captura unitária\\\hline
 Folga axial & 0,72 mm entre disco e reservatório & Movimento relativo\\\hline
-Canal vertical & 30 mm & Condução até o coletor\\\hline
+Furo central da coluna do intermediário & Diâmetro de 30 mm & Passagem central; percurso até o coletor a confirmar\\\hline
+Plano do disco & 30\ensuremath{^{\circ}} em relação à horizontal & Referência do modelo V75, não medição física\\\hline
 Copo coletor & Diâmetro externo de 38,0 mm; altura de 34 mm & Recebimento das unidades\\\hline
 \end{longtable}
 \noindent Fonte: modelo V75, análise geométrica dos autores.\par}
@@ -54,7 +55,7 @@ Copo coletor & Diâmetro externo de 38,0 mm; altura de 34 mm & Recebimento das u
 \section{Acionamento e percurso do medicamento}
 O eixo do motor transmite a rotação ao disco por acoplamento. Durante o movimento, a posição relativa entre disco, reservatório e apoio define quando a cavidade pode receber, transportar ou liberar uma unidade. O alinhamento precisa impedir atrito excessivo sem criar uma passagem pela qual o comprimido escape fora da região prevista.
 
-A sequência funcional compreende localizar uma referência, encontrar uma cavidade, realizar o transporte e verificar sua condição após a liberação. O sensor observa o disco, enquanto a inspeção física avalia a correspondência entre essa leitura e a unidade no coletor. Essa combinação evita tratar o avanço comandado como confirmação automática de dose.
+O sensor fica uma cavidade antes da saída, cerca de 72 graus nominais. Com a referência válida, o transporte utiliza avanço nominal de 820 fases e retorno de 820 fases para releitura; procurar uma cavidade pelo sensor é procedimento reservado à localização com disco vazio. A releitura após o retorno é uma observação do disco, não uma contagem no coletor. \cite{DC_VALIDACAO2026} O sensor observa o disco, enquanto a inspeção física avalia a correspondência entre essa leitura e a unidade no coletor. Essa combinação evita tratar o avanço comandado como confirmação automática de dose.
 
 \section{Fabricação, montagem e manutenção}
 A fabricação por impressão 3D permite ajustar a geometria e produzir componentes substituíveis. O planejamento de materiais inclui PLA branco, fixadores M3 e ímãs. A lista de aquisição orienta os recursos previstos; o registro de fabricação identifica o material e os parâmetros efetivamente empregados em cada peça. \cite{DC_LISTA,DC_PROPOSTA}
@@ -63,11 +64,51 @@ Na montagem, os pontos críticos são a concentricidade do disco, o assentamento
 
 A verificação mecânica relaciona dimensões, folgas, inclinação, desgaste e comportamento com cada unidade de teste. Seus resultados integram a avaliação descrita no Capítulo~\ref{cap:testes}, em conjunto com alimentação e controle.
 
-\section*{\textcolor{red}{Complementações necessárias}}
-\pendencia{MEC01}{Atualizar o CAD e os desenhos para a inclinação adotada de 35\ensuremath{^{\circ}}. O modelo V75 ilustrado utiliza 30\ensuremath{^{\circ}} e não deve ser apresentado como geometria final. Vincular revisão, cotas e medição do conjunto montado.}
+\section{Registro fotográfico da montagem}
+As vistas da Figura~\ref{fig:montagem_2026} documentam o conjunto fechado e o acesso ao intermediário. O acervo complementa os desenhos e modelos anteriores, permitindo identificar o arranjo fabricado sem atribuir às fotografias uma precisão dimensional que elas não oferecem. \cite{DC_VALIDACAO2026}
+
+\begin{figure}[htbp]
+\centering
+\caption{Protótipo montado: (a) vista frontal; (b) três quartos; (c) conjunto sem a tampa superior}\label{fig:montagem_2026}
+\includegraphics[width=0.98\textwidth,height=0.59\textheight,keepaspectratio]{Figuras/Validacao20261126/conjunto.jpg}
+\fonte{Acervo dos autores, pacote de validação recebido em novembro de 2026.}
+\end{figure}
+
+A Figura~\ref{fig:central_fisica_2026} apresenta a central, a retirada do copinho, o coletor separado, a face de contato e o acesso USB. O copinho é um elemento removível do percurso de coleta; a presença de uma cavidade vazia no disco não determina, por si só, a quantidade depositada nesse recipiente.
+
+\begin{figure}[htbp]
+\centering
+\caption{Central fabricada: (a) conjunto; (b) retirada do copinho; (c) copinho removido; (d) contatos superiores; (e) acesso USB; (f) face inferior}\label{fig:central_fisica_2026}
+\includegraphics[width=0.98\textwidth,height=0.69\textheight,keepaspectratio]{Figuras/Validacao20261126/central_externa.jpg}
+\fonte{Acervo dos autores, pacote de validação recebido em novembro de 2026.}
+\end{figure}
+
+As Figuras~\ref{fig:sub_fisico_2026} e~\ref{fig:mecanismo_fisico_2026} mostram o reservatório, o disco removível, o conector e o apoio do mecanismo. As unidades visíveis nas imagens documentam a ocupação fotografada, mas não identificam medicamento, material de ensaio ou repetição experimental. A classificação farmacológica das unidades não foi inferida por aparência.
+
+\begin{figure}[htbp]
+\centering
+\caption{Submódulo: (a--b) corpo; (c) reservatório; (d) disco de cinco cavidades; (e) componentes separados; (f) conector inferior}\label{fig:sub_fisico_2026}
+\includegraphics[width=0.98\textwidth,height=0.69\textheight,keepaspectratio]{Figuras/Validacao20261126/submodulo.jpg}
+\fonte{Acervo dos autores, pacote de validação recebido em novembro de 2026.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{Detalhes do mecanismo: (a--b) desmontagem; (c) disco; (d) apoio e sensor; (e) fixação do motor; (f) conector}\label{fig:mecanismo_fisico_2026}
+\includegraphics[width=0.98\textwidth,height=0.69\textheight,keepaspectratio]{Figuras/Validacao20261126/mecanismo.jpg}
+\fonte{Acervo dos autores, pacote de validação recebido em novembro de 2026.}
+\end{figure}
+
+\section{Interferência óptica do reservatório e posição do disco}
+As leituras escuras observadas com o reservatório deixaram de ser apenas uma causa desconhecida: o registro de bancada relaciona a mudança à reflexão infravermelha da sua base. No mesmo furo vazio, foram documentadas aproximadamente 1.970 contagens sem reservatório, 61 a 64 com ele e 1.617 a 1.625 após a aplicação de fita preta sob a base. A calibração com reservatório e fita foi então concluída. Trata-se de uma correção observada numa configuração, não de uma demonstração de estabilidade para diferentes materiais, iluminação ou envelhecimento. \cite{DC_VALIDACAO2026}
+
+A localização automática na recolocação foi retirada a partir do runtime 0.7.12. Um giro de localização com disco carregado podia transportar uma unidade até a saída; assim, a reconexão não deve ordenar movimento apenas para descobrir a posição. A localização manual exige disco vazio quando a referência precisa ser recuperada. A posição persistida reduz essa necessidade, mas não detecta giro manual ou passos perdidos, conforme discutido no Capítulo~\ref{cap:embarcados}. \cite{DC_VALIDACAO2026}
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\pendencia{MEC01}{Resolver a divergência 30 graus do V75 versus 35 graus da decisão de projeto; identificar revisão fabricada e medir a montagem antes de alterar o CAD por pressuposto.}
 \pendencia{MEC03}{Conferir as dimensões da peça fabricada com instrumento, revisão e incerteza apropriados. Medir disco, cavidades, folgas, aberturas, oscilação e trajeto até o coletor. Não converter cotas do V75 em valores medidos do protótipo.}
 \pendencia{MEC04}{Inserir a ficha de fabricação por peça: material/marca/lote, impressora, fatiador, revisão, bico, temperaturas, camada, perímetros, preenchimento, orientação, suportes, tempo e massa. A lista de compra já foi recebida; falta a fabricação efetiva.}
 \pendencia{MEC05}{Completar a lista técnica instalada: parafusos por posição, ímãs e polaridade, acoplamentos, pogo, retenção, ajustes e eventual uso de adesivo. Incorporar o material complementar a ser fornecido pela autora.}
-\pendencia{MEC06-FOTO1}{Substituir ou complementar a fotografia de outubro pela montagem final pós-reparos, com data e identificação dos módulos e peças visíveis.}
-\pendencia{MEC06-FOTO2}{Acrescentar fotografias de detalhe da montagem final: disco, sensor, saída, coletor, fixação do motor e contatos, com escala.}
-\pendencia{MEC07}{Registrar massas, inclinação medida, atrito/ângulo de deslizamento, retenção desenergizada, folgas após impressão, desgaste e ciclos de encaixe. Para cada tipo de comprimido de teste, registrar captura simples/dupla, retenção, travamento, tentativas e falhas com denominador. Não há resultados finais fornecidos.}
+\pendencia{MEC06-FOTO1}{Montagem de novembro incorporada na Figura~\ref{fig:montagem_2026}. Confirmar com a equipe revisão e identificação das peças fotografadas antes do fechamento.}
+\pendencia{MEC06-FOTO2}{Detalhes da montagem incorporados nas Figuras~\ref{fig:sub_fisico_2026} e~\ref{fig:mecanismo_fisico_2026}; complementar com escala, orientação do sensor e caminho efetivo até o coletor.}
+\pendencia{MEC07}{Completar massas, inclinação física, atrito, retenção, desgaste e encaixes. Já há ciclos e falhas de desenvolvimento no Capítulo~\ref{cap:resultados}; falta campanha controlada por unidade de teste com contagem independente.}

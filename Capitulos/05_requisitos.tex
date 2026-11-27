@@ -16,7 +16,7 @@ RF01 & Armazenar cada medicamento em submódulo removível e liberar a quantidad
 RF02 & Indicar luminosamente a posição e solicitar confirmação humana da associação do submódulo. & Conferência de cada posição e associação registrada.\\\hline
 RF03 & Avisar o horário por luz e som e aguardar confirmação de presença antes de dispensar. & Roteiro da sequência e das recusas sem confirmação.\\\hline
 RF04 & Reler opticamente a cavidade após a liberação para avaliar seu retorno ao estado vazio. & Comparação da leitura com inspeção independente.\\\hline
-RF05 & Calibrar o disco e localizar a próxima cavidade vazia após encaixe ou reinício. & Casos de inserção, reinício e referência inválida.\\\hline
+RF05 & Calibrar o disco e permitir localização manual com disco vazio quando a posição não for confiável; restaurar posição persistida somente com referências válidas. & Casos de inserção, reinício e referência inválida.\\\hline
 RF06 & Registrar comandos, resultados e eventos com origem identificada e sincronizá-los. & Auditoria local/servidor e reconexão.\\\hline
 RF07 & Configurar a rede pelo celular via Bluetooth, sem periféricos de console. & Pareamento e provisionamento autenticado.\\\hline
 RF08 & Permitir recuperação de rede e gestão das redes conhecidas sem desconfigurar o aparelho. & Casos sem Wi-Fi, troca, lista, inclusão e exclusão.\\\hline
@@ -55,7 +55,7 @@ RNF08 & Ser compreensível para o público pretendido, sem depender exclusivamen
 \textbf{ID} & \textbf{Requisito} & \textbf{Verificação prevista}\\\hline
 \endhead
 RF13-APP & Exigir login e disponibilizar configuração e acompanhamento pelo Care via API. & Sessões válidas/expiradas e tarefas por tela.\\\hline
-RF14-VIS & Produzir observações visuais rastreáveis, distinguindo tomada, ausência de tomada e inconclusão. & Avaliação com referência independente.\\\hline
+RF14-VIS & Produzir observações visuais rastreáveis, distinguindo indício de gesto, ausência de evidência suficiente, inconclusão e erro técnico, sem comprovar ingestão clínica. & Avaliação com referência independente.\\\hline
 RF15-AG & Consultar contexto e solicitar ações de cuidado por ferramentas autorizadas com confirmação de escrita. & Roteiro de leituras, aprovação, recusa e erros.\\\hline
 RNF09-IA & Não prescrever, decidir doses nem converter incerteza em confirmação clínica. & Casos adversariais e avaliação humana.\\\hline
 RNF10-DADOS & Preservar origem, instante, versão e limitações de cada observação e restringir seu acesso. & Auditoria e matriz de acesso/retenção.\\\hline
@@ -67,6 +67,6 @@ A avaliação relaciona cada requisito a um procedimento e a uma configuração.
 
 As exigências de operação local e modularidade também dependem de condições explícitas. A continuidade sem rede requer tempo confiável, agenda válida e hardware pronto; a remoção energizada requer integridade elétrica e de comunicação. Essas condições orientam a arquitetura do Capítulo~\ref{cap:arquitetura} e os ensaios do Capítulo~\ref{cap:testes}.
 
-\section*{\textcolor{red}{Complementações necessárias}}
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{REQ02}{Definir os limites quantitativos de aceitação: taxa de separação correta e dose extra, tempo por unidade, capacidade útil, repetibilidade, tensão mínima em carga, correntes, latência, disponibilidade, número de ciclos e critérios de visão/agente. Registrar justificativa e unidade; não inventar metas.}
 \pendencia{REQ03-MATRIZ}{Preencher a matriz final requisito--teste--evidência--resultado após a campanha. Todas as frentes permanecem no escopo; o estado de atendimento continua pendente.}

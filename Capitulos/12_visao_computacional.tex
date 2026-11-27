@@ -1,14 +1,81 @@
 \chapter{Visão computacional}\label{cap:visao}
-A visão computacional compõe a observação associada à tomada, em complemento aos registros do mecanismo e aos relatos do cuidado. Sua função é produzir uma saída rastreável sobre as imagens analisadas, preservando a condição inconclusiva quando não houver informação suficiente. Uma observação visual não é tratada como comprovação clínica de ingestão.
+A visão computacional constitui um recurso complementar de observação da tomada. O reconhecimento de um gesto não confirma deglutição, composição ou dose. Este capítulo consolida o memorial da frente de visão, identificado como \texttt{vision-v3}, versão 3.0.0, distinguindo o método descrito da implantação e da validação experimental. \cite{DC_VISAO2026}
 
-A integração com a central compartilha o recurso de câmera e precisa delimitar aquisição, processamento e devolução do resultado. O registro deve conservar o evento de referência, a versão do método e as condições da captura, de forma que a saída possa ser relacionada à rotina apresentada no aplicativo.
+\section{Aquisição e arquitetura}
+O método utiliza Python, OpenCV, MediaPipe e NumPy. O desenvolvimento inicial foi realizado com webcam em computador e posteriormente adaptado à Raspberry Pi Zero 2 W. O memorial prevê Camera Module 3, captura de $320\times240$ pixels a 5 quadros/s, limite de processamento de 4 quadros/s e redimensionamento para largura de 640 pixels, preservando a proporção. São parâmetros configurados, não desempenho medido na central. O processamento ocorre localmente; o resultado é trocado em JSON com o restante do sistema durante uma janela padrão de 30 s. \cite{DC_VISAO2026}
 
-\section{Método de aquisição e processamento}
-\pendencia{VIS01}{Completar a descrição técnica da frente de visão com o objetivo operacional e o evento observado. Responsável: Vinicius.}
-\pendencia{VIS02}{Inserir a arquitetura implementada: aquisição, preparação, algoritmo ou modelo, saídas, erros, versões e implantação. Acrescentar o diagrama e as imagens do método utilizado.}
-\section{Dados e avaliação}
-\pendencia{VIS03}{Informar origem e autorização dos dados, anonimização, classes, rotulagem, composição e separação dos conjuntos e referência independente.}
-\pendencia{VIS04}{Definir métricas, limiares, cenários, repetições, condições e critérios de aceitação. Distinguir a pontuação do modelo de certeza clínica.}
-\section{Resultados e limitações}
-\pendencia{VIS05}{Inserir somente os resultados experimentais efetivamente obtidos, com versões, denominadores e registros correspondentes.}
-\pendencia{VIS06}{Descrever as falhas observadas, fatores de generalização e condições em que o método deve declarar resultado inconclusivo.}
+A sequência compreende aquisição, preparação, pontos de referência, análise de uma região de interesse entre os dedos, rastreamento do objeto e decisão temporal. O memorial não contém imagens incorporadas da interface, da segmentação ou dos pontos detectados. Não foram produzidas imagens sintéticas para substituir evidência do algoritmo em operação.
+
+\section{Pontos de referência e critérios geométricos}
+O Face Landmarker fornece os pontos 61 e 291 nas extremidades da boca e 13 e 14 na região interna dos lábios. O Hand Landmarker fornece os pontos 4 e 8, extremidades de polegar e indicador. Coordenadas normalizadas são convertidas para pixels, com largura $W$ e altura $H$:
+\begin{equation}\label{eq:vis-coordenadas}
+x_p=x_nW,\qquad y_p=y_nH.
+\end{equation}
+O centro da boca é o ponto médio entre suas extremidades. A abertura é estimada pela distância entre os lábios; a pinça, pela distância entre os dedos; a aproximação, pela distância do indicador ao centro da boca. Esses critérios dependem da escala e do enquadramento, não correspondem a distâncias físicas universais. \cite{DC_VISAO2026}
+
+Dados os pontos $\mathbf{p}_{61}$ e $\mathbf{p}_{291}$, o centro é $\mathbf{c}_b=(\mathbf{p}_{61}+\mathbf{p}_{291})/2$. As medidas são
+\begin{equation}\label{eq:vis-distancias}
+a_b=\|\mathbf{p}_{13}-\mathbf{p}_{14}\|_2,\quad
+d_p=\|\mathbf{p}_{4}-\mathbf{p}_{8}\|_2,\quad
+d_b=\|\mathbf{p}_{8}-\mathbf{c}_b\|_2.
+\end{equation}
+Essas distâncias sustentam os limiares da Tabela~\ref{tab:vis-parametros}. \cite{DC_VISAO2026}
+
+\section{Identificação e acompanhamento do objeto}
+A ROI acompanha o ponto médio entre os dedos. O processamento converte a região para cinza, aplica filtro gaussiano $5\times5$, limiarização adaptativa gaussiana com vizinhança $11\times11$ e abertura e fechamento com elemento $3\times3$. Contornos elegíveis são comparados por área $A$, circularidade $C$ e distância $d$ ao centro da ROI. A pontuação transcrita do memorial é
+\begin{equation}\label{eq:vis-score}
+S=A+40C-0{,}8d.
+\end{equation}
+Com perímetro $L$, a circularidade utilizada é $C=4\pi A/L^2$, para $L>0$. Trata-se de uma heurística de seleção geométrica, sem interpretação probabilística. Identificar um contorno não identifica o medicamento. \cite{DC_VISAO2026}
+
+Após a seleção, a área de referência pode ser atualizada pela mediana de quadros recentes. Uma ROI de referência em cinza, filtrada e redimensionada para $80\times80$ pixels, é comparada às seguintes. Ausência de contorno válido, área inferior a 12 pixels quadrados, redução para menos de 45\% da referência ou diferença média de intensidade superior a 12 são indícios de desaparecimento aparente. Oclusão, iluminação e saída da mão da ROI também podem satisfazer essas condições. \cite{DC_VISAO2026}
+
+\section{Decisão sequencial e parâmetros}
+O memorial descreve seis estados: aguardando objeto, objeto confirmado, mão na boca, boca aberta, boca fechada e ``ingestão provável'', rótulo interno da fonte. Nesta monografia, o último é entendido como sequência visual compatível com a tomada, sem confirmação clínica. A evidência de desaparecimento é acompanhada em paralelo e exigida para a decisão final; não é uma etapa que obrigatoriamente ocorra depois do fechamento da boca. O tempo máximo intermediário é de 2,5 s; quando excedido, a máquina retorna ao início. \cite{DC_VISAO2026}
+
+{\small\setlength{\tabcolsep}{3pt}
+\begin{longtable}{p{0.65\textwidth}p{0.25\textwidth}}
+\caption{Parâmetros documentados de vision-v3}\label{tab:vis-parametros}\\
+\hline\textbf{Parâmetro} & \textbf{Valor}\\\hline\endfirsthead
+\hline\textbf{Parâmetro} & \textbf{Valor}\\\hline\endhead
+Abertura da boca & $>7$ pixels\\\hline
+Proximidade mão--boca & $<50$ pixels\\\hline
+Pinça & $5<d<60$ pixels\\\hline
+Área elegível de contorno & 20 a 3.000 pixels$^2$\\\hline
+Área absoluta de desaparecimento & 12 pixels$^2$\\\hline
+Redução da área & Menos de 45\%\\\hline
+Diferença média da ROI & 12 níveis de intensidade\\\hline
+Confirmação de objeto / desaparecimento & 1 quadro / 1 quadro\\\hline
+Janela de monitoramento do objeto & 25 quadros\\\hline
+Prazo intermediário / observação padrão & 2,5 s / 30 s\\\hline
+\end{longtable}
+\noindent Fonte: memorial da frente de visão. \cite{DC_VISAO2026}\par}
+
+\section{Integração, cancelamento e falhas técnicas}
+O memorial prevê MediaPipe 0.10.18 na plataforma embarcada e 0.10.32 no computador. O módulo recebe solicitação e devolve classificação, quadros processados, estado final e informações de tempo. O acesso exclusivo à câmera, o indicador luminoso, a verificação de memória e o cancelamento buscam evitar concorrência e publicação indevida de observações canceladas. Indisponibilidade da câmera, interrupção de captura ou falha dos modelos são erros técnicos, não evidência de ausência de tomada. A comprovação desses caminhos na configuração instalada depende dos registros correspondentes. \cite{DC_VISAO2026}
+
+\section{Dados e protocolo de avaliação}
+Os modelos MediaPipe são pré-treinados; o memorial não descreve treinamento de uma rede própria para medicamentos. Isso não dispensa conjunto independente de avaliação. A proposta inclui sequência completa simulada, mão vazia próxima à boca, objeto sem aproximação, sequência interrompida e abertura da boca sem objeto, além de variações de luz, distância e oclusão. Não se trata de campanha já realizada. \cite{DC_VISAO2026}
+
+Com referência humana da sequência simulada, podem-se calcular precisão $P$, sensibilidade $R$, acurácia e frequência efetiva:
+\begin{equation}\label{eq:vis-metricas}
+P=\frac{VP}{VP+FP},\quad R=\frac{VP}{VP+FN},\quad
+\mathrm{Acc}=\frac{VP+VN}{VP+VN+FP+FN},\quad
+\mathrm{FPS}=\frac{N_q}{\Delta t}.
+\end{equation}
+Denominador nulo deve produzir métrica não definida, não acerto automático. A fonte considera saídas inconclusivas como não positivas apenas para a análise experimental; no cuidado, elas requerem confirmação e não demonstram que a pessoa não tomou o medicamento. Erros técnicos devem ser contados separadamente, com o total de tentativas, e não excluídos silenciosamente. \cite{DC_VISAO2026}
+
+\section{Resultados disponíveis, divergências e limitações}
+O memorial documenta a implementação do método, da interface de inspeção e de mecanismos de integração, mas não fornece conjunto rotulado, matriz de confusão nem medições finais do desempenho embarcado. Portanto, não são apresentados valores de acurácia, precisão, sensibilidade ou F1. \cite{DC_VISAO2026}
+
+Há divergência entre as fontes: o relatório do pacote de validação descreve regressão logística de 16 medidas e cerca de 1,3 quadro/s, enquanto o DOCX descreve a máquina de estados vision-v3. Os escores e os eventos históricos do primeiro não foram usados como resultados do segundo. Falta vincular versão, código, release e observações para estabelecer qual implementação estava ativa em cada ensaio. \cite{DC_VALIDACAO2026,DC_VISAO2026}
+
+Os riscos identificados na análise do método incluem confirmação em um único quadro, oclusão dos lábios pela mão, contornos sem identidade farmacológica, limiares fixos em pixels e perda de movimentos rápidos. Ausência de pontos faciais não deve ser confundida com boca fechada. São limitações e hipóteses para ensaio, não frequências de falha já medidas. \cite{DC_VISAO2026}
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\pendencia{VIS01}{Confirmar com o responsável a correspondência entre vision-v3 3.0.0, código, release instalada e método ativo. Resolver a divergência com a regressão logística de 16 medidas do pacote.}
+\pendencia{VIS02}{Anexar figuras reais da aquisição, landmarks, ROI e interface; conferir versões das bibliotecas e execução dos mecanismos de câmera/cancelamento no aparelho. O DOCX não possui imagens incorporadas.}
+\pendencia{VIS03}{Fornecer conjunto de avaliação autorizado, condições, classes, rotulagem independente e separação de ajuste e avaliação. Modelos pré-treinados não eliminam essa necessidade.}
+\pendencia{VIS04}{Aprovar os critérios e a amostragem de avaliação; os limiares implementados estão na Tabela~\ref{tab:vis-parametros} e não são metas clínicas nem desempenho obtido.}
+\pendencia{VIS05}{Executar ou localizar avaliação rotulada: número de sequências, matriz de confusão, erros técnicos, casos que requerem confirmação, tempo, memória e quadros/s efetivos.}
+\pendencia{VIS06}{Avaliar experimentalmente oclusões, luz, distância, ausência de landmarks e confirmação em um quadro, preservando a diferença entre falha técnica e resultado que requer confirmação.}

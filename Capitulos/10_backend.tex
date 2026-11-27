@@ -8,7 +8,7 @@ Na Raspberry Pi, o runtime coordena agenda, comunicação com os módulos, sinal
 \centering
 \caption{Serviços e fluxos de execução da unidade central}\label{fig:runtime_processos}
 \includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/runtime_processos.png}
-\fonte{Elaboração dos autores a partir da arquitetura do runtime 0.7.7. Versão de referência do desenho.}
+\fonte{Elaboração dos autores a partir da arquitetura do runtime 0.7.7, referência histórica do desenho, não instalada. A coleta de fechamento registra runtime 0.9.2; o desenho não atesta sua configuração integral.}
 \end{figure}
 
 
@@ -46,7 +46,7 @@ O provisionamento permite configurar o aparelho pelo celular, sem teclado ou mon
 A senha da rede não deve ser enviada antes da verificação prevista no fluxo. A recuperação das redes conhecidas também precisa preservar a identidade e os registros do aparelho. Essas operações pertencem à manutenção da conectividade e não devem produzir, por consequência, novo comando de dispensação.
 
 \section{API, autenticação e persistência central}
-A API FastAPI concentra validação de entrada, autorização e regras do cuidado. O PostgreSQL mantém os vínculos entre paciente, medicamento, agenda, inventário e eventos. O Supabase oferece os serviços de identidade e persistência utilizados pela aplicação. A autenticação inicia a sessão; a autorização determina quais operações são permitidas naquele contexto.
+A API FastAPI concentra validação de entrada, autorização e regras do cuidado. O PostgreSQL mantém os vínculos entre paciente, medicamento, agenda, inventário e eventos. O Supabase hospedado no servidor fornece PostgreSQL e autenticação. O Care utiliza o Supabase para identidade; as leituras e escritas do cuidado passam pela API, que acessa o PostgreSQL com consultas parametrizadas. O PostgREST não é o caminho usado pela API de negócio e o serviço de tempo real não integra a composição documentada. A conta autorizada é única: as visões de cuidador, familiar e paciente não constituem isolamento por pessoa, e a atuação física exige a visão de cuidador. \cite{DC_COMPILADO,DC_VALIDACAO2026}
 
 A publicação utiliza HTTPS e serviços em contêineres. O proxy recebe as conexões externas e as encaminha ao gateway do projeto, que distribui os caminhos para aplicativo e API. A Figura~\ref{fig:implantacao_servidor} mostra essa organização e as redes internas. O banco não é acessado diretamente pelo aparelho.
 
@@ -84,8 +84,15 @@ A perda de conexão pode ocorrer depois de uma operação local e antes da confi
 
 Essa organização fornece ao Care uma interface de acompanhamento consistente com o dispositivo. O capítulo seguinte apresenta como planejamento, histórico, manual e assistente são organizados para o usuário.
 
-\section*{\textcolor{red}{Complementações necessárias}}
-\pendencia{BE01-RUNTIME}{Confirmar release e hash instalados na data de fechamento, manifesto, dependências, serviços e configuração efetiva. Documentar o provisionamento ativo e a diferença entre fonte no servidor e instalação local.}
+\section{Separação de ambientes e confirmação física}
+O Oficial e o Simulado executam a mesma família de código em instâncias próprias de API, autenticação e banco. O segundo pode comandar o aparelho real sob política de apresentação; a Demonstração pública não comanda o protótipo. A separação reduz a mistura de cadastros, mas não constitui, isoladamente, uma avaliação de isolamento ou de segurança. \cite{DC_VALIDACAO2026}
+
+O servidor distingue o reconhecimento do comando, o estado de uma sessão de motor, a confirmação humana da quantidade e a observação de câmera. Na regra atual, a resposta à pergunta sobre a quantidade coletada é que fundamenta a baixa de estoque. ``Não vi'' encerra o teste manual sem presumir quantidade; uma correção posterior deve ser registrada como recontagem, evitando descontar duas vezes. \cite{DC_VALIDACAO2026}
+
+A documentação de segurança registra ainda o uso, pela API, de papel que pode ignorar as políticas RLS e a autenticação do MCP por chave estática. Assim, a proteção efetiva depende de validação no servidor e de controle dos segredos; a existência de RLS no banco não autoriza afirmar segregação de ponta a ponta. Os testes de recusa de token inválido e os testes locais não equivalem a auditoria de todas as permissões em produção. Retenção, restauração, privacidade e acesso a observações reservadas continuam sujeitos à verificação específica. \cite{DC_VALIDACAO2026}
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\pendencia{BE01-RUNTIME}{Versão e configuração de 26/11 incorporadas; complementar hash, manifesto e dependências da apresentação, sem atribuir a essa configuração todos os ensaios históricos.}
 \pendencia{BE02-AGENDA}{Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação.}
 \pendencia{BE03-REDE}{Anexar roteiros e logs de pareamento, configuração/troca de Wi-Fi, senha incorreta, perda de conexão, reset e recadastramento, sem expor segredos.}
 \pendencia{BE04-LOCAL}{Comprovar persistência de filas e idempotência, tratamento de resultado incerto, sincronização após falha e atualização segura da Pi com interrupção controlada.}

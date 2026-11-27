@@ -15,12 +15,12 @@ Na configuração de referência de 3 de novembro de 2026, o aplicativo utilizav
 
 
 \section{Contexto e recuperação de informações}
-O agente de conversa utiliza pesquisa em arquivos para recuperar contexto. A utilidade desse recurso depende da seleção, da revisão e da atualização do conteúdo disponibilizado. A existência de um índice não garante que o manual esteja completo ou que os registros atuais do cuidado sejam consultados.
+Na configuração de referência de 3 de novembro, o agente de conversa utilizava pesquisa em arquivos para recuperar contexto. A utilidade desse recurso depende da seleção, da revisão e da atualização do conteúdo disponibilizado. A existência de um índice não garante que o manual esteja completo ou que os registros atuais do cuidado sejam consultados.
 
 As respostas devem distinguir conhecimento de referência e dados obtidos por ferramenta. Quando uma consulta falha ou retorna informação parcial, o agente precisa informar esse limite antes de afirmar rotina, estoque ou histórico. Textos recuperados são tratados como dados de contexto, não como instruções para alterar a política de operação.
 
 \section{Ferramentas e operações}
-A configuração MCP reúne duas ferramentas de leitura e seis de escrita. As leituras consultam contexto e registros; as escritas alteram cadastros, rotinas, atividades ou observações. A Tabela~\ref{tab:13-1} apresenta os identificadores da configuração de referência. \cite{DC_FOUNDRY}
+A configuração MCP de referência de 3 de novembro reunia duas ferramentas de leitura e seis de escrita. As leituras consultam contexto e registros; as escritas alteram cadastros, rotinas, atividades ou observações. A Tabela~\ref{tab:13-1} apresenta os identificadores da configuração de referência. \cite{DC_FOUNDRY}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.44\textwidth}p{0.12\textwidth}p{0.32\textwidth}}\caption{Ferramentas da cópia MCP do agente, documentadas em novembro}\label{tab:13-1}\\
 \hline
@@ -56,7 +56,7 @@ A segurança é distribuída entre identificação do usuário, autorização do
 Quando o retorno de uma ferramenta é incerto, o agente deve consultar o estado antes de solicitar repetição. O mesmo cuidado se aplica à comunicação do resultado: preparar uma chamada, obter aprovação, persistir a alteração e produzir eventual efeito físico são etapas diferentes.
 
 \section{Voz e integração com o Care}
-A interface de voz utiliza um relay no backend. Na configuração apresentada, esse caminho não processa as aprovações exigidas pelas ferramentas MCP, motivo pelo qual foi mantido separado do agente de teste. A resposta conversacional disponível no Care não é, portanto, apresentada como execução automática das oito ferramentas. \cite{DC_FOUNDRY,DC_ANALISE}
+A interface de voz utiliza um relay no backend. Na configuração histórica de 3 de novembro, esse caminho não processa as aprovações exigidas pelas ferramentas MCP, motivo pelo qual foi mantido separado do agente de teste. A resposta conversacional disponível no Care não é, portanto, apresentada como execução automática das oito ferramentas. \cite{DC_FOUNDRY,DC_ANALISE}
 
 A integração deve conservar os caminhos manuais do aplicativo e informar o que foi efetivamente realizado. O agente pode esclarecer uma solicitação, consultar e apresentar um retorno, mas não deve transformar uma falha de acesso em afirmação de ausência de dados.
 
@@ -65,11 +65,19 @@ A avaliação diferencia recuperação de contexto, escolha da ferramenta, argum
 
 Os procedimentos são relacionados à estratégia de integração do capítulo seguinte. Os resultados do agente devem manter a versão, o ambiente e os casos utilizados, permitindo interpretar o alcance de cada evidência.
 
-\section*{\textcolor{red}{Complementações necessárias}}
+\section{Estado da integração e alcance da evidência}
+Os novos insumos não apresentam uma campanha de interações do modelo que permita estimar precisão de seleção de ferramenta, frequência de falso sucesso ou segurança de escritas em contexto real. A suíte do MCP verifica componentes de software, não corresponde ao mesmo número de conversas avaliadas. A conversa de leitura documentada e a configuração de aprovação são evidências distintas de uma alteração aprovada, persistida e conferida no cuidado correto. \cite{DC_VALIDACAO2026}
+
+A aprovação do Foundry é uma política do caminho do agente, não uma trava universal de toda chamada ao MCP. Quem detiver a chave do serviço pode estar fora desse caminho; por isso, controle de segredo, autorização na API e registro da origem permanecem necessários. A monografia não presume que a integração entre voz, MCP e Care esteja validada apenas porque cada parte responde isoladamente. \cite{DC_VALIDACAO2026}
+
+\section{Relatos posteriores à configuração de referência}
+O pacote de novembro relata migração do agente para Azure Voice Live, desligamento do MCP dedicado anterior e consulta somente de leitura ao contexto do paciente por \texttt{GET /v1/care/assistant\_context}; as alterações permaneceriam no aplicativo. Essas informações são relatos de integração de outra frente, não uma atualização confirmada da configuração do agente neste capítulo. Não se apresentam a leitura de receita nem a redução de latência de 94,5 s para 11,0 s como métricas verificadas sem versão, cenário, repetição e registro primário. \cite{DC_VALIDACAO2026}
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{AG01}{Confirmar modelo, parâmetros e versões finais do agente publicado e do agente chamado pelo aplicativo. O rótulo interno gpt-5.6-luna precisa de identificação verificável e não deve ser tratado como especificação pública do modelo.}
 \pendencia{AG02}{Fornecer evidências das oito ferramentas, aprovação e recusa de escritas, validação do servidor, tratamento de duplicatas e falhas ambíguas. Não executar gravações de teste em dados reais.}
 \pendencia{AG03}{Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \texttt{file\_search}.}
 \pendencia{AG04}{Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.}
 \pendencia{AG05}{Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.}
 \pendencia{AG06}{Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.}
-\pendencia{AG07}{Comprovar eventual integração posterior MCP--voz--Care e tratamento de aprovação na interface. Na ausência de prova, manter a distinção v5 sem MCP e agente de teste com ferramentas.}
+\pendencia{AG07}{Reconciliar a configuração histórica de 03/11 com o relato posterior de Voice Live e ferramenta de contexto somente de leitura; identificar versão ativa, protocolo, permissões e evidência no Care antes de afirmar a integração atual.}

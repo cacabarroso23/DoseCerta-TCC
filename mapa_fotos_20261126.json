@@ -1,0 +1,193 @@
+{
+  "conjunto": [
+    {
+      "painel": "a",
+      "foto": "01_conjunto_frente.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/01_conjunto_frente.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "02_conjunto_tres_quartos_esquerda.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/02_conjunto_tres_quartos_esquerda.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "03_conjunto_sem_tampa_sub_encaixado.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/03_conjunto_sem_tampa_sub_encaixado.jpg"
+    }
+  ],
+  "central_externa": [
+    {
+      "painel": "a",
+      "foto": "10_central_tres_quartos_frente.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/10_central_tres_quartos_frente.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "11_central_retirando_copinho.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/11_central_retirando_copinho.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "12_central_copinho_removido.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/12_central_copinho_removido.jpg"
+    },
+    {
+      "painel": "d",
+      "foto": "13_central_face_superior_contatos.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/13_central_face_superior_contatos.jpg"
+    },
+    {
+      "painel": "e",
+      "foto": "14_central_traseira_usb.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/14_central_traseira_usb.jpg"
+    },
+    {
+      "painel": "f",
+      "foto": "15_central_invertida_tampa_inferior.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/15_central_invertida_tampa_inferior.jpg"
+    }
+  ],
+  "submodulo": [
+    {
+      "painel": "a",
+      "foto": "30_submodulo_frente.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/30_submodulo_frente.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "31_submodulo_lateral.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/31_submodulo_lateral.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "32_submodulo_reservatorio_comprimidos.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/32_submodulo_reservatorio_comprimidos.jpg"
+    },
+    {
+      "painel": "d",
+      "foto": "33_submodulo_disco_vista_superior.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/33_submodulo_disco_vista_superior.jpg"
+    },
+    {
+      "painel": "e",
+      "foto": "35_submodulo_vista_explodida.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/35_submodulo_vista_explodida.jpg"
+    },
+    {
+      "painel": "f",
+      "foto": "37_submodulo_invertido_conector.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/37_submodulo_invertido_conector.jpg"
+    }
+  ],
+  "mecanismo": [
+    {
+      "painel": "a",
+      "foto": "34_submodulo_sem_disco_lateral.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/34_submodulo_sem_disco_lateral.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "36_submodulo_vista_explodida_b.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/36_submodulo_vista_explodida_b.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "40_detalhe_disco_cavidades_sensor.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/40_detalhe_disco_cavidades_sensor.jpg"
+    },
+    {
+      "painel": "d",
+      "foto": "41_detalhe_placa_apoio_eixo_sensor_saida.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/41_detalhe_placa_apoio_eixo_sensor_saida.jpg"
+    },
+    {
+      "painel": "e",
+      "foto": "43_detalhe_fixacao_motor.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/43_detalhe_fixacao_motor.jpg"
+    },
+    {
+      "painel": "f",
+      "foto": "44_detalhe_conector_submodulo.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/44_detalhe_conector_submodulo.jpg"
+    }
+  ],
+  "central_eletronica": [
+    {
+      "painel": "a",
+      "foto": "16_central_aberta_raspberry_rtc.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/16_central_aberta_raspberry_rtc.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "17_central_raspberry_detalhe.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/17_central_raspberry_detalhe.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "18_central_cabo_camera.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/18_central_cabo_camera.jpg"
+    },
+    {
+      "painel": "d",
+      "foto": "19_central_rtc_usb_contato.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/19_central_rtc_usb_contato.jpg"
+    }
+  ],
+  "intermediario": [
+    {
+      "painel": "a",
+      "foto": "20_intermediario_sem_tampa_encaixes.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/20_intermediario_sem_tampa_encaixes.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "21_intermediario_vista_superior_contatos.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/21_intermediario_vista_superior_contatos.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "22_intermediario_leds_verdes.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/22_intermediario_leds_verdes.jpg"
+    },
+    {
+      "painel": "d",
+      "foto": "23_intermediario_sub_encaixado_leds_azuis.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/23_intermediario_sub_encaixado_leds_azuis.jpg"
+    }
+  ],
+  "intermediario_chicote": [
+    {
+      "painel": "a",
+      "foto": "24_intermediario_sub_aberto_no_encaixe.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/24_intermediario_sub_aberto_no_encaixe.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "25_intermediario_aberto_chicote.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/25_intermediario_aberto_chicote.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "26_intermediario_tampa_inferior_pogo_fios.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/26_intermediario_tampa_inferior_pogo_fios.jpg"
+    }
+  ],
+  "sub_eletronica": [
+    {
+      "painel": "a",
+      "foto": "38_submodulo_aberto_motor_driver.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/38_submodulo_aberto_motor_driver.jpg"
+    },
+    {
+      "painel": "b",
+      "foto": "39_submodulo_aberto_esp32.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/39_submodulo_aberto_esp32.jpg"
+    },
+    {
+      "painel": "c",
+      "foto": "42_detalhe_motor_28byj48_driver.jpg",
+      "arquivo_original": "04_Fotos_do_prototipo/organizadas/42_detalhe_motor_28byj48_driver.jpg"
+    }
+  ]
+}

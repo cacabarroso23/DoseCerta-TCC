@@ -48,7 +48,7 @@ O executor organiza a sequência de fases, os limites e a parada. Antes da atua�
 Os estados de término, aborto, erro e interrupção são mantidos até o reconhecimento pertinente. Esse comportamento impede que uma nova solicitação apague o contexto necessário para interpretar o movimento anterior. A recuperação combina leitura da placa e registros duráveis; quando não há evidência suficiente, o estado continua incerto em vez de ser convertido em sucesso.
 
 \section{Leitura óptica e calibração}
-A leitura do TCRT5000 é relacionada à posição do disco. O procedimento de calibração utiliza a variação do sinal entre material e cavidade para definir referências de busca. A validade do perfil depende do conjunto utilizado, incluindo sensor, disco e alinhamento. A contagem de fases descreve o movimento comandado e não elimina a necessidade de observar o efeito físico.
+A leitura do TCRT5000 é relacionada à posição do disco. O procedimento de calibração utiliza a variação do sinal entre material e cavidade para definir referências de busca. A validade do perfil depende do conjunto utilizado, incluindo sensor, disco, reservatório e alinhamento. Desde a versão 0.7.11, a faixa de vazio considera também a leitura parada na cavidade de referência, inferior à leitura durante o movimento. \cite{DC_VALIDACAO2026} A contagem de fases descreve o movimento comandado e não elimina a necessidade de observar o efeito físico.
 
 A consulta do ADC utiliza uma sequência própria de seleção, leitura e restauração do estado, apresentada na Figura~\ref{fig:consulta_adc}. O controle conserva a exclusão do barramento durante essa troca, de modo que a leitura não seja confundida com a resposta de outra operação.
 
@@ -61,7 +61,7 @@ A consulta do ADC utiliza uma sequência própria de seleção, leitura e restau
 
 
 \section{Atualização pelo barramento}
-A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação.
+A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação. O manifesto vincula imagem, papel, endereço físico, local e ciclo de inicialização; o SHA-256 verifica integridade na partição inativa. A imagem da ESP32 não possui assinatura criptográfica, diferentemente da release da Raspberry. \cite{DC_VALIDACAO2026}
 
 \begin{figure}[htbp]
 \centering
@@ -83,9 +83,23 @@ A sequência da Figura~\ref{fig:ota_sequencia} separa preparação, envio, final
 
 A configuração instalada deve ser identificada por versão e manifesto de gravação. Essa identificação conecta o firmware às rotinas da central, apresentadas no capítulo seguinte, e aos testes de interrupção, duplicata e recuperação.
 
-\section*{\textcolor{red}{Complementações necessárias}}
+\section{Calibração ativa, persistência de posição e retomada}
+O modelo ativo extraído em 26 de novembro foi criado em 7 de novembro de 2026, às 23h24 de Brasília, com SUB01 0.6.1, reservatório e fita preta. Os centros são 0, 814, 1.639, 2.451 e 3.266 fases; os intervalos 814, 825, 812, 815 e 830 totalizam 4.096 fases. A faixa de vazio é 1.556 a 2.920 contagens e a de ocupado, 1 a 1.139. O espaço entre as faixas evita classificar leituras intermediárias como decisão segura; essas faixas pertencem ao perfil e não são uma taxa experimental de acerto. \cite{DC_VALIDACAO2026}
+
+A calibração passou a considerar também a leitura parada do furo de referência, pois o valor parado era inferior ao observado em movimento. Na varredura, atrasos de acesso ao cartão, consulta do observador e abertura de banco foram retirados do caminho crítico; os pulsos dos LEDs internos deixaram de concorrer com as leituras durante localização e calibração. Os registros iniciais posteriores apontam lacunas de 10 a 15 fases, diante do limite local de 40; não constituem uma distribuição de todas as execuções. \cite{DC_VALIDACAO2026}
+
+A posição fica no arquivo \texttt{slot\_pose.json}. Antes do movimento é marcada como em andamento; após o reconhecimento, a referência é atualizada pela contagem devolvida pelo firmware. A restauração depende da identidade da placa, versão, modelo, calibração e encerramento conhecido da sessão anterior. Movimento sem contagem confirmada, troca incompatível ou referência inconsistente impedem sua reutilização. Giro manual, travamento com perda de passos e erro acumulado do período permanecem limites dessa estratégia sem encoder. \cite{DC_VALIDACAO2026}
+
+Na configuração documentada, a saída está uma cavidade à frente do sensor: o ciclo avança 820 fases e retorna para releitura. Se a unidade permanecer retida, podem ocorrer até duas tentativas com balanço de $-80/+80$ fases e pausa de 0,5 s, respeitando o tempo disponível da sessão. O retorno do sensor a vazio não mede a queda no coletor. A pergunta ``Quantos caíram?'' e a resposta humana permanecem independentes; a redução do estoque não deve ser inferida apenas da câmera ou do ADC. \cite{DC_VALIDACAO2026}
+
+\section{Manutenção e sinalização na configuração atual}
+No Oficial, uma saída sem resposta bloqueia novos giros, mas não os testes sem motor nem a liberação sem giro. A liberação de uma dispensação em revisão não executa movimento e pode invalidar a posição, exigindo posterior localização com disco vazio. No Simulado há regras de apresentação mais permissivas; seus resultados não demonstram por si só a eficácia das travas do Oficial. \cite{DC_VALIDACAO2026}
+
+Os sinais são gerados pelo runtime. A instalação de versões posteriores a 0.7.7 remove a antiga pendência de instalar os sinais, mas não substitui sua inspeção visual. A observação de que o âmbar aparenta vermelho na montagem é uma limitação concreta de distinção de estados. A troca do LED da câmera foi observada; a sinalização azul em todo fluxo real de captura ainda exige conferência. Os avisos da agenda real permaneciam não acionados na configuração de fechamento. \cite{DC_VALIDACAO2026}
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{EMB01}{Fornecer código/release final, hashes, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.}
 \pendencia{EMB02}{Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação.}
-\pendencia{EMB03}{Anexar parâmetros e registros de calibração e localização do disco utilizado: fases por volta, intervalo, leituras, limiares, dispersão, falhas e restauração após desligamento.}
+\pendencia{EMB03}{Perfil ativo e intervalos incorporados. Completar referência angular independente, restauração física após desligamento, deslocamento manual e desempenho de localização na configuração final.}
 \pendencia{EMB04}{Fornecer relatórios de bancada de motor/sensor, duplicatas, perda de comunicação, reinício durante movimento, falha de persistência e recuperação. Separar teste simulado de execução física e identificar denominadores.}
-\pendencia{EMB05}{Comprovar atualização pelo barramento e recuperação de interrupção/corrupção com logs sanitizados. Não assumir assinatura, rollback ou persistência preservada sem evidência da versão.}
+\pendencia{EMB05}{Quatro atualizações aceitas e três canceladas estão documentadas. Completar ensaio controlado de corrupção/interrupção e recuperação. Imagem ESP32 tem SHA-256, não assinatura criptográfica.}

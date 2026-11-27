@@ -1,0 +1,13 @@
+﻿inicio_da_sessao (BRT);release;acao;quantidade_pedida;ciclo;bolso_antes;leitura_antes_mediana;bolso_depois;leitura_depois_mediana;resultado_do_ciclo;tentativas_de_desprender;resultado_da_sessao
+2026-11-08 09:37:21;2026.11.07-dc8-5;simulate_quantity;1;1;OCCUPIED;154.0;OCCUPIED;223.0;slot_unit_retained;;slot_unit_retained
+2026-11-08 13:26:25;2026.11.08-dc8-6;simulate_quantity;1;1;OCCUPIED;108.5;EMPTY;1916.5;slot_verified_empty;;slot_quantity_completed
+2026-11-08 13:27:18;2026.11.08-dc8-6;simulate_quantity;2;1;OCCUPIED;139.0;OCCUPIED;144.0;slot_unit_retained;2;slot_unit_retained
+2026-11-08 21:38:05;2026.11.08-dc8-6;simulate_quantity;1;1;OCCUPIED;388.0;;;slot_cycle_intent;;slot_requires_reconciliation
+2026-11-14 17:02:43;2026.11.14-amb-1;simulate_quantity;1;1;OCCUPIED;122.0;;;slot_cycle_intent;;slot_adc_identity_or_freshness_changed
+2026-11-14 18:15:29;2026.11.14-amb-2;simulate_quantity;1;1;OCCUPIED;147.0;EMPTY;1872.0;slot_verified_empty;;slot_quantity_completed
+2026-11-14 18:17:17;2026.11.14-amb-2;simulate_quantity;2;1;OCCUPIED;161.0;EMPTY;1807.0;slot_verified_empty;;slot_insufficient_candidates
+2026-11-14 18:20:08;2026.11.14-amb-2;simulate_quantity;1;1;OCCUPIED;272.0;EMPTY;1646.0;slot_verified_empty;;slot_quantity_completed
+2026-11-14 20:51:31;2026.11.14-amb-3;simulate_quantity;2;1;OCCUPIED;220.5;OCCUPIED;923.0;slot_unit_retained;;slot_unit_retained
+2026-11-14 20:52:42;2026.11.14-amb-3;simulate_quantity;2;1;OCCUPIED;125.5;OCCUPIED;445.0;slot_unit_retained;;slot_unit_retained
+2026-11-14 23:04:15;2026.11.14-amb-4;simulate_quantity;2;1;OCCUPIED;154.0;AMBIGUOUS;1258.0;slot_dropped_refilled;;slot_quantity_completed
+2026-11-14 23:04:15;2026.11.14-amb-4;simulate_quantity;2;2;OCCUPIED;144.5;OCCUPIED;880.0;slot_dropped_refilled;;slot_quantity_completed

@@ -1,0 +1,17 @@
+﻿command_type;status;motivo;count
+apply_config;failed;config_not_available;21
+apply_config;expired;;19
+dc1_motor;failed;slot_status_read_unavailable;6
+dc1_motor;failed;slot_requires_reconciliation;4
+dc1_motor;failed;slot_scan_contrast_insufficient;4
+dc1_motor;failed;slot_disc_obstructed;3
+dc1_motor;failed;slot_scan_coverage_gap;3
+dc1_motor;failed;wiring_led_state_changed;2
+dc1_motor;failed;prototype_empty_verification_failed;2
+dc1_motor;failed;slot_adc_identity_or_freshness_changed;2
+dc1_motor;failed;slot_localization_hole_not_found;2
+dc1_motor;failed;slot_no_coherent_hypothesis;2
+dc1_motor;failed;slot_anchor_not_empty;1
+dc1_motor;failed;occupancy_unstable_capture;1
+dc1_motor;failed;slot_too_many_invalid_points;1
+dc1_motor;failed;dc1_motor_requires_reconciliation;1

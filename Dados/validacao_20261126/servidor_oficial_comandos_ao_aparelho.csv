@@ -1,0 +1,9 @@
+﻿command_type;status;count;ack_medio_s;ack_mediana_s;ack_max_s;de;ate
+apply_config;applied;36;2.15;1.67;6.70;2026-09-08;2026-11-12
+apply_config;expired;19;;;;2026-10-29;2026-10-29
+apply_config;failed;21;16.81;2.68;282.35;2026-08-24;2026-11-03
+apply_config;queued;7;;;;2026-09-08;2026-11-16
+dc1_led;applied;40;1.56;1.26;12.52;2026-10-18;2026-10-24
+dc1_motor;applied;56;17.56;7.09;77.89;2026-10-18;2026-11-08
+dc1_motor;failed;34;35.60;19.42;247.82;2026-10-18;2026-11-08
+vision_observe;applied;2;2.11;2.11;2.23;2026-11-08;2026-11-08

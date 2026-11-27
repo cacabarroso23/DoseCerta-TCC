@@ -1,4 +1,3 @@
-% Campos editoriais: visíveis no PDF quando compilado, inclusive em cópia de leitura.
-\definecolor{RED}{RGB}{255,0,0}
-
-\newcommand{\pendencia}[2]{\par\begingroup\color{red}\noindent\textbf{PENDENTE [#1] -- }#2\par\endgroup\medskip}
+% Pendências editoriais visíveis na cópia de leitura.
+\definecolor{DCPendente}{RGB}{190,0,0}
+\newcommand{\pendencia}[2]{\par\begingroup\color{DCPendente}\noindent\textbf{PENDENTE [#1] -- }#2\par\endgroup\medskip}

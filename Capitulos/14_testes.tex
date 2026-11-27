@@ -31,7 +31,14 @@ Na interface, as tarefas incluem login, configuração, consulta do plano diári
 \section{Consolidação das evidências}
 A matriz final relaciona requisito, caso de teste, configuração, evidência e desfecho. Itens não executados e falhas abertas permanecem identificados. Os resultados são apresentados no Capítulo~\ref{cap:resultados}; sua interpretação, no Capítulo~\ref{cap:discussao}. Essa separação permite discutir o alcance das observações sem substituir dados por expectativas de projeto.
 
-\section*{\textcolor{red}{Complementações necessárias}}
+\section{Ensaios e registros recebidos em 26 de novembro}
+A campanha de caixa preta permanece planejada: seu executor teve 42 de 42 testes de software aprovados, o que verifica a ferramenta de execução e não equivale a 42 testes físicos do dosador. Os blocos previstos são localização com disco vazio, dispensação com contagem independente e comunicação/energia. Metas como 95\% em pelo menos 60 pedidos e 98\% de localizações são propostas do plano, ainda sujeitas ao protocolo final; não foram adotadas retroativamente como aceite. \cite{DC_VALIDACAO2026}
+
+Separadamente, a coleta passiva das 22h11 às 22h40, horário de Brasília, produziu 1.725 tentativas de consulta local, uma falha HTTP e 1.724 amostras válidas. As contagens de 1.614 leituras distintas por placa somam 3.228, pois consultas sucessivas podem reutilizar o mesmo estado de hardware. A condição era sem acionamento do motor; ausência de reinício nessa janela não demonstra estabilidade sob carga. \cite{DC_VALIDACAO2026}
+
+A consolidação recontou as tabelas recebidas, mas não repetiu as suítes do produto nem enviou comandos ao protótipo, API de produção ou banco. Os resultados do Capítulo~\ref{cap:resultados} são evidências de origem, não novos testes realizados durante a redação.
+
+\section*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{TST01}{Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final.}
 \pendencia{TST02}{Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente.}
 \pendencia{TST03}{Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais.}

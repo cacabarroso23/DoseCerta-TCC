@@ -1,0 +1,326 @@
+DoseCerta — Visão computacional
+Fundamentação teórica
+Visão Computacional
+A visão computacional é uma área da computação que tem como objetivo possibilitar a extração, a interpretação e a análise de informações provenientes de imagens e vídeos por meio de sistemas computacionais. Essa área combina técnicas de processamento digital de imagens, reconhecimento de padrões, inteligência artificial e métodos matemáticos para identificar características relevantes em uma determinada cena.
+Diferentemente do processamento digital de imagens, que está associado principalmente à transformação e ao aprimoramento das informações visuais, a visão computacional busca interpretar essas informações, permitindo a identificação de objetos, movimentos, formas e comportamentos presentes no ambiente analisado.
+Um sistema de visão computacional pode ser constituído por diferentes etapas, incluindo a aquisição das imagens, o pré-processamento, a extração de características e a interpretação das informações obtidas. A aquisição consiste na obtenção de imagens por meio de dispositivos sensores, como câmeras digitais. O pré-processamento tem como finalidade preparar essas imagens para as etapas posteriores, enquanto a extração de características permite identificar informações relevantes para a aplicação desenvolvida.
+Com o avanço das técnicas de inteligência artificial e aprendizado de máquina, tornou-se possível utilizar modelos computacionais capazes de identificar características corporais, como pontos de referência faciais e articulações das mãos. Essas informações possibilitam a análise de movimentos humanos por meio de coordenadas espaciais extraídas das imagens.
+No contexto do projeto DoseCerta, a visão computacional é empregada como ferramenta de identificação de eventos visuais associados à administração de medicamentos. A abordagem desenvolvida combina modelos de aprendizado de máquina, responsáveis pela identificação de pontos de referência do rosto e das mãos, com técnicas convencionais de processamento digital de imagens, utilizadas para a identificação e o monitoramento de objetos.
+As informações extraídas são posteriormente analisadas por meio de regras e condições temporais, permitindo identificar uma sequência de eventos compatível com uma provável ingestão de medicamento.
+Representação Digital de Imagens
+Uma imagem digital pode ser representada computacionalmente por uma matriz bidimensional composta por elementos denominados pixels. Cada pixel corresponde a uma posição discreta da imagem e armazena informações relacionadas à intensidade luminosa ou às componentes de cor naquele ponto.
+Matematicamente, uma imagem digital monocromática de dimensões M×N pode ser representada pela seguinte matriz:
+I=I0,0⋯I0,N-1I1,0⋯I1,N-1⋮⋱⋮IM-1,0⋯IM-1,N-1   (1)
+Em que M representa o número de linhas da imagem, N representa o número de colunas e Ii,j corresponde à intensidade do pixel localizado na linha i e na coluna j.
+Em imagens representadas com uma profundidade de 8 bits por canal, os valores de intensidade variam entre 0 e 255, possibilitando a representação de 256 níveis distintos.
+Nas imagens coloridas, cada pixel pode ser representado por um conjunto de componentes de cor. No modelo RGB, por exemplo, essas componentes correspondem às intensidades de vermelho, verde e azul.
+A resolução espacial de uma imagem é determinada pela quantidade de pixels presentes em suas dimensões horizontal e vertical. A escolha da resolução influencia tanto a quantidade de detalhes disponíveis para análise quanto o custo computacional associado ao processamento.
+Em aplicações embarcadas de visão computacional, a definição da resolução representa um compromisso entre a qualidade das informações visuais e a capacidade de processamento do dispositivo utilizado.
+Espaços de Cores
+Os espaços de cores são representações matemáticas utilizadas para descrever as informações cromáticas de uma imagem digital. A escolha da representação está diretamente relacionada à aplicação desenvolvida, uma vez que diferentes formatos podem facilitar a extração de determinadas características visuais.
+O modelo RGB (Red, Green, Blue) representa uma imagem por meio da combinação das intensidades das componentes vermelha, verde e azul. Em imagens digitais com profundidade de 8 bits por canal, cada componente pode assumir valores entre 0 e 255.
+A biblioteca OpenCV utiliza, por padrão, a representação BGR (Blue, Green, Red) em diversas operações de leitura e aquisição de imagens. Embora essa representação utilize as mesmas componentes do RGB, a ordem de armazenamento dos canais é invertida. Dessa forma, a conversão entre esses formatos é necessária quando diferentes bibliotecas de processamento de imagens utilizam convenções distintas.
+Outra representação amplamente utilizada no processamento digital de imagens é a escala de cinza, na qual cada pixel possui apenas um valor associado à sua intensidade. Essa representação reduz a quantidade de informações cromáticas presentes na imagem, permitindo simplificar determinadas operações de processamento e análise.
+Em que Rx,y, Gx,y e Bx,y representam as intensidades das componentes vermelha, verde e azul, respectivamente, enquanto Ix,y corresponde ao valor de intensidade resultante na escala de cinza.
+Os coeficientes utilizados atribuem diferentes pesos às componentes de cor, considerando a sensibilidade da percepção visual humana.
+No sistema de visão computacional desenvolvido para o DoseCerta, a representação RGB é utilizada como entrada dos modelos de detecção do MediaPipe, enquanto a conversão para escala de cinza é empregada durante as etapas de segmentação e identificação do objeto localizado entre os dedos do usuário.
+Processamento Digital de Imagens
+O processamento digital de imagens compreende um conjunto de técnicas matemáticas e computacionais destinadas à transformação, ao aprimoramento e à extração de informações de imagens digitais.
+Em sistemas de visão computacional, essas técnicas podem ser utilizadas como etapas intermediárias de preparação das imagens, permitindo reduzir ruídos, destacar estruturas relevantes, separar regiões de interesse e identificar características geométricas dos elementos presentes na cena.
+No sistema desenvolvido, o processamento digital de imagens é empregado principalmente na identificação e no monitoramento do objeto localizado entre os dedos do usuário. Para essa finalidade, são utilizadas técnicas de filtragem gaussiana, limiarização adaptativa, operações morfológicas e detecção de contornos.
+Região de Interesse
+A região de interesse, denominada ROI (Region of Interest), corresponde a uma região específica de uma imagem digital selecionada para a realização de determinadas operações de processamento. A utilização dessa técnica permite restringir a análise a uma parcela da imagem que apresenta informações relevantes para a aplicação desenvolvida.
+Em sistemas de visão computacional, o processamento integral de uma imagem pode envolver informações que não contribuem diretamente para a identificação do elemento desejado. Dessa forma, a delimitação de uma região de interesse permite reduzir a quantidade de pixels analisados em determinadas operações, diminuindo o custo computacional e a influência de elementos externos à região selecionada.
+A definição de uma ROI pode ser realizada de maneira estática, por meio de coordenadas previamente estabelecidas, ou de maneira dinâmica, a partir de características identificadas ao longo da execução do algoritmo.
+No sistema de visão computacional desenvolvido para o DoseCerta, a região de interesse é definida dinamicamente a partir das coordenadas das extremidades dos dedos indicador e polegar, identificadas pelo modelo de detecção das mãos.
+A delimitação dessa região permite concentrar as operações de processamento digital de imagens na área em que se espera encontrar o medicamento, evitando a necessidade de aplicar as técnicas de segmentação e análise de contornos à totalidade da imagem.
+Além disso, como a posição dos dedos é atualizada ao longo dos quadros capturados, a região de interesse acompanha os movimentos realizados pelo usuário durante a execução do sistema.
+Detecção de Contornos
+A detecção de contornos é uma técnica de processamento digital de imagens utilizada para identificar os limites das estruturas presentes em uma imagem. Em imagens binárias, os contornos podem ser representados por sequências de pontos que delimitam regiões pertencentes ao primeiro plano.
+A identificação dessas estruturas possibilita a obtenção de informações relacionadas à geometria dos elementos segmentados, tais como área, perímetro, posição e dimensões espaciais.
+Essas características podem ser utilizadas como critérios para selecionar objetos que apresentam propriedades compatíveis com aquelas esperadas pela aplicação desenvolvida.
+A qualidade da detecção de contornos está diretamente relacionada às etapas anteriores de processamento da imagem. A presença de ruídos, variações de iluminação e descontinuidades nas regiões segmentadas pode resultar na identificação de estruturas indesejadas ou na fragmentação dos objetos analisados.
+Por esse motivo, técnicas de filtragem, limiarização e operações morfológicas são frequentemente empregadas antes da extração dos contornos.
+No algoritmo desenvolvido para o DoseCerta, a detecção de contornos é realizada após a aplicação das etapas de processamento digital de imagens na região de interesse localizada entre os dedos indicador e polegar.
+A partir dos contornos identificados, são extraídas características geométricas utilizadas para selecionar aquele que apresenta maior compatibilidade com a presença de um possível medicamento.
+É importante destacar que a identificação de um contorno com determinadas características geométricas não garante que o objeto detectado seja efetivamente um medicamento. Dessa forma, essa informação é utilizada em conjunto com outros critérios visuais e temporais durante a execução do algoritmo.
+Extração de Características Geométricas
+A extração de características geométricas consiste na obtenção de informações quantitativas relacionadas à forma, à dimensão e à posição dos elementos identificados em uma imagem.
+Essas informações permitem representar determinadas propriedades dos objetos por meio de parâmetros matemáticos, possibilitando sua utilização em algoritmos de reconhecimento, classificação e tomada de decisão.
+No sistema desenvolvido, as principais características geométricas utilizadas correspondem à distância euclidiana, à área, ao perímetro e à circularidade dos contornos.
+MediaPipe
+O MediaPipe é uma plataforma de código aberto desenvolvida pelo Google, destinada à construção de aplicações que envolvem o processamento de informações provenientes de diferentes fontes de dados, incluindo imagens, vídeos e sinais de áudio.
+A plataforma disponibiliza ferramentas e modelos previamente treinados para a realização de tarefas de visão computacional, como detecção facial, reconhecimento de gestos, estimativa de postura corporal e identificação de pontos de referência anatômicos.
+Uma das características do MediaPipe é a possibilidade de execução de modelos de aprendizado de máquina diretamente no dispositivo utilizado pela aplicação, reduzindo a necessidade de encaminhamento das imagens para servidores externos durante a etapa de inferência.
+Nas aplicações relacionadas à análise do corpo humano, os modelos disponibilizados pela plataforma permitem identificar pontos de referência, denominados landmarks, associados a determinadas estruturas anatômicas.
+Esses pontos são representados por coordenadas que descrevem suas posições estimadas na imagem. A utilização dessas informações possibilita a análise de movimentos, distâncias, orientações e configurações geométricas.
+As coordenadas horizontais e verticais dos pontos podem ser disponibilizadas de maneira normalizada em relação às dimensões da imagem. Dessa forma, para a realização de cálculos utilizando coordenadas expressas em pixels, torna-se necessário converter os valores normalizados.
+Essa conversão pode ser realizada conforme as Equações 2 e 3.
+xp=xnW   (2)
+yp=ynH   (3)
+Em que xn e yn representam as coordenadas normalizadas do ponto de referência, W e H correspondem, respectivamente, à largura e à altura da imagem em pixels, enquanto xp e yp representam as coordenadas resultantes no sistema de referência da imagem.
+No projeto DoseCerta, são utilizados dois modelos disponibilizados pelo MediaPipe: o Face Landmarker, destinado à identificação de pontos de referência faciais, e o Hand Landmarker, responsável pela identificação dos pontos de referência das mãos.
+A utilização conjunta desses modelos permite estabelecer relações geométricas entre diferentes regiões do corpo, possibilitando a análise dos movimentos associados à administração de medicamentos.
+MediaPipe Hand Landmarker
+O Hand Landmarker é uma ferramenta disponibilizada pelo MediaPipe destinada à identificação e ao acompanhamento de pontos de referência das mãos em imagens e sequências de vídeo.
+A abordagem empregada pela ferramenta utiliza modelos de aprendizado de máquina para localizar a região correspondente à mão e estimar a posição de suas principais estruturas anatômicas.
+O modelo disponibiliza 21 pontos de referência para cada mão identificada, distribuídos entre o pulso, as articulações e as extremidades dos dedos.
+A representação da mão por meio desses pontos possibilita a análise de sua configuração geométrica, permitindo identificar movimentos de flexão, extensão, aproximação e afastamento dos dedos.
+Entre as possíveis configurações da mão, destaca-se o movimento de pinça, caracterizado pela aproximação entre o polegar e o dedo indicador.
+Esse movimento está associado à manipulação de objetos de pequenas dimensões, sendo relevante para aplicações que envolvem a identificação de ações relacionadas à administração de medicamentos.
+A partir das coordenadas das extremidades desses dedos, torna-se possível calcular a distância entre eles e estabelecer critérios geométricos para identificar uma configuração compatível com o movimento de pinça.
+Entretanto, a identificação dessa configuração não garante que exista efetivamente um objeto entre os dedos. Para isso, torna-se necessária a associação das informações fornecidas pelo modelo com técnicas adicionais de processamento de imagens.
+No sistema DoseCerta, os pontos de referência fornecidos pelo Hand Landmarker são utilizados para identificar a posição das extremidades dos dedos indicador e polegar, delimitar dinamicamente uma região de interesse e analisar a proximidade entre a mão e a boca.
+A utilização conjunta dos dados obtidos pelos modelos Face Landmarker e Hand Landmarker possibilita, portanto, estabelecer relações espaciais entre as estruturas faciais e as mãos do usuário.
+Essas relações são utilizadas como informações de entrada para o algoritmo responsável pela interpretação da sequência de movimentos associados à provável ingestão de medicamentos.
+Máquinas de Estados Finitos
+Uma máquina de estados finitos, denominada FSM (Finite State Machine), consiste em um modelo matemático utilizado para representar o comportamento de sistemas que podem assumir um conjunto finito de estados.
+Cada estado representa uma determinada condição de funcionamento do sistema, enquanto as transições estabelecem as condições necessárias para que ocorra a mudança entre os estados.
+A utilização de máquinas de estados é particularmente relevante em aplicações nas quais o comportamento do sistema depende não apenas das informações recebidas em determinado instante, mas também da sequência de eventos ocorridos anteriormente.
+Em aplicações práticas, as condições de transição também podem considerar informações temporais, valores provenientes de sensores e resultados de outros algoritmos.
+A incorporação de restrições temporais permite estabelecer limites para a ocorrência de determinados eventos, evitando que o sistema permaneça indefinidamente em um estado intermediário.
+Caso as condições necessárias para a transição não sejam atendidas dentro do intervalo estabelecido, o sistema pode retornar ao estado inicial ou assumir outro estado previamente definido.
+No contexto da visão computacional, as máquinas de estados podem ser utilizadas para interpretar sequências de movimentos humanos a partir de características identificadas em imagens sucessivas.
+No projeto DoseCerta, a utilização dessa abordagem permite associar os resultados obtidos pelos módulos de detecção facial, detecção das mãos e identificação de objetos.
+A identificação isolada de uma mão próxima à boca, por exemplo, não representa evidência suficiente para caracterizar uma ingestão. Entretanto, a ocorrência de diferentes eventos dentro de uma sequência temporal predefinida permite estabelecer critérios adicionais para a interpretação da ação observada.
+Dessa forma, a máquina de estados atua como o elemento responsável pela integração das informações visuais extraídas ao longo da execução do algoritmo.
+A abordagem desenvolvida permite classificar uma sequência de eventos como compatível com uma provável ingestão de medicamento ou considerar a observação inconclusiva quando as condições estabelecidas não são atendidas.
+Ressalta-se que essa classificação é baseada em regras de interpretação visual, não representando uma comprovação clínica da ingestão nem uma estimativa probabilística calibrada.
+Metodologia — versão detalhada
+Sistema de Visão Computacional
+O sistema de visão computacional do DoseCerta foi desenvolvido com o objetivo de identificar eventos visuais associados à provável ingestão de medicamentos. Para isso, foi implementado um algoritmo que combina modelos de aprendizado de máquina, técnicas de processamento digital de imagens e uma máquina de estados finitos.
+A abordagem adotada baseia-se na análise de uma sequência de movimentos realizados pelo usuário, considerando a presença de um objeto entre os dedos, a aproximação da mão à boca, a abertura e o fechamento da boca e o desaparecimento aparente do objeto.
+A combinação dessas informações busca reduzir a dependência de eventos isolados, uma vez que determinados movimentos, como aproximar a mão à boca, também podem estar associados a outras atividades cotidianas.
+Arquitetura do Sistema de Visão
+O algoritmo foi desenvolvido utilizando a linguagem de programação Python, em conjunto com as bibliotecas OpenCV, MediaPipe e NumPy.
+A biblioteca OpenCV foi utilizada para a aquisição e o processamento das imagens, enquanto o MediaPipe foi empregado para a identificação dos pontos de referência faciais e das mãos. A biblioteca NumPy foi utilizada como ferramenta auxiliar para a realização de operações matemáticas e manipulação das informações extraídas das imagens.
+Inicialmente, o desenvolvimento foi realizado em um computador utilizando uma webcam, permitindo a implementação e a visualização das diferentes etapas do algoritmo. Posteriormente, o sistema foi adaptado para execução em uma plataforma embarcada baseada no Raspberry Pi Zero 2 W.
+O funcionamento do algoritmo consiste na aquisição contínua de imagens durante uma janela de observação. Cada quadro é submetido aos modelos de detecção facial e das mãos, responsáveis por fornecer as coordenadas dos pontos de referência utilizados nas etapas posteriores.
+A partir dessas coordenadas, são realizadas análises geométricas e operações de processamento de imagens, cujos resultados são encaminhados para uma máquina de estados finitos responsável pela interpretação da sequência de eventos.
+Detecção Facial e das Mãos
+Para a identificação das características faciais e das mãos, foram utilizados os modelos Face Landmarker e Hand Landmarker, disponibilizados pelo MediaPipe.
+Na detecção facial, foram selecionados quatro pontos de referência associados à região da boca: os pontos de índices 61 e 291, correspondentes às extremidades laterais dos lábios, e os pontos de índices 13 e 14, associados às regiões internas dos lábios superior e inferior.
+A posição central da boca foi determinada a partir do ponto médio entre suas extremidades laterais. A abertura da boca, por sua vez, foi calculada utilizando a distância euclidiana entre os pontos correspondentes aos lábios superior e inferior.
+Foi estabelecido um limiar de 7 pixels para a classificação da abertura da boca. Quando a distância calculada ultrapassa esse valor, a boca é considerada aberta pelo algoritmo.
+Na detecção das mãos, foram utilizados os pontos de índices 4 e 8, correspondentes às extremidades do polegar e do dedo indicador, respectivamente.
+A distância entre esses pontos foi utilizada para identificar uma configuração compatível com o movimento de pinça. Para isso, foi estabelecido um intervalo de distância superior a 5 pixels e inferior a 60 pixels.
+Além disso, a distância entre a extremidade do dedo indicador e o centro da boca foi utilizada para identificar a proximidade entre a mão e a região bucal. Quando essa distância é inferior a 50 pixels, a mão é considerada próxima da boca.
+Os limiares definidos são expressos em pixels e correspondem aos parâmetros adotados na implementação do algoritmo. Portanto, sua interpretação depende da resolução da imagem, da distância entre o usuário e a câmera e das condições de enquadramento.
+Identificação do Objeto entre os Dedos
+A identificação de um possível medicamento é realizada a partir da análise de uma região de interesse localizada entre as extremidades dos dedos indicador e polegar.
+Essa região é definida dinamicamente, utilizando o ponto médio entre os dedos como referência. Suas dimensões são determinadas em função da distância entre os pontos identificados, permitindo que a região acompanhe os movimentos da mão.
+Após a delimitação da região de interesse, a imagem é convertida para escala de cinza e submetida a uma sequência de operações de processamento digital de imagens.
+Inicialmente, aplica-se um filtro gaussiano com uma matriz de dimensão 5×5, seguido de uma limiarização adaptativa gaussiana com uma vizinhança de 11×11 pixels. Posteriormente, são realizadas operações de abertura e fechamento morfológico utilizando um elemento estruturante de dimensão 3×3.
+Essas operações têm como finalidade preparar a imagem para a detecção dos contornos das estruturas presentes na região analisada.
+Os contornos identificados são avaliados de acordo com suas características geométricas. Inicialmente, são descartados aqueles que apresentam áreas inferiores a 20 pixels quadrados ou superiores a 3000 pixels quadrados, além de estruturas com dimensões insuficientes para a análise.
+Para selecionar o contorno mais adequado, foi implementada uma função de pontuação baseada na área, na circularidade e na distância em relação ao centro da região de interesse, conforme apresentado na Equação 4.
+S=A+40C-0,8d   (4)
+Em que S representa a pontuação atribuída ao contorno, A corresponde à sua área, C representa sua circularidade e d corresponde à distância entre o centro do retângulo delimitador do contorno e o centro da região de interesse.
+A função favorece contornos com maiores áreas, maior circularidade e menor distância em relação ao centro da região analisada.
+O contorno que apresenta a maior pontuação é selecionado como candidato a representar o objeto manipulado pelo usuário.
+Entretanto, essa classificação não permite identificar o tipo de medicamento nem garantir que o objeto detectado seja efetivamente um comprimido. A informação obtida é utilizada como um dos critérios para a análise da sequência de ingestão.
+Monitoramento do Desaparecimento do Objeto
+Após a identificação de um possível objeto entre os dedos, o algoritmo inicia uma etapa de monitoramento de suas características visuais ao longo dos quadros subsequentes.
+Para essa finalidade, são utilizadas duas informações principais: a área aparente do objeto e as características da região de interesse no momento de sua identificação.
+A área de referência é inicialmente definida a partir do contorno selecionado e pode ser atualizada utilizando a mediana das áreas observadas em quadros recentes. Essa abordagem busca reduzir a influência de variações isoladas nas dimensões aparentes do objeto.
+Além disso, uma imagem da região de interesse é armazenada temporariamente como referência para comparação com os quadros posteriores. Para padronizar essa comparação, as regiões são convertidas para escala de cinza, submetidas à filtragem gaussiana e redimensionadas para uma resolução de 80×80 pixels.
+A identificação do desaparecimento aparente do objeto considera a ocorrência de pelo menos uma das seguintes condições: ausência de um contorno válido, redução da área abaixo de um limite absoluto, redução da área para menos de 45% do valor de referência ou diferença média de intensidade entre as regiões comparadas superior ao limiar estabelecido.
+Essas informações são utilizadas como indícios de que o objeto deixou de estar visível na região entre os dedos.
+É importante destacar que o desaparecimento visual também pode ocorrer em decorrência de movimentos da mão, oclusões ou alterações nas condições de iluminação. Por esse motivo, essa informação não é utilizada isoladamente para determinar a provável ingestão do medicamento.
+Máquina de Estados Finitos
+Para integrar as informações obtidas pelas diferentes etapas de detecção, foi implementada uma máquina de estados finitos responsável por interpretar a sequência de eventos associados à provável ingestão de medicamentos.
+A máquina de estados foi estruturada em seis estados principais, conforme apresentado a seguir:
+Aguardando objeto: estado inicial do sistema, no qual o algoritmo aguarda a identificação de um possível objeto entre os dedos do usuário.
+Objeto confirmado: estado alcançado após a identificação de um objeto associado à configuração de pinça.
+Mão na boca: estado alcançado quando a mão é identificada próxima à região bucal.
+Boca aberta: estado alcançado quando o algoritmo identifica a abertura da boca após a aproximação da mão.
+Boca fechada: estado alcançado quando a boca deixa de ser classificada como aberta.
+Ingestão provável: estado alcançado quando, após a ocorrência dos eventos anteriores, o desaparecimento aparente do objeto também foi identificado.
+As transições entre os estados são realizadas de acordo com as condições identificadas durante o processamento das imagens.
+Para evitar que eventos separados por longos intervalos sejam interpretados como pertencentes à mesma ação, foi estabelecido um tempo máximo de 2,5 segundos para cada uma das etapas intermediárias.
+Caso a condição necessária para a próxima transição não seja atendida dentro do intervalo estabelecido, a máquina retorna ao estado inicial, permitindo uma nova tentativa de identificação.
+O desaparecimento aparente do objeto é monitorado paralelamente à execução da máquina de estados. Dessa forma, sua ocorrência pode ser registrada durante a sequência e posteriormente utilizada como condição para atingir o estado de ingestão provável.
+A utilização dessa estrutura permite que a classificação seja realizada a partir da combinação de diferentes evidências visuais, em vez de depender exclusivamente de um único movimento identificado pelo sistema.
+Quando a sequência esperada é completada, o algoritmo registra uma ocorrência de provável ingestão. Caso a janela de observação seja encerrada sem que a sequência seja completada, o resultado é considerado inconclusivo.
+Implementação e Integração com o DoseCerta
+Após o desenvolvimento do algoritmo em ambiente computacional convencional, o sistema de visão foi adaptado para execução no Raspberry Pi Zero 2 W, considerando as limitações de memória e capacidade de processamento da plataforma.
+Para a aquisição das imagens, foi prevista a utilização do módulo de câmera Raspberry Pi Camera Module 3.
+A configuração adotada estabelece uma resolução de captura de 320×240 pixels, com uma frequência de aquisição configurada em 5 quadros por segundo e um limite de processamento de 4 quadros por segundo.
+Antes da análise, as imagens são redimensionadas para uma largura de 640 pixels, preservando sua proporção original. Essa operação permite manter uma escala de coordenadas compatível com os limiares utilizados pelo algoritmo.
+O processamento das imagens e a execução dos modelos de detecção são realizados localmente no dispositivo, sem a necessidade de encaminhar continuamente as imagens capturadas para servidores externos.
+A integração com o sistema DoseCerta foi implementada por meio da troca de arquivos estruturados no formato JSON. O módulo de visão recebe uma solicitação de observação, executa o algoritmo durante uma janela de tempo determinada e disponibiliza o resultado para os demais componentes do sistema.
+A janela padrão de observação foi configurada em 30 segundos, podendo ser ajustada de acordo com a solicitação recebida.
+Como medida de controle da utilização da câmera, foi implementado um mecanismo de acesso exclusivo ao dispositivo de captura, associado ao acionamento de um indicador luminoso durante o período de observação.
+Ao término da execução, o módulo disponibiliza o resultado da análise, juntamente com informações relacionadas ao número de quadros processados, ao estado final do algoritmo e ao desempenho de processamento.
+Os resultados são classificados como ingestão provável ou observação inconclusiva, permitindo que o sistema DoseCerta utilize essas informações como recurso complementar no acompanhamento da administração de medicamentos.
+Ressalta-se que o algoritmo desenvolvido não realiza uma confirmação clínica da ingestão. Sua finalidade consiste na identificação de uma sequência de eventos visuais compatível com a ação esperada.
+Visão computacional — capítulo integrado
+A visão computacional compõe a observação associada à ingestão, em complemento aos registros do mecanismo e aos relatos do cuidado. Sua função é produzir uma saída rastreável sobre as imagens analisadas, preservando a condição inconclusiva quando não houver informação suficiente. Uma observação visual não é tratada como comprovação clínica de ingestão.
+A integração com a central compartilha o recurso de câmera e precisa delimitar aquisição, processamento e devolução do resultado. O registro deve conservar o evento de referência, a versão do método e as condições da captura, de forma que a saída possa ser relacionada à rotina apresentada no aplicativo.
+Método de aquisição e processamento
+O módulo de visão computacional do DoseCerta foi desenvolvido com o objetivo de identificar eventos visuais associados à provável ingestão de medicamentos, fornecendo informações complementares ao sistema de acompanhamento da administração do medicamento.
+A abordagem adotada considera que a disponibilização do medicamento não garante sua ingestão. Assim, o sistema busca identificar uma sequência de ações realizadas pelo usuário, incluindo a presença de um objeto entre os dedos, a aproximação da mão à boca, a abertura e o fechamento da boca e o desaparecimento do objeto.
+Para realizar essa análise, foi desenvolvido um algoritmo que combina modelos previamente treinados de aprendizado de máquina, técnicas de processamento digital de imagens e uma máquina de estados finitos.
+Arquitetura e aquisição das imagens
+O sistema foi desenvolvido utilizando a linguagem de programação Python, em conjunto com as bibliotecas OpenCV, MediaPipe e NumPy. A biblioteca OpenCV foi empregada na aquisição e no processamento das imagens, enquanto o MediaPipe foi utilizado para a identificação dos pontos de referência faciais e das mãos. A biblioteca NumPy foi utilizada para a realização de operações matemáticas e manipulação das imagens.
+Inicialmente, o algoritmo foi desenvolvido em um ambiente computacional convencional, utilizando uma webcam para a aquisição das imagens e uma interface gráfica para acompanhamento das etapas de detecção. Posteriormente, o software foi adaptado para execução na plataforma embarcada do DoseCerta, baseada no Raspberry Pi Zero 2 W.
+A arquitetura implementada foi organizada em etapas de aquisição, preparação das imagens, identificação dos pontos de referência corporais, processamento da região de interesse, monitoramento do objeto e interpretação sequencial dos eventos.
+Na plataforma embarcada, foi prevista a utilização do Raspberry Pi Camera Module 3, com resolução de captura configurada em 320×240 pixels e frequência de aquisição de 5 quadros por segundo. O limite de processamento foi configurado em 4 quadros por segundo, considerando as restrições computacionais do dispositivo.
+Antes do processamento, as imagens são redimensionadas para uma largura de 640 pixels, preservando sua proporção original. Essa operação permite manter uma escala de coordenadas compatível com os limiares geométricos utilizados pelo algoritmo.
+Nota de edição: Inserir figura da arquitetura geral do sistema de visão. Nota de edição: Inserir imagem do dispositivo de aquisição utilizado.
+Detecção facial e das mãos
+Para a identificação das características faciais e das mãos, foram utilizados os modelos Face Landmarker e Hand Landmarker, disponibilizados pelo MediaPipe.
+Na detecção facial, foram selecionados os pontos de referência de índices 61 e 291, correspondentes às extremidades laterais da boca, e os pontos de índices 13 e 14, associados aos lábios superior e inferior.
+O centro da boca é determinado a partir do ponto médio entre suas extremidades laterais, enquanto sua abertura é calculada por meio da distância euclidiana entre os pontos correspondentes aos lábios superior e inferior.
+Na detecção das mãos, foram utilizados os pontos de referência de índices 4 e 8, correspondentes às extremidades do polegar e do dedo indicador, respectivamente. A distância entre esses pontos permite identificar uma configuração compatível com o movimento de pinça.
+Adicionalmente, a distância entre a extremidade do dedo indicador e o centro da boca é utilizada para identificar a aproximação da mão à região bucal.
+Essas informações são atualizadas ao longo dos quadros processados e utilizadas como entradas para as demais etapas do algoritmo.
+Nota de edição: Inserir imagem dos pontos faciais e das mãos identificados pelo sistema.
+Identificação e monitoramento do objeto
+A identificação de um possível medicamento é realizada por meio da análise de uma região de interesse delimitada dinamicamente entre as extremidades dos dedos indicador e polegar.
+Após a delimitação da região, a imagem é convertida para escala de cinza e submetida à filtragem gaussiana, à limiarização adaptativa e às operações de abertura e fechamento morfológico.
+Em seguida, são identificados os contornos presentes na imagem processada. Esses contornos são avaliados de acordo com suas características geométricas, considerando a área, a circularidade e a distância em relação ao centro da região de interesse.
+O contorno que apresenta a maior pontuação, dentre aqueles que atendem aos critérios geométricos estabelecidos, é selecionado como candidato a representar o objeto manipulado pelo usuário.
+Após sua identificação, o algoritmo inicia o monitoramento de suas características visuais. Para isso, são utilizadas uma referência dinâmica de área, calculada a partir da mediana de observações recentes, e uma imagem de referência da região de interesse.
+O desaparecimento aparente do objeto pode ser identificado pela ausência de um contorno válido, pela redução significativa de sua área ou pela alteração das características visuais da região analisada.
+Essa etapa não permite determinar a identidade do medicamento, sendo utilizada exclusivamente como um dos critérios para a interpretação da sequência de movimentos.
+Nota de edição: Inserir imagens das etapas de processamento da região de interesse.
+Interpretação da sequência de ingestão
+As informações obtidas pelas etapas de detecção são integradas por meio de uma máquina de estados finitos, responsável por interpretar a sequência de eventos visuais associados à administração de medicamentos.
+A máquina de estados foi estruturada em seis estados principais: aguardando objeto, objeto confirmado, mão na boca, boca aberta, boca fechada e ingestão provável.
+A transição entre os estados ocorre conforme as condições identificadas durante o processamento das imagens. Para evitar que movimentos separados por longos intervalos sejam interpretados como pertencentes à mesma ação, foram estabelecidas restrições temporais para as etapas intermediárias.
+O desaparecimento aparente do objeto é monitorado separadamente à máquina de estados e utilizado como condição para a classificação final.
+Quando a sequência esperada é completada, o sistema classifica a observação como ingestão provável. Caso a janela de observação seja encerrada sem que todas as condições sejam atendidas, o resultado é classificado como inconclusivo.
+Nota de edição: Inserir diagrama da máquina de estados finitos implementada.
+Implantação e integração com o DoseCerta
+A versão do módulo de visão computacional descrita neste trabalho corresponde à implementação vision-v3, identificada no software pela versão 3.0.0.
+No ambiente embarcado, foi prevista a utilização da biblioteca MediaPipe na versão 0.10.18, enquanto o ambiente de desenvolvimento em computador utiliza a versão 0.10.32.
+O processamento das imagens é realizado localmente no dispositivo. A comunicação entre o módulo de visão computacional e os demais componentes do DoseCerta ocorre por meio da troca de arquivos estruturados no formato JSON.
+Ao receber uma solicitação de observação, o módulo inicia a aquisição e o processamento das imagens durante uma janela de tempo configurável, cujo valor padrão é de 30 segundos.
+Ao término da observação, são disponibilizadas informações referentes à classificação obtida, ao número de quadros processados, ao estado final do algoritmo, ao tempo de execução e à frequência efetiva de processamento.
+Também foram implementados mecanismos de acesso exclusivo à câmera, acionamento de um indicador luminoso durante a captura das imagens e monitoramento da disponibilidade de memória do dispositivo.
+Em situações de indisponibilidade da câmera, interrupção da captura, insuficiência de memória ou falhas na inicialização dos modelos, o software possui mecanismos de interrupção e registro de erros, evitando que uma falha operacional seja interpretada automaticamente como uma confirmação de ingestão.
+A versão integrada também permite o cancelamento de observações, impedindo que uma observação cancelada seja publicada como ingestão provável.
+Dados e avaliação
+Origem e organização dos dados
+A abordagem desenvolvida utiliza modelos previamente treinados disponibilizados pelo MediaPipe para a identificação de pontos de referência faciais e das mãos. Dessa forma, não foi implementado um processo próprio de treinamento de redes neurais para essas tarefas.
+A identificação do possível medicamento e a classificação da sequência de ingestão são realizadas por meio de técnicas de processamento digital de imagens e regras determinísticas estabelecidas durante o desenvolvimento do algoritmo.
+Portanto, diferentemente de uma abordagem baseada no treinamento de um classificador específico, o sistema não depende diretamente da construção de um conjunto de imagens de medicamentos para o aprendizado de seus parâmetros.
+Entretanto, a avaliação experimental do algoritmo requer a utilização de imagens ou sequências de vídeo representativas das condições esperadas de funcionamento.
+Para essa avaliação, propõe-se a realização de ensaios controlados, contemplando sequências completas de movimentos associados à ingestão e sequências incompletas ou incompatíveis com a ação esperada.
+As classes de referência consideradas na avaliação correspondem à execução completa da sequência de ingestão simulada e à ausência dessa sequência.
+Parâmetros do algoritmo
+A classificação dos eventos visuais é realizada a partir de limiares geométricos e temporais definidos na implementação do algoritmo.
+A Tabela 1 apresenta os principais parâmetros utilizados na versão desenvolvida.
+Tabela 1 – Principais parâmetros do algoritmo de visão computacional.
+Parâmetro
+Valor
+Limiar de abertura da boca
+7 pixels
+Limiar de proximidade mão-boca
+50 pixels
+Distância mínima da pinça
+5 pixels
+Distância máxima da pinça
+60 pixels
+Área mínima do contorno
+20 pixels​2
+Área máxima do contorno
+3000 pixels​2
+Limiar absoluto de desaparecimento
+12 pixels​2
+Fator de redução da área
+45%
+Limiar de diferença média da ROI
+12
+Quadros para confirmação do objeto
+1
+Quadros para confirmação do desaparecimento
+1
+Janela de monitoramento do objeto
+25 quadros
+Tempo máximo por etapa intermediária
+2,5 s
+Janela padrão de observação
+30 s
+Fonte: elaboração própria.
+Esses valores correspondem aos parâmetros configurados na implementação do algoritmo, não representando limites clínicos ou valores universais relacionados à ingestão de medicamentos.
+Os limiares geométricos são expressos em pixels e, consequentemente, podem sofrer influência da distância entre o usuário e a câmera, da resolução da imagem e das características físicas do indivíduo.
+A pontuação utilizada para seleção dos contornos também não representa uma probabilidade de ingestão, sendo exclusivamente um critério de seleção geométrica.
+Metodologia de avaliação
+Para avaliar o funcionamento do módulo de visão computacional, propõe-se a realização de ensaios que representem tanto a sequência esperada de administração do medicamento quanto situações que possam provocar classificações incorretas.
+Os cenários experimentais propostos são apresentados na Tabela 2.
+Tabela 2 – Cenários propostos para avaliação do sistema de visão.
+Cenário
+Resultado esperado
+Simulação completa da sequência de ingestão
+Ingestão provável
+Aproximação da mão vazia à boca
+Inconclusivo
+Manipulação de objeto sem aproximação da boca
+Inconclusivo
+Aproximação do objeto sem completar a sequência
+Inconclusivo
+Abertura e fechamento da boca sem objeto
+Inconclusivo
+Sequência completa sob diferentes condições de iluminação
+Avaliação de robustez
+Sequência completa em diferentes distâncias da câmera
+Avaliação de robustez
+Observação com oclusão da face ou das mãos
+Avaliação de robustez
+Fonte: elaboração própria.
+A repetição dos ensaios deverá permitir avaliar a consistência das classificações e identificar situações nas quais o algoritmo apresenta dificuldades.
+Para a avaliação quantitativa, propõe-se a utilização de métricas de classificação, considerando a sequência completa de ingestão simulada como condição positiva de referência.
+Um verdadeiro positivo corresponde à identificação de ingestão provável durante uma sequência positiva de referência. Um falso positivo corresponde à identificação de ingestão provável em uma situação na qual a sequência esperada não foi realizada.
+Um falso negativo corresponde à ausência de identificação de ingestão provável durante uma sequência positiva de referência, enquanto um verdadeiro negativo corresponde à ausência de classificação positiva em uma sequência negativa de referência.
+Para o cálculo dessas métricas, os resultados inconclusivos são considerados classificações não positivas. Essa convenção é utilizada exclusivamente para a avaliação experimental, não significando que o sistema tenha confirmado a ausência de ingestão.
+A acurácia pode ser calculada conforme a Equação 5.
+Acc=VP+VNVP+VN+FP+FN   (5)
+Em que VP representa o número de verdadeiros positivos, VN representa o número de verdadeiros negativos, FP representa o número de falsos positivos e FN representa o número de falsos negativos.
+A precisão das classificações positivas pode ser determinada por:
+P=VPVP+FP   (6)
+A sensibilidade, responsável por representar a proporção de sequências positivas identificadas pelo algoritmo, pode ser calculada conforme a Equação 7.
+R=VPVP+FN   (7)
+Além dessas métricas, deverá ser analisada a proporção de observações inconclusivas e de falhas operacionais, permitindo distinguir limitações de reconhecimento de problemas relacionados à execução do software.
+As falhas operacionais deverão ser registradas separadamente, juntamente com o número total de tentativas, evitando sua exclusão silenciosa da avaliação.
+A avaliação computacional deverá considerar a frequência efetiva de processamento das imagens, o tempo necessário para a classificação e o consumo de memória durante a execução na plataforma embarcada.
+A frequência de processamento pode ser determinada conforme a Equação 8.
+FPS=NqΔt   (8)
+Em que Nq representa o número de quadros processados durante o intervalo de tempo Δt.
+Os critérios de aceitação deverão considerar principalmente a redução da ocorrência de falsos positivos, a capacidade de identificação das sequências esperadas e a estabilidade de execução do algoritmo na plataforma embarcada.
+Resultados e limitações
+Resultados do desenvolvimento
+O desenvolvimento do módulo de visão computacional resultou na implementação de um algoritmo integrado de identificação de eventos visuais associados à provável ingestão de medicamentos.
+A associação entre os modelos Face Landmarker e Hand Landmarker possibilitou a implementação de critérios geométricos para a identificação da abertura e do fechamento da boca, da configuração de pinça e da proximidade entre a mão e a região bucal.
+A utilização de técnicas de processamento digital de imagens permitiu implementar um método de seleção de possíveis objetos presentes entre os dedos, sem a necessidade de treinamento de uma rede neural específica para a identificação de medicamentos.
+Adicionalmente, foi implementado um mecanismo de monitoramento temporal das características visuais do objeto, utilizando informações relacionadas à sua área aparente e às alterações observadas na região de interesse.
+A integração dessas informações por meio de uma máquina de estados finitos possibilitou estabelecer uma lógica de classificação baseada na sequência de movimentos esperada.
+Como resultado do desenvolvimento, também foi implementada uma interface gráfica para acompanhamento dos pontos de referência corporais, das distâncias calculadas, dos contornos identificados e das transições entre os estados do algoritmo.
+A interface disponibiliza informações relacionadas à abertura da boca, à proximidade da mão, à configuração de pinça, à presença do objeto e ao estado atual da máquina de estados, permitindo acompanhar visualmente o funcionamento da solução.
+A adaptação do software para o Raspberry Pi Zero 2 W resultou na implementação de mecanismos de gerenciamento da câmera, controle da execução, monitoramento de memória e comunicação com os demais componentes do DoseCerta.
+A documentação da versão vision-v3 também descreve testes automatizados destinados à avaliação da máquina de estados, do protocolo de comunicação, do cancelamento de observações e do gerenciamento da câmera.
+Entretanto, esses testes funcionais não substituem a avaliação experimental da capacidade de identificação de ingestão em condições reais de utilização.
+Resultados experimentais
+A avaliação quantitativa deverá considerar os resultados obtidos durante os ensaios experimentais, identificando a versão do software utilizada, as condições de aquisição das imagens, a quantidade de observações realizadas e as classificações produzidas pelo algoritmo.
+A apresentação dos resultados deverá incluir o número absoluto de classificações positivas, inconclusivas e de falhas operacionais, juntamente com os respectivos denominadores.
+Também deverão ser apresentados os resultados de desempenho computacional obtidos na plataforma embarcada.
+Os valores de resolução e frequência de processamento configurados no software não correspondem necessariamente ao desempenho efetivamente obtido durante a execução.
+Dessa forma, a determinação da acurácia, da precisão, da sensibilidade e da frequência real de processamento depende dos registros experimentais correspondentes.
+Limitações do sistema
+A abordagem desenvolvida apresenta limitações relacionadas tanto às condições de aquisição das imagens quanto aos critérios utilizados para a interpretação dos movimentos.
+A identificação dos pontos de referência corporais pode ser influenciada pelo posicionamento do usuário, pela orientação da face, pela distância em relação à câmera e pela ocorrência de oclusões.
+Durante a aproximação da mão à boca, por exemplo, os dedos podem encobrir parcialmente os lábios, dificultando a identificação dos pontos de referência faciais necessários para a determinação da abertura da boca.
+A identificação de objetos de pequenas dimensões também depende das condições de iluminação, do contraste entre o objeto e o ambiente e da resolução das imagens capturadas.
+Como a detecção do objeto é baseada em características geométricas, existe a possibilidade de seleção de contornos que não correspondam efetivamente a medicamentos.
+O desaparecimento aparente do objeto também pode ocorrer em situações nas quais não houve ingestão, como alterações na posição da mão, oclusões ou retirada do objeto da região de interesse.
+Outro fator limitante corresponde à utilização de limiares geométricos fixos, expressos em pixels. Esses parâmetros podem apresentar comportamentos diferentes de acordo com as características físicas dos usuários e com as condições de enquadramento.
+Na implementação atual, tanto a confirmação do objeto quanto a identificação de seu desaparecimento podem ocorrer a partir de um único quadro processado, tornando essas etapas potencialmente sensíveis a variações momentâneas na detecção.
+Além disso, a ausência temporária de pontos de referência faciais pode ser interpretada pelo algoritmo como ausência de abertura da boca, constituindo uma possível fonte de transições incorretas na máquina de estados.
+As limitações computacionais do Raspberry Pi Zero 2 W também podem influenciar a frequência efetiva de processamento, aumentando a possibilidade de que movimentos realizados rapidamente não sejam registrados em quadros sucessivos.
+Esses fatores representam limitações identificadas a partir da análise da implementação, cuja ocorrência e impacto deverão ser avaliados experimentalmente.
+Quando as condições necessárias para a identificação da sequência não são atendidas dentro da janela de observação, o sistema deve apresentar um resultado inconclusivo.
+Situações de falha operacional, como indisponibilidade da câmera, interrupção da captura ou insuficiência de memória, devem ser registradas separadamente, sem serem interpretadas como confirmação ou ausência de ingestão.
+Ressalta-se que a identificação de uma sequência visual compatível com a ingestão não permite comprovar que o medicamento foi efetivamente deglutido, identificar sua composição ou verificar a dosagem administrada.
+Portanto, o módulo de visão computacional constitui um recurso complementar de monitoramento, não devendo ser interpretado como um instrumento de confirmação clínica da administração de medicamentos.
+Como possibilidades de aprimoramento, destacam-se a utilização de limiares proporcionais às dimensões corporais identificadas, a confirmação temporal dos eventos em múltiplos quadros, o tratamento explícito da ausência de pontos de referência e a melhoria da robustez da identificação dos objetos.

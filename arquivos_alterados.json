@@ -1,0 +1,306 @@
+[
+  {
+    "arquivo": "ALTERACOES_20261127.md",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "CONFERENCIA_SHAREPOINT_REFERENCIA.md",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Capitulos/01_introducao.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/02_fundamentacao.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/03_estado_da_arte.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/04_metodologia.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/05_requisitos.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/06_arquitetura.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/09_embarcados.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/10_backend.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/11_aplicativo.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/14_testes.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/15_resultados.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/16_discussao.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Capitulos/17_conclusao.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/CATALOGO_FOTOS.md",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/PROVENIENCIA_DADOS.md",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/RELATORIO_FONTE.md",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/VISAO_MEMORIAL_TEXTO_E_EQUACOES.txt",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/atualizacoes_firmware_i2c.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/calibracoes_do_disco.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/dispensacao_ciclos_por_bolso.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/executor_caixa_preta_42_testes.log",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/ledger_dc1_comandos_por_tipo.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/ledger_dc1_por_dia.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/releases_instaladas_raspberry.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_comandos_ao_aparelho.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_comandos_de_motor_por_acao.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_disponibilidade_do_enlace.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_maiores_lacunas.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_motivos_de_falha_dos_comandos.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_registros_de_tomada.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_oficial_relatorios_de_estado_por_dia.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_simulado_comandos_ao_aparelho.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_simulado_comandos_de_motor_por_acao.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_simulado_disponibilidade_do_enlace.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_simulado_maiores_lacunas.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/servidor_simulado_relatorios_de_estado_por_dia.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/sessoes_do_disco.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/sessoes_do_disco_motivos_de_falha.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/sessoes_do_disco_por_fase.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/telemetria_i2c_amostras.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/telemetria_i2c_resumo.json",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Dados/validacao_20261126/testes_software_por_rodada.csv",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "FEI-bib/dosecerta-referencias.bib",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/central_eletronica.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/central_externa.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/conjunto.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/desfechos_ciclos.png",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/faixas_calibracao.png",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/intermediario.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/intermediario_chicote.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/mecanismo.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/sub_eletronica.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "Figuras/Validacao20261126/submodulo.jpg",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "PERGUNTAS_PARA_CONTRIBUIDORES.md",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "PERGUNTAS_PARA_CONTRIBUIDORES_ANTES_DA_INTEGRACAO.md",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "PosTextual/apendices.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "PreTextual/abstract.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "PreTextual/resumo.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "PreTextual/simbolos.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "README.md",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "VALIDACAO_E_COMPILACAO.md",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "alteracoes_base_local.patch",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "historico_pendencias_pre_integracao.json",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "main.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "mapa_fotos_20261126.json",
+    "estado": "novo"
+  },
+  {
+    "arquivo": "pendencias.json",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "pendencias_dosecerta.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "referencias.tex",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "validacao_estatica.json",
+    "estado": "alterado"
+  },
+  {
+    "arquivo": "validar_integracao.py",
+    "estado": "novo"
+  }
+]

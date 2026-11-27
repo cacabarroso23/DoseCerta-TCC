@@ -1,4 +1,5 @@
-% DoseCerta — monografia. Modelo FEI; paginação digital sem versos vazios.
+% DoseCerta — monografia.
+% Modelo FEI; paginação digital sem versos vazios.
 % Compilar na raiz com pdfLaTeX; repetir até resolver sumário, listas e referências.
 \documentclass[12pt,openany,oneside,a4paper,chapter=TITLE,english,brazil]{classe/USPSC}
 \usepackage[T1]{fontenc}
@@ -9,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{array,longtable}
+\usepackage{amsmath}
 \usepackage{url}
 \usepackage{caption}
 \captionsetup[table]{justification=raggedright,singlelinecheck=false,width=\textwidth}
@@ -16,13 +18,12 @@
 \usepackage[alf,abnt-emphasize=bf,abnt-thesis-year=both,abnt-repeated-author-omit=no,abnt-last-names=abnt,abnt-etal-cite=3,abnt-etal-list=3,abnt-etal-text=it,abnt-and-type=e,abnt-doi=doi,abnt-url-package=none,abnt-verbatim-entry=no]{abntex2cite}
 \usepackage{classe/ABNT6023-10520}
 \usepackage{hyphenat}
-
 \input{pendencias_dosecerta}
 \makeatletter
 \renewcommand{\imprimirfolhaderosto}[1][\folhaderostoname]{%
-    \@ifstar
-        {\imprimirfolhaderostostar{#1}}
-        {\imprimirfolhaderostonostar{#1}}%
+\@ifstar
+{\imprimirfolhaderostostar{#1}}
+{\imprimirfolhaderostonostar{#1}}%
 }
 \makeatother
 % A edição digital não insere páginas de paridade vazias.

@@ -1,244 +1,228 @@
-# DoseCerta — roteiro atualizado de pendências
+# Pendências da versão integrada
+Gerado do LaTeX atual em 27/11/2026. Alguns itens pedem confirmação ou complementação, não implementação nova. O guia anterior está preservado com sufixo ANTES_DA_INTEGRACAO.
 
-## Decisões incorporadas
+## Capitulos/01_introducao.tex
 
-* Monografia em português do Brasil, com abstract em inglês e modelo FEI fornecido pela equipe.
-* Nick/Nicolas: aplicativo Care; Vini/Vinicius: visão computacional; Thi/Thiago: agente de IA; Toca/Rafael: elétrica e mecânica; Caroline: revisão bibliográfica e consolidação.
-* Inclinação de projeto: 35°. Não é necessário reconfirmar a decisão; a comprovação da peça fabricada continua pendente.
-* Login do aplicativo obrigatório. Versão, telas e evidências de autenticação ainda devem ser fornecidas.
-* Aplicativo, visão e agente pertencem ao escopo formal, sem atendimento presumido dos requisitos.
-* Resultados, discussão e conclusão aguardam dados; não foram inventados métodos, medições ou resultados.
-* Elementos pré-textuais não preenchidos foram mantidos com marcação vermelha. Somente a ficha catalográfica foi omitida.
+- **EA04** — Definir população, amostra, contexto de avaliação e desfechos do estudo empírico. Não há dados finais para afirmar melhora de adesão, usabilidade, segurança clínica ou redução de erros.
 
-## Como responder
+## Capitulos/02_fundamentacao.tex
 
-Esta lista corresponde aos 87 campos de `pendencias.json` e às chamadas de `\pendencia{ID}{texto}` no projeto. A macro define texto vermelho para a futura compilação. O PDF integral ainda não foi compilado nem inspecionado visualmente.
+- **ARM01** — Validar com profissional farmacêutico a elegibilidade e o armazenamento; medir umidade, temperatura, barreira e estabilidade da configuração fabricada. Conferir fontes primárias e enquadramento regulatório sem transpor prazos hospitalares ou estrangeiros para uso doméstico.
 
-Para cada ID, informar resposta, responsável, data/versão e arquivo de evidência. Ensaios devem registrar condições, instrumentos, repetições, denominadores e falhas. Não enviar credenciais nem dados identificáveis de pacientes. Na ausência de evidência, manter a pendência.
+## Capitulos/03_estado_da_arte.tex
 
-Os responsáveis acima são a divisão confirmada pela autora. Para firmware, servidor, integração e ensaios, a equipe deve identificar o responsável técnico; não foi presumida atribuição individual.
+- **EA02-REV** — Completar a revisão narrativa com o registro das bases, datas, expressões de busca e critérios de seleção. Acrescentar as referências da versão final.
 
-## Campos por arquivo
+- **EA03-COMP** — Completar o quadro comparativo com modelos específicos e fontes primárias: capacidade, autonomia, dimensões, preço com data/região, reabastecimento e mecanismo. Não preencher parâmetros comerciais ausentes por analogia nem afirmar vantagem sem ensaio comparável.
 
-### `Capitulos/01_introducao.tex`
+- **EA04-COMP** — Inserir comparação empírica somente após definição de população, cenário, desfechos e dados. Deixar explícitos os parâmetros ainda não medidos e as diferenças entre as soluções comparadas.
 
-* `EA04` — Definir população, amostra, contexto de avaliação e desfechos do estudo empírico. Não há dados finais para afirmar melhora de adesão, usabilidade, segurança clínica ou redução de erros.
+## Capitulos/04_metodologia.tex
 
-### `Capitulos/03_estado_da_arte.tex`
+- **MET01-ACEITE** — Identificar executores e revisores dos ensaios, instrumentos, condições e evidências por frente.
 
-* `EA02-REV` — Caroline: concluir a revisão bibliográfica, registrar bases, datas, expressões de busca, critérios e referências adicionais. Se for adotado um método sistemático, executar e documentar o protocolo antes de assim denominar o levantamento.
+- **MET03-IA** — Completar a declaração por integrante: Copilot (especificar produto), Copilot Studio, OpenAI (produto/API e modelo), Claude e demais ferramentas efetivamente usadas; tarefas, datas/versões quando disponíveis, partes aproveitadas e revisão humana realizada. Não atribuir uso a uma pessoa sem confirmação.
 
-* `EA03-COMP` — Completar o quadro comparativo com modelos específicos e fontes primárias: capacidade, autonomia, dimensões, preço com data/região, reabastecimento e mecanismo. Não preencher parâmetros comerciais ausentes por analogia nem afirmar vantagem sem ensaio comparável.
+- **MET02-VERSOES** — Informar software e revisão CAD final, impressora/fatiador, versões das bibliotecas, compiladores, dependências e releases efetivamente apresentados. Distinguir ambiente de desenvolvimento, teste e produção.
 
-* `EA04-COMP` — Inserir comparação empírica somente após definição de população, cenário, desfechos e dados. Deixar explícitos os parâmetros ainda não medidos e as diferenças entre as soluções comparadas.
+- **MET02-PROTOCOLO** — Fechar com a orientação o protocolo final, repetições, amostragem, instrumentos e critérios quantitativos. Não há base documental suficiente para inventar tolerâncias de taxa de erro, corrente, latência ou desempenho.
 
-### `Capitulos/04_metodologia.tex`
+- **MET-ETICA** — Informar se haverá participantes, coleta de imagens ou dados pessoais; documentar autorizações, consentimento e avaliação institucional aplicáveis. Não inserir número de parecer ou dispensa não fornecidos.
 
-* `MET01-ACEITE` — Cada responsável deverá fornecer os instrumentos, condições, calibração, protocolo e evidências da sua frente. Identificar quem executou e quem conferiu os ensaios; não inferir autoria ou aceite apenas da divisão de tarefas.
+## Capitulos/05_requisitos.tex
 
-* `MET03-IA` — Completar a declaração por integrante: Copilot (especificar produto), Copilot Studio, OpenAI (produto/API e modelo), Claude e demais ferramentas efetivamente usadas; tarefas, datas/versões quando disponíveis, partes aproveitadas e revisão humana realizada. Não atribuir uso a uma pessoa sem confirmação.
+- **REQ02** — Definir os limites quantitativos de aceitação: taxa de separação correta e dose extra, tempo por unidade, capacidade útil, repetibilidade, tensão mínima em carga, correntes, latência, disponibilidade, número de ciclos e critérios de visão/agente. Registrar justificativa e unidade; não inventar metas.
 
-* `MET02-VERSOES` — Informar software e revisão CAD final, impressora/fatiador, versões das bibliotecas, compiladores, dependências e releases efetivamente apresentados. Distinguir ambiente de desenvolvimento, teste e produção.
+- **REQ03-MATRIZ** — Preencher a matriz final requisito--teste--evidência--resultado após a campanha. Todas as frentes permanecem no escopo; o estado de atendimento continua pendente.
 
-* `MET02-PROTOCOLO` — Fechar com a orientação o protocolo final, repetições, amostragem, instrumentos e critérios quantitativos. Não há base documental suficiente para inventar tolerâncias de taxa de erro, corrente, latência ou desempenho.
+## Capitulos/06_arquitetura.tex
 
-* `MET-ETICA` — Informar se haverá participantes, coleta de imagens ou dados pessoais; documentar autorizações, consentimento e avaliação institucional aplicáveis. Não inserir número de parecer ou dispensa não fornecidos.
+- **ARQ01** — Conferir os diagramas inseridos com a configuração final; atualizar módulos, interfaces e versões que tenham sido alterados desde o desenho de referência.
 
-### `Capitulos/05_requisitos.tex`
+- **ARQ02** — Fornecer esquema da montagem pós-reparos, orientação de cada pogo, continuidade e fotografias identificadas. O mapa funcional disponível não comprova ordem física nem estado atual de todos os módulos.
 
-* `REQ02` — Definir os limites quantitativos de aceitação: taxa de separação correta e dose extra, tempo por unidade, capacidade útil, repetibilidade, tensão mínima em carga, correntes, latência, disponibilidade, número de ciclos e critérios de visão/agente. Registrar justificativa e unidade; não inventar metas.
+- **ARQ04** — Configuração de 26/11 incorporada: runtime 0.9.2, INT01 0.3.1 e SUB01 0.6.1, Simulado, RTC não ativo e agenda desligada. Acrescentar hashes e comissionamento da configuração apresentada; não reutilizar a antiga referência sem fonte a 12/11.
 
-* `REQ03-MATRIZ` — Preencher a matriz final requisito--teste--evidência--resultado após a campanha. Todas as frentes permanecem no escopo; o estado de atendimento continua pendente.
+## Capitulos/07_projeto_mecanico.tex
 
-### `Capitulos/06_arquitetura.tex`
+- **MEC01** — Resolver a divergência 30 graus do V75 versus 35 graus da decisão de projeto; identificar revisão fabricada e medir a montagem antes de alterar o CAD por pressuposto.
 
-* `ARQ01` — A autora enviará o subspace de arquitetura. Incorporar o diagrama da configuração final e confrontá-lo com esquema, versões e montagem real; não substituir o material prometido por inferência.
+- **MEC03** — Conferir as dimensões da peça fabricada com instrumento, revisão e incerteza apropriados. Medir disco, cavidades, folgas, aberturas, oscilação e trajeto até o coletor. Não converter cotas do V75 em valores medidos do protótipo.
 
-* `ARQ02` — Fornecer esquema da montagem pós-reparos, orientação de cada pogo, continuidade e fotografias identificadas. O mapa funcional disponível não comprova ordem física nem estado atual de todos os módulos.
+- **MEC04** — Inserir a ficha de fabricação por peça: material/marca/lote, impressora, fatiador, revisão, bico, temperaturas, camada, perímetros, preenchimento, orientação, suportes, tempo e massa. A lista de compra já foi recebida; falta a fabricação efetiva.
 
-* `ARQ04` — Confirmar a configuração na data de fechamento: hashes, versões, boot IDs, módulos montados, provisionamento e pré-condições de operação. Registrar RTC, agenda e comissionamento com evidências primárias.
+- **MEC05** — Completar a lista técnica instalada: parafusos por posição, ímãs e polaridade, acoplamentos, pogo, retenção, ajustes e eventual uso de adesivo. Incorporar o material complementar a ser fornecido pela autora.
 
-### `Capitulos/07_projeto_mecanico.tex`
+- **MEC06-FOTO1** — Montagem de novembro incorporada na Figura~\ref{fig:montagem_2026}. Confirmar com a equipe revisão e identificação das peças fotografadas antes do fechamento.
 
-* `MEC01` — Inserir CAD e desenho técnico finais, revisão, cotas e relação das peças fabricadas com o modelo. A inclinação adotada é 35°; fornecer a evidência de fabricação e a medição do conjunto montado.
+- **MEC06-FOTO2** — Detalhes da montagem incorporados nas Figuras~\ref{fig:sub_fisico_2026} e~\ref{fig:mecanismo_fisico_2026}; complementar com escala, orientação do sensor e caminho efetivo até o coletor.
 
-* `MEC03` — Conferir as dimensões da peça fabricada com instrumento, revisão e incerteza apropriados. Medir disco, cavidades, folgas, aberturas, oscilação e trajeto até o coletor. Não converter cotas do V75 em valores medidos do protótipo.
+- **MEC07** — Completar massas, inclinação física, atrito, retenção, desgaste e encaixes. Já há ciclos e falhas de desenvolvimento no Capítulo~\ref{cap:resultados}; falta campanha controlada por unidade de teste com contagem independente.
 
-* `MEC04` — Inserir a ficha de fabricação por peça: material/marca/lote, impressora, fatiador, revisão, bico, temperaturas, camada, perímetros, preenchimento, orientação, suportes, tempo e massa. A lista de compra já foi recebida; falta a fabricação efetiva.
+## Capitulos/08_projeto_eletronico.tex
 
-* `MEC05` — Completar a lista técnica instalada: parafusos por posição, ímãs e polaridade, acoplamentos, pogo, retenção, ajustes e eventual uso de adesivo. Incorporar o material complementar a ser fornecido pela autora.
+- **ELE01** — Informar marca/modelo da fonte instalada, etiqueta, regulação, fusíveis, aterramento, proteção e cabeamento. Medir tensão na Pi e nos módulos, queda de tensão, corrente em repouso/atuação e aquecimento. Não tratar 10 A como consumo.
 
-* `MEC06-FOTO1` — INSERIR FOTO: vista geral do protótipo físico final, identificando revisão, módulos presentes e data. A figura CAD do artigo não substitui a fotografia.
+- **ELE02** — Conferir ordem, orientação e continuidade real de cada pogo, comprimentos, bitolas e retornos. Completar esquema elétrico pós-reparos e identificar conectores por modelo ou desenho cotado.
 
-* `MEC06-FOTO2` — INSERIR FOTOS: disco, cavidades, reservatório, placa de apoio, saída, coletor, fixação do motor e contatos. Incluir escala e legenda, sem dados pessoais.
+- **ELE03** — Medir pull-ups equivalentes, capacitância/tempos de subida e níveis do I²C com os módulos e os motores; verificar colisão de endereços, taxas de erro e comportamento no encaixe/retirada energizados. O mapa funcional não atesta integridade elétrica.
 
-* `MEC07` — Registrar massas, inclinação medida, atrito/ângulo de deslizamento, retenção desenergizada, folgas após impressão, desgaste e ciclos de encaixe. Para cada tipo de comprimido de teste, registrar captura simples/dupla, retenção, travamento, tentativas e falhas com denominador. Não há resultados finais fornecidos.
+- **ELE04** — Conferir pinagem do TCRT5000 físico, resistores, alimentação e faixa ADC; obter leituras em cavidade vazia/ocupada e sob diferentes condições. Medir comportamento do motor, driver e sensor em conjunto, sem confundir leitura da cavidade com sensor de saída.
 
-### `Capitulos/08_projeto_eletronico.tex`
+- **ELE05** — Confirmar LED adquirido/instalado, terminais A/K, corrente e brilho por cor, resistores e dissipação dos drivers. Fornecer fotos e testes de todas as posições; não assumir funcionamento dos dois intermediários a partir de uma unidade.
 
-* `ELE01` — Informar marca/modelo da fonte instalada, etiqueta, regulação, fusíveis, aterramento, proteção e cabeamento. Medir tensão na Pi e nos módulos, queda de tensão, corrente em repouso/atuação e aquecimento. Não tratar 10 A como consumo.
+- **ELE06** — Identificar RTC e bateria realmente instalados; conferir carga e compatibilidade da placa, habilitação no Linux, leitura de /dev/rtc0 e teste após desligamento sem rede. A bateria do RTC não alimenta a Pi.
 
-* `ELE02` — Conferir ordem, orientação e continuidade real de cada pogo, comprimentos, bitolas e retornos. Completar esquema elétrico pós-reparos e identificar conectores por modelo ou desenho cotado.
+- **ELE07** — Fechar ensaios de buzzer, LEDs centrais, chaveamento, aquecimento, reinício e interferência em conjunto. Inserir esquema final, registros dos instrumentos e condições; confirmar capacitores/proteções acrescentados nos reparos.
 
-* `ELE03` — Medir pull-ups equivalentes, capacitância/tempos de subida e níveis do I²C com os módulos e os motores; verificar colisão de endereços, taxas de erro e comportamento no encaixe/retirada energizados. O mapa funcional não atesta integridade elétrica.
+- **BOM01** — Conciliar os orçamentos XLSX e XLSM/contrato com compras, doações e fretes; o valor anterior de R\$ 2.512,55 não foi localizado e não é adotado. Não preencher custo realizado com orçamento.
 
-* `ELE04` — Conferir pinagem do TCRT5000 físico, resistores, alimentação e faixa ADC; obter leituras em cavidade vazia/ocupada e sob diferentes condições. Medir comportamento do motor, driver e sensor em conjunto, sem confundir leitura da cavidade com sensor de saída.
+- **BOM02** — Completar a lista técnica instalada com sensores, conectores pogo, resistores, drivers de LEDs, buzzer/MOSFET, RTC, bateria, cabos, proteções e demais itens. Conferir a troca de WS2812B cotado pelo RGB comum documentado.
 
-* `ELE05` — Confirmar LED adquirido/instalado, terminais A/K, corrente e brilho por cor, resistores e dissipação dos drivers. Fornecer fotos e testes de todas as posições; não assumir funcionamento dos dois intermediários a partir de uma unidade.
+## Capitulos/09_embarcados.tex
 
-* `ELE06` — Identificar RTC e bateria realmente instalados; conferir carga e compatibilidade da placa, habilitação no Linux, leitura de /dev/rtc0 e teste após desligamento sem rede. A bateria do RTC não alimenta a Pi.
+- **EMB01** — Fornecer código/release final, hashes, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.
 
-* `ELE07` — Fechar ensaios de buzzer, LEDs centrais, chaveamento, aquecimento, reinício e interferência em conjunto. Inserir esquema final, registros dos instrumentos e condições; confirmar capacitores/proteções acrescentados nos reparos.
+- **EMB02** — Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação.
 
-* `BOM01` — Conciliar lista XLSX, proposta/contrato e eventual registro de R$ 2.512,55: revisão, data, aprovação, compras, doações, fretes e comprovantes. Não preencher custo realizado com orçamento ou campo vazio.
+- **EMB03** — Perfil ativo e intervalos incorporados. Completar referência angular independente, restauração física após desligamento, deslocamento manual e desempenho de localização na configuração final.
 
-* `BOM02` — Completar a lista técnica instalada com sensores, conectores pogo, resistores, drivers de LEDs, buzzer/MOSFET, RTC, bateria, cabos, proteções e demais itens. Conferir a troca de WS2812B cotado pelo RGB comum documentado.
+- **EMB04** — Fornecer relatórios de bancada de motor/sensor, duplicatas, perda de comunicação, reinício durante movimento, falha de persistência e recuperação. Separar teste simulado de execução física e identificar denominadores.
 
-### `Capitulos/09_embarcados.tex`
+- **EMB05** — Quatro atualizações aceitas e três canceladas estão documentadas. Completar ensaio controlado de corrupção/interrupção e recuperação. Imagem ESP32 tem SHA-256, não assinatura criptográfica.
 
-* `EMB01` — Fornecer código/release final, hashes, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.
+## Capitulos/10_backend.tex
 
-* `EMB02` — Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação.
+- **BE01-RUNTIME** — Versão e configuração de 26/11 incorporadas; complementar hash, manifesto e dependências da apresentação, sem atribuir a essa configuração todos os ensaios históricos.
 
-* `EMB03` — Anexar parâmetros e registros de calibração e localização do disco utilizado: fases por volta, intervalo, leituras, limiares, dispersão, falhas e restauração após desligamento.
+- **BE02-AGENDA** — Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação.
 
-* `EMB04` — Fornecer relatórios de bancada de motor/sensor, duplicatas, perda de comunicação, reinício durante movimento, falha de persistência e recuperação. Separar teste simulado de execução física e identificar denominadores.
+- **BE03-REDE** — Anexar roteiros e logs de pareamento, configuração/troca de Wi-Fi, senha incorreta, perda de conexão, reset e recadastramento, sem expor segredos.
 
-* `EMB05` — Comprovar atualização pelo barramento e recuperação de interrupção/corrupção com logs sanitizados. Não assumir assinatura, rollback ou persistência preservada sem evidência da versão.
+- **BE04-LOCAL** — Comprovar persistência de filas e idempotência, tratamento de resultado incerto, sincronização após falha e atualização segura da Pi com interrupção controlada.
 
-### `Capitulos/10_backend.tex`
+- **BE01-API** — Fornecer versão e hash da API, migrações aplicadas, esquema do banco, configuração sanitizada e manifesto dos serviços na versão final. Não atribuir versão do runtime à API.
 
-* `BE01-RUNTIME` — Confirmar release e hash instalados na data de fechamento, manifesto, dependências, serviços e configuração efetiva. Documentar o provisionamento ativo e a diferença entre fonte no servidor e instalação local.
+- **BE02-CONTRATO** — Conferir os contratos atuais API--Pi, normalização de payload/hash, estados, paginação e migrações. O compilado indica uso de cancelled em fluxos de demonstração; confirmar que o tipo/coluna de produção o aceita e registrar a migração.
 
-* `BE02-AGENDA` — Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação.
+- **BE03-SEGURANCA** — Documentar autorização real por usuário/paciente, expiração/renovação de sessão, rotação de segredos, retenção e purga. Fornecer teste de backup/restauração e política para imagens/eventos.
 
-* `BE03-REDE` — Anexar roteiros e logs de pareamento, configuração/troca de Wi-Fi, senha incorreta, perda de conexão, reset e recadastramento, sem expor segredos.
+- **BE04-TESTES** — Anexar resultados próprios do servidor, migrações e integração autenticada: data, ambiente, versões, comandos, aprovados, falhas e limites de simulação. Não converter relatórios históricos em aceite final.
 
-* `BE04-LOCAL` — Comprovar persistência de filas e idempotência, tratamento de resultado incerto, sincronização após falha e atualização segura da Pi com interrupção controlada.
+## Capitulos/11_aplicativo.tex
 
-* `BE01-API` — Fornecer versão e hash da API, migrações aplicadas, esquema do banco, configuração sanitizada e manifesto dos serviços na versão final. Não atribuir versão do runtime à API.
+- **APP01** — Nicolas: a autora enviará a versão e as telas do aplicativo. Inserir release/hash, ambiente, navegação e tarefas efetivamente disponíveis, além de capturas sanitizadas.
 
-* `BE02-CONTRATO` — Conferir os contratos atuais API--Pi, normalização de payload/hash, estados, paginação e migrações. O compilado indica uso de cancelled em fluxos de demonstração; confirmar que o tipo/coluna de produção o aceita e registrar a migração.
+- **APP02** — Login obrigatório confirmado: inserir telas e evidências do fluxo real, emissão/validação e renovação de sessão, expiração, logout, acesso negado e mensagens de erro, sem expor credenciais.
 
-* `BE03-SEGURANCA` — Documentar autorização real por usuário/paciente, expiração/renovação de sessão, rotação de segredos, retenção e purga. Fornecer teste de backup/restauração e política para imagens/eventos.
+- **APP03** — Conferir a autorização na versão final, especialmente se as visões de paciente/cuidador usam conta única. Não declarar isolamento de dados sem teste.
 
-* `BE04-TESTES` — Anexar resultados próprios do servidor, migrações e integração autenticada: data, ambiente, versões, comandos, aprovados, falhas e limites de simulação. Não converter relatórios históricos em aceite final.
+- **APP04** — Fornecer resultados próprios da suíte Care, integração autenticada, estados de erro/sem rede, atualização de histórico e comunicação com o aparelho. Identificar o que foi simulado.
 
-### `Capitulos/11_aplicativo.tex`
+- **APP05** — Inserir fotos/capturas atualizadas das tarefas principais e avaliação de acessibilidade/usabilidade: método, participantes quando houver, critérios, problemas e correções. Não inferir qualidade de uso pelo desenho das telas.
 
-* `APP01` — Nicolas: a autora enviará a versão e as telas do aplicativo. Inserir release/hash, ambiente, navegação e tarefas efetivamente disponíveis, além de capturas sanitizadas.
+## Capitulos/12_visao_computacional.tex
 
-* `APP02` — Login obrigatório confirmado: inserir telas e evidências do fluxo real, emissão/validação e renovação de sessão, expiração, logout, acesso negado e mensagens de erro, sem expor credenciais.
+- **VIS01** — Confirmar com o responsável a correspondência entre vision-v3 3.0.0, código, release instalada e método ativo. Resolver a divergência com a regressão logística de 16 medidas do pacote.
 
-* `APP03` — Conferir a autorização na versão final, especialmente se as visões de paciente/cuidador usam conta única. Não declarar isolamento de dados sem teste.
+- **VIS02** — Anexar figuras reais da aquisição, landmarks, ROI e interface; conferir versões das bibliotecas e execução dos mecanismos de câmera/cancelamento no aparelho. O DOCX não possui imagens incorporadas.
 
-* `APP04` — Fornecer resultados próprios da suíte Care, integração autenticada, estados de erro/sem rede, atualização de histórico e comunicação com o aparelho. Identificar o que foi simulado.
+- **VIS03** — Fornecer conjunto de avaliação autorizado, condições, classes, rotulagem independente e separação de ajuste e avaliação. Modelos pré-treinados não eliminam essa necessidade.
 
-* `APP05` — Inserir fotos/capturas atualizadas das tarefas principais e avaliação de acessibilidade/usabilidade: método, participantes quando houver, critérios, problemas e correções. Não inferir qualidade de uso pelo desenho das telas.
+- **VIS04** — Aprovar os critérios e a amostragem de avaliação; os limiares implementados estão na Tabela~\ref{tab:vis-parametros} e não são metas clínicas nem desempenho obtido.
 
-### `Capitulos/12_visao_computacional.tex`
+- **VIS05** — Executar ou localizar avaliação rotulada: número de sequências, matriz de confusão, erros técnicos, casos que requerem confirmação, tempo, memória e quadros/s efetivos.
 
-* `VIS01` — Texto a fornecer por Vinicius. Inserir objetivo específico, evento observado e limites; não preencher método por inferência de telas ou contratos de integração.
+- **VIS06** — Avaliar experimentalmente oclusões, luz, distância, ausência de landmarks e confirmação em um quadro, preservando a diferença entre falha técnica e resultado que requer confirmação.
 
-* `VIS02` — INSERIR arquitetura implementada, aquisição, preparação, algoritmo/modelo, saídas, erros, versões e evidência de implantação.
+## Capitulos/13_agente_ia.tex
 
-* `VIS03` — INSERIR origem e autorização dos dados, anonimização, classes, rotulagem, composição e separação dos conjuntos, protocolo e referência independente.
+- **AG01** — Confirmar modelo, parâmetros e versões finais do agente publicado e do agente chamado pelo aplicativo. O rótulo interno gpt-5.6-luna precisa de identificação verificável e não deve ser tratado como especificação pública do modelo.
 
-* `VIS04` — INSERIR métricas justificadas, limiares, cenários, repetições, condições e critérios de aceitação, distinguindo confiança do modelo de certeza clínica.
+- **AG02** — Fornecer evidências das oito ferramentas, aprovação e recusa de escritas, validação do servidor, tratamento de duplicatas e falhas ambíguas. Não executar gravações de teste em dados reais.
 
-* `VIS05` — SEM DADOS FINAIS: inserir resultados reais somente após recebimento dos registros do responsável.
+- **AG03** — Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \texttt{file\_search}.
 
-* `VIS06` — INSERIR limites observados e fatores de generalização, falhas e condições em que o sistema deve declarar inconclusão.
+- **AG04** — Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.
 
-### `Capitulos/13_agente_ia.tex`
+- **AG05** — Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.
 
-* `AG01` — Thiago: confirmar modelo/rótulo, versão publicada e versão efetivamente chamada, parâmetros, instruções e ambiente na data final. Anexar definição sanitizada e hashes quando aplicáveis.
+- **AG06** — Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.
 
-* `AG02` — Fornecer evidências das oito ferramentas, aprovação e recusa de escritas, validação do servidor, tratamento de duplicatas e falhas ambíguas. Não executar gravações de teste em dados reais.
+- **AG07** — Reconciliar a configuração histórica de 03/11 com o relato posterior de Voice Live e ferramenta de contexto somente de leitura; identificar versão ativa, protocolo, permissões e evidência no Care antes de afirmar a integração atual.
 
-* `AG03` — Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir file_search.
+## Capitulos/14_testes.tex
 
-* `AG04` — Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.
+- **TST01** — Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final.
 
-* `AG05` — Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.
+- **TST02** — Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente.
 
-* `AG06` — Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.
+- **TST03** — Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais.
 
-* `AG07` — Comprovar eventual integração posterior MCP--voz--Care e tratamento de aprovação na interface. Na ausência de prova, manter a distinção v5 sem MCP e agente de teste com ferramentas.
+- **TST04** — Completar os protocolos e relatórios de visão e agente com versões, dados, métricas e falhas. Distinguir servidor MCP, seleção de ferramentas, qualidade de resposta, voz e integração com o Care.
 
-### `Capitulos/14_testes.tex`
+- **TST05** — Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado ao capítulo 15; não antecipar discussão ou conclusão.
 
-* `TST01` — Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final.
+## Capitulos/15_resultados.tex
 
-* `TST02` — Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente.
+- **RES01** — Acrescentar os hashes e o manifesto sanitizado da configuração que será apresentada, instrumentos e condição de comissionamento. A configuração lida em 26/11 não reúne todos os ensaios históricos deste capítulo.
 
-* `TST03` — Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais.
+- **RES02** — Completar dimensões físicas, inclinação, corrente e tensão sob carga, aquecimento dos componentes e ensaios pós-reparo. Não converter temperatura da central em caracterização térmica de todo o aparelho.
 
-* `TST04` — Completar os protocolos e relatórios de visão e agente com versões, dados, métricas e falhas. Distinguir servidor MCP, seleção de ferramentas, qualidade de resposta, voz e integração com o Care.
+- **RES03** — Executar a campanha com contagem independente, referência física, versões e denominadores: acerto, ausência, unidade extra, retenção, travamento, tempo e recuperação. Preservar tentativas interrompidas.
 
-* `TST05` — Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado ao capítulo 15; não antecipar discussão ou conclusão.
+- **RES04** — Vincular versões e logs completos do servidor e aplicativo apresentados na defesa; resolver ou justificar erros e falhas remanescentes. Completar testes autenticados de ponta a ponta e tarefas, sem somar rodadas.
 
-### `Capitulos/15_resultados.tex`
+- **RES05** — Completar os resultados de visão e agente separadamente, com método/versionamento reconciliados, conjunto de referência, falhas e denominadores.
 
-* `RES01` — SEM DADOS FINAIS: inserir configuração efetivamente avaliada, versões, montagem, data, instrumentos e condições.
+- **RES06** — Inserir avaliação de usabilidade e acessibilidade, caso realizada: protocolo, autorizações aplicáveis, participantes, tarefas e achados. Não há base para afirmar melhoria de adesão ou eficácia clínica.
 
-* `RES02` — SEM DADOS: inserir dimensões medidas, alimentação, corrente, aquecimento e ensaios/fotografias finais.
+- **RES07** — Aprovar a matriz final requisito--teste--evidência e os critérios quantitativos; executar os casos físicos ainda ausentes e conferir o atendimento das outras frentes.
 
-* `RES03` — SEM DADOS: inserir tentativas, denominadores, saída observada, falhas, doses extras, repetibilidade e recuperação.
+## Capitulos/16_discussao.tex
 
-* `RES04` — SEM DADOS FINAIS: inserir resultados próprios de software, integração autenticada, latência e tarefas da versão avaliada.
+- **DIS02** — Completar a comparação após fechar a campanha e o quadro de soluções: utilizar grandezas efetivamente medidas e fontes primárias, sem comparar reconhecimento de comando com acerto físico de outro equipamento.
 
-* `RES05` — SEM DADOS: inserir avaliação real de cada módulo separadamente, método, conjunto, métricas, falhas e limites.
+- **DIS01** — Revisar a interpretação com a orientação e os responsáveis após a campanha final; conservar o recorte exploratório dos resultados atuais.
 
-* `RES06` — SEM DADOS: inserir protocolo, autorizações aplicáveis, participantes, tarefas e achados, caso a avaliação seja realizada.
+- **DIS03** — Atualizar os limites de validade e segurança com os ensaios de carga, autonomia, versões de visão/agente e controle de acesso efetivamente concluídos.
 
-* `RES07` — SEM DADOS FINAIS: relacionar requisito, critério, teste, evidência, resultado e limitação; não marcar atendimento automaticamente.
+- **DIS04** — Priorizar as melhorias com base em resultados finais: geometria e retenção, estabilidade elétrica, referência do disco, indicação de estados e proteção dos dados.
 
-### `Capitulos/16_discussao.tex`
+## Capitulos/17_conclusao.tex
 
-* `DIS01` — PREENCHER APÓS OS RESULTADOS: analisar achados reais por objetivo e requisito, distinguindo software e evidência física.
+- **CON01** — Revisar a resposta aos objetivos após a campanha final, substituindo apenas os limites efetivamente resolvidos e conservando a rastreabilidade das evidências.
 
-* `DIS02` — PREENCHER APÓS OS RESULTADOS: comparar grandezas e contextos equivalentes, sem afirmar superioridade não demonstrada.
+- **CON02** — Validar com a equipe as contribuições e a continuidade, sem apresentar funcionamento autônomo, conformidade ou benefícios clínicos que não foram demonstrados.
 
-* `DIS03` — PREENCHER APÓS OS RESULTADOS: discutir falhas, incertezas, validade e limites da integração e das inferências.
+## PosTextual/anexos.tex
 
-* `DIS04` — PREENCHER APÓS OS RESULTADOS: derivar melhorias das evidências, separando requisito não concluído de evolução futura.
+- **AN-A** — Selecionar os documentos externos necessários à compreensão do trabalho, com autoria, referência e autorização aplicável. Não anexar automaticamente contratos assinados ou dados pessoais.
 
-### `Capitulos/17_conclusao.tex`
+## PosTextual/apendices.tex
 
-* `CON01` — PREENCHER APÓS RESULTADOS E DISCUSSÃO: responder aos objetivos somente com base no que foi demonstrado.
+- **AP-A** — Matriz e inventário incorporados. Aprovar critérios e anexar fichas preenchidas, instrumentos, executores, dados físicos e evidências finais. Não arquivar dados pessoais, segredos ou resultados simulados como observação real.
 
-* `CON02` — PREENCHER APÓS OS RESULTADOS: delimitar contribuições efetivas, limitações, pendências e possibilidades futuras. Não antecipar eficácia ou segurança clínica.
+## PreTextual/abstract.tex
 
-### `PosTextual/anexos.tex`
+- **PRE-ABS** — Complete this abstract with the main quantitative results and conclusions after the experimental campaign. Match the final method and the institutional word limit.
 
-* `AN-A` — Selecionar os documentos externos estritamente necessários, com autoria, referência e autorização aplicável. Não anexar automaticamente contratos assinados ou dados pessoais; remover este campo apenas após decisão editorial.
+## PreTextual/agradecimentos.tex
 
-### `PosTextual/apendices.tex`
+- **PRE-AGR** — INSERIR o texto de agradecimentos aprovado pela equipe.
 
-* `AP-A` — Inserir manifestos de versões/hashes, protocolos aprovados, matriz de requisitos e fichas de ensaio, com identificação e vínculo com os resultados. Evitar repetir o corpo da monografia ou inserir credenciais.
+## PreTextual/dedicatoria.tex
 
-### `PreTextual/abstract.tex`
+- **PRE-DED** — INSERIR a dedicatória da equipe, se desejada na versão definitiva.
 
-* `PRE-ABS` — Update this abstract with the final method, quantitative results, and conclusions only after the experimental campaign and Chapters 15 to 17 are completed.
+## PreTextual/epigrafe.tex
 
-### `PreTextual/agradecimentos.tex`
+- **PRE-EPI** — INSERIR a citação escolhida com autoria e fonte, ou decidir pela retirada na versão definitiva.
 
-* `PRE-AGR` — INSERIR o texto de agradecimentos aprovado pela equipe.
+## PreTextual/folhadeaprovacao.tex
 
-### `PreTextual/dedicatoria.tex`
+- **PRE-APROV** — Inserir data de defesa/aprovação, composição da banca, titulação, afiliação e formalização/assinaturas conforme orientação da FEI. Não há aprovação presumida nesta cópia de leitura.
 
-* `PRE-DED` — INSERIR a dedicatória da equipe, se desejada na versão definitiva.
+## PreTextual/resumo.tex
 
-### `PreTextual/epigrafe.tex`
-
-* `PRE-EPI` — INSERIR a citação escolhida com autoria e fonte, ou decidir pela retirada na versão definitiva.
-
-### `PreTextual/folhadeaprovacao.tex`
-
-* `PRE-APROV` — Inserir data de defesa/aprovação, composição da banca, titulação, afiliação e formalização/assinaturas conforme orientação da FEI. Não há aprovação presumida nesta cópia de leitura.
-
-### `PreTextual/resumo.tex`
-
-* `PRE-RES` — Atualizar o resumo com método final, principais resultados quantitativos e conclusão somente após o encerramento da campanha e dos capítulos 15 a 17.
-
+- **PRE-RES** — Completar o resumo com os principais resultados quantitativos e a conclusão após a campanha experimental. Ajustar o texto ao método final e ao limite institucional de palavras.

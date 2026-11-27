@@ -1,0 +1,5 @@
+﻿acao;status;motivo;count
+simulate_quantity;applied;slot_insufficient_candidates;1
+simulate_quantity;applied;slot_quantity_completed;3
+simulate_quantity;applied;slot_unit_retained;2
+simulate_quantity;failed;slot_adc_identity_or_freshness_changed;1

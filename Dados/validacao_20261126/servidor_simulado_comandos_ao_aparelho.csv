@@ -1,0 +1,7 @@
+﻿command_type;status;count;ack_medio_s;ack_mediana_s;ack_max_s;de;ate
+apply_config;applied;1;1.86;1.86;1.86;2026-11-14;2026-11-14
+camera_restart;applied;1;1.55;1.55;1.55;2026-11-25;2026-11-25
+dc1_motor;applied;6;36.57;34.29;54.55;2026-11-14;2026-11-14
+dc1_motor;failed;1;23.35;23.35;23.35;2026-11-14;2026-11-14
+stage_vision;applied;3;1.87;1.92;2.04;2026-11-25;2026-11-25
+vision_observe;applied;1;2.13;2.13;2.13;2026-11-25;2026-11-25

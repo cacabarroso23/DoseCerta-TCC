@@ -1,0 +1,56 @@
+{
+ "amostras": 1725,
+ "inicio": "2026-11-26T22:11:49.959-03:00",
+ "fim": "2026-11-26T22:40:42.577-03:00",
+ "falhas_http_runtime": 1,
+ "latencia_estado_ms": {
+  "mediana": 183.4,
+  "p95": 277.7,
+  "max": 7932.1
+ },
+ "INT-01": {
+  "amostras": 1724,
+  "leituras_distintas_do_barramento": 1614,
+  "amostras_invalidas_ou_ausentes": 0,
+  "amostras_com_last_error": 0,
+  "boot_ids": [
+   2228074949
+  ],
+  "reinicios_observados": 0,
+  "estados": {
+   "DONE/NONE": 1724
+  }
+ },
+ "SUB-01": {
+  "amostras": 1724,
+  "leituras_distintas_do_barramento": 1614,
+  "amostras_invalidas_ou_ausentes": 0,
+  "amostras_com_last_error": 0,
+  "boot_ids": [
+   3213772843
+  ],
+  "reinicios_observados": 0,
+  "estados": {
+   "READY/NONE": 1724
+  },
+  "adc_parado": {
+   "n": 1724,
+   "media": 143.4,
+   "desvio": 1.21,
+   "min": 138,
+   "max": 148,
+   "mediana": 144.0
+  }
+ },
+ "temperatura_c": {
+  "n": 173,
+  "media": 56.0,
+  "min": 53.692,
+  "max": 57.458
+ },
+ "throttled": {
+  "throttled=0x0": 173
+ },
+ "nuvem_online_pct": 100.0,
+ "filas_nao_vazias": 121
+}
