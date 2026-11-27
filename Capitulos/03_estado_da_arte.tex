@@ -1,34 +1,34 @@
-\chapter{Estado da arte}\label{cap:estadoarte}
+\section{Estado da arte}\label{cap:estadoarte}
 A relação entre a proposta e as soluções de apoio à medicação foi organizada em três eixos: forma de disponibilizar as doses, informação gerada sobre o uso e interação com a pessoa responsável pelo cuidado. Essa organização permite discutir o que cada recurso oferece antes de reunir mecanismos diferentes sob a mesma denominação de dispensador inteligente.
 
-\section{Organização e disponibilização das doses}
+\subsection{Organização e disponibilização das doses}
 Os organizadores passivos distribuem previamente os medicamentos por compartimentos. Seu funcionamento depende do abastecimento correto e da retirada no momento previsto. A estrutura auxilia a organização, mas não controla, por si só, o horário de acesso nem produz um registro automático do que aconteceu.
 
 Nos equipamentos de dose pronta, cada compartimento recebe antecipadamente a quantidade correspondente a um horário. A automação atua na apresentação ou liberação desse conjunto. Já na separação unitária, um reservatório mantém várias unidades do mesmo medicamento, cabendo ao mecanismo formar a quantidade solicitada. Essa última alternativa reduz a necessidade de preparar cada dose individualmente, mas amplia a responsabilidade do sistema sobre captura, transporte e liberação.
 
-O DoseCerta adota a separação unitária com reservatórios independentes. Essa escolha direciona o desenvolvimento para a geometria das cavidades, a movimentação controlada e a verificação da condição do disco, apresentadas nos Capítulos~\ref{cap:mecanica} e~\ref{cap:embarcados}.
+O DoseCerta adota a separação unitária com reservatórios independentes. Essa escolha direciona o desenvolvimento para a geometria das cavidades, a movimentação controlada e a verificação da condição do disco, apresentadas nas Seções~\ref{cap:mecanica} e~\ref{cap:embarcados}.
 
-\section{Dispensadores no cuidado domiciliar}
+\subsection{Dispensadores no cuidado domiciliar}
 A revisão de \citeonline{SALMENSUU2025} reúne estudos sobre dispensadores utilizados por pessoas idosas que vivem em casa e examina diferentes dimensões de benefício. Os achados variam conforme o domínio e o contexto de uso. Dessa forma, a presença de automação não permite concluir que todos os equipamentos produzam o mesmo efeito sobre saúde, experiência de uso ou custos.
 
 Essa distinção é relevante para o projeto. Uma solução pode facilitar o acesso às doses e, ao mesmo tempo, exigir apoio para abastecimento e configuração. Também pode registrar a abertura de um compartimento sem observar a ingestão. A comparação deve, portanto, considerar a tarefa realizada e a evidência produzida, não apenas a existência de alarmes ou conectividade.
 
-\section{Monitoramento e qualidade do registro}
+\subsection{Monitoramento e qualidade do registro}
 O acompanhamento digital permite reunir horários, alertas e histórico, mas a interpretação desses dados depende de sua origem. Um evento gerado pelo controlador indica o que o aparelho registrou; um relato humano expressa uma observação; uma classificação visual resulta de um método de análise. Conservar essas diferenças evita atribuir ao histórico uma certeza que ele não possui.
 
 No DoseCerta, essa necessidade se traduz na separação entre planejamento, comando, resultado mecânico, observação e relato. O aplicativo apresenta as informações, enquanto o servidor preserva os vínculos entre paciente, medicamento, agenda e evento. A visão e o agente acrescentam recursos de observação e interação sem substituir esses registros por uma confirmação genérica.
 
-\section{Interação e acessibilidade}
+\subsection{Interação e acessibilidade}
 A utilização de um sistema conectado inclui tarefas de cadastro, definição de horários, reabastecimento e resposta a falhas. A clareza dessas tarefas é tão importante quanto o funcionamento do mecanismo. A referência às WCAG 2.2 orienta aspectos da interface web, especialmente identificação dos controles e redundância das informações visuais. \cite{WCAG22}
 
 A interação conversacional pode complementar os caminhos manuais, mas não deve torná-los obrigatoriamente dependentes da interpretação de um modelo. Por esse motivo, o Care conserva funções de consulta e cadastro na interface. O agente atua como caminho adicional, sujeito às mesmas regras de autorização e à confirmação das operações de escrita.
 
-\section{Posicionamento do trabalho}
+\subsection{Posicionamento do trabalho}
 A contribuição proposta consiste na articulação entre módulos removíveis, separação unitária, operação local e acompanhamento rastreável. O controle distribuído permite manter a atuação próxima ao mecanismo, enquanto aplicativo e servidor concentram as tarefas de configuração e consulta. A visão e a conversação são incorporadas como interfaces complementares dessa arquitetura.
 
 O levantamento adotado é narrativo e não pretende representar uma revisão sistemática. A avaliação da proposta é realizada por requisitos e funções, sem transferir para o protótipo os efeitos clínicos de outras intervenções.
 
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{EA02-REV}{Completar a revisão narrativa com o registro das bases, datas, expressões de busca e critérios de seleção. Acrescentar as referências da versão final.}
 \pendencia{EA03-COMP}{Completar o quadro comparativo com modelos específicos e fontes primárias: capacidade, autonomia, dimensões, preço com data/região, reabastecimento e mecanismo. Não preencher parâmetros comerciais ausentes por analogia nem afirmar vantagem sem ensaio comparável.}
 \pendencia{EA04-COMP}{Inserir comparação empírica somente após definição de população, cenário, desfechos e dados. Deixar explícitos os parâmetros ainda não medidos e as diferenças entre as soluções comparadas.}

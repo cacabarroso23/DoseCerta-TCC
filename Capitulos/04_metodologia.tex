@@ -1,17 +1,17 @@
-\chapter{Metodologia}\label{cap:metodologia}
-\section{Abordagem do desenvolvimento}
+\section{Planejamento e procedimentos de desenvolvimento}\label{sec:planejamento}
+\subsection{Abordagem do desenvolvimento}
 O trabalho caracteriza-se como desenvolvimento tecnológico aplicado, organizado pela definição de requisitos, construção incremental e verificação das interfaces.
 A decomposição do problema partiu da sequência de uso: configurar a rotina, identificar o medicamento, disponibilizar a quantidade solicitada e registrar os eventos.
 Essa sequência orientou a divisão entre mecanismo, controle embarcado e serviços digitais.
 O processo foi estruturado em ciclos de especificação, implementação e revisão.
 Cada alteração passou a integrar uma configuração identificável, permitindo relacionar modelos mecânicos, circuitos e programas.
 A comparação entre versões foi utilizada para separar decisões substituídas das que compõem a solução apresentada.
-\section{Organização das frentes}
+\subsection{Organização das frentes}
 O desenvolvimento foi distribuído entre frentes complementares: Nicolas Kuhnast, aplicativo; Vinicius Renan de Lima e Silva Grec, visão computacional; Thiago Luppi Blumer, agente de inteligência artificial; Rafael Simões Israel, mecânica, elétrica, arquitetura do sistema e programação de hardware e de software (firmware, comunicação I²C, execução local, provisionamento e atualização); e Caroline Alves Barroso, revisão bibliográfica e consolidação do trabalho.
 As interfaces entre as frentes foram tratadas como parte do projeto, especialmente nos vínculos entre aplicativo, API e dispositivo.
 Essa divisão permitiu conduzir atividades em paralelo, mantendo pontos comuns de integração: identificação dos módulos, formato dos comandos, origem dos eventos, autenticação e apresentação do resultado ao usuário.
-As verificações do sistema relacionam essas interfaces às funções esperadas, conforme o Capítulo~\ref{cap:testes}.
-\section{Etapas de projeto e construção}
+As verificações do sistema relacionam essas interfaces às funções esperadas, conforme a Seção~\ref{cap:testes}.
+\subsection{Etapas de projeto e construção}
 O desenvolvimento mecânico compreendeu a organização modular, a definição do percurso do medicamento e a associação entre reservatório, disco e motor.
 A fabricação por impressão 3D permitiu trabalhar com peças substituíveis e ajustar a geometria de captura.
 A avaliação dimensional deve relacionar a revisão do arquivo utilizado à peça efetivamente ensaiada.
@@ -23,49 +23,50 @@ A comunicação entre central e módulos foi definida por protocolo próprio sob
 Nas camadas superiores, a persistência local e central, a identificação das operações e a sincronização foram tratadas em conjunto com os cenários de interrupção.
 A Figura~\ref{fig:fluxo_desenvolvimento} apresenta a separação entre desenvolvimento, conferência e implantação.
 Essa organização distingue a aprovação de uma alteração em ambiente de teste de sua instalação no servidor ou no aparelho.
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Etapas de desenvolvimento, revisão e implantação do software}\label{fig:fluxo_desenvolvimento}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/fluxo_desenvolvimento.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/fluxo_desenvolvimento.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
-\section{Ferramentas e ambientes}
+
+\noindent
+\subsection{Ferramentas e ambientes}
 A modelagem e a impressão 3D foram utilizadas na construção mecânica.
 O controle dos módulos emprega ESP32, enquanto a central executa serviços Python em Linux na Raspberry Pi Zero 2 W.
 A API utiliza FastAPI, o Care utiliza React e TypeScript, e a persistência combina PostgreSQL no servidor com SQLite na central.
 A interface percorreu etapas de prototipação no Google Stitch e no Google AI Studio antes da implementação integrada.
 No agente, a proposta inicial com Microsoft Copilot Studio evoluiu para a organização em Microsoft Foundry, com recursos de voz e uma configuração separada para ferramentas MCP.
 Essas tecnologias correspondem a etapas e papéis específicos, não a produtos intercambiáveis.
-\cite{DC_ARTIGO,DC_FOUNDRY}
-\section{Uso de inteligência artificial}
+
+\subsection{Uso de inteligência artificial}
 Durante a elaboração deste trabalho, foram consultados e utilizados diferentes recursos computacionais, incluindo ferramentas baseadas em inteligência artificial, como ChatGPT, OpenAI Codex, Claude Code, Google Gemini, Google AI Studio, GitHub Copilot e Glean.
 Esses recursos foram empregados de forma complementar em atividades de pesquisa, consulta técnica, organização de informações, documentação e desenvolvimento do projeto, conforme as necessidades identificadas ao longo de sua execução.
 A concepção, as decisões técnicas, a condução dos trabalhos e a avaliação dos resultados são de responsabilidade dos autores.
-\section{Estratégia de verificação}
+\subsection{Identificação das versões}
+Além da versão legível, pode-se registrar um resumo criptográfico (\emph{hash}), como SHA-256: uma sequência calculada a partir do conteúdo do arquivo. Sua comparação ajuda a identificar se dois arquivos têm o mesmo conteúdo ou se houve alteração. Um hash não é senha, criptografia do arquivo ou assinatura de autoria; a verificação de autenticidade de uma atualização exige também um mecanismo de confiança, como assinatura digital.
+
+
+\subsection{Estratégia de verificação}
 A verificação foi organizada em níveis: inspeção de projeto, testes de software, execução em placa, integração física e avaliação de uso.
 Essa divisão permite escolher evidências adequadas a cada requisito.
 Um teste automatizado verifica o comportamento modelado no software; a separação de um comprimido exige observação da execução física.
 Para cada caso, o registro reúne configuração, condição inicial, entrada, comportamento esperado, comportamento observado e evidência.
 Versões de firmware, aplicativo e componentes devem acompanhar o resultado, de forma que uma alteração posterior não seja confundida com a configuração ensaiada.
 Os critérios quantitativos e a matriz de correspondência são apresentados junto aos requisitos e ao plano de testes.
-\section{Privacidade e aspectos éticos}
+\subsection{Privacidade e aspectos éticos}
 As demonstrações do aplicativo utilizam dados fictícios.
 Credenciais, chaves e dados pessoais não integram a documentação pública do projeto.
 O tratamento de imagens e de informações de saúde exige delimitar finalidade, acesso e retenção.
 Uma eventual avaliação com participantes deve seguir as autorizações e o enquadramento definidos pela instituição antes da coleta.
-\section{Consolidação das evidências de novembro de 2026}
-O fechamento documental desta versão considera o pacote de validação de 26 de novembro de 2026 e o memorial específico de visão computacional. Os arquivos foram confrontados com os capítulos existentes e com a documentação do projeto. A consolidação é uma análise de registros produzidos durante o desenvolvimento; não constitui repetição dos ensaios, nova intervenção no protótipo nem auditoria dos serviços em produção. \cite{DC_VALIDACAO2026,DC_VISAO2026}
+\subsection{Registro e análise dos ensaios}
+Cada tentativa foi identificada por operação, condição inicial, versões, entrada, resposta do sistema e observação humana, quando disponível. Registros de software, observação física e resultados de testes automatizados foram analisados separadamente. A confirmação de um comando não foi utilizada como referência da quantidade coletada.
 
-Quatro situações são mantidas distintas: comportamento verificado em software, versão instalada, operação registrada pelo runtime e resultado observado fisicamente. Um reconhecimento do barramento comprova a resposta da placa; uma sessão encerrada comprova um estado do controlador; nenhum deles, isoladamente, comprova a quantidade coletada. Fotografias documentam a montagem, mas não fornecem escala dimensional ou caracterização de material.
+Os ensaios exploratórios acompanharam a evolução do protótipo. Por isso, revisões distintas não foram agrupadas como uma única amostra de validação. Contagens de testes de regressão também não foram somadas entre rodadas com casos sobrepostos. Para a análise da integração, foram relacionados pedido, comando, retorno do mecanismo, confirmação e persistência.
 
-As tabelas de sessões foram analisadas por ação e por fase do software. As contagens de testes de regressão são fotografias de versões, não amostras independentes a somar. A telemetria de aproximadamente 30 minutos foi mantida separada do histórico de comandos e das observações com motor. Os intervalos sem relatórios foram interpretados considerando os desligamentos intencionais e as trocas de ambiente. Os planos de campanhas ainda não executadas não foram convertidos em resultados.
+O procedimento de avaliação física com contagem independente é apresentado na Seção~\ref{cap:testes}. Ele é distinguido dos ensaios exploratórios já realizados; os critérios e as repetições ainda em definição permanecem assinalados. Na telemetria, foram analisados intervalos entre mensagens, falhas de consulta e indicadores locais, sem equiparar disponibilidade de comunicação a exatidão da dose.
 
-\section{Contribuição de aplicativo e protocolo proposto}
-A entrega de 27 de novembro acrescenta oito registros do fluxo de dispensação vinculada no Oficial e sete no Simulado, em CSVs com identificadores de operação. Esses recortes foram confrontados linha a linha com os resumos e mantidos separados dos 12 ciclos por cavidade do pacote anterior; não são amostras independentes a somar. Campo ausente não foi convertido em zero, sucesso ou estoque físico verificado. \cite{DC_NICOLAS2026}
-
-O fluxo vincula paciente, medicamento e posição e distingue pedido, retorno do aparelho e observação humana. A campanha prospectiva proposta utiliza esse fluxo e o Apêndice~\ref{ap:ensaios}; os blocos, tamanhos e critérios ainda dependem de aprovação. Os registros históricos não foram produzidos sob esse protocolo, e sua existência não demonstra execução da campanha. \cite{DC_NICOLAS2026}
-
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{MET01-ACEITE}{Identificar executores e revisores dos ensaios, instrumentos, condições e evidências por frente.}
 \pendencia{MET03-IA}{Completar a declaração por integrante: Copilot (especificar produto), Copilot Studio, OpenAI (produto/API e modelo), Claude e demais ferramentas efetivamente usadas; tarefas, datas/versões quando disponíveis, partes aproveitadas e revisão humana realizada.
 Não atribuir uso a uma pessoa sem confirmação.}
@@ -74,4 +75,4 @@ Distinguir ambiente de desenvolvimento, teste e produção.}
 \pendencia{MET02-PROTOCOLO}{Fechar com a orientação o protocolo final, repetições, amostragem, instrumentos e critérios quantitativos.
 Não há base documental suficiente para inventar tolerâncias de taxa de erro, corrente, latência ou desempenho.}
 \pendencia{MET-ETICA}{Informar se haverá participantes, coleta de imagens ou dados pessoais; documentar autorizações, consentimento e avaliação institucional aplicáveis.
-Não inserir número de parecer ou dispensa não fornecidos.}
+Não inserir número de parecer ou dispensa não registrados.}

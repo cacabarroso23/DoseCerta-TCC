@@ -1,10 +1,10 @@
 \chapter{Protocolos e rastreabilidade dos ensaios}\label{ap:ensaios}
 \section{Critério de leitura}
-A matriz abaixo relaciona evidências disponíveis e lacunas de aceite. ``Parcial'' não é atendimento integral nem porcentagem de conclusão. Os critérios de aceitação discutidos no Capítulo~\ref{cap:requisitos} permanecem dependentes de protocolo e aprovação; a matriz usa os mesmos identificadores e conserva a diferença entre operação registrada e saída física. \cite{DC_VALIDACAO2026}
+A matriz abaixo relaciona evidências disponíveis e lacunas de aceite. ``Parcial'' não é atendimento integral nem porcentagem de conclusão. Os critérios de aceitação discutidos no Capítulo~\ref{cap:requisitos} permanecem dependentes de protocolo e aprovação; a matriz usa os mesmos identificadores e conserva a diferença entre operação registrada e saída física. 
 
 {\small\setlength{\tabcolsep}{3pt}
 \begin{longtable}{p{0.12\textwidth}p{0.37\textwidth}p{0.40\textwidth}}
-\caption{Requisitos, evidências recebidas e aceite ainda necessário}\label{tab:ap-matriz}\\
+\caption{Requisitos, evidências disponíveis e aceite ainda necessário}\label{tab:ap-matriz}\\
 \hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endfirsthead
 \hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endhead
 RF01 & Disco, 12 ciclos e oito registros vinculados, com lacunas & Campanha independente, unidade extra e retenção\\\hline
@@ -28,19 +28,17 @@ RNF06 & Inventário de releases e versões & Manifesto sanitizado da configuraç
 RNF07 & Fotos dos encaixes e quatro contatos & Inserção energizada, continuidade e integridade do barramento\\\hline
 RNF08 & Interface Care e sinais com apoio de texto & Tarefas autorizadas, acessibilidade e compreensão\\\hline
 RF13-APP & Care, suítes históricas e 16 capturas demonstrativas & Sessão válida/expirada, versão e tarefas autenticadas\\\hline
-RF14-VIS & Método de visão documentado & Reconciliar versões e avaliar sequências rotuladas\\\hline
-RF15-AG & Histórico e proposta v28 ainda a confirmar & Aprovação técnica, paciente correto e efeitos persistidos\\\hline
+RF14-VIS & Método de visão documentado & Avaliar sequências rotuladas da versão final\\\hline
+RF15-AG & Histórico e proposta v28 ainda a confirmar & Confirmação técnica, contexto do paciente único e efeitos persistidos\\\hline
 RNF09-IA & Limites de finalidade descritos & Casos adversariais e avaliação humana do agente e da visão\\\hline
 RNF10-DADOS & Registros locais e centrais com origem & Matriz de acesso, retenção e auditoria de todas as observações\\\hline
-\end{longtable}\noindent Fonte: elaboração dos autores a partir das evidências recebidas. \cite{DC_VALIDACAO2026}\par}
+\end{longtable}\noindent Fonte: Autoria própria (2026).\par}
 
-\section{Situação do protocolo recebido}
-O protocolo de 27 de novembro é uma \textbf{proposta} a aprovar antes da coleta, não campanha executada. As metas abaixo pertencem à proposta do contribuinte e não são metas clínicas nem critérios já aprovados pela orientação. O PDF de prévia emprega em alguns trechos verbos no passado; a presente consolidação os corrige para evitar afirmar experimentos sem fichas. \cite{DC_NICOLAS2026}
+\section{Protocolo de bancada e alcance}
+O protocolo a seguir é um instrumento para uma campanha controlada, ainda sujeito à aprovação dos critérios e da amostragem. Não é apresentado como ensaio executado. Não autoriza ingestão de medicamentos ou intervenção em produção; utiliza unidades de bancada e procedimentos seguros definidos previamente.
 
-Não se deverão realizar ensaios de ingestão com medicamentos ou participantes a partir deste plano de bancada. Unidades de ensaio, montagem segura e autorizações devem ser definidos previamente. Interrupções de alimentação ou rede exigem procedimento supervisionado e aprovado; a proposta não é autorização para intervenção em produção.
-
-\section{Proposta de campanha: configuração antes de cada bloco}
-Antes do primeiro ensaio de cada bloco deverão ser registrados: o ambiente do servidor e a política de travas da central; as versões do runtime, dos firmwares do intermediário e do submódulo, do aplicativo e da API; o submódulo e a posição utilizados; o comprimido de teste (tipo, diâmetro, espessura e massa medidos); a revisão do disco e a inclinação montada; o estoque inicial contado manualmente; os responsáveis pela operação, pela contagem e pelas fotografias. A montagem deverá ser fotografada com escala; não há fichas preenchidas dessa campanha no pacote.
+\section{Configuração antes de cada bloco}
+Antes do primeiro ensaio de cada bloco deverão ser registrados: o ambiente do servidor e a política de travas da central; as versões do runtime, dos firmwares do intermediário e do submódulo, do aplicativo e da API; o submódulo e a posição utilizados; o comprimido de teste (tipo, diâmetro, espessura e massa medidos); a revisão do disco e a inclinação montada; o estoque inicial contado manualmente; os responsáveis pela operação, pela contagem e pelas fotografias. A montagem deverá ser fotografada com escala..
 
 \section{Procedimento de um ensaio de dispensação}
 \begin{enumerate}
@@ -67,7 +65,7 @@ C & Falhas controladas, com procedimento seguro aprovado (rede, reinício e alim
 D & Leitura do sensor com cavidade vazia e ocupada & 60 & Faixas sem sobreposição; pelo menos 95\% corretas\\\hline
 E & Sinalização luminosa por posição e cor & 12 & Todas corretas\\\hline
 F & Agenda sem internet (RTC ativo, energia de retenção e comissionamento) & 5 & Todas no horário\\\hline
-\end{longtable}}{\small\noindent Fonte: proposta de campanha recebida em 27 nov. 2026. \cite{DC_NICOLAS2026}\par}
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
 Em todos os blocos, o estoque do aplicativo deve coincidir com a contagem física. Caso a amostragem e a independência sejam justificadas, as proporções deverão ser acompanhadas de intervalo de Wilson de 95\%, com numerador, denominador, exclusões e inconclusivos explícitos. Esses intervalos não corrigem viés de seleção, ajuste durante o teste ou repetição dependente no mesmo conjunto. Zero eventos observados não significa risco nulo.
 
@@ -78,9 +76,6 @@ Cada ensaio gera uma linha com: bloco, número, data e hora, identificador da op
 \section{Vínculo entre blocos e requisitos}
 Os blocos A e B fornecem dados para RF01 e RF04; D complementa RF04; E verifica RF02 e parte de RF12. As tentativas da preparação caracterizam RF05. C informa RNF02 e RNF03; F se refere à continuidade de RNF01, condicionada ao comissionamento temporal. RF06 e RF13-APP requerem também registros de origem, autenticação e acompanhamento. Os demais requisitos da matriz permanecem sujeitos a ensaios específicos; a campanha não encerra automaticamente todos os 25 requisitos.
 
-\section{Inventário e integridade}
-O diretório \texttt{Dados/validacao\_20261126} conserva tabelas de sessões, ciclos, calibração, comunicação, servidor e software. O histórico de observações foi preservado com sua proveniência; o projeto distribuído não inclui bancos brutos nem scripts executáveis do arquivo recebido. O diretório \texttt{Dados/entrega\_Nicolas\_20261127} conserva os CSVs e o protocolo proposto, além da síntese de segurança. As tabelas-fonte recebidas não foram alteradas. O mapa \texttt{mapa\_fotos\_20261126.json} relaciona cada painel às imagens de origem. As pranchas fotográficas foram compostas e redimensionadas para a monografia, sem reconstrução de conteúdo.
-
-\section{Protocolos ainda não executados}
-O plano de caixa preta recebido propõe blocos de localização com disco vazio, dispensação com contagem independente e comunicação/energia. Seu executor aprovado em testes de software não transforma o plano em experimento executado. A ficha de referência, versões e condições devem acompanhar cada tentativa; falhas e interrupções precisam permanecer no denominador. \cite{DC_VALIDACAO2026}
 \pendencia{AP-A}{Matriz e inventário incorporados. Aprovar critérios e anexar fichas preenchidas, instrumentos, executores, dados físicos e evidências finais. Não arquivar dados pessoais, segredos ou resultados simulados como observação real.}
+
+\pendencia{AN-A}{Selecionar anexos somente se documentos de terceiros forem necessários à argumentação, com autoria e autorização; desenhos próprios estão no Apêndice~\ref{ap:desenhos}.}

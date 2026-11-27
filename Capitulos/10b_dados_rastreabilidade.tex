@@ -1,10 +1,10 @@
-\section{Camada de dados e rastreabilidade}\label{sec:dados_rastreabilidade}
-A entrega da frente de aplicativo e dados detalha os dois níveis de persistência do DoseCerta. \cite{DC_NICOLAS2026} Na borda, a central guarda em SQLite o que precisa para operar sem rede: configuração ativa, agenda, decisões de dose, execuções e as filas de entrada e saída. No servidor, o PostgreSQL concentra o histórico compartilhado, os cadastros e as regras de acesso. Os dois níveis se comunicam apenas pela API; o aparelho não acessa o banco central.
+\subsection{Camada de dados e rastreabilidade}\label{sec:dados_rastreabilidade}
+O DoseCerta utiliza dois níveis de persistência.  Na borda, a central guarda em SQLite o que precisa para operar sem rede: configuração ativa, agenda, decisões de dose, execuções e as filas de entrada e saída. No servidor, o PostgreSQL concentra o histórico compartilhado, os cadastros e as regras de acesso. Os dois níveis se comunicam apenas pela API; o aparelho não acessa o banco central.
 
 A escolha de manter dois bancos decorre do requisito de operação local (RNF01) e do requisito de não repetir movimento (RNF02). O banco local é projetado para conservar o registro de uma operação em andamento diante de quedas de energia; a eficácia dessa recuperação depende de ensaio controlado; o banco central precisa reunir os eventos de várias fontes e preservar sua origem para consulta no aplicativo.
 
-\subsection{Banco local da central}
-Segundo o memorial de dados recebido em 27 de novembro, o banco local opera em modo WAL (\emph{write-ahead logging}) com sincronização completa a cada transação (\texttt{synchronous = FULL}), chaves estrangeiras ativas e verificação de integridade na inicialização. A Tabela~\ref{tab:dados-local} resume suas tabelas. As restrições de domínio ficam no próprio esquema: posição do módulo entre 1 e 2, encaixe entre 1 e 4, quantidade por dose positiva, intervalo mínimo não negativo e janelas de tolerância coerentes.
+\subsubsection{Banco local da central}
+O banco local foi configurado para operar em modo WAL (\emph{write-ahead logging}) com sincronização completa a cada transação (\texttt{synchronous = FULL}), chaves estrangeiras ativas e verificação de integridade na inicialização. A Tabela~\ref{tab:dados-local} resume suas tabelas. As restrições de domínio ficam no próprio esquema: posição do módulo entre 1 e 2, encaixe entre 1 e 4, quantidade por dose positiva, intervalo mínimo não negativo e janelas de tolerância coerentes.
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.24\textwidth}p{0.66\textwidth}}
 \caption{Tabelas do banco local da central (SQLite)}\label{tab:dados-local}\\
@@ -17,53 +17,38 @@ Segundo o memorial de dados recebido em 27 de novembro, o banco local opera em m
 \texttt{inbox} & Comandos recebidos do servidor, com estado de processamento e expiração.\\\hline
 \texttt{outbox} & Eventos a enviar ao servidor, com chave de idempotência única e contagem de tentativas.\\\hline
 \texttt{runtime\_state} & Estado persistente do serviço entre reinícios.\\\hline
-\end{longtable}}{\small\noindent Fonte: memorial da camada de dados recebido em 27 nov. 2026. \cite{DC_NICOLAS2026}\par}
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
 O estado \emph{incerto} de uma execução é o ponto central da recuperação. Se a energia cai ou a comunicação com o submódulo se perde durante um giro, a execução não é marcada como concluída nem como falha. Ela permanece incerta, e a central não aceita novo movimento naquela posição até que a situação seja reconciliada com a leitura do submódulo ou com a confirmação humana. Esse comportamento é esperado na política rigorosa; o ambiente de apresentação admite exceções e deve ser avaliado separadamente. Registros de recusa e de reconciliação não provam a recuperação física em toda falha de energia.
 
-\subsection{Banco central}
-A entrega registra, para o esquema consultado, 28 tabelas, 48 chaves estrangeiras, 62 restrições de verificação, 40 políticas de acesso por linha e 20 gatilhos. São contagens documentais, não resultados de auditoria; privilégios da API podem contornar RLS. A Tabela~\ref{tab:dados-central} agrupa as tabelas por função.
+\subsubsection{Banco central}
+O esquema consultado possui 28 tabelas, 48 chaves estrangeiras, 62 restrições de verificação, 40 políticas de acesso por linha e 20 gatilhos. Essas contagens estruturais não constituem auditoria de segurança; privilégios da API podem contornar RLS. A Tabela~\ref{tab:dados-central} agrupa as tabelas por função.
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.2\textwidth}p{0.4\textwidth}p{0.3\textwidth}}
 \caption{Tabelas do banco central agrupadas por função}\label{tab:dados-central}\\
 \hline\textbf{Grupo} & \textbf{Tabelas} & \textbf{Função}\\\hline\endfirsthead
 \hline\textbf{Grupo} & \textbf{Tabelas} & \textbf{Função}\\\hline\endhead
-Pessoas e acesso & \texttt{patient}, \texttt{patient\_responsible}, \texttt{app\_user\_profile}, \texttt{device\_caregiver\_access} & Pacientes, responsáveis e quem pode ver o quê\\\hline
-Tratamento & \texttt{medication}, \texttt{medication\_schedule}, \texttt{intake\_event} & Medicamentos, horários e registros de tomada\\\hline
+Pessoas e acesso & \texttt{patient}, \path{patient_responsible}, \texttt{app\_user\_profile}, \path{device_caregiver_access} & Pacientes, responsáveis e quem pode ver o quê\\\hline
+Tratamento & \texttt{medication}, \path{medication_schedule}, \texttt{intake\_event} & Medicamentos, horários e registros de tomada\\\hline
 Rotina de cuidado & \texttt{care\_activity}, \texttt{care\_observation}, \texttt{care\_review}, \texttt{care\_preference}, \texttt{care\_notice\_read} & Atividades, relatos e leitura de avisos\\\hline
-Aparelho & \texttt{device}, \texttt{device\_level}, \texttt{device\_module}, \texttt{device\_compartment}, \texttt{device\_compartment\_inventory}, \texttt{device\_patient\_assignment} & Topologia física, posições, estoque e vínculo com pacientes\\\hline
-Identidade do aparelho & \texttt{device\_credential}, \texttt{device\_claim\_token}, \texttt{device\_config\_revision} & Credenciais, pareamento e versões de configuração\\\hline
+Aparelho & \texttt{device}, \texttt{device\_level}, \texttt{device\_module}, \texttt{device\_compartment}, \path{device_compartment_inventory}, \path{device_patient_assignment} & Topologia física, posições, estoque e vínculo com pacientes\\\hline
+Identidade do aparelho & \texttt{device\_credential}, \path{device_claim_token}, \path{device_config_revision} & Credenciais, pareamento e versões de configuração\\\hline
 Operação e auditoria & \texttt{device\_command}, \texttt{device\_status}, \texttt{domain\_event}, \texttt{api\_idempotency} & Comandos, sinais de vida, eventos e chaves de idempotência\\\hline
-Simulação & \texttt{device\_simulation\_profile}, \texttt{device\_simulation\_action}, \texttt{device\_simulation\_artifact} & Aparelho simulado para desenvolvimento\\\hline
-\end{longtable}}{\small\noindent Fonte: esquema de 12 nov. 2026 reproduzido na entrega. \cite{DC_NICOLAS2026}\par}
+Simulação & \path{device_simulation_profile}, \path{device_simulation_action}, \path{device_simulation_artifact} & Aparelho simulado para desenvolvimento\\\hline
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
 Três tabelas sustentam a rastreabilidade. A \texttt{device\_command} guarda cada comando enviado à central, com quem o pediu, quando foi entregue, reconhecido e aplicado, e o resultado devolvido pelo aparelho. A \texttt{domain\_event} registra cada fato relevante (comando enfileirado, dose dispensada, saída confirmada, configuração publicada) com o tipo de ator que o produziu: o aparelho, um operador humano ou o próprio sistema. A \texttt{api\_idempotency} associa cada escrita a uma chave única, para reconhecer um reenvio da mesma operação. A garantia depende de preservar a chave e a semântica da operação; não se presume para requisições com chaves diferentes ou para efeitos físicos sem confirmação.
 
-\subsection{Dois ambientes}
-O servidor mantém dois ambientes com bancos separados no mesmo PostgreSQL. O ambiente \emph{oficial} aplica a política de travas \emph{rigorosa}: o aparelho só executa um movimento quando todas as pré-condições são satisfeitas. O ambiente \emph{simulado} aplica uma política de \emph{apresentação}, com travas mínimas, e só vale quando o aparelho e o servidor concordam com ela. A troca de ambiente é feita na central por um script que, segundo a entrega, altera o endereço da API e a política, recusa a troca com o motor em movimento e não toca na credencial, no banco local nem nas redes Wi-Fi.
+\subsubsection{Dois ambientes}
+O servidor mantém dois ambientes com bancos separados no mesmo PostgreSQL. O ambiente \emph{oficial} aplica a política de travas \emph{rigorosa}: o aparelho só executa um movimento quando todas as pré-condições são satisfeitas. O ambiente \emph{simulado} aplica uma política de \emph{apresentação}, com travas mínimas, e só vale quando o aparelho e o servidor concordam com ela. A troca de ambiente é feita na central por um procedimento administrativo que altera o endereço da API e a política, recusa a troca com o motor em movimento e não toca na credencial, no banco local nem nas redes Wi-Fi.
 
 Essa separação permitiu apresentar o protótipo sem misturar dados de demonstração com os registros oficiais. Em contrapartida, os resultados precisam indicar em qual ambiente foram obtidos, pois a política de apresentação pode fechar um ensaio automaticamente, sem a contagem humana exigida na avaliação.
 
-\subsection{Volume e evolução dos dados}
-A Tabela~\ref{tab:dados-volume} reproduz os volumes informados pelo memorial, com datas e método. As contagens de 26 de novembro provêm das estatísticas do PostgreSQL e são estimativas, não contagens exatas com \texttt{COUNT(*)}; não devem ser equiparadas às 98.722 linhas efetivamente extraídas no outro recorte. A maior parte corresponde aos sinais de vida da central, enviados a cada 10~s aproximadamente, e às respectivas chaves de idempotência.
+\subsubsection{Privacidade e alcance dos controles}
+A implementação utiliza HTTPS, tokens de sessão, credenciais próprias para a central, pareamento com token de uso único armazenado como resumo criptográfico, desafio de autenticação no Bluetooth e verificação de integridade e assinatura das releases da Raspberry. A descrição dos controles não equivale a uma auditoria independente. Para as ESP32 permanece a distinção da Seção~\ref{cap:embarcados}: SHA-256 não é assinatura criptográfica. 
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.34\textwidth}p{0.17\textwidth}p{0.17\textwidth}p{0.2\textwidth}}
-\caption{Volume de registros nos bancos do servidor}\label{tab:dados-volume}\\
-\hline\textbf{Tabela} & \textbf{Oficial, 12/11} & \textbf{Oficial, 26/11} & \textbf{Simulado, 26/11}\\\hline\endfirsthead
-\hline\textbf{Tabela} & \textbf{Oficial, 12/11} & \textbf{Oficial, 26/11} & \textbf{Simulado, 26/11}\\\hline\endhead
-\texttt{device\_status} (sinais de vida) & 176.734 & 195.129 & 99.009\\\hline
-\texttt{domain\_event} (eventos) & 177.510 & 192.553 & 99.077\\\hline
-\texttt{api\_idempotency} & 177.258 & 192.305 & 99.060\\\hline
-\texttt{device\_command} (comandos) & 207 & 215 & 31\\\hline
-\end{longtable}}{\small\noindent Fonte: consultas relatadas na entrega; 26/11: estimativas das estatísticas do PostgreSQL. \cite{DC_NICOLAS2026}\par}
+A existência de políticas RLS, chaves estrangeiras e restrições não garante sozinha autorização por pessoa. A configuração apresentada é limitada a um paciente por cadastro; avaliação multiusuário e multipaciente é uma possibilidade de continuidade, não critério de aceite desta versão. A configuração acadêmica utiliza conta operadora compartilhada, privilégios da API que podem contornar RLS e credencial estática do MCP. As três visões da interface não foram interpretadas como três identidades autenticadas independentes. 
 
-A entrega relata crescimento sem rotina de expurgo, tabela de idempotência do Oficial com 2,3~GB e ocupação de 98\% do disco em outubro. Esses valores são históricos e não foram medidos novamente nesta consolidação. A definição de prazo de retenção para sinais de vida e chaves de idempotência é uma melhoria necessária para operação prolongada.
+O PostgreSQL no servidor guarda cadastros, agenda, relatos, comandos, eventos e telemetria, com bancos separados para Oficial e Simulado. O SQLite da central guarda configuração, agenda e filas locais; os resultados detalhados da visão permanecem na central, enquanto ao servidor chegam pedido e estado. Conversas e imagens de receitas enviadas ao assistente são processadas no Azure/Microsoft Foundry. Portanto, processamento local da visão não significa processamento exclusivamente local de todas as imagens do sistema. 
 
-\subsection{Privacidade e alcance dos controles}
-A síntese de segurança recebida descreve HTTPS, tokens de sessão, credenciais próprias para a central, pareamento com token de uso único armazenado como hash, desafio de autenticação no Bluetooth e verificação de integridade e assinatura das releases da Raspberry. Os controles são declarados pela documentação e não equivalem a auditoria. Para as ESP32 permanece a distinção do Capítulo~\ref{cap:embarcados}: SHA-256 não é assinatura criptográfica. \cite{DC_SEGURANCA2026,DC_VALIDACAO2026}
-
-A existência de políticas RLS, chaves estrangeiras e restrições não garante sozinha autorização por pessoa ou paciente. A documentação anterior registra conta operadora compartilhada, privilégios que contornam RLS e credencial estática do MCP. A nova síntese não fornece evidência de que essas condições foram removidas. As três visões da interface não foram interpretadas como três identidades autenticadas independentes. \cite{DC_SEGURANCA2026,DC_VALIDACAO2026}
-
-O PostgreSQL no servidor guarda cadastros, agenda, relatos, comandos, eventos e telemetria, com bancos separados para Oficial e Simulado. O SQLite da central guarda configuração, agenda e filas locais; os resultados detalhados da visão permanecem na central, enquanto ao servidor chegam pedido e estado. Conversas e imagens de receitas enviadas ao assistente são processadas no Azure/Microsoft Foundry. Portanto, processamento local da visão não significa processamento exclusivamente local de todas as imagens do sistema. \cite{DC_SEGURANCA2026,DC_NICOLAS2026}
-
-Retenção, exclusão, restauração, acesso a observações reservadas e tratamento de dados no serviço externo dependem de política e comprovação específicas. O memorial não autoriza afirmar conformidade legal, anonimização integral ou proteção contra toda repetição de movimento. A idempotência dos registros e a contagem física do coletor permanecem avaliações diferentes.
+Retenção, exclusão, restauração, acesso a observações reservadas e tratamento de dados no serviço externo dependem de política e comprovação específicas. Não se afirma conformidade legal, anonimização integral ou proteção contra toda repetição de movimento. A idempotência dos registros e a contagem física do coletor permanecem avaliações diferentes.

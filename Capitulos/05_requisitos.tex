@@ -1,10 +1,10 @@
-\chapter{Requisitos e especificações do sistema}\label{cap:requisitos}
-\section{Definição e organização}
-Os requisitos traduzem o problema de uso em funções e condições de operação. A linha de base reúne dispensação, sinalização, configuração, registro e manutenção; os requisitos complementares explicitam aplicativo, visão e agente. A numeração RF01 a RF12 e RNF01 a RNF08 foi mantida para relacionar o desenvolvimento às verificações. \cite{DC_COMPILADO}
+\section{Requisitos e especificações do sistema}\label{cap:requisitos}
+\subsection{Definição e organização}
+Os requisitos traduzem o problema de uso em funções e condições de operação. A linha de base reúne dispensação, sinalização, configuração, registro e manutenção; os requisitos complementares explicitam aplicativo, visão e agente. A numeração RF01 a RF12 e RNF01 a RNF08 foi mantida para relacionar o desenvolvimento às verificações. 
 
 As Tabelas~\ref{tab:05-1} a~\ref{tab:05-3} apresentam o comportamento esperado e a forma de avaliá-lo. A coluna de verificação define a evidência pertinente e não representa, por si só, o resultado do ensaio.
 
-\section{Requisitos funcionais}
+\subsection{Requisitos funcionais}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.09\textwidth}p{0.49\textwidth}p{0.3\textwidth}}\caption{Requisitos funcionais da linha de base}\label{tab:05-1}\\
 \hline
@@ -22,12 +22,12 @@ RF07 & Configurar a rede pelo celular via Bluetooth, sem periféricos de console
 RF08 & Permitir recuperação de rede e gestão das redes conhecidas sem desconfigurar o aparelho. & Casos sem Wi-Fi, troca, lista, inclusão e exclusão.\\\hline
 RF09 & Reiniciar e recadastrar por software, sem depender de botão físico. & Fluxos autorizados e preservação de identidade.\\\hline
 RF10 & Atualizar firmware das ESP32 pelo barramento. & Imagem válida, inválida e interrupção.\\\hline
-RF11 & Atualizar remotamente a execução da Raspberry Pi com verificação de autenticidade. & Assinatura/hash, instalação e recuperação.\\\hline
+RF11 & Atualizar remotamente a execução da Raspberry Pi com verificação de autenticidade. & Assinatura/resumo criptográfico, instalação e recuperação.\\\hline
 RF12 & Sinalizar processamento, sucesso, erro e atenção com convenções consistentes. & Matriz de sinais e comportamento observado.\\\hline
-\end{longtable}}{\small\noindent Fonte: RF01 a RF12 definidos para o projeto.\par}
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
 
-\section{Requisitos não funcionais}
+\subsection{Requisitos não funcionais}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.09\textwidth}p{0.49\textwidth}p{0.3\textwidth}}\caption{Requisitos não funcionais da linha de base}\label{tab:05-2}\\
 \hline
@@ -40,13 +40,13 @@ RNF02 & Não repetir movimento físico em razão de reenvio ou de resultado desc
 RNF03 & Aplicar limites locais de fases e duração independentes da rede. & Ensaios de limites e travamento do controlador.\\\hline
 RNF04 & Preservar identidade, calibração e registros em atualização e reinício. & Comparação de estado e recuperação.\\\hline
 RNF05 & Proteger credenciais por autenticação, canal protegido e menor privilégio. & Inspeção e testes negativos por interface.\\\hline
-RNF06 & Rastrear versões instaladas e alterações por identificadores e hashes. & Manifestos e registros de implantação.\\\hline
+RNF06 & Rastrear versões instaladas e alterações por identificadores e resumos criptográficos. & Manifestos e registros de implantação.\\\hline
 RNF07 & Permitir modularidade e remoção/encaixe sem ferramenta e com aparelho energizado, mediante segurança e integridade verificadas. & Ciclos de encaixe, continuidade e integridade do barramento.\\\hline
 RNF08 & Ser compreensível para o público pretendido, sem depender exclusivamente de cor. & Inspeção de acessibilidade e avaliação de tarefas.\\\hline
-\end{longtable}}{\small\noindent Fonte: RNF01 a RNF08 definidos para o projeto.\par}
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
 
-\section{Requisitos complementares das frentes digitais}
+\subsection{Requisitos complementares das frentes digitais}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.13\textwidth}p{0.45\textwidth}p{0.3\textwidth}}\caption{Requisitos complementares das frentes digitais}\label{tab:05-3}\\
 \hline
@@ -59,14 +59,14 @@ RF14-VIS & Produzir observações visuais rastreáveis, distinguindo indício de
 RF15-AG & Consultar contexto e solicitar ações de cuidado por ferramentas autorizadas com confirmação de escrita. & Roteiro de leituras, aprovação, recusa e erros.\\\hline
 RNF09-IA & Não prescrever, decidir doses nem converter incerteza em confirmação clínica. & Casos adversariais e avaliação humana.\\\hline
 RNF10-DADOS & Preservar origem, instante, versão e limitações de cada observação e restringir seu acesso. & Auditoria e matriz de acesso/retenção.\\\hline
-\end{longtable}}{\small\noindent Fonte: Elaboração dos autores.\par}
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
 
-\section{Critérios de aceitação e rastreabilidade}
+\subsection{Critérios de aceitação e rastreabilidade}
 A avaliação relaciona cada requisito a um procedimento e a uma configuração. Na dispensação, a análise deve considerar tanto a liberação correta quanto a ocorrência de dose adicional, travamento ou resultado inconclusivo. Na comunicação, os casos de duplicata, perda de resposta e reinício são tratados junto à recuperação, pois a ausência de exceção no programa não comprova o efeito físico.
 
-As exigências de operação local e modularidade também dependem de condições explícitas. A continuidade sem rede requer tempo confiável, agenda válida e hardware pronto; a remoção energizada requer integridade elétrica e de comunicação. Essas condições orientam a arquitetura do Capítulo~\ref{cap:arquitetura} e os ensaios do Capítulo~\ref{cap:testes}.
+As exigências de operação local e modularidade também dependem de condições explícitas. A continuidade sem rede requer tempo confiável, agenda válida e hardware pronto; a remoção energizada requer integridade elétrica e de comunicação. Essas condições orientam a arquitetura da Seção~\ref{cap:arquitetura} e os ensaios da Seção~\ref{cap:testes}.
 
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{REQ02}{Definir os limites quantitativos de aceitação: taxa de separação correta e dose extra, tempo por unidade, capacidade útil, repetibilidade, tensão mínima em carga, correntes, latência, disponibilidade, número de ciclos e critérios de visão/agente. Registrar justificativa e unidade; não inventar metas.}
 \pendencia{REQ03-MATRIZ}{Preencher a matriz final requisito--teste--evidência--resultado após a campanha. Todas as frentes permanecem no escopo; o estado de atendimento continua pendente.}

@@ -1,101 +1,183 @@
-% DoseCerta — monografia.
-% Modelo FEI; paginação digital sem versos vazios.
-% Compilar na raiz com pdfLaTeX; repetir até resolver sumário, listas e referências.
-\documentclass[12pt,openany,oneside,a4paper,chapter=TITLE,english,brazil]{classe/USPSC}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{times}
-\usepackage{indentfirst}
-\usepackage{xcolor}
-\usepackage{graphicx}
-\usepackage{microtype}
-\usepackage{array,longtable}
-\usepackage{amsmath}
-\usepackage{url}
-\usepackage{caption}
-\captionsetup[table]{justification=raggedright,singlelinecheck=false,width=\textwidth}
-\captionsetup[figure]{justification=raggedright,singlelinecheck=false,width=\textwidth}
-\usepackage[alf,abnt-emphasize=bf,abnt-thesis-year=both,abnt-repeated-author-omit=no,abnt-last-names=abnt,abnt-etal-cite=3,abnt-etal-list=3,abnt-etal-text=it,abnt-and-type=e,abnt-doi=doi,abnt-url-package=none,abnt-verbatim-entry=no]{abntex2cite}
-\usepackage{classe/ABNT6023-10520}
-\usepackage{hyphenat}
-\input{pendencias_dosecerta}
-\makeatletter
-% Usar argumento opcional do ambiente; não imprimir o rótulo do marcador.
-\renewcommand{\imprimirfolhaderostostar}[1]{%
-\begin{folhaderosto*}[#1]\folhaderostocontent\end{folhaderosto*}}
-\renewcommand{\imprimirfolhaderostonostar}[1]{%
-\begin{folhaderosto}[#1]\folhaderostocontent\end{folhaderosto}}
-\renewcommand{\imprimirfolhaderosto}[1][\folhaderostoname]{%
-\@ifstar{\imprimirfolhaderostostar{#1}}{\imprimirfolhaderostonostar{#1}}}
-\makeatother
-% A edição digital não insere páginas de paridade vazias.
-\let\cleardoublepage\clearpage
-% Distribuição de figuras sem forçar uma página inteira para cada uma.
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\bottomfraction}{0.8}
-\renewcommand{\textfraction}{0.08}
-\renewcommand{\floatpagefraction}{0.75}
-\setcounter{topnumber}{3}
-\setcounter{bottomnumber}{2}
-\setcounter{totalnumber}{5}
-\raggedbottom
-\renewcommand{\footnotesize}{\small}
-\renewcommand{\ABNTEXchapterfont}{\rmfamily}
-\setlength{\parindent}{1.3cm}
-\setlength{\emergencystretch}{2em}
-\hypersetup{pdftitle={DoseCerta: Sistema Inteligente de Dispensação e Verificação de Medicamentos},pdfauthor={Caroline Alves Barroso e equipe DoseCerta},pdfsubject={Trabalho de Conclusão de Curso em Engenharia de Robôs},colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black,bookmarksdepth=4}
-\begin{document}
-\selectlanguage{brazil}
-\frenchspacing
-\renewcommand{\ABNTEXchapterfontsize}{\fontsize{12}{12}\bfseries}
-\renewcommand{\ABNTEXsectionfontsize}{\fontsize{12}{12}\normalfont}
-\renewcommand{\ABNTEXsubsectionfontsize}{\fontsize{12}{12}\bfseries}
-\renewcommand{\ABNTEXsubsubsectionfontsize}{\fontsize{12}{12}\bfseries\itshape}
-\pretextual
-\imprimircapa
-\imprimirfolhaderosto*
-% Ficha catalográfica omitida por autorização da autora nesta cópia de leitura.
-\include{PreTextual/folhadeaprovacao}
-\include{PreTextual/dedicatoria}
-\include{PreTextual/agradecimentos}
-\include{PreTextual/epigrafe}
-\include{PreTextual/resumo}
-\include{PreTextual/abstract}
-\pdfbookmark[0]{\listfigurename}{lof}
-\listoffigures*
-\cleardoublepage
-\pdfbookmark[0]{\listtablename}{lot}
-\listoftables*
-\cleardoublepage
-\include{PreTextual/abreviaturas_siglas}
-\include{PreTextual/simbolos}
-\pdfbookmark[0]{\contentsname}{toc}
-\tableofcontents*
-\cleardoublepage
-\textual
-\include{Capitulos/01_introducao}
-\include{Capitulos/02_fundamentacao}
-\include{Capitulos/03_estado_da_arte}
-\include{Capitulos/04_metodologia}
-\include{Capitulos/05_requisitos}
-\include{Capitulos/06_arquitetura}
-\include{Capitulos/07_projeto_mecanico}
-\include{Capitulos/08_projeto_eletronico}
-\include{Capitulos/09_embarcados}
-\include{Capitulos/10_backend}
-\include{Capitulos/11_aplicativo}
-\include{Capitulos/12_visao_computacional}
-\include{Capitulos/13_agente_ia}
-\include{Capitulos/14_testes}
-\include{Capitulos/15_resultados}
-\include{Capitulos/16_discussao}
-\include{Capitulos/17_conclusao}
-\postextual
-\input{referencias}
-\begin{apendicesenv}
-\include{PosTextual/apendices}
-\end{apendicesenv}
-\begin{anexosenv}
-\include{PosTextual/anexos}
-\end{anexosenv}
-\end{document}
+{
+  ".latexmkrc": "91a7ec9b1336ead7d7e1acd2170e5c9a009a41e7d3eb38b6843c9457f0624f00",
+  "00_LEIA_PRIMEIRO_ENTREGA_ATUALIZADA.txt": "fb7ccb7ab489fd016934e1fd97eb2853357a845ade79cdcef3fbefe5c7e16770",
+  "ALTERACOES_20261127.md": "7da48b1eb9e6e3fc5e245e5b883f8c12406a3fe5d1fdc507e5a9e8753880e545",
+  "CHECAGEM_ESTATICA.json": "0cefa818e919cdd5380a8fe48b0ee07dc1c6cb283c8144b66656ad6ed68d67c1",
+  "CONCILIACAO_ENTREGA_NICOLAS_20261127.md": "e7ecd3505acb41b7c2af4476165f1d201f5eb7e9bf3a75d8846b6f88848e3a69",
+  "CONFERENCIA_SHAREPOINT_REFERENCIA.md": "07c5a99a8ac789a7d50f2d764b6b2694dd5f50ea204eff56f3735720512416ec",
+  "Capitulos/01_introducao.tex": "09801e2a0c72560e8f3f82e32b4d2902214fa9ef5948b0565101291d2deb4759",
+  "Capitulos/02_base_teorica.tex": "0db1e9228b53a76450fccc7d955b194f092d5bf8f08f865891c4d2cb90376312",
+  "Capitulos/02_fundamentacao.tex": "d9420724967b2ed177526d6b4a13770b37ff72094c35c88d8c265a35eadec7d3",
+  "Capitulos/03_estado_da_arte.tex": "375f1c8d0b1e74db535f34ded42977476bf2f4aecbc09ab9267eec5fb4b0e127",
+  "Capitulos/03_metodo_integrado.tex": "34e25d02bc5b3b9e36dcc4dcf593e42a0e3c0d2c95ea481f871185bdde772fc4",
+  "Capitulos/04_metodologia.tex": "809f8cc051f7f7f063ded8516aa9edc824f22069f004d66fb9b036a4b5dff68b",
+  "Capitulos/04_resultados_discussao.tex": "84180052f573b4f6e72615088505426c9115413a461dfaf96cce84d4f2197972",
+  "Capitulos/05_requisitos.tex": "0f78d32d1d2fb39facdacac2b78ea42235873558ca210b0cf7d7841324d95186",
+  "Capitulos/06_arquitetura.tex": "ff5b5f7276de4fd3e0d1fffcd82264a540090156452f1febbbe690e81fe72c1b",
+  "Capitulos/07_projeto_mecanico.tex": "26b3f8f05fefb5fed06a3dc29124cb11e92e3b2441b4dea56fb7901bf4fa12cb",
+  "Capitulos/08_projeto_eletronico.tex": "68659fd9fc929dab230c62aa7f5c1dad0d1233650ae55c0038bbc3a0f5d0593c",
+  "Capitulos/09_embarcados.tex": "072e4f4d05ab6cb33624e3fb76593c38ed34b6963195dc8ac769df486bbc348f",
+  "Capitulos/10_backend.tex": "b7e963c6e77fe632aa6bd4c59e16b21cd7c1425f201c97c4c95ae9de5f77a049",
+  "Capitulos/10b_dados_rastreabilidade.tex": "c9b0e3f2976266cc60a603c26b0da59ccce08ccedef2e5498fb61fa0c8c0f4c5",
+  "Capitulos/11_aplicativo.tex": "581b568d8c874a50d1c5ab11327c1d04f30d381e08862b52af5f67804169c5e9",
+  "Capitulos/12_visao_computacional.tex": "075a2e252e9321781cdb8b7c97674942eceaa4449211ab2f6dfe347434a8378f",
+  "Capitulos/13_agente_ia.tex": "1c7cc8377080421d8e16cf878455b770512c4a18ca473600deccb1566c19ed14",
+  "Capitulos/14_testes.tex": "bc7a5e6f3494b353dae9eeeab7e0cbdf147b694ccc10e24e4f3aadb22a1e8f17",
+  "Capitulos/15_resultados.tex": "efb47fb9ea8c74e638b67939dc9307787b8a3a07125f515250ac762d5ed24799",
+  "Capitulos/16_discussao.tex": "050c162ab51d37e23599447ac337f3b64eedcf07f49156843fc0beb4186a2713",
+  "Capitulos/17_conclusao.tex": "6c8cb7d81d1ac69158ef8b3259b56335aa6c5a1b5fe2ab94e2745df38017b4df",
+  "Capitulos/tabela_ensaios.tex": "1f0b82188ad9df2b60ccbf5cc2df173ebfa7d50f561c5332204facc241b92b3b",
+  "Capitulos/tabela_ensaios_simulado.tex": "2cefe4e5243960f8d9bb496439deec63ab0155b3b66790f91c70b44adb1dd93a",
+  "Dados/entrega_Nicolas_20261127/LEIA-ME.md": "d56c0aa2f30bd49ddc14bb8756d8e9b3df876a1d3cbe92372033be389660f659",
+  "Dados/entrega_Nicolas_20261127/MENSAGEM_PARA_CAROL.txt": "c5d6752e76b811de5d7b45cbd9e58c318942cb386ce2564676597ba3e875afeb",
+  "Dados/entrega_Nicolas_20261127/PROTOCOLO_CAMPANHA.md": "d906a082dd268e2d6a60aed31c8ffba34c10951d9159f47b970441888e042ce2",
+  "Dados/entrega_Nicolas_20261127/SEGURANCA_E_ARMAZENAMENTO.md": "fd0d60c04588da0838ab6c343c3c430c74a99d3007d9113126143f40858bce7a",
+  "Dados/entrega_Nicolas_20261127/ensaios_dispensacao.csv": "857d41f1a6937cbe168b331b0cd913deb5cbb7c940b1aad02f56f4c6803071d7",
+  "Dados/entrega_Nicolas_20261127/ensaios_dispensacao_simulado.csv": "53a44bd396825dd7f01b65783b52514877f87e0602d514ad9bb2d030b35e4624",
+  "Dados/entrega_Nicolas_20261127/ficha_ensaio.csv": "96ba4655644e1d923c06a7200b963c32059d44bfbc4825bc5b1ba786e9dc5d85",
+  "Dados/validacao_20261126/CATALOGO_FOTOS.md": "cc32c74fddb184345f04c5a00ce8854ca3f7fc4b439e27cd80b84635484a4326",
+  "Dados/validacao_20261126/PROVENIENCIA_DADOS.md": "b6cf539300a7730fb9673f2560aa646c7973aacf1cb7f338cc7159cebfb12b84",
+  "Dados/validacao_20261126/RELATORIO_FONTE.md": "ba3dd88a854b36b0b62583b1d91a89f69a67d61ed0274b497ca712dce1b6ee83",
+  "Dados/validacao_20261126/VISAO_MEMORIAL_TEXTO_E_EQUACOES.txt": "72d65a327d5106d666f03a88110e6a92bb3c3dc1797a154a97b67c310c719243",
+  "Dados/validacao_20261126/atualizacoes_firmware_i2c.csv": "8a7ceaae39b84083fd193d10a8e77c8b063e3e7afc2e9788c1740ab7886cb476",
+  "Dados/validacao_20261126/calibracoes_do_disco.csv": "60167738b2cf77988036a9f81e3a0318f28a9c50d2ae9586c94ef4e845a71a84",
+  "Dados/validacao_20261126/dispensacao_ciclos_por_bolso.csv": "d3be1a5e710fd6895afd347921b9ac8765dc6afb9cf1221bd1045b1596fa1d78",
+  "Dados/validacao_20261126/ledger_dc1_comandos_por_tipo.csv": "51e563a10de201dfe670072c3c5782e95a5441b96e6b0c943da9d836d7053daf",
+  "Dados/validacao_20261126/ledger_dc1_por_dia.csv": "bc4c2b4c080aedaa4b95e260510fb924217069590ee6fbcd9d405464342a141c",
+  "Dados/validacao_20261126/releases_instaladas_raspberry.csv": "79e6040d93409f131461198c1f414925b50211c93d81c9e780e28094c93a4e09",
+  "Dados/validacao_20261126/servidor_oficial_comandos_ao_aparelho.csv": "e4a71dd074db204d2e394d569e1f3dcd64b45ab672a453e2ecf56e7f2da12da3",
+  "Dados/validacao_20261126/servidor_oficial_comandos_de_motor_por_acao.csv": "a05bfb72e1f005d4293303da1d1396c59119f6861d8bc79e5c25f0828766f45c",
+  "Dados/validacao_20261126/servidor_oficial_disponibilidade_do_enlace.csv": "d9449cbb3ab5a5c77eb1a597affa4287c485ad8aa5719ef6b3f0693fe1b0d36b",
+  "Dados/validacao_20261126/servidor_oficial_maiores_lacunas.csv": "7e6718bf706a900f29c9ce936da2d2d7a4ee861fe621a48c94c9bf8af5fa55e5",
+  "Dados/validacao_20261126/servidor_oficial_motivos_de_falha_dos_comandos.csv": "31140d7534e167b07efd95b0831c3686147aa53415186667a15eec01a3524c25",
+  "Dados/validacao_20261126/servidor_oficial_registros_de_tomada.csv": "a73cd69328fdd4503e39c96b5fe4c28cab579ca8872c976ca36092378521879e",
+  "Dados/validacao_20261126/servidor_oficial_relatorios_de_estado_por_dia.csv": "e1b47e5955a7993b43724f72cf6b0ad3d56ff1da46e3415d43c0b5fb7107c018",
+  "Dados/validacao_20261126/servidor_simulado_comandos_ao_aparelho.csv": "ecd9c374b36e7c7c7147ad6c62f7a717d4ea3094d39ec3da28a32d033d44655a",
+  "Dados/validacao_20261126/servidor_simulado_comandos_de_motor_por_acao.csv": "5b7774b92e3458cdcdc54a2d5ec68f3b11dbbdc3adb604a44ffd38c9f274bd63",
+  "Dados/validacao_20261126/servidor_simulado_disponibilidade_do_enlace.csv": "693d8e3e3b690aeee3584af6d25400cda188ae1c706825510ee082a64b174cd0",
+  "Dados/validacao_20261126/servidor_simulado_maiores_lacunas.csv": "db903e8e38bc4275380273bd0c151b48fa0df8d383eba9e83d42dc4a9f30708d",
+  "Dados/validacao_20261126/servidor_simulado_relatorios_de_estado_por_dia.csv": "1563e920b18bb6c7ab3d6fdb0331668777c562630b03130dcdda5e4c567d7002",
+  "Dados/validacao_20261126/sessoes_do_disco.csv": "df58d45163dd83e54ecfc2081eac69d5fa7824887a61e7b279379b78d4832be1",
+  "Dados/validacao_20261126/sessoes_do_disco_motivos_de_falha.csv": "642ed282a53a598cacb2c253a5a2b207a98beb063a0aaa7388f8ea937924b861",
+  "Dados/validacao_20261126/sessoes_do_disco_por_fase.csv": "6cdd2445cac6328510338630f054e6137b7286b5e50a46d77a62ee1e7737ea1e",
+  "Dados/validacao_20261126/telemetria_i2c_amostras.csv": "e1537fb563887139c121895c38b1ad6f9579e026a4dcc9d1994c80f5edfcb782",
+  "Dados/validacao_20261126/telemetria_i2c_resumo.json": "696fcea9ba157a6e0b288388373d67712c1d98496a27ff4b42b253c5b1c1cc2c",
+  "Dados/validacao_20261126/testes_software_por_rodada.csv": "54c98fc9051534a70d5c034bd8b6754090d2638a8d96c500242b99239cc0660f",
+  "Documentacao/DC-V75_desenhos.pdf": "3c0935cdf9712bb32b8f3351a2a2af59a8be4130cc6b4f20842b505175fc8382",
+  "Documentacao/FICHA_TECNICA_V75.pdf": "47acd698076750f4327b6051e331a51cb99351d3d26967ae0723fe9e6bc3eb1d",
+  "FEI-bib/dosecerta-referencias.bib": "d92431cf7164927d99b70b29178cd216c64a5b378bd16cb017744ad2f20b1abb",
+  "FEI-bib/modelo-references.bib": "cb7577e1f76c2fad038a29dcba8e6206ce994b0c22185da0e61b59cc06c9bdbb",
+  "FEI-pre-textual.tex": "6f85792fd6fed450395b222f3b39ff77e44e5f9d888501a44cdcff923188cbc8",
+  "Figuras/App/00_login.jpg": "d7b156c516a3588b421e99b5031122b27837747d0e301faf95a51ac32d6e5c33",
+  "Figuras/App/01_guia_primeiro_acesso.jpg": "a40eb74785c4d9ec2c12b911c050c3a3ac1202767de85eceefdc16f13258f4a3",
+  "Figuras/App/02_painel.jpg": "8bbd2fba39f0d6d42753e797d54f72fda5a03aecc95842f430756b19b4f58984",
+  "Figuras/App/03_rotinas_medicamentos.jpg": "f3a43f83ef212adbb5449f03ca3dac6f0183a7a6268a07ac69f360fd66e497e5",
+  "Figuras/App/04_rotinas_dia_a_dia.jpg": "8f80a13c59f1aefe9b1a32f9e310a864446509628840acf4baaa081d77c73737",
+  "Figuras/App/05_observacoes.jpg": "f3a3c47af0a75eaf73da21e764e76d6a9983fad2bad1c73d87f66592d2055f03",
+  "Figuras/App/06_manual_3d.jpg": "29a5f8558ca86a8a99658eb6acaaf924b87c711df585ab16352ce9d93531f7ef",
+  "Figuras/App/07_aparelho.jpg": "55d684f969d0920483db630a7e9ceb6225aa7cef6c042cb811729ae1f08973c6",
+  "Figuras/App/08_estoque_reposicao.jpg": "68ff1769f3d4cea4989014d9d39f5deb70048c4e3ae6a12257e81172a353c31d",
+  "Figuras/App/09_notificacoes.jpg": "e6cbe1cff28e4b9aa8484a20f5de7693410e88d9e0949f64cdde4df6b7bf3eab",
+  "Figuras/App/10_assistente_conversa.jpg": "8d87bca59223917b4c283d414766bfb7fc65d4251a1c67a2b2021f3998a837b5",
+  "Figuras/App/11_assistente_menu_anexo.jpg": "94e712cb18cd6da33c12a76c7ec5d29110c5dd6a204e51d6678b76275fc21029",
+  "Figuras/App/12_assistente_receita.jpg": "6976d2d8ebf0b19fe031f3a56ba9d854005be3512bbec9ad5d473255ab357e4b",
+  "Figuras/App/13_visoes_cuidador_familiar_paciente.jpg": "04dda04dfe33455aaaae54ba0108a0983f56cd09fcf3208ffe843d60e6b4eb07",
+  "Figuras/App/14_painel_visao_paciente.jpg": "cd1736ef13a60bd9e438daef3186a4acef8731eba39810a819b1f55fa7709d04",
+  "Figuras/App/15_painel_desktop.jpg": "cebb70a099bdb026daf0d2efc6fc37915063d2facf58bae9bee2df7e93df9ed7",
+  "Figuras/Artigo/agente_conceitual_historico.jpeg": "b51a939a53ddce82cb7f1731dc47d6f627b70b198be1978a4df059ce3ebad9af",
+  "Figuras/Artigo/arquitetura_artigo.png": "ed7929bb30c916756546f2ecf65305cba84a370ba78a62b6f5630e3579808758",
+  "Figuras/Artigo/cad_base_artigo.jpeg": "ae7433d2b502955ac4de7ad14058986089e09523abbb200b0263720d00a0faea",
+  "Figuras/Artigo/cad_funil_artigo.jpeg": "9fa4ba0f2d78b152783856449136ec8572b11ace02051e833f38873976a936b4",
+  "Figuras/Artigo/cad_modulo_artigo.jpeg": "6974affb56ea48d39097360dd38af18a0a987ad3e25e8232b40125adf08dcafe",
+  "Figuras/Artigo/conjunto_completo_artigo.jpeg": "7a4cfed8b80fd96658ad9c877f1d9e40f90e961ba46824bd1c06e0bbffc83b89",
+  "Figuras/Artigo/submodulo_superior_artigo.jpeg": "fd34fc29d6c8ce71ffee278949ac9c29a8d68d5aa51a3d61dc68e74c5f62d693",
+  "Figuras/SharePoint/agente_aprovacao.png": "12df240ce9d15e2f968e38ca49142b856ede048e81a4839ead567e5bc1efd453",
+  "Figuras/SharePoint/agente_arquitetura.png": "d0017bc8a4725cb6e2b169288725dc73d5d0938cc4c2f9b678290bb2ca84a5d7",
+  "Figuras/SharePoint/app_camadas.png": "3ce59f8b82260ac28af46220c1b67e5c8f9e1c348795e58df7efc99b528ee45c",
+  "Figuras/SharePoint/app_dados.png": "9438a0692c93a1cda29c24527cde0dcd78e377b2397107fdefd53015d3c19b99",
+  "Figuras/SharePoint/app_etapas.png": "ff85d5e81ed7933c929d207dc5469dfe743f7b209c0a529a8421e0ba4752bb69",
+  "Figuras/SharePoint/app_evolucao.png": "1b340582f4d642bb26737cf41c05c8e18fa82157c550e35845f07188979a9971",
+  "Figuras/SharePoint/app_manual_assistente.png": "9c00eff4a9815ec809157be15685a65c09e33d069e9909356a6c9dc058afc7ae",
+  "Figuras/SharePoint/app_piloto.png": "40d882c2427bba440a1fd08e201e8c9edf72f6f028bf5c6e859cfafe1be37d04",
+  "Figuras/SharePoint/app_rotina_historico.png": "4920c5e44d517861c3a328cb453d1f49039cf1b5ffb350f816a9e9acff83cda2",
+  "Figuras/SharePoint/app_stitch.png": "721756e7c3d55c5aa29515976ad939fdf22320ae783fb1fcbde763e161c63e23",
+  "Figuras/SharePoint/arquitetura_borda_nuvem.png": "3091479cd5e3ab5b937e7514d8453a69faf651d0709f4581c116fac251f34c1f",
+  "Figuras/SharePoint/barramento_compartilhado.png": "c3c3f3a63f645fae1ab95392ca6ca62a172f438b89b710288ef27fe2b924602e",
+  "Figuras/SharePoint/blocos_fisicos.png": "b0abb9dfe33d998924b2d267fbf3db8fcd887c5276d54b3f61962eb822e9cdad",
+  "Figuras/SharePoint/buzzer.png": "519b0625e43db6c1daef9b9080d8fef5a8b08d20c5e81fe2284c4a3606a51d91",
+  "Figuras/SharePoint/cad_v75.png": "69a4c62880fc6a16caaf5dc9262b05203d608c56e093f657dd14f097c8115245",
+  "Figuras/SharePoint/circuito_central.png": "9301b7933b9b7d712119d6133239f6f093ed65acbbf136d48e923ae760d4234f",
+  "Figuras/SharePoint/circuito_intermediario.png": "f85e3ce10a51ceb8a98a06d96349e3f15749c7403bda2cdb8c8f066d54671f6b",
+  "Figuras/SharePoint/circuito_submodulo.png": "43af029664e2d9584cc91c42f76fe521bb59a79532cc85d446b58b118487a5ef",
+  "Figuras/SharePoint/comando_ponta_a_ponta.png": "75ecb4a20b4138c38be1f9a64ef1835a900126ea5081649a7b2c647ac050931e",
+  "Figuras/SharePoint/consulta_adc.png": "b7e1610e130706c972c2217918826d25745dd29a7f6ffe74f2d50e32765c8f21",
+  "Figuras/SharePoint/distribuicao_alimentacao.png": "227a4f093909e6d3df865ad2d4cf12c6a1e72897b8d9cbbfdbbeb16d2f9bc18a",
+  "Figuras/SharePoint/dosador_explodido.png": "d2a4ef2dd9276b6190f45ff9d1bcd319c6d58a55de03bd41c075f850e2809b71",
+  "Figuras/SharePoint/encaixes_intermediario.png": "ef37da8da89f3ed026341d3853fd69f974d80d4579d92e17c70bb1b9b29196b3",
+  "Figuras/SharePoint/estados_comando.png": "1e2cc61ff551785734fdabe4ed1b6e97b01c3067ec980929e0db31c7b69c0175",
+  "Figuras/SharePoint/estados_motor.png": "c4009b4c4f70243a8b9421e084387801481b1e1f51f255d9130ef79131245203",
+  "Figuras/SharePoint/firmware_estrutura.png": "678768b860b36cf824e1290e78ab206adeb33bf4f0b132220eb4bca34e7ebcdc",
+  "Figuras/SharePoint/fluxo_desenvolvimento.png": "516378b31889c04c3d9bff31c207197064432ed8dd9cae96c39d33215e6ba4a6",
+  "Figuras/SharePoint/i2c_dreno_aberto.png": "472162f928ad701eea36a14806de821443c044a14dbe8d5d80fe5466f599db9d",
+  "Figuras/SharePoint/i2c_temporizacao.png": "c81002ae6872b0d06245ab7ae66260ada2f03d1301335b03ebd8e58d15928d66",
+  "Figuras/SharePoint/implantacao_servidor.png": "370c1d59143b2e856dbf3868b28c6a5dfdf99bafb5b6b7cc19cc86d1898090c1",
+  "Figuras/SharePoint/ota_blocos.png": "7c40034ac288562e5568dbcac7d38baaddcd7392e7ee6d6e1772c20985a998f9",
+  "Figuras/SharePoint/ota_sequencia.png": "84245e535139c534ae88cdfbea04d89e191b3616210bc9a306d3c8a432c48f5d",
+  "Figuras/SharePoint/prototipo_montado.png": "e1d748e173a13444d0912767a1adca41b380493fc4d8902bdf00abdc4cb44d51",
+  "Figuras/SharePoint/provisionamento_ble.png": "e36ce2724bae2f3db699ce856b41c50303542c93e7c1ca8df52bd9d3b676f5b6",
+  "Figuras/SharePoint/runtime_processos.png": "c888976c20cb344fa5c7eabd320d5c22e545f1be37331a1316245aa7dfe2973f",
+  "Figuras/SharePoint/sinalizacao_posicao.png": "b2b750990461569b47c90da05d3c69f889569244028ac8f26b871e929dd77192",
+  "Figuras/SharePoint/transacao_dc1.png": "791967b79109598edbacef8b305fccab4b0d6743cd3742c99fadeb2629587d1f",
+  "Figuras/Validacao20261126/central_eletronica.jpg": "d819e001d96a6c50c151f53a7205277208739f18066ffa4b0944dfc1ec874c1e",
+  "Figuras/Validacao20261126/central_externa.jpg": "de19ebdcae48126d154bd7c573037077bb9967d380917aac19b1caf5caeba601",
+  "Figuras/Validacao20261126/conjunto.jpg": "d7974b853f10d98a793796fecb566568c1e96efb0dc4b64da5c03c287bac5b65",
+  "Figuras/Validacao20261126/desfechos_ciclos.png": "1a9bef4bc1678b4d4ec27a0a4d15a11ad5425c65d965d1e50219d64cae9f8e4b",
+  "Figuras/Validacao20261126/faixas_calibracao.png": "86e4ff9f5f35466382a69d45e50d290544436b38ca7b09c745ee1a1526d0f575",
+  "Figuras/Validacao20261126/intermediario.jpg": "01e1cee6ba85c2cb608d0c6636ceb3c250a8f6d6192f4fc9ce07995ada1713e2",
+  "Figuras/Validacao20261126/intermediario_chicote.jpg": "adadef95d6c158e0f2930abcf7f630ea58d2f5cdb8724769609be671d3787828",
+  "Figuras/Validacao20261126/mecanismo.jpg": "8b3182d5e0f2f3371483b1414e0ba2eb3e2c1cff07d5455a62482bca2ddfc244",
+  "Figuras/Validacao20261126/sub_eletronica.jpg": "10d89bd9e751a27a3559eb9943d4117b6a451069611667c932b032daae186b5c",
+  "Figuras/Validacao20261126/submodulo.jpg": "f24f79a582fe5cfe4a6496ccee0e1dad06a384a55d7fb1af5728217a331bff87",
+  "PENDENCIAS_ABERTAS.json": "5d781fe268b487ea95600fcae51230d14695e9be2278b22e1bb76dee80943341",
+  "PENDENCIAS_ABERTAS.txt": "5dacc741c3408485170cba491e78b1669dc65c080d0d673fe03baaa5eeab03f2",
+  "PENDENCIAS_ENCERRADAS.json": "ed0dd8cb91fe3a746079b07f9926099c8a151540178d7b95c12ad57b66442367",
+  "PERGUNTAS_PARA_CONTRIBUIDORES.md": "ac406f2237228e0903710b6d1a96b7f45912dbebbd2142fc45e3b858e22637e8",
+  "PERGUNTAS_PARA_CONTRIBUIDORES_ANTES_DA_INTEGRACAO.md": "d45eff8da3de7fa7ebae20179d8ae861b6f9d0a89df5fb332b44a06bd50430b8",
+  "PosTextual/anexos.tex": "88d310b71cbd56321a218d77652bcf4ca6ec26116d0fcef9df84639ae3481238",
+  "PosTextual/apendices.tex": "e448e3d1a63eae72f537f9512a37f03bcf7973df54a5c59998fcd45abee19e94",
+  "PosTextual/desenhos_v75.tex": "a3dfccd52472731980cf627021f1b47c8244ffe01f1bc3f38387e29f45a88702",
+  "PreTextual/abreviaturas_siglas.tex": "4058e1e7c9142fbf6dae9bfbdd38c7060bfa4bc924beb4a1a5126cf6711075d2",
+  "PreTextual/abstract.tex": "7b09c6311d378167b494ae39212ae4730b52fcb28dfdcc1c10b6f58191b844a6",
+  "PreTextual/agradecimentos.tex": "5437ac85c1c198e19bedca93f78f1849c81a73d8eaa7b214085901c7f6f413da",
+  "PreTextual/dedicatoria.tex": "b82c9acbdf54271d6997575903d0e78a36e076846165f6533914ed16e8cd2825",
+  "PreTextual/epigrafe.tex": "aef153760f0d338bb4df7101d6c5e18f9f38cffef67e590c9b11015ce3e91e8c",
+  "PreTextual/folhadeaprovacao.tex": "685f7f936a5ecf8004320de882cc525fd3c65491a7fca90e6270a52bfbc63230",
+  "PreTextual/resumo.tex": "25c53feccbf350ad79b63b9f4839f3b5a18fe9762e47f953990fdcdaa255cc32",
+  "PreTextual/simbolos.tex": "87fa6460d968fd6233fa66152e84ba61cf452f8d211789de1e797198b46cb7aa",
+  "README.md": "c8f690fdb45747ae07dbd1046aa2eb99e70bbed509bc6f2bccd4d76fd4b8bb0b",
+  "VALIDACAO_E_COMPILACAO.md": "2e7a88f16209859eaad871e0e97fb578e86e4dbe2191632797c94a106b8b946a",
+  "alteracoes_base_local.patch": "723fa53774897e88107bf6b9d58b73da9a4863e8b99df516af1b874c1198051f",
+  "alteracoes_base_local_rodada1.patch": "6559c203b19038a5ed37f3b5596e0cf779cfd3efe456431022475d0832195ac4",
+  "arquivos_alterados.json": "78e1d13145915b3e701f8b8a2a5050c44993c58d4581e09315d47879d4777cbb",
+  "arquivos_alterados_rodada1.json": "2eac68d054b7b2116e6911a3e9be34ab0862cc68118f3552e07e6bd791d5d5dd",
+  "classe/ABNT6023-10520.sty": "294535f93df4d5fa60980bd61cd1d83bac68ed37485028887d43b2536061d1dc",
+  "classe/USPSC.cls": "c2f3a80938506014fac8ba353c6508853ffb49034a6f7327c60a27fc898e6fa1",
+  "classe/abntex2-alf-USPSC.bst": "c9a62b6e48ae6d67b436d46c1ebdd2ce3346362d23b5e27ffed121797fbf6b92",
+  "classe/abntex2-alfeng-USPSC.bst": "e4e3dac9f4006a4a7f870f3ec21ed0170f3a5f61807b7d6e79eeb01337668c55",
+  "classe/abntex2-num-USPSC.bst": "9f06f4c8d4aa39e755b3d50e6a7c787786a31281d3a8d23fd9fe20884eae1b20",
+  "classe/abntex2-numeng-USPSC.bst": "3c5948c9b9685206d131cadf2b2577f9f679d775ba89047798e67dc5376cfba3",
+  "compilar_banca.bat": "caaa8b2bb10f5a2e053edff0c2ab09afb5005b9cc5ab240027311bed9666ac26",
+  "compilar_banca.py": "9c33c70a577477672a77007a9933d8e80b74c2c92c81382a6c74812b76d1dac0",
+  "compilar_banca.sh": "17ebf693b0a801fe5aa1cd917af68acebfd080f9d78281d5baa3706acac7e64d",
+  "dosecerta_pedidos_finais_grupo.md": "f6aec025f1f725f32faff9df452a78024c4c9e9deca04c6695f2ca54718dcb24",
+  "gerar_referencias.py": "cb4493093e59b69a55d4120088e4f525c390107a5fccbf7f0ee8c66a6b7508bf",
+  "historico_pendencias_antes_rodada2.json": "d556eb0b0bdd0a65dfc2c421a428a3c57fd223ce2a5cf1911bddb1f17786981b",
+  "historico_pendencias_pre_integracao.json": "5c1c71d96c98d39a4c76a7658d534b3fea0a385c6529b73fc989ce58b0e3bbcf",
+  "main.tex": "40a1c0fcb9162c63c85bb2d9c8d234631a73c8a741733fdc87150a302e1211c2",
+  "mapa_fotos_20261126.json": "ec8ad46c59d1cc8fb6a0f9461aa2f1ac759688e4a7bc76f121de7bac5d222a19",
+  "pendencias.json": "3411fbdc3dfe166a512af2f153e8fed17af24d43ba496e6ffeffc32cf65ab2f7",
+  "pendencias_dosecerta.tex": "8e4b432d5ed3b775d38a2ce549e65c8cabac9445d79acf4ee1947bc1173d9710",
+  "referencias.tex": "a2cd6552313e153c7deeb3cd41b1d2c8e169c900c60e8418142998260fd6fe5e",
+  "validacao_estatica.json": "d42aff596b02a2b572c1e9dad7f583b6f109a21b4bf239deb3ca90dd9e5b5b3d",
+  "validar_integracao.py": "96c43e541c6a764b2f21c25a543b95cc0cb31879845692e2d437f4d62b7be82e"
+}

@@ -1,0 +1,25 @@
+DOSECERTA — PACOTE ATUALIZADO — 27/11/2026
+
+Este é o projeto completo revisado, não apenas um patch. Os históricos das rodadas anteriores foram preservados; este arquivo e CHECAGEM_ESTATICA.json descrevem a entrega atual.
+
+COMO USAR
+Importe o conteúdo da pasta DoseCerta_TCC_trabalho em um novo projeto do Overleaf. Selecione main.tex como arquivo principal e pdfLaTeX como compilador. Recompile do zero e repita até estabilizar listas e referências. Não execute BibTeX/Biber: a bibliografia utilizada está em referencias.tex.
+Localmente, com TeX Live/MiKTeX e Python 3, execute python3 compilar_banca.py (Windows: python compilar_banca.py).
+
+CONTEÚDO
+- Fontes LaTeX completos, classe, bibliografia, figuras e dados de apoio.
+- Cinco capítulos principais: introdução, base teórica, método integrado, resultados/discussão e conclusão.
+- Comandos de listas de figuras/tabelas e sumário; chamadas e rótulos de figuras revisados.
+- Documentacao/: ficha técnica e desenhos V75; inclinação nominal do eixo a 30 graus da vertical incorporada.
+- Pendências mantidas em vermelho; PENDENCIAS_ABERTAS.txt e PENDENCIAS_ABERTAS.json contêm a lista atual separada (88 itens).
+- PENDENCIAS_ENCERRADAS.json registra as baixas MEC01 e APP03.
+- Escopo: um paciente por cadastro; MCP com identidade fixa; isolamento multipaciente fica como trabalho futuro.
+- dosecerta_pedidos_finais_grupo.md: última versão editada pela autora, copiada sem alterações.
+- compilar_banca.py/.bat/.sh: rotinas para compilar e verificar estabilidade de referências, listas e extravasamentos.
+
+VALIDAÇÃO E LIMITES
+Checagem estática executada: zero erros e zero avisos; 98 rótulos, 113 referências internas, 59 figuras e 11 citações distintas. Esses controles de fonte não garantem o resultado visual.
+Não há compilador LaTeX neste ambiente: NÃO foi gerado PDF atualizado. Paginação, listas efetivamente preenchidas, posição final das figuras e extravasamentos ainda exigem compilação e revisão visual. Não entregar à banca sem essas etapas.
+
+HISTÓRICO
+README.md, relatórios das rodadas anteriores, patches e inventários antigos são mantidos como histórico. Para o estado atual, use CHECAGEM_ESTATICA.json e PENDENCIAS_ABERTAS.*. Os arquivos pendencias.json e validacao_estatica.json correspondem a controles anteriores; não substituem os relatórios atuais em maiúsculas.

@@ -1,46 +1,53 @@
-\chapter{Integração e testes}\label{cap:testes}
-A integração relaciona o comportamento de cada frente ao fluxo completo de uso. A estratégia foi organizada para verificar primeiro as condições locais e, em seguida, as interfaces entre mecanismo, central, servidor e aplicativo. Essa ordem permite localizar falhas sem atribuir a uma camada um resultado observado em outra.
+\section{Método de integração e testes}\label{cap:testes}
+A avaliação foi organizada em inspeção de projeto, testes automatizados, execução nas placas e integração de ponta a ponta. O desenvolvimento incluiu testes de caixa preta, exercitando entradas, saídas e estados observáveis, e de caixa branca, verificando regras internas, persistência e tratamento de erros. O procedimento distingue testes executados durante o desenvolvimento do protocolo controlado ainda a concluir.
 
-\section{Preparação e configuração}
-Cada campanha deve identificar revisão mecânica, disco, unidades de teste, firmware das placas, runtime, API, aplicativo e agente. Antes da atuação, são verificadas continuidade, alimentação, identidade dos módulos, referência temporal e validade da calibração. Uma operação de motor ainda incerta exige reconciliação antes de novo movimento.
+\subsection{Preparação, configuração e unidade de ensaio}
+Antes de cada bloco, devem ser registrados revisão mecânica, disco, unidade física de teste, alimentação, versões de firmware/runtime/API/Care, ambiente e política de travas. A referência temporal, a calibração, a identidade dos módulos e a ausência de operação incerta são condições de preparação. Instrumento, operador e responsável pela observação acompanham o registro.
 
-O registro de cada caso reúne requisito, configuração, condição inicial, entrada, comportamento esperado, comportamento observado e evidência. A identificação da configuração permite comparar repetições e delimitar quais resultados continuam válidos depois de uma alteração.
+Uma tentativa de dispensação corresponde a um pedido identificado e seu desfecho, inclusive quando recusado ou interrompido. ``Unidade de teste'' designa o objeto físico usado no ensaio, com tipo e dimensões identificados; não significa necessariamente medicamento destinado a ingestão. O número de pedidos, de ciclos internos, de unidades solicitadas e de unidades coletadas é conservado separadamente.
 
-\section{Verificação mecânica e elétrica}
-A análise mecânica considera dimensões, inclinação, folgas, retenção, percurso e reabastecimento. Na dispensação, cada tentativa precisa ter uma observação independente do coletor, distinguindo liberação correta, ausência, unidade adicional e travamento. A leitura óptica é comparada a essa referência, não utilizada como sua própria confirmação.
+\subsection{Dispensação com contagem independente}
+A campanha controlada consiste em repetir um roteiro sob condições registradas, mantendo constantes as características escolhidas para o bloco. A quantidade no copo é contada por observação física, sem adotar como verdade o estado do motor, a leitura do sensor ou a baixa no aplicativo. Essa é a referência independente. Sua comparação com o pedido permite identificar acerto, ausência, unidade extra, retenção, travamento e resultado não observado.
 
-A análise elétrica considera tensão e corrente em repouso e durante atuação, queda nos contatos, aquecimento e estabilidade do barramento. A remoção energizada exige ensaio próprio de inserção e retirada, pois a recuperação lógica da comunicação não demonstra segurança elétrica do encaixe.
+O procedimento compreende conferir o estoque inicial, identificar o pedido, executar sem reenvio indevido, contar o coletor, registrar tempo e condição do mecanismo e conferir os estoques físico e digital. Fotografias identificadas apoiam a auditoria. Ausência de observação não é registrada como zero. Mudança de peça, ajuste ou versão inicia novo bloco; não elimina falhas do anterior. Fichas e proposta de blocos estão no Apêndice~\ref{ap:ensaios}.
 
-\section{Firmware e comunicação}
-Os testes de software tratam quadros válidos e inválidos, integridade, identidade, duplicatas e transições de estado. Os ensaios em placa acrescentam perda de comunicação, reinício durante movimento, resultado retido e falha de persistência. A recuperação deve conservar a identidade da operação e impedir um segundo movimento indevido.
+\subsection{Mecânica, elétrica e sensoriamento}
+A inspeção dimensional compara as cotas nominais V75 às medidas da peça impressa, sem inferir tolerância apenas da malha. A avaliação elétrica considera polaridade, continuidade, tensão e corrente em repouso e atuação, quedas nos contatos e aquecimento. Remoção energizada exige ensaio próprio; reconexão lógica não comprova segurança elétrica.
 
-A atualização de firmware é avaliada em etapas: preparação, transferência, ativação, reinício e confirmação. Imagem inválida ou transferência interrompida deve produzir um estado identificável e recuperável. O registro precisa separar testes com dependências simuladas de transmissão e execução na placa física.
+Para o sensor, a referência é a inspeção da cavidade vazia e ocupada, com o reservatório montado. Localização, calibração e restauração de posição são avaliadas em condições identificadas, inclusive perda de referência. Resultados de ADC parado não são extrapolados para o mecanismo em movimento.
 
-\section{Fluxo Care--API--dispositivo}
-O caso integrado começa em uma sessão autenticada e acompanha a solicitação até a API, o registro do comando, a execução local e a apresentação do resultado. A evidência relaciona identidade da operação, logs, observação física e persistência. A mensagem exibida ao usuário deve corresponder ao estado alcançado, não apenas ao recebimento da solicitação.
+\subsection{Software, comunicação e atualização}
+As suítes automatizadas verificam estados, contratos, identidade, quadros válidos e inválidos, CRC, duplicatas e persistência. No aplicativo, consideram componentes, navegação e API simulada; no servidor, regras, contratos e gravação. Os registros conservam comando de execução, versão, casos aprovados, falhas, erros e ignorados. Rodadas sobrepostas não são somadas.
 
-O mesmo fluxo é considerado sob perda de conexão, sessão expirada, duplicata e resposta tardia. Na operação sem rede, são verificadas agenda, relógio, reinício, filas e reconciliação após o retorno da conexão. A análise conserva a distinção entre continuidade das funções locais e disponibilidade da consulta remota.
+Em placa, são considerados parada, perda de resposta, reinício durante movimento, resultado retido e reconciliação. Atualizações são avaliadas por transferência, verificação de integridade, ativação, reinício e recuperação. Para a Pi, verifica-se também assinatura; nas ESP32, SHA-256 não é apresentado como assinatura. Os testes com dependências simuladas são distinguidos da atuação física.
 
-\section{Visão, agente e interação}
-A avaliação da visão utiliza referência independente e condições de captura identificadas. As classes e os casos inconclusivos precisam estar definidos antes da interpretação das métricas. A pontuação produzida pelo método não é utilizada diretamente como certeza clínica.
+\subsection{Integração Care--API--central e recuperação}
+O roteiro acompanha uma sessão autenticada desde a solicitação até comando, atuação, confirmação humana, estoque e histórico, utilizando a mesma identidade de operação. Perda de rede, resposta tardia, expiração de sessão, duplicata e reinício são tratados junto à recuperação. Na operação sem internet, é preciso verificar relógio, agenda e prontidão, e não apenas a existência de SQLite.
 
-No agente, os casos incluem consulta, pedido incompleto, aprovação, recusa, escrita inválida e resultado incerto. A avaliação relaciona a resposta apresentada ao efeito verificado na API. O fluxo de voz é analisado separadamente das ferramentas MCP enquanto permanecerem como caminhos distintos.
+A configuração entregue utiliza um paciente por cadastro. A validação atual não exige criar outro usuário ou outro paciente. Ampliação para múltiplos contextos e testes de acesso cruzado pertencem às possibilidades de continuidade. Isso não dispensa verificar credenciais inválidas, sessão e permissões das funções existentes.
 
-Na interface, as tarefas incluem login, configuração, consulta do plano diário, interpretação do histórico e resposta a falhas. A avaliação considera compreensão, possibilidade de correção e apresentação acessível dos estados, sem presumir conformidade integral apenas pela adoção de diretrizes.
+\subsection{Telemetria e análise de medidas}
+A coleta passiva registra tentativas, consultas válidas, falhas HTTP, estado das placas, identificadores de inicialização, leituras ADC, temperatura e filas. Uma consulta pode reutilizar o mesmo estado de hardware; por isso, amostras e leituras distintas são contadas separadamente. Mediana, percentis, extremos e lacunas são interpretados com a condição de carga e os desligamentos intencionais. Latência HTTP local, reconhecimento de LED, resposta de voz e duração da dose não são reunidos como uma única métrica.
 
-\section{Consolidação das evidências}
-A matriz final relaciona requisito, caso de teste, configuração, evidência e desfecho. Itens não executados e falhas abertas permanecem identificados. Os resultados são apresentados no Capítulo~\ref{cap:resultados}; sua interpretação, no Capítulo~\ref{cap:discussao}. Essa separação permite discutir o alcance das observações sem substituir dados por expectativas de projeto.
+\subsection{Avaliação da visão e do agente}
+Na visão, a referência humana identifica sequências simuladas completas, mão vazia, objeto sem aproximação e sequência interrompida, com luz, distância e oclusão registradas. Ajuste e avaliação devem usar conjuntos separados. A máquina de estados final é avaliada independentemente dos escores de versões anteriores.
 
-\section{Ensaios e registros recebidos em 26 de novembro}
-A campanha de caixa preta permanece planejada: seu executor teve 42 de 42 testes de software aprovados, o que verifica a ferramenta de execução e não equivale a 42 testes físicos do dosador. Os blocos previstos são localização com disco vazio, dispensação com contagem independente e comunicação/energia. Metas como 95\% em pelo menos 60 pedidos e 98\% de localizações são propostas do plano, ainda sujeitas ao protocolo final; não foram adotadas retroativamente como aceite. \cite{DC_VALIDACAO2026}
+Para precisão $P$, sensibilidade $R$ e acurácia, com VP, FP, VN e FN definidos pela referência, utilizam-se:
+\begin{equation}\label{eq:vis-metricas}
+P=\frac{VP}{VP+FP},\quad R=\frac{VP}{VP+FN},\quad
+\mathrm{Acc}=\frac{VP+VN}{VP+VN+FP+FN},\quad
+\mathrm{FPS}=\frac{N_q}{\Delta t}.
+\end{equation}
+Denominador nulo resulta em métrica não definida. Inconclusivos e falhas técnicas são reportados separadamente, sem interpretar ausência de detecção como prova de ausência de tomada.
 
-Separadamente, a coleta passiva das 22h11 às 22h40, horário de Brasília, produziu 1.725 tentativas de consulta local, uma falha HTTP e 1.724 amostras válidas. As contagens de 1.614 leituras distintas por placa somam 3.228, pois consultas sucessivas podem reutilizar o mesmo estado de hardware. A condição era sem acionamento do motor; ausência de reinício nessa janela não demonstra estabilidade sob carga. \cite{DC_VALIDACAO2026}
+No agente, verificam-se contexto do paciente único, seleção de ferramenta, argumentos, confirmação, recusa, efeito persistido, ambiguidades, falhas e limites de finalidade. Ferramentas MCP, resposta do modelo e experiência de voz são unidades de avaliação diferentes. As versões do agente são identificadas para que melhorias históricas não sejam atribuídas indistintamente à versão final.
 
-A consolidação recontou as tabelas recebidas, mas não repetiu as suítes do produto nem enviou comandos ao protótipo, API de produção ou banco. Os resultados do Capítulo~\ref{cap:resultados} são evidências de origem, não novos testes realizados durante a redação.
+\subsection{Rastreabilidade e análise}
+A matriz relaciona requisito, caso, configuração, evidência e desfecho. Tentativas interrompidas, falhas e itens não avaliados permanecem identificados. Os resultados numéricos e sua interpretação são apresentados exclusivamente na Seção~\ref{cap:resultados}, sem antecipar resultados empíricos nesta seção metodológica.
 
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{TST01}{Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final.}
 \pendencia{TST02}{Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente.}
 \pendencia{TST03}{Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais.}
 \pendencia{TST04}{Completar os protocolos e relatórios de visão e agente com versões, dados, métricas e falhas. Distinguir servidor MCP, seleção de ferramentas, qualidade de resposta, voz e integração com o Care.}
-\pendencia{TST05}{Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado ao capítulo 15; não antecipar discussão ou conclusão.}
+\pendencia{TST05}{Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado aa Seção~\ref{cap:resultados}; não antecipar discussão ou conclusão.}

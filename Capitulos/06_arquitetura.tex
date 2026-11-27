@@ -1,73 +1,74 @@
-\chapter{Arquitetura geral do DoseCerta}\label{cap:arquitetura}
-A arquitetura foi organizada para separar a execução física das tarefas de rede e de interação. A central coordena o sistema; os módulos executam funções locais; o servidor mantém o registro compartilhado; e o aplicativo permite configurar e acompanhar a rotina. Essa divisão estabelece os pontos de integração detalhados nos capítulos seguintes.
+\section{Arquitetura geral do DoseCerta}\label{cap:arquitetura}
+A arquitetura foi organizada para separar a execução física das tarefas de rede e de interação. A central coordena o sistema; os módulos executam funções locais; o servidor mantém o registro compartilhado; e o aplicativo permite configurar e acompanhar a rotina. Essa divisão estabelece os pontos de integração detalhados nos itens seguintes.
 
-\section{Organização física}
+\subsection{Organização física}
 O dispositivo é composto por unidade central, intermediário e submódulos dosadores. A configuração de expansão prevê dois intermediários, cada um com quatro posições. Cada submódulo armazena um medicamento e contém seu mecanismo, motor, sensor e ESP32. A bancada de referência reúne uma central, um intermediário INT01 e um submódulo SUB01; a capacidade de expansão não é apresentada como conjunto completo ensaiado.
 
 A Raspberry Pi Zero 2 W concentra agenda, registros, comunicação externa e periféricos centrais. O intermediário distribui alimentação e barramento e controla a sinalização de suas posições. O submódulo produz a sequência de acionamento e realiza a leitura óptica. A Figura~\ref{fig:blocos_fisicos} mostra essa organização e os componentes associados.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Módulo central, intermediário e submódulo: componentes e interfaces}\label{fig:blocos_fisicos}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/blocos_fisicos.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/blocos_fisicos.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
+\noindent
 
-\section{Conexão entre os módulos}
+
+\subsection{Conexão entre os módulos}
 A interface modular utiliza quatro vias: +5 V, GND, SDA e SCL. A alimentação e o barramento atravessam o intermediário e chegam aos encaixes, sem criação de um segundo barramento para cada submódulo. A Raspberry Pi atua como único controlador I²C; intermediário e submódulos respondem diretamente a seus endereços.
 
 O intermediário, portanto, não roteia os comandos. Sua função elétrica de passagem das quatro vias é distinta de sua função lógica de controlar os LEDs. A Figura~\ref{fig:barramento_compartilhado} apresenta essa topologia. Como os encaixes compartilham o mesmo nó, o endereço identifica a unidade que respondeu, mas não revela automaticamente sua posição física.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Topologia compartilhada do I²C e endereçamento direto dos módulos}\label{fig:barramento_compartilhado}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/barramento_compartilhado.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/barramento_compartilhado.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
+\noindent
 
-A associação entre identidade, encaixe e medicamento é registrada com confirmação do usuário. Essa separação permite retirar um submódulo sem tratar seu endereço como sinônimo de conteúdo ou localização. A sinalização dos encaixes apoia esse procedimento e é detalhada no Capítulo~\ref{cap:eletrica}.
 
-\section{Divisão entre borda e servidor}
+A associação entre identidade, encaixe e medicamento é registrada com confirmação do usuário. Essa separação permite retirar um submódulo sem tratar seu endereço como sinônimo de conteúdo ou localização. A sinalização dos encaixes apoia esse procedimento e é detalhada na Seção~\ref{cap:eletrica}.
+
+\subsection{Divisão entre borda e servidor}
 A central conserva agenda e registros operacionais em SQLite. O servidor oferece a API e mantém os dados compartilhados em PostgreSQL. O Care utiliza o serviço de autenticação para iniciar a sessão e encaminha as operações do cuidado à API, que aplica as regras de negócio. A central também se comunica com a API, sem acesso direto ao banco central.
 
 A Figura~\ref{fig:arquitetura_borda_nuvem} apresenta essa divisão. As caixas de entrada e saída locais permitem registrar comandos e eventos antes da transmissão. O vínculo entre solicitação e resultado é mantido durante a sincronização, evitando que a reconexão seja interpretada como autorização para repetir um efeito físico.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Divisão das responsabilidades entre aplicativo, API e execução local}\label{fig:arquitetura_borda_nuvem}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/arquitetura_borda_nuvem.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/arquitetura_borda_nuvem.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
+\noindent
 
-\section{Fluxo funcional}
+
+\subsection{Fluxo funcional}
 A rotina começa com a configuração do medicamento e da agenda em sessão autenticada. O servidor valida o contexto e disponibiliza a configuração ao aparelho. A central verifica suas condições locais e coordena a sinalização, a confirmação de presença e o mecanismo. O resultado é registrado com sua origem e sincronizado para consulta no aplicativo.
 
 A leitura da cavidade e a observação por imagem acrescentam informações ao fluxo, mas não substituem a identificação de cada etapa. Da mesma forma, uma solicitação realizada pelo agente percorre as regras da API; o modelo não aciona diretamente as bobinas nem altera o banco por fora do domínio do sistema.
 
-\section{Condições de operação e segurança}
+\subsection{Condições de operação e segurança}
 A agenda somente deve produzir atuação quando houver referência temporal, configuração válida, associação dos módulos e estado de prontidão. Um resultado de motor ainda desconhecido impede a repetição automática até a reconciliação. A manutenção também requer exclusão das operações incompatíveis, especialmente durante atualização de firmware.
 
-A arquitetura conecta, assim, requisitos de rastreabilidade e recuperação às decisões de implementação. O Capítulo~\ref{cap:mecanica} apresenta o mecanismo; o Capítulo~\ref{cap:eletrica}, sua interface elétrica; e o Capítulo~\ref{cap:embarcados}, o protocolo e o controle que executam essa sequência.
+A arquitetura conecta, assim, requisitos de rastreabilidade e recuperação às decisões de implementação. O Seção~\ref{cap:mecanica} apresenta o mecanismo; a Seção~\ref{cap:eletrica}, sua interface elétrica; e a Seção~\ref{cap:embarcados}, o protocolo e o controle que executam essa sequência.
 
-\section{Configuração de referência e ambientes de operação}
-Na coleta de 26 de novembro de 2026, a central registrava runtime 0.9.2, release \texttt{2026.11.25-cam-3}; o intermediário e o submódulo mantinham, respectivamente, firmware 0.3.1 em \texttt{0x20} e 0.6.1 em \texttt{0x30}. O provisionamento era 0.1.0+dc9. Essa referência substitui a indicação antiga de runtime 0.7.6 e de instalação pendente da 0.7.7. O inventário registra 46 releases; sua contagem não equivale a 46 ensaios independentes de recuperação por falha. \cite{DC_VALIDACAO2026}
+\subsection{Configuração de referência e ambientes de operação}
+Desde novembro, o sistema distingue três ambientes. O Oficial utiliza a política rigorosa de validação. O Simulado tem API, autenticação e banco próprios e pode comandar o mesmo protótipo físico, sob política de apresentação. A Demonstração utiliza dados fictícios e aparelho representado no navegador, sem comandar o hardware. Portanto, ``Simulado'' não significa necessariamente hardware simulado. 
 
-Desde novembro, o sistema distingue três ambientes. O Oficial utiliza a política rigorosa de validação. O Simulado tem API, autenticação e banco próprios e pode comandar o mesmo protótipo físico, sob política de apresentação. A Demonstração utiliza dados fictícios e aparelho representado no navegador, sem comandar o hardware. Portanto, ``Simulado'' não significa necessariamente hardware simulado. \cite{DC_VALIDACAO2026}
+A troca administrativa entre Oficial e Simulado mantém vínculo e estado local; a configuração do destino é republicada com uma revisão superior. A avaliação diferencia comandos manuais, simulação e execução autônoma da agenda. 
 
-A troca administrativa entre Oficial e Simulado mantém vínculo e estado local; a configuração do destino é republicada com uma revisão superior. Na coleta final, o aparelho apontava para o Simulado e informava configuração local na versão 1076. Esse número identifica o estado recebido pelo aparelho, não comprova o aceite físico de todas as rotinas. A dispensação agendada real continuava desabilitada; comandos manuais e a simulação completa não devem ser apresentados como execução autônoma da agenda. \cite{DC_VALIDACAO2026}
+\subsection{Alternativa de comunicação e serialização do movimento}
+A UART sugerida na qualificação foi avaliada como alternativa de ligação ponto a ponto. Para os encaixes intercambiáveis, uma implantação multiponto exigiria multiplexação ou transceptores e um protocolo de endereçamento adicional. Manteve-se o I²C de duas linhas compartilhadas, mas a decisão não elimina seus limites de capacitância, distância e integridade elétrica. A frequência nominal do barramento não substitui medição na montagem. \cite{NXP_I2C}
 
-\section{Alternativa de comunicação e serialização do movimento}
-A UART sugerida na qualificação foi avaliada como alternativa de ligação ponto a ponto. Para os encaixes intercambiáveis, uma implantação multiponto exigiria multiplexação ou transceptores e um protocolo de endereçamento adicional. Manteve-se o I²C de duas linhas compartilhadas, mas a decisão não elimina seus limites de capacitância, distância e integridade elétrica. A frequência nominal do barramento não substitui medição na montagem. \cite{DC_VALIDACAO2026,NXP_I2C}
+O controlador escreve um comando DC1 e consulta o resultado enquanto a ESP32 gera o movimento localmente. Assim, não mantém o barramento reservado durante todo o giro. A serialização de um único giro por vez é uma política do runtime, que também reduz a sobreposição de picos de corrente e mantém a rastreabilidade; não é uma impossibilidade elétrica de um barramento atender mais de um endereço. A expansão para vários submódulos permanece sem aceite físico. 
 
-O controlador escreve um comando DC1 e consulta o resultado enquanto a ESP32 gera o movimento localmente. Assim, não mantém o barramento reservado durante todo o giro. A serialização de um único giro por vez é uma política do runtime, que também reduz a sobreposição de picos de corrente e mantém a rastreabilidade; não é uma impossibilidade elétrica de um barramento atender mais de um endereço. A expansão para vários submódulos permanece sem aceite físico. \cite{DC_VALIDACAO2026}
-
-\section{Divergência de versão na entrega de 27 de novembro}
-O LEIA-ME da frente de aplicativo indica runtime 0.8.0 como instalado, enquanto o relatório anterior identifica uma leitura de 26 de novembro, 22h10, com 0.9.2 e release \texttt{2026.11.25-cam-3}. A nova entrega não inclui manifesto do aparelho que demonstre alteração posterior. Assim, mantém-se a referência de leitura datada, registra-se a divergência e solicita-se confirmação final. Não se retrocede a versão por simples substituição textual. \cite{DC_NICOLAS2026,DC_VALIDACAO2026}
-
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{ARQ01}{Conferir os diagramas inseridos com a configuração final; atualizar módulos, interfaces e versões que tenham sido alterados desde o desenho de referência.}
 \pendencia{ARQ02}{Fornecer esquema da montagem pós-reparos, orientação de cada pogo, continuidade e fotografias identificadas. O mapa funcional disponível não comprova ordem física nem estado atual de todos os módulos.}
-\pendencia{ARQ04}{Configuração de 26/11 incorporada: runtime 0.9.2, INT01 0.3.1 e SUB01 0.6.1, Simulado, RTC não ativo e agenda desligada. Acrescentar hashes e comissionamento da configuração apresentada; não reutilizar a antiga referência sem fonte a 12/11.}
+\pendencia{ARQ04}{Configuração de 26/11 incorporada: runtime 0.9.2, INT01 0.3.1 e SUB01 0.6.1, Simulado, RTC não ativo e agenda desligada. Acrescentar resumos criptográficos e comissionamento da configuração apresentada; não reutilizar a antiga referência sem fonte a 12/11.}

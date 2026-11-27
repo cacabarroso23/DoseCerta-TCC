@@ -1,0 +1,530 @@
+[
+  {
+    "id": "PRE-APROV",
+    "arquivo": "PreTextual/folhadeaprovacao.tex",
+    "linha": 7,
+    "texto_tex": "Inserir data de defesa/aprovação, composição da banca, titulação, afiliação e formalização/assinaturas conforme orientação da FEI. Não há aprovação presumida nesta cópia de leitura."
+  },
+  {
+    "id": "PRE-DED",
+    "arquivo": "PreTextual/dedicatoria.tex",
+    "linha": 2,
+    "texto_tex": "INSERIR a dedicatória da equipe, se desejada na versão definitiva."
+  },
+  {
+    "id": "PRE-AGR",
+    "arquivo": "PreTextual/agradecimentos.tex",
+    "linha": 2,
+    "texto_tex": "INSERIR o texto de agradecimentos aprovado pela equipe."
+  },
+  {
+    "id": "PRE-EPI",
+    "arquivo": "PreTextual/epigrafe.tex",
+    "linha": 2,
+    "texto_tex": "INSERIR a citação escolhida com autoria e fonte, ou decidir pela retirada na versão definitiva."
+  },
+  {
+    "id": "PRE-RES",
+    "arquivo": "PreTextual/resumo.tex",
+    "linha": 4,
+    "texto_tex": "Completar o resumo com os principais resultados quantitativos e a conclusão após a campanha experimental. Ajustar o texto ao método final e ao limite institucional de palavras."
+  },
+  {
+    "id": "PRE-ABS",
+    "arquivo": "PreTextual/abstract.tex",
+    "linha": 4,
+    "texto_tex": "Complete this abstract with the main quantitative results and conclusions after the experimental campaign. Match the final method and the institutional word limit."
+  },
+  {
+    "id": "EA04",
+    "arquivo": "Capitulos/01_introducao.tex",
+    "linha": 35,
+    "texto_tex": "Delimitar a avaliação de bancada e suas unidades de ensaio. Se houver estudo com participantes, definir população, amostra e autorizações; avaliação clínica e validação multiusuário não integram o desenvolvimento atual."
+  },
+  {
+    "id": "ARM01",
+    "arquivo": "Capitulos/02_fundamentacao.tex",
+    "linha": 83,
+    "texto_tex": "Validar com profissional farmacêutico a elegibilidade e o armazenamento; medir umidade, temperatura, barreira e estabilidade da configuração fabricada. Conferir fontes primárias e enquadramento regulatório sem transpor prazos hospitalares ou estrangeiros para uso doméstico."
+  },
+  {
+    "id": "EA02-REV",
+    "arquivo": "Capitulos/03_estado_da_arte.tex",
+    "linha": 32,
+    "texto_tex": "Completar a revisão narrativa com o registro das bases, datas, expressões de busca e critérios de seleção. Acrescentar as referências da versão final."
+  },
+  {
+    "id": "EA03-COMP",
+    "arquivo": "Capitulos/03_estado_da_arte.tex",
+    "linha": 33,
+    "texto_tex": "Completar o quadro comparativo com modelos específicos e fontes primárias: capacidade, autonomia, dimensões, preço com data/região, reabastecimento e mecanismo. Não preencher parâmetros comerciais ausentes por analogia nem afirmar vantagem sem ensaio comparável."
+  },
+  {
+    "id": "EA04-COMP",
+    "arquivo": "Capitulos/03_estado_da_arte.tex",
+    "linha": 34,
+    "texto_tex": "Inserir comparação empírica somente após definição de população, cenário, desfechos e dados. Deixar explícitos os parâmetros ainda não medidos e as diferenças entre as soluções comparadas."
+  },
+  {
+    "id": "MET01-ACEITE",
+    "arquivo": "Capitulos/04_metodologia.tex",
+    "linha": 70,
+    "texto_tex": "Identificar executores e revisores dos ensaios, instrumentos, condições e evidências por frente."
+  },
+  {
+    "id": "MET03-IA",
+    "arquivo": "Capitulos/04_metodologia.tex",
+    "linha": 71,
+    "texto_tex": "Completar a declaração por integrante: Copilot (especificar produto), Copilot Studio, OpenAI (produto/API e modelo), Claude e demais ferramentas efetivamente usadas; tarefas, datas/versões quando disponíveis, partes aproveitadas e revisão humana realizada.\nNão atribuir uso a uma pessoa sem confirmação."
+  },
+  {
+    "id": "MET02-VERSOES",
+    "arquivo": "Capitulos/04_metodologia.tex",
+    "linha": 73,
+    "texto_tex": "Informar software e revisão CAD final, impressora/fatiador, versões das bibliotecas, compiladores, dependências e releases efetivamente apresentados.\nDistinguir ambiente de desenvolvimento, teste e produção."
+  },
+  {
+    "id": "MET02-PROTOCOLO",
+    "arquivo": "Capitulos/04_metodologia.tex",
+    "linha": 75,
+    "texto_tex": "Fechar com a orientação o protocolo final, repetições, amostragem, instrumentos e critérios quantitativos.\nNão há base documental suficiente para inventar tolerâncias de taxa de erro, corrente, latência ou desempenho."
+  },
+  {
+    "id": "MET-ETICA",
+    "arquivo": "Capitulos/04_metodologia.tex",
+    "linha": 77,
+    "texto_tex": "Informar se haverá participantes, coleta de imagens ou dados pessoais; documentar autorizações, consentimento e avaliação institucional aplicáveis.\nNão inserir número de parecer ou dispensa não registrados."
+  },
+  {
+    "id": "REQ02",
+    "arquivo": "Capitulos/05_requisitos.tex",
+    "linha": 71,
+    "texto_tex": "Definir os limites quantitativos de aceitação: taxa de separação correta e dose extra, tempo por unidade, capacidade útil, repetibilidade, tensão mínima em carga, correntes, latência, disponibilidade, número de ciclos e critérios de visão/agente. Registrar justificativa e unidade; não inventar metas."
+  },
+  {
+    "id": "REQ03-MATRIZ",
+    "arquivo": "Capitulos/05_requisitos.tex",
+    "linha": 72,
+    "texto_tex": "Preencher a matriz final requisito--teste--evidência--resultado após a campanha. Todas as frentes permanecem no escopo; o estado de atendimento continua pendente."
+  },
+  {
+    "id": "ARQ01",
+    "arquivo": "Capitulos/06_arquitetura.tex",
+    "linha": 72,
+    "texto_tex": "Conferir os diagramas inseridos com a configuração final; atualizar módulos, interfaces e versões que tenham sido alterados desde o desenho de referência."
+  },
+  {
+    "id": "ARQ02",
+    "arquivo": "Capitulos/06_arquitetura.tex",
+    "linha": 73,
+    "texto_tex": "Fornecer esquema da montagem pós-reparos, orientação de cada pogo, continuidade e fotografias identificadas. O mapa funcional disponível não comprova ordem física nem estado atual de todos os módulos."
+  },
+  {
+    "id": "ARQ04",
+    "arquivo": "Capitulos/06_arquitetura.tex",
+    "linha": 74,
+    "texto_tex": "Configuração de 26/11 incorporada: runtime 0.9.2, INT01 0.3.1 e SUB01 0.6.1, Simulado, RTC não ativo e agenda desligada. Acrescentar resumos criptográficos e comissionamento da configuração apresentada; não reutilizar a antiga referência sem fonte a 12/11."
+  },
+  {
+    "id": "MEC03",
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "linha": 126,
+    "texto_tex": "Conferir as dimensões da peça fabricada com instrumento, revisão e incerteza apropriados. Medir disco, cavidades, folgas, aberturas, oscilação e trajeto até o coletor. Não converter cotas do V75 em valores medidos do protótipo."
+  },
+  {
+    "id": "MEC04",
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "linha": 127,
+    "texto_tex": "Inserir a ficha de fabricação por peça: material/marca/lote, impressora, fatiador, revisão, bico, temperaturas, camada, perímetros, preenchimento, orientação, suportes, tempo e massa. O material e os parâmetros efetivamente usados precisam ser distinguidos da previsão de compra."
+  },
+  {
+    "id": "MEC05",
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "linha": 128,
+    "texto_tex": "Completar a lista técnica instalada: parafusos por posição, ímãs e polaridade, acoplamentos, pogo, retenção, ajustes e eventual uso de adesivo. Conferir a contagem física final."
+  },
+  {
+    "id": "MEC06-FOTO1",
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "linha": 129,
+    "texto_tex": "Montagem de novembro incorporada na Figura~\\ref{fig:montagem_2026}. Confirmar com a equipe revisão e identificação das peças fotografadas antes do fechamento."
+  },
+  {
+    "id": "MEC06-FOTO2",
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "linha": 130,
+    "texto_tex": "Detalhes da montagem incorporados nas Figuras~\\ref{fig:sub_fisico_2026} e~\\ref{fig:mecanismo_fisico_2026}; complementar com escala, orientação do sensor e caminho efetivo até o coletor."
+  },
+  {
+    "id": "MEC07",
+    "arquivo": "Capitulos/07_projeto_mecanico.tex",
+    "linha": 131,
+    "texto_tex": "Completar massas, inclinação física, atrito, retenção, desgaste e encaixes. Já há ciclos e falhas de desenvolvimento na Seção~\\ref{cap:resultados}; falta campanha controlada por unidade de teste com contagem independente."
+  },
+  {
+    "id": "ELE-BOM",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 125,
+    "texto_tex": "Conferir a lista instalada: fabricante/modelo, quantidades, marcações, capacidade do cartão e fonte, variante de câmera/RTC, resistores, transistores, contatos, bitolas e fixadores; apurar custo efetivo sem substituir por orçamento."
+  },
+  {
+    "id": "ELE01",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 171,
+    "texto_tex": "Informar marca/modelo da fonte instalada, etiqueta, regulação, fusíveis, aterramento, proteção e cabeamento. Medir tensão na Pi e nos módulos, queda de tensão, corrente em repouso/atuação e aquecimento. Não tratar 10 A como consumo."
+  },
+  {
+    "id": "ELE02",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 172,
+    "texto_tex": "Conferir ordem, orientação e continuidade real de cada pogo, comprimentos, bitolas e retornos. Completar esquema elétrico pós-reparos e identificar conectores por modelo ou desenho cotado."
+  },
+  {
+    "id": "ELE03",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 173,
+    "texto_tex": "Medir pull-ups equivalentes, capacitância/tempos de subida e níveis do I²C com os módulos e os motores; verificar colisão de endereços, taxas de erro e comportamento no encaixe/retirada energizados. O mapa funcional não atesta integridade elétrica."
+  },
+  {
+    "id": "ELE04",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 174,
+    "texto_tex": "Conferir pinagem do TCRT5000 físico, resistores, alimentação e faixa ADC; obter leituras em cavidade vazia/ocupada e sob diferentes condições. Medir comportamento do motor, driver e sensor em conjunto, sem confundir leitura da cavidade com sensor de saída."
+  },
+  {
+    "id": "ELE05",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 175,
+    "texto_tex": "Confirmar LED adquirido/instalado, terminais A/K, corrente e brilho por cor, resistores e dissipação dos drivers. Fornecer fotos e testes de todas as posições; não assumir funcionamento dos dois intermediários a partir de uma unidade."
+  },
+  {
+    "id": "ELE06",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 176,
+    "texto_tex": "Identificar RTC e bateria realmente instalados; conferir carga e compatibilidade da placa, habilitação no Linux, leitura de /dev/rtc0 e teste após desligamento sem rede. A bateria do RTC não alimenta a Pi."
+  },
+  {
+    "id": "ELE07",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 177,
+    "texto_tex": "Fechar ensaios de buzzer, LEDs centrais, chaveamento, aquecimento, reinício e interferência em conjunto. Inserir esquema final, registros dos instrumentos e condições; confirmar capacitores/proteções acrescentados nos reparos."
+  },
+  {
+    "id": "BOM01",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 178,
+    "texto_tex": "Conciliar os orçamentos XLSX e XLSM/contrato com compras, doações e fretes; o valor anterior de R\\$ 2.512,55 não foi localizado e não é adotado. Não preencher custo realizado com orçamento."
+  },
+  {
+    "id": "BOM02",
+    "arquivo": "Capitulos/08_projeto_eletronico.tex",
+    "linha": 179,
+    "texto_tex": "Completar a lista técnica instalada com sensores, conectores pogo, resistores, drivers de LEDs, buzzer/MOSFET, RTC, bateria, cabos, proteções e demais itens. Conferir a troca de WS2812B cotado pelo RGB comum documentado."
+  },
+  {
+    "id": "EMB01",
+    "arquivo": "Capitulos/09_embarcados.tex",
+    "linha": 111,
+    "texto_tex": "Fornecer código/release final, resumos criptográficos, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício."
+  },
+  {
+    "id": "EMB02",
+    "arquivo": "Capitulos/09_embarcados.tex",
+    "linha": 112,
+    "texto_tex": "Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação."
+  },
+  {
+    "id": "EMB03",
+    "arquivo": "Capitulos/09_embarcados.tex",
+    "linha": 113,
+    "texto_tex": "Perfil ativo e intervalos incorporados. Completar referência angular independente, restauração física após desligamento, deslocamento manual e desempenho de localização na configuração final."
+  },
+  {
+    "id": "EMB04",
+    "arquivo": "Capitulos/09_embarcados.tex",
+    "linha": 114,
+    "texto_tex": "Fornecer relatórios de bancada de motor/sensor, duplicatas, perda de comunicação, reinício durante movimento, falha de persistência e recuperação. Separar teste simulado de execução física e identificar denominadores."
+  },
+  {
+    "id": "EMB05",
+    "arquivo": "Capitulos/09_embarcados.tex",
+    "linha": 115,
+    "texto_tex": "Quatro atualizações aceitas e três canceladas estão documentadas. Completar ensaio controlado de corrupção/interrupção e recuperação. Imagem ESP32 tem SHA-256, não assinatura criptográfica."
+  },
+  {
+    "id": "BE01-RUNTIME",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 109,
+    "texto_tex": "Versão e configuração de 26/11 incorporadas; complementar resumo criptográfico, manifesto e dependências da apresentação, sem atribuir a essa configuração todos os ensaios históricos."
+  },
+  {
+    "id": "BE02-AGENDA",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 110,
+    "texto_tex": "Fornecer evidência de comissionamento, tempo confiável sem rede, calibração, associação e pré-condições da agenda. Manter a declaração de operação automática pendente até ensaio de perda de rede, reinício e recuperação."
+  },
+  {
+    "id": "BE03-REDE",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 111,
+    "texto_tex": "Anexar roteiros e logs de pareamento, configuração/troca de Wi-Fi, senha incorreta, perda de conexão, reset e recadastramento, sem expor segredos."
+  },
+  {
+    "id": "BE04-LOCAL",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 112,
+    "texto_tex": "Comprovar persistência de filas e idempotência, tratamento de resultado incerto, sincronização após falha e atualização segura da Pi com interrupção controlada."
+  },
+  {
+    "id": "BE01-API",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 113,
+    "texto_tex": "Fornecer versão e resumo criptográfico da API, migrações aplicadas, esquema do banco, configuração sanitizada e manifesto dos serviços na versão final. Não atribuir versão do runtime à API."
+  },
+  {
+    "id": "BE02-CONTRATO",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 114,
+    "texto_tex": "Conferir os contratos atuais API--Pi, normalização de payload/resumo criptográfico, estados, paginação e migrações. O código de desenvolvimento indica uso de cancelled em fluxos de demonstração; confirmar que o tipo/coluna de produção o aceita e registrar a migração."
+  },
+  {
+    "id": "BE03-SEGURANCA",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 115,
+    "texto_tex": "Completar expiração/renovação de sessão, rotação de segredos, retenção, exclusão e teste de backup/restauração no escopo de paciente único. Isolamento multiusuário e multipaciente será proposto como trabalho futuro."
+  },
+  {
+    "id": "BE04-TESTES",
+    "arquivo": "Capitulos/10_backend.tex",
+    "linha": 116,
+    "texto_tex": "Anexar resultados próprios do servidor, migrações e integração autenticada: data, ambiente, versões, comandos, aprovados, falhas e limites de simulação. Não converter relatórios históricos em aceite final."
+  },
+  {
+    "id": "APP01",
+    "arquivo": "Capitulos/11_aplicativo.tex",
+    "linha": 213,
+    "texto_tex": "Dezesseis capturas incorporadas com identificação de perfil, dados fictícios e respostas roteirizadas. Confirmar versão e identificador do código publicado do webapp e da API. O desenvolvimento cita webapp 2aa391ad e API 2d07bd78 em 18/11 e republicação posterior; não assumir esses resumos criptográficos como finais."
+  },
+  {
+    "id": "APP02",
+    "arquivo": "Capitulos/11_aplicativo.tex",
+    "linha": 214,
+    "texto_tex": "Login fotografado sem credenciais. Completar evidências autenticadas de emissão, validação, renovação, expiração, logout e acesso negado; os prints da Demonstração não comprovam esses caminhos."
+  },
+  {
+    "id": "APP04",
+    "arquivo": "Capitulos/11_aplicativo.tex",
+    "linha": 215,
+    "texto_tex": "Corrigir ou justificar as falhas remanescentes e registrar versão/log final. Não substituir 363 casos de 25/11 por 359 de um recorte anterior nem somar suítes com escopos sobrepostos. Completar integração autenticada e falhas de rede."
+  },
+  {
+    "id": "APP05",
+    "arquivo": "Capitulos/11_aplicativo.tex",
+    "linha": 216,
+    "texto_tex": "Capturas das funções principais incorporadas; permanecem a avaliação de usabilidade/acessibilidade com método, autorizações, tarefas e achados, e a eventual captura de voz real sem roteirização."
+  },
+  {
+    "id": "VIS01",
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "linha": 58,
+    "texto_tex": "Identificar a versão de código e implantação correspondente à implementação final vision-v3 3.0.0. Manter as métricas exploratórias de versões anteriores separadas; não exigir que métodos de épocas distintas sejam equivalentes."
+  },
+  {
+    "id": "VIS02",
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "linha": 59,
+    "texto_tex": "Acrescentar capturas reais de aquisição, landmarks, ROI e interface da implementação final; conferir dependências e mecanismos de cancelamento no aparelho."
+  },
+  {
+    "id": "VIS03",
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "linha": 60,
+    "texto_tex": "Fornecer conjunto de avaliação autorizado, condições, classes, rotulagem independente e separação de ajuste e avaliação. Modelos pré-treinados não eliminam essa necessidade."
+  },
+  {
+    "id": "VIS04",
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "linha": 61,
+    "texto_tex": "Aprovar os critérios e a amostragem de avaliação; os limiares implementados estão na Tabela~\\ref{tab:vis-parametros} e não são metas clínicas nem desempenho obtido."
+  },
+  {
+    "id": "VIS05",
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "linha": 62,
+    "texto_tex": "Executar ou localizar avaliação rotulada: número de sequências, matriz de confusão, erros técnicos, casos que requerem confirmação, tempo, memória e quadros/s efetivos."
+  },
+  {
+    "id": "VIS06",
+    "arquivo": "Capitulos/12_visao_computacional.tex",
+    "linha": 63,
+    "texto_tex": "Avaliar experimentalmente oclusões, luz, distância, ausência de landmarks e confirmação em um quadro, preservando a diferença entre falha técnica e resultado que requer confirmação."
+  },
+  {
+    "id": "AG01",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 71,
+    "texto_tex": "Confirmar com Thiago modelo, parâmetros, exportação sanitizada e versão efetivamente chamada pelo aplicativo. Os registros de desenvolvimento identificam v28 desde 25/11 e usa rótulo interno gpt-6-luna, diferente de gpt-5.6-luna no registro anterior; nenhum deles foi promovido a identificação pública de modelo sem comprovação."
+  },
+  {
+    "id": "AG02",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 72,
+    "texto_tex": "Conferir as oito ferramentas e o caminho de aprovação: ensaio exploratório relata escrita sem confirmação na v24 e relay sem tratamento de aprovação. Obter evidências de aprovação/recusa e autorização no servidor; usar apenas dados fictícios em ambiente autorizado."
+  },
+  {
+    "id": "AG03",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 73,
+    "texto_tex": "Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \\texttt{file\\_search}."
+  },
+  {
+    "id": "AG04",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 74,
+    "texto_tex": "Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste."
+  },
+  {
+    "id": "AG05",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 75,
+    "texto_tex": "Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo."
+  },
+  {
+    "id": "AG06",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 76,
+    "texto_tex": "Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt."
+  },
+  {
+    "id": "AG07",
+    "arquivo": "Capitulos/13_agente_ia.tex",
+    "linha": 77,
+    "texto_tex": "Confirmar a cronologia do agente ao longo do ano e sua configuração final, distinguindo versões intermediárias e integração mais recente. Registrar a identidade fixa do paciente como decisão de escopo; não exigir propagação multipaciente no desenvolvimento atual."
+  },
+  {
+    "id": "TST01",
+    "arquivo": "Capitulos/14_testes.tex",
+    "linha": 49,
+    "texto_tex": "Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final."
+  },
+  {
+    "id": "TST02",
+    "arquivo": "Capitulos/14_testes.tex",
+    "linha": 50,
+    "texto_tex": "Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente."
+  },
+  {
+    "id": "TST03",
+    "arquivo": "Capitulos/14_testes.tex",
+    "linha": 51,
+    "texto_tex": "Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais."
+  },
+  {
+    "id": "TST04",
+    "arquivo": "Capitulos/14_testes.tex",
+    "linha": 52,
+    "texto_tex": "Completar os protocolos e relatórios de visão e agente com versões, dados, métricas e falhas. Distinguir servidor MCP, seleção de ferramentas, qualidade de resposta, voz e integração com o Care."
+  },
+  {
+    "id": "TST05",
+    "arquivo": "Capitulos/14_testes.tex",
+    "linha": 53,
+    "texto_tex": "Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado aa Seção~\\ref{cap:resultados}; não antecipar discussão ou conclusão."
+  },
+  {
+    "id": "RES01",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 8,
+    "texto_tex": "Acrescentar os resumos criptográficos e o manifesto sanitizado da configuração que será apresentada, instrumentos e condição de comissionamento. A configuração lida em 26/11 não reúne todos os ensaios históricos desta seção."
+  },
+  {
+    "id": "RES02",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 16,
+    "texto_tex": "Comparar cotas físicas com as dimensões nominais V75 já incorporadas; completar corrente e tensão sob carga, aquecimento e ensaios pós-reparo. Inclinação nominal final definida em 30° em relação à vertical."
+  },
+  {
+    "id": "RES03",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 59,
+    "texto_tex": "Executar a campanha com contagem independente, referência física, versões e denominadores: acerto, ausência, unidade extra, retenção, travamento, tempo e recuperação. Preservar tentativas interrompidas."
+  },
+  {
+    "id": "RES04",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 119,
+    "texto_tex": "Vincular versões e logs completos do servidor e aplicativo apresentados na defesa; resolver ou justificar erros e falhas remanescentes. Completar testes autenticados de ponta a ponta e tarefas, sem somar rodadas."
+  },
+  {
+    "id": "RES05",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 134,
+    "texto_tex": "Completar os resultados de visão e agente separadamente, com método/versionamento reconciliados, conjunto de referência, falhas e denominadores."
+  },
+  {
+    "id": "RES06",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 135,
+    "texto_tex": "Inserir avaliação de usabilidade e acessibilidade, caso realizada: protocolo, autorizações aplicáveis, participantes, tarefas e achados. Não há base para afirmar melhoria de adesão ou eficácia clínica."
+  },
+  {
+    "id": "RES07",
+    "arquivo": "Capitulos/15_resultados.tex",
+    "linha": 164,
+    "texto_tex": "Aprovar a matriz final requisito--teste--evidência e os critérios quantitativos; executar os casos físicos ainda ausentes e conferir o atendimento das outras frentes."
+  },
+  {
+    "id": "DIS02",
+    "arquivo": "Capitulos/16_discussao.tex",
+    "linha": 14,
+    "texto_tex": "Completar a comparação após fechar a campanha e o quadro de soluções: utilizar grandezas efetivamente medidas e fontes primárias, sem comparar reconhecimento de comando com acerto físico de outro equipamento."
+  },
+  {
+    "id": "DIS01",
+    "arquivo": "Capitulos/16_discussao.tex",
+    "linha": 27,
+    "texto_tex": "Revisar a interpretação com a orientação e os responsáveis após a campanha final; conservar o recorte exploratório dos resultados atuais."
+  },
+  {
+    "id": "DIS03",
+    "arquivo": "Capitulos/16_discussao.tex",
+    "linha": 28,
+    "texto_tex": "Atualizar os limites de validade e segurança com os ensaios de carga, autonomia, versões de visão/agente e controle de acesso efetivamente concluídos."
+  },
+  {
+    "id": "DIS04",
+    "arquivo": "Capitulos/16_discussao.tex",
+    "linha": 29,
+    "texto_tex": "Priorizar as melhorias com base em resultados finais: geometria e retenção, estabilidade elétrica, referência do disco, indicação de estados e proteção dos dados."
+  },
+  {
+    "id": "CON01",
+    "arquivo": "Capitulos/17_conclusao.tex",
+    "linha": 11,
+    "texto_tex": "Revisar a resposta aos objetivos após a campanha final, substituindo apenas os limites efetivamente resolvidos e conservando a rastreabilidade das evidências."
+  },
+  {
+    "id": "CON02",
+    "arquivo": "Capitulos/17_conclusao.tex",
+    "linha": 12,
+    "texto_tex": "Validar com a equipe as contribuições e a continuidade, sem apresentar funcionamento autônomo, conformidade ou benefícios clínicos que não foram demonstrados."
+  },
+  {
+    "id": "AP-A",
+    "arquivo": "PosTextual/apendices.tex",
+    "linha": 79,
+    "texto_tex": "Matriz e inventário incorporados. Aprovar critérios e anexar fichas preenchidas, instrumentos, executores, dados físicos e evidências finais. Não arquivar dados pessoais, segredos ou resultados simulados como observação real."
+  },
+  {
+    "id": "AN-A",
+    "arquivo": "PosTextual/apendices.tex",
+    "linha": 81,
+    "texto_tex": "Selecionar anexos somente se documentos de terceiros forem necessários à argumentação, com autoria e autorização; desenhos próprios estão no Apêndice~\\ref{ap:desenhos}."
+  },
+  {
+    "id": "AP-V75",
+    "arquivo": "PosTextual/desenhos_v75.tex",
+    "linha": 3,
+    "texto_tex": "Confirmar polímero, parâmetros de fabricação, função física do item 08 e tolerância adotada; revisar as legendas dos desenhos e comparar cotas funcionais com as peças impressas."
+  }
+]

@@ -1,38 +1,38 @@
-\chapter{Agente de inteligência artificial}\label{cap:agente}
-O agente oferece uma forma de consultar informações e solicitar ações do cuidado em linguagem natural, por texto ou por voz. Sua função é complementar o aplicativo, não prescrever, escolher doses ou substituir o responsável pelo tratamento. As operações passam pela API, que aplica as regras de negócio e as permissões do contexto.
+\section{Agente de inteligência artificial}\label{cap:agente}
+O agente complementa o Care com consultas e solicitações em linguagem natural, por texto e voz. O desenvolvimento ocorreu ao longo de um ano e acompanhou mudanças nas plataformas disponíveis. As configurações intermediárias são apresentadas como etapas de engenharia, e não como alternativas simultaneamente ativas na versão final. O agente não prescreve, escolhe doses nem substitui o responsável pelo tratamento.
 
-\section{Situação documental e revisão por frente}
-O texto a seguir incorpora uma proposta de atualização enviada pela frente de aplicativo e dados em 27 de novembro, ainda sujeita à conferência do responsável pelo agente. A documentação de 3 de novembro registrava agente de conversa v5 separado de um agente de teste MCP v8. O pacote anterior relatava migração para Voice Live com contexto de leitura e desligamento do MCP dedicado; a nova entrega relata MCP de leitura e escrita no agente do aplicativo. São descrições de épocas e origens distintas; sem exportação sanitizada da configuração, não se presume que todas descrevam a implantação atual. \cite{DC_FOUNDRY,DC_VALIDACAO2026,DC_NICOLAS2026}
+\subsection{Evolução durante o desenvolvimento}
+A concepção inicial utilizou Microsoft Copilot Studio. O trabalho evoluiu para Microsoft Foundry, com separação inicial entre o agente de conversa e um agente de teste de ferramentas MCP. Em 3 de novembro, a configuração de referência mantinha conversa v5 e teste MCP v8 em caminhos distintos. A Figura~\ref{fig:agente_arquitetura} representa essa etapa e explica por que acesso a ferramentas e conversa por voz foram verificados separadamente.
 
-\section{Evolução e organização}
-A proposta inicial utilizou Microsoft Copilot Studio. O desenvolvimento posterior passou a utilizar Microsoft Foundry, com um agente versionado (\texttt{tcc-agent}) acessado pela API do projeto por meio do serviço Azure Voice Live, que oferece conversa por texto e por voz em tempo real. \cite{DC_ARTIGO,DC_FOUNDRY}
+\begin{figure}[H]\centering
+\caption{Etapa intermediária: agente de conversa e agente de teste MCP separados}\label{fig:agente_arquitetura}
+\includegraphics[width=0.94\textwidth,height=0.57\textheight,keepaspectratio]{Figuras/SharePoint/agente_arquitetura.png}
+\fonte{Autoria própria (2026).}
+\par{\footnotesize Nota: configuração histórica de 3 de novembro, não representação da integração final.\par}
+\end{figure}
 
-A Tabela~\ref{tab:13-versoes} reproduz a sequência de versões relatada pela frente de aplicativo, ainda não conferida por exportação do serviço nesta consolidação. Até 12 de novembro, o aplicativo usava a versão 5, que apenas pesquisava em arquivos de referência e não acessava os dados do paciente. A partir da versão 21, o agente passou a usar um servidor MCP próprio, que expõe ferramentas de leitura e escrita sobre os dados do cuidado. A configuração de teste com MCP, apresentada na Figura~\ref{fig:agente_arquitetura}, foi portanto incorporada ao agente do aplicativo.
+\noindent
+
+Posteriormente, o aplicativo incorporou o servidor MCP ao caminho do agente e utilizou Azure Voice Live para interação em tempo real. A Tabela~\ref{tab:13-versoes} relaciona as versões registradas até v28, a mais recente identificada no desenvolvimento. O identificador da versão do agente não equivale ao nome público do modelo de linguagem: instruções, ferramentas e modelo precisam ser identificados separadamente.
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.1\textwidth}p{0.17\textwidth}p{0.63\textwidth}}
-\caption{Versões do agente utilizadas pelo aplicativo}\label{tab:13-versoes}\\
+\caption{Evolução das versões do agente no aplicativo}\label{tab:13-versoes}\\
 \hline\textbf{Versão} & \textbf{Uso no app} & \textbf{Características}\\\hline\endfirsthead
 \hline\textbf{Versão} & \textbf{Uso no app} & \textbf{Características}\\\hline\endhead
 5 & até 12/11 & Pesquisa em arquivos de referência; sem acesso aos dados do paciente\\\hline
 21 & 12/11 & Pesquisa em arquivos e servidor MCP com consulta ao contexto de cuidado; respostas curtas\\\hline
 24 e 25 & 12/11 a 25/11 & Ferramentas de escrita descritas nas instruções, com regra de confirmar em dois turnos\\\hline
 28 & desde 25/11 & Responde somente sobre o DoseCerta; esforço de raciocínio baixo; escolha automática de ferramentas\\\hline
-\end{longtable}}{\small\noindent Fonte: proposta de atualização recebida em 27 nov. 2026; confirmação da frente pendente. \cite{DC_NICOLAS2026}\par}
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
-\begin{figure}[htbp]
-\centering
-\caption{Organização do agente com servidor MCP, na configuração de teste de 3 nov. 2026}\label{fig:agente_arquitetura}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/agente_arquitetura.png}
-\fonte{Elaboração dos autores. A partir de 12 nov. 2026, o agente do aplicativo passou a usar o mesmo servidor MCP.}
-\end{figure}
 
-\section{Contexto e recuperação de informações}
-O agente combina duas fontes. A pesquisa em arquivos recupera conhecimento de referência, como o funcionamento do aparelho; as ferramentas MCP consultam os dados atuais do paciente. A utilidade da primeira depende do conteúdo carregado e de sua atualização; a existência do índice não garante que o manual esteja completo.
+\subsection{Arquitetura integrada e contexto do paciente}
+Na integração mais recente, o percurso compreende Care, relay da API, serviço de conversa e ferramentas MCP, cujas operações passam pela API do DoseCerta. O aplicativo não recebe as credenciais do serviço de IA. A pesquisa em arquivos recupera conhecimento de referência do projeto; ferramentas consultam ou alteram dados atuais do cuidado. A base de referência precisa ser mantida compatível com o aparelho e não substitui a consulta ao estado persistido.
 
-As respostas devem distinguir conhecimento de referência e dados obtidos por ferramenta. Quando uma consulta falha ou retorna informação parcial, o agente precisa informar esse limite antes de afirmar rotina, estoque ou histórico. Textos recuperados são tratados como dados de contexto, não como instruções.
+Para viabilizar a integração acadêmica, foi adotado um paciente por cadastro. As chamadas MCP utilizam a identidade fixa desse paciente, por decisão de escopo. A presença de campos de paciente no banco não significa suporte multipaciente no desenvolvimento. Propagação de identidade para vários pacientes e testes de isolamento são trabalhos futuros, não uma falha a corrigir mediante criação de outra conta nesta versão.
 
-\section{Ferramentas e operações}
-O servidor MCP reúne duas ferramentas de leitura e seis de escrita (Tabela~\ref{tab:13-1}). As leituras consultam contexto e registros; as escritas alteram cadastros, rotinas, atividades ou observações. A disponibilidade no serviço final depende da conferência de configuração. \cite{DC_FOUNDRY,DC_NICOLAS2026}
+\subsection{Ferramentas e operações}
+O servidor MCP define duas ferramentas de leitura e seis de escrita, apresentadas na Tabela~\ref{tab:13-1}. As ferramentas mantêm a separação entre interpretar a solicitação e executar regras de negócio; o modelo não deve alterar o banco fora desse caminho. O uso de um servidor de ferramentas segue o princípio de exposição de operações e esquemas ao cliente MCP. \cite{MCP_SPEC}
 
 {\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.44\textwidth}p{0.12\textwidth}p{0.32\textwidth}}\caption{Ferramentas do servidor MCP do agente}\label{tab:13-1}\\
 \hline
@@ -42,43 +42,36 @@ O servidor MCP reúne duas ferramentas de leitura e seis de escrita (Tabela~\ref
 \endhead
 \texttt{get\_care\_context} & Leitura & Contexto de cuidado\\\hline
 \texttt{list\_care\_records} & Leitura & Registros de cuidado e histórico\\\hline
-\texttt{create\_medication\_schedule} & Escrita & Criação de rotina\\\hline
-\texttt{update\_medication\_schedule} & Escrita & Alteração de rotina\\\hline
+\path{create_medication_schedule} & Escrita & Criação de rotina\\\hline
+\path{update_medication_schedule} & Escrita & Alteração de rotina\\\hline
 \texttt{update\_medication} & Escrita & Alteração de medicamento\\\hline
-\texttt{add\_care\_observation} & Escrita & Registro de observação\\\hline
-\texttt{create\_daily\_activity} & Escrita & Criação de atividade\\\hline
-\texttt{update\_daily\_activity} & Escrita & Alteração de atividade\\\hline
-\end{longtable}}{\small\noindent Fonte: configuração do servidor MCP, nov. 2026.\par}
+\path{add_care_observation} & Escrita & Registro de observação\\\hline
+\path{create_daily_activity} & Escrita & Criação de atividade\\\hline
+\path{update_daily_activity} & Escrita & Alteração de atividade\\\hline
+\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
 
-\section{Aprovação das escritas e segurança}
-O fluxo projetado para as escritas, apresentado na Figura~\ref{fig:agente_aprovacao}, começa pela consulta do contexto e pela verificação da clareza do pedido, apresenta a ação e seus argumentos e só prossegue após aprovação explícita.
 
-\begin{figure}[htbp]
-\centering
-\caption{Fluxo projetado de solicitação, esclarecimento, aprovação e execução de uma escrita}\label{fig:agente_aprovacao}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/agente_aprovacao.png}
-\fonte{Elaboração dos autores (2026).}
+\subsection{Confirmação e execução de alterações}
+O fluxo de escrita é projetado para consultar o contexto, esclarecer ambiguidades, apresentar ação e argumentos e obter confirmação antes de executar. A Figura~\ref{fig:agente_aprovacao} representa esse comportamento esperado. A aprovação na figura é um controle a verificar em cada integração; uma orientação no prompt não equivale a uma trava imposta pelo servidor.
+
+\begin{figure}[H]\centering
+\caption{Fluxo projetado de confirmação e execução de alterações pelo agente}\label{fig:agente_aprovacao}
+\includegraphics[width=0.94\textwidth,height=0.56\textheight,keepaspectratio]{Figuras/SharePoint/agente_aprovacao.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
-Segundo a proposta recebida, a aprovação não seria imposta pela infraestrutura no caminho de integração então descrito. Nesse relato, o servidor MCP estaria configurado sem exigência de aprovação, e o relay de voz não trataria pedidos de aprovação do serviço. A única proteção é a instrução no prompt, que pede confirmação em dois turnos antes de qualquer escrita. A proposta relata uma gravação de atividade pela versão 24 sem confirmação; não acompanha o diálogo e o registro primário desse caso. O relato exige tratamento como risco e verificação em ambiente autorizado, não como teste repetido nesta revisão. Se confirmada essa configuração, a aprovação depende do comportamento do modelo e não de um controle verificável, contrariando RF15-AG; até a reconciliação, a garantia de aprovação não está demonstrada. \cite{DC_NICOLAS2026}
+\noindent
 
-Uma segunda limitação relatada refere-se ao paciente consultado. O aplicativo exige a escolha do paciente e a API valida essa escolha ao abrir a conversa, mas, segundo a proposta, o identificador não seria repassado ao servidor MCP, que usaria o contexto de um paciente fixo configurado no servidor. Com um único paciente ativo, o efeito não aparece; com dois, o agente pode responder sobre o paciente errado. \cite{DC_NICOLAS2026}
+As etapas de desenvolvimento incluíram diferentes caminhos de aprovação no serviço e no relay. Na avaliação, uma escrita só é considerada concluída após verificar o efeito persistido; aprovação, recusa, falha técnica e resultado desconhecido são resultados distintos. As limitações observadas e as confirmações ainda necessárias são apresentadas na Seção~\ref{cap:resultados}.
 
-A correção proposta, a verificar e testar, é: exigir aprovação nas ferramentas de escrita, tratar o pedido de aprovação no relay e no aplicativo com um botão de confirmar ou recusar, e repassar o paciente selecionado ao servidor MCP.
+\subsection{Voz, anexos e continuidade dos caminhos manuais}
+O Care disponibiliza texto, ditado e conversa de voz em tempo real. Fotografias e PDFs de receitas são preparados no navegador e enviados ao serviço de IA, diferentemente da visão local do gesto. A transcrição e a resposta não são, por si, confirmação de cadastro ou de tomada. As operações de cuidado continuam disponíveis pelas telas do aplicativo, permitindo conferir os efeitos e prosseguir sem depender da interpretação do agente.
 
-\section{Voz, anexos e integração com o Care}
-O assistente do Care usa o mesmo agente por texto e por voz. Na conversa por voz em tempo real, a transcrição aparece durante a fala; quando a resposta exige consulta aos dados, a entrega relata cerca de 11~s até a primeira palavra em uma condição de consulta; não apresenta amostra de latências. O aplicativo também envia fotos e PDFs de receitas, convertidos em imagens no próprio celular; a entrega relata um teste com receita fictícia, quatro medicamentos e resposta em cerca de 15~s (Capítulo~\ref{cap:aplicativo}). \cite{DC_NICOLAS2026}
-
-A integração conserva os caminhos manuais do aplicativo: tudo o que o agente faz pode ser feito pelas telas, e o resultado de uma escrita aparece nas mesmas listas.
-
-\section{Avaliação}
-A avaliação diferencia recuperação de contexto, escolha da ferramenta, argumentos, confirmação, autorização e efeito persistido. Também considera respostas a ambiguidades, recusa de pedidos clínicos, perguntas fora do tema e tratamento de falhas. O teste funcional do servidor MCP avalia uma parte dessa cadeia; não representa, isoladamente, a qualidade do modelo ou da experiência de voz.
-
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
-\pendencia{AG01}{Confirmar com Thiago modelo, parâmetros, exportação sanitizada e versão efetivamente chamada pelo aplicativo. A proposta cita v28 desde 25/11 e usa rótulo interno gpt-6-luna, diferente de gpt-5.6-luna no registro anterior; nenhum deles foi promovido a identificação pública de modelo sem comprovação.}
-\pendencia{AG02}{Conferir as oito ferramentas e o caminho de aprovação: proposta de 27/11 relata escrita sem confirmação na v24 e relay sem tratamento de aprovação. Obter evidências de aprovação/recusa e autorização no servidor; usar apenas dados fictícios em ambiente autorizado.}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
+\pendencia{AG01}{Confirmar com Thiago modelo, parâmetros, exportação sanitizada e versão efetivamente chamada pelo aplicativo. Os registros de desenvolvimento identificam v28 desde 25/11 e usa rótulo interno gpt-6-luna, diferente de gpt-5.6-luna no registro anterior; nenhum deles foi promovido a identificação pública de modelo sem comprovação.}
+\pendencia{AG02}{Conferir as oito ferramentas e o caminho de aprovação: ensaio exploratório relata escrita sem confirmação na v24 e relay sem tratamento de aprovação. Obter evidências de aprovação/recusa e autorização no servidor; usar apenas dados fictícios em ambiente autorizado.}
 \pendencia{AG03}{Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \texttt{file\_search}.}
 \pendencia{AG04}{Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.}
 \pendencia{AG05}{Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.}
 \pendencia{AG06}{Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.}
-\pendencia{AG07}{Revisar a proposta recebida com Thiago: reconciliar configuração de 03/11, relato anterior de Voice Live somente de leitura e nova indicação de v28 com MCP. Conferir encaminhamento do paciente selecionado, paciente fixo no MCP e correções implantadas, sem presumir que o risco foi resolvido.}
+\pendencia{AG07}{Confirmar a cronologia do agente ao longo do ano e sua configuração final, distinguindo versões intermediárias e integração mais recente. Registrar a identidade fixa do paciente como decisão de escopo; não exigir propagação multipaciente no desenvolvimento atual.}

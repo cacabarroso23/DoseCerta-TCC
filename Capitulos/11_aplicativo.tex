@@ -1,46 +1,52 @@
-\chapter{Aplicativo Care}\label{cap:aplicativo}
-O Care é a interface web pela qual cuidadores, familiares e a própria pessoa em tratamento configuram e acompanham a rotina de cuidado. O aplicativo concentra o cadastro de medicamentos e horários, o registro de tomadas e observações, a consulta ao estado do aparelho e o acesso ao assistente de inteligência artificial. As regras de negócio permanecem na API; o aplicativo apresenta os estados recebidos e preserva a diferença entre o que foi planejado e o que de fato ocorreu. \cite{DC_APP}
+\section{Aplicativo Care}\label{cap:aplicativo}
+O Care é a interface web pela qual cuidadores, familiares e a própria pessoa em tratamento configuram e acompanham a rotina de cuidado. O aplicativo concentra o cadastro de medicamentos e horários, o registro de tomadas e observações, a consulta ao estado do aparelho e o acesso ao assistente de inteligência artificial. As regras de negócio permanecem na API; o aplicativo apresenta os estados recebidos e preserva a diferença entre o que foi planejado e o que de fato ocorreu. 
 
-\section{Um aplicativo, três perfis}
+\subsection{Um aplicativo, três perfis}
 O mesmo código-fonte é compilado em três perfis, definidos no momento do empacotamento. O perfil \emph{oficial} atende ao uso real, com todas as travas do sistema e sem funções de simulação. O perfil \emph{simulado} conversa com uma instância separada do servidor e do banco de dados, destinada a apresentações e ensaios com o protótipo, e acrescenta uma área de testes do aparelho. O perfil \emph{demonstração} roda inteiramente no navegador, com uma paciente fictícia, sem acesso ao servidor nem ao aparelho; foi o perfil publicado para o público da feira por meio de um código QR.
 
-A separação por perfis busca manter as funções de teste fora do uso real e permite apresentar a interface com dados fictícios. As diferenças entre os perfis estão reunidas em um único módulo de configuração; as telas são as mesmas. As capturas utilizam dados fictícios: o login foi obtido no perfil Oficial; as demais telas usam a Demonstração ou uma cópia local de apresentação. Os três prints do assistente têm respostas roteirizadas, como explicitado na legenda, e não comprovam execução do agente. \cite{DC_NICOLAS2026}
+A separação por perfis busca manter as funções de teste fora do uso real e permite apresentar a interface com dados fictícios. As diferenças entre os perfis estão reunidas em um único módulo de configuração; as telas são as mesmas. As capturas utilizam dados fictícios: o login foi obtido no perfil Oficial; as demais telas usam a Demonstração ou uma cópia local de apresentação. Os três prints do assistente têm respostas roteirizadas, como explicitado na legenda, e não comprovam execução do agente. 
 
-\section{Da referência visual ao protótipo navegável}
+\subsection{Da referência visual ao protótipo navegável}
 A primeira etapa utilizou o Google Stitch para elaborar a composição visual, apresentada na Figura~\ref{fig:app_stitch}, com destaque para a próxima dose e os indicadores do painel. Em seguida, o Google AI Studio foi utilizado para experimentar navegação, animações e alertas com relógio acelerado e ocorrências simuladas. A sequência da Figura~\ref{fig:app_etapas} resume a passagem do desenho à aplicação integrada, na qual os estados em memória foram substituídos por operações autenticadas na API.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Referência inicial de interface criada no Google Stitch}\label{fig:app_stitch}
 \includegraphics[width=0.94\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_stitch.png}
-\fonte{Acervo dos autores. Protótipo visual com nomes, estoque e indicadores demonstrativos.}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
-\begin{figure}[htbp]
+\noindent
+
+\begin{figure}[H]
 \centering
 \caption{Evolução do desenvolvimento: desenho, navegação e implementação}\label{fig:app_etapas}
-\includegraphics[width=0.98\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_etapas.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_etapas.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
-\section{Arquitetura do frontend}
-O frontend foi implementado em React com TypeScript, empacotado com Vite e estilizado com Tailwind CSS. A interface organiza componentes e estados de apresentação, enquanto a API FastAPI concentra validação, autorização e persistência. A Figura~\ref{fig:app_camadas} apresenta essa separação e as interfaces com o aparelho e com o assistente. \cite{DC_VISUAL}
+\noindent
 
-\begin{figure}[htbp]
+\subsection{Arquitetura do frontend}
+O frontend foi implementado em React com TypeScript, empacotado com Vite e estilizado com Tailwind CSS. A interface organiza componentes e estados de apresentação, enquanto a API FastAPI concentra validação, autorização e persistência. A Figura~\ref{fig:app_camadas} apresenta essa separação e as interfaces com o aparelho e com o assistente. 
+
+\begin{figure}[H]
 \centering
 \caption{Responsabilidades da interface, da API e da persistência}\label{fig:app_camadas}
-\includegraphics[width=0.98\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_camadas.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_camadas.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
-A implementação descrita associa às operações de escrita uma chave de idempotência gerada no navegador. Se a resposta se perde e a solicitação é reenviada, o servidor reconhece a chave e devolve o resultado original, em vez de criar um segundo registro. O mesmo princípio, descrito no Capítulo~\ref{cap:backend}, busca impedir duplicação quando o reenvio mantém a mesma identidade; não prova por si que duas solicitações independentes não produzam dois comandos. A conversa com o assistente utiliza um canal WebSocket com a API, que atua como intermediária entre o aplicativo e o serviço de voz; o aplicativo nunca recebe as credenciais do serviço de IA.
+\noindent
+
+A implementação descrita associa às operações de escrita uma chave de idempotência gerada no navegador. Se a resposta se perde e a solicitação é reenviada, o servidor reconhece a chave e devolve o resultado original, em vez de criar um segundo registro. O mesmo princípio, descrito na Seção~\ref{cap:backend}, busca impedir duplicação quando o reenvio mantém a mesma identidade; não prova por si que duas solicitações independentes não produzam dois comandos. A conversa com o assistente utiliza um canal WebSocket com a API, que atua como intermediária entre o aplicativo e o serviço de voz; o aplicativo nunca recebe as credenciais do serviço de IA.
 
 O aplicativo é responsivo. No celular, a navegação fica em abas no topo e o assistente em um botão flutuante; em telas largas, as mesmas funções se reorganizam em uma barra horizontal, como na Figura~\ref{fig:app_desktop}.
 
-\section{Autenticação, visões e pacientes}
-O acesso exige login com e-mail e senha (Figura~\ref{fig:app_login_painel}). O serviço de identidade emite um token de sessão, enviado em cada solicitação à API; a API valida o token e decide, a cada operação, se aquele usuário pode agir sobre aquele paciente. A sessão identifica a conta autenticada, não necessariamente a pessoa física em uma conta compartilhada. A autorização descrita deve ser confirmada por testes negativos por paciente e interface. \cite{DC_NICOLAS2026,DC_VALIDACAO2026}
+\subsection{Autenticação, visões e pacientes}
+O acesso exige login com e-mail e senha (Figura~\ref{fig:app_login_painel}). O serviço de identidade emite um token de sessão, enviado em cada solicitação à API; a API valida o token e verifica as permissões no contexto do paciente único cadastrado. A sessão identifica a conta autenticada, não necessariamente a pessoa física em uma conta compartilhada. A avaliação de autenticação considera sessão válida, expiração e recusa de credenciais inválidas dentro desse escopo. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Tela de entrada do perfil oficial e painel inicial do cuidador}\label{fig:app_login_painel}
 \begin{minipage}[t]{0.42\textwidth}\centering
@@ -49,12 +55,14 @@ O acesso exige login com e-mail e senha (Figura~\ref{fig:app_login_painel}). O s
 \begin{minipage}[t]{0.42\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{Figuras/App/02_painel.jpg}\par\small (b) Painel
 \end{minipage}
-\fonte{Capturas do aplicativo Care, perfis oficial (a) e demonstração (b), com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-A interface oferece três visões: cuidador, familiar e paciente (Figura~\ref{fig:app_visoes}). Cada visão ajusta a linguagem e as funções disponíveis; na visão do paciente, por exemplo, o painel passa a tratar a rotina como ``Seu dia''. Quando um mesmo aparelho atende mais de um paciente, o aplicativo exige a escolha explícita do paciente antes de exibir dados ou abrir o assistente, e a API recusa operações sem essa seleção. A entrega registra essa seleção como resposta ao risco de contexto incorreto, mas também aponta que o caminho MCP pode continuar usando um paciente fixo. A seleção na tela e a validação de abertura da conversa não comprovam o isolamento do assistente de ponta a ponta. Ver Capítulo~\ref{cap:agente}. \cite{DC_NICOLAS2026}
+\noindent
 
-\begin{figure}[htbp]
+A interface oferece três visões: cuidador, familiar e paciente (Figura~\ref{fig:app_visoes}). São formas de apresentação do mesmo contexto, não três contas independentes. Na visão do paciente, o painel utiliza a expressão ``Seu dia''. A configuração final foi deliberadamente limitada a um paciente por cadastro para viabilizar a integração e os entregáveis. O MCP utiliza a identidade desse paciente fixo; não se apresenta seleção multipaciente nem isolamento entre pacientes como função entregue. Uma extensão com múltiplos pacientes exigiria propagação explícita do contexto e testes próprios de autorização.
+
+\begin{figure}[H]
 \centering
 \caption{Visões do aplicativo: seleção da visão e painel na visão do paciente}\label{fig:app_visoes}
 \begin{minipage}[t]{0.42\textwidth}\centering
@@ -63,26 +71,30 @@ A interface oferece três visões: cuidador, familiar e paciente (Figura~\ref{fi
 \begin{minipage}[t]{0.42\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{Figuras/App/14_painel_visao_paciente.jpg}\par\small (b) Visão do paciente
 \end{minipage}
-\fonte{Capturas do aplicativo Care no perfil de demonstração, com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\section{Organização dos dados de cuidado}
+\noindent
+
+\subsection{Organização dos dados de cuidado}
 O modelo preserva o vínculo entre paciente, medicamento, horário e evento. Atividades do dia a dia e observações possuem registros próprios, e o inventário associa cada medicamento a um compartimento do aparelho. A Figura~\ref{fig:app_dados} apresenta um recorte conceitual dessa organização; a estrutura completa do banco é descrita na Seção~\ref{sec:dados_rastreabilidade}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Organização conceitual dos dados de cuidado}\label{fig:app_dados}
-\includegraphics[width=0.98\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_dados.png}
-\fonte{Elaboração dos autores. Agrupamento conceitual, não diagrama completo de chaves estrangeiras.}
+\includegraphics[width=0.94\textwidth,height=0.6\textheight,keepaspectratio]{Figuras/SharePoint/app_dados.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
+
+\noindent
 
 A distinção entre planejar e registrar evita que uma alteração de horário seja interpretada como tomada realizada. Cada registro conserva sua origem (o aparelho, uma pessoa ou o sistema) e seu autor. O mesmo princípio orienta a apresentação do histórico e das notificações.
 
-\section{Funções principais}
-\subsection{Painel e rotinas}
+\subsection{Funções principais}
+\subsubsection{Painel e rotinas}
 O painel (Figura~\ref{fig:app_login_painel}b) prioriza a próxima dose, com tempo restante, o resumo das tomadas do dia, o último registro, a próxima atividade e a última observação. A aba Rotinas separa os medicamentos das atividades do dia a dia, navegáveis por data (Figura~\ref{fig:app_rotinas}). Cada horário mostra um de oito estados: programada, tomada registrada, não tomada, não administrada, horário perdido, verificação inconclusiva, sem atualização e resultado a conferir. Um horário vencido nunca é convertido em tomada; a ausência de informação aparece como tal.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Rotinas: horários de medicamentos e atividades do dia a dia}\label{fig:app_rotinas}
 \begin{minipage}[t]{0.42\textwidth}\centering
@@ -91,13 +103,15 @@ O painel (Figura~\ref{fig:app_login_painel}b) prioriza a próxima dose, com temp
 \begin{minipage}[t]{0.42\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{Figuras/App/04_rotinas_dia_a_dia.jpg}\par\small (b) Dia a dia
 \end{minipage}
-\fonte{Capturas do aplicativo Care no perfil de demonstração, com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\subsection{Observações e notificações}
+\noindent
+
+\subsubsection{Observações e notificações}
 As observações registram relatos do cuidado, com autor, horário e visibilidade (compartilhada ou reservada). As notificações reúnem registros e avisos recentes; limpar a lista afeta apenas a visualização de quem limpou e não apaga os registros (Figura~\ref{fig:app_notas}).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Observações do cuidado e central de notificações}\label{fig:app_notas}
 \begin{minipage}[t]{0.42\textwidth}\centering
@@ -106,13 +120,15 @@ As observações registram relatos do cuidado, com autor, horário e visibilidad
 \begin{minipage}[t]{0.42\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{Figuras/App/09_notificacoes.jpg}\par\small (b) Notificações
 \end{minipage}
-\fonte{Capturas do aplicativo Care no perfil de demonstração, com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\subsection{Aparelho e estoque}
+\noindent
+
+\subsubsection{Aparelho e estoque}
 A janela do aparelho informa o último retorno recebido da central, permite verificar a conexão e lista os medicamentos por posição com a quantidade em estoque (Figura~\ref{fig:app_aparelho}). A reposição é registrada pelo usuário; a baixa automática ocorre apenas quando a saída de uma unidade é confirmada, como descrito na Seção~\ref{sec:app_dispensacao}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Janela do aparelho e controle de estoque por posição}\label{fig:app_aparelho}
 \begin{minipage}[t]{0.42\textwidth}\centering
@@ -121,13 +137,15 @@ A janela do aparelho informa o último retorno recebido da central, permite veri
 \begin{minipage}[t]{0.42\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{Figuras/App/08_estoque_reposicao.jpg}\par\small (b) Estoque e reposição
 \end{minipage}
-\fonte{Capturas do aplicativo Care no perfil de demonstração, com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\subsection{Manual tridimensional e guia de primeiro acesso}
+\noindent
+
+\subsubsection{Manual tridimensional e guia de primeiro acesso}
 O manual apresenta a montagem do aparelho em 16 etapas sobre um modelo tridimensional que pode ser girado, além de uma tabela dos sinais luminosos e sonoros e das instruções de conexão. O guia de primeiro acesso percorre as funções do aplicativo e pode ser reaberto pelas configurações (Figura~\ref{fig:app_manual}). O carregamento do modelo 3D é feito apenas quando o manual é aberto, para não atrasar a abertura do painel.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Manual tridimensional e guia de primeiro acesso}\label{fig:app_manual}
 \begin{minipage}[t]{0.42\textwidth}\centering
@@ -136,15 +154,17 @@ O manual apresenta a montagem do aparelho em 16 etapas sobre um modelo tridimens
 \begin{minipage}[t]{0.42\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{Figuras/App/01_guia_primeiro_acesso.jpg}\par\small (b) Guia
 \end{minipage}
-\fonte{Capturas do aplicativo Care no perfil de demonstração, com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\section{Assistente no aplicativo}
-O assistente abre em tela própria e mantém o paciente selecionado como contexto da conversa. A pessoa pode escrever, ditar a mensagem pelo microfone ou iniciar uma conversa por voz em tempo real, na qual a transcrição aparece enquanto se fala. Cada resposta pode ser copiada ou ouvida novamente. A Figura~\ref{fig:app_assistente} mostra uma consulta à rotina e o envio de uma receita.
+\noindent
 
-O anexo aceita foto da câmera, imagem da galeria ou arquivo PDF. Antes de sair do aparelho, toda imagem é reduzida para no máximo 1600 pixels no lado maior; um PDF tem suas primeiras páginas (até quatro) desenhadas como imagens no próprio navegador. Dessa forma, receitas digitais e fotografadas são lidas da mesma maneira, e o tamanho transmitido fica limitado. A API repassa as imagens ao agente, que as interpreta junto com o contexto do paciente. Segundo o relato da entrega, um teste exploratório com receita fictícia retornou quatro medicamentos, doses e horários em cerca de 15~s. Não há nesta entrega uma série independente que permita estimar precisão ou latência típica. \cite{DC_NICOLAS2026} A leitura da receita produz uma resposta em texto; qualquer alteração no cadastro continua sujeita às regras descritas no Capítulo~\ref{cap:agente}.
+\subsection{Assistente no aplicativo}
+O assistente abre em tela própria e utiliza o paciente único configurado como contexto da conversa. A pessoa pode escrever, ditar a mensagem pelo microfone ou iniciar uma conversa por voz em tempo real, na qual a transcrição aparece enquanto se fala. Cada resposta pode ser copiada ou ouvida novamente. A Figura~\ref{fig:app_assistente} mostra uma consulta à rotina e o envio de uma receita.
 
-\begin{figure}[htbp]
+O anexo aceita foto da câmera, imagem da galeria ou arquivo PDF. Antes de sair do aparelho, toda imagem é reduzida para no máximo 1600 pixels no lado maior; um PDF tem suas primeiras páginas (até quatro) desenhadas como imagens no próprio navegador. Dessa forma, receitas digitais e fotografadas são lidas da mesma maneira, e o tamanho transmitido fica limitado. A API repassa as imagens ao agente, que as interpreta junto com o contexto do paciente. A leitura da receita produz uma resposta em texto; qualquer alteração no cadastro continua sujeita às regras descritas na Seção~\ref{cap:agente}.
+
+\begin{figure}[H]
 \centering
 \caption{Assistente: consulta à rotina, menu de anexo e leitura de uma receita fictícia}\label{fig:app_assistente}
 \begin{minipage}[t]{0.31\textwidth}\centering
@@ -156,10 +176,12 @@ O anexo aceita foto da câmera, imagem da galeria ou arquivo PDF. Antes de sair 
 \begin{minipage}[t]{0.31\textwidth}\centering
 \includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{Figuras/App/12_assistente_receita.jpg}\par\small (c) Receita
 \end{minipage}
-\fonte{Capturas do aplicativo Care em ambiente local de demonstração, com dados e receita fictícios (nov. 2026). As respostas foram roteirizadas para a captura; a de (c) reproduz o texto obtido do agente real em teste de 17 nov. 2026.}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: dados fictícios e respostas roteirizadas para apresentação da interface; não constituem avaliação do agente.\par}
 \end{figure}
 
-\section{Integração com o aparelho: dispensação vinculada}\label{sec:app_dispensacao}
+\noindent
+
+\subsection{Integração com o aparelho: dispensação vinculada}\label{sec:app_dispensacao}
 Para os ensaios com o protótipo, o aplicativo oferece um fluxo de dispensação vinculada a um paciente, a um medicamento e a uma posição do aparelho. O fluxo separa quatro momentos, cada um com registro próprio no banco de dados:
 \begin{enumerate}
 \item \textbf{Pedido}: o usuário escolhe a quantidade; a API registra o início do ensaio com o estoque naquele instante.
@@ -168,26 +190,27 @@ Para os ensaios com o protótipo, o aplicativo oferece um fluxo de dispensação
 \item \textbf{Baixa}: o estoque é reduzido somente pela quantidade observada; sem confirmação de saída, nada é debitado.
 \end{enumerate}
 
-Essa separação permite comparar, em cada ensaio, o que foi pedido, o que o aparelho relatou e o que a pessoa observou. Quando o resultado do motor é incerto, o aplicativo bloqueia um novo pedido até que a situação seja reconciliada. Os mesmos registros formam a ficha de cada ensaio utilizada no Capítulo~\ref{cap:resultados}. No perfil simulado, uma área de testes reúne ainda o teste das ligações (LEDs, buzzer, motor e sensor), a calibração e a localização do disco, a câmera e o modo de apresentação.
+Essa separação permite comparar, em cada ensaio, o que foi pedido, o que o aparelho relatou e o que a pessoa observou. Quando o resultado do motor é incerto, o aplicativo bloqueia um novo pedido até que a situação seja reconciliada. Os mesmos registros formam a ficha de cada ensaio utilizada na Seção~\ref{cap:resultados}. No perfil simulado, uma área de testes reúne ainda o teste das ligações (LEDs, buzzer, motor e sensor), a calibração e a localização do disco, a câmera e o modo de apresentação.
 
-\section{Tratamento de falhas e acessibilidade}
+\subsection{Tratamento de falhas e acessibilidade}
 A interface distingue carregamento, conclusão, recusa e resultado desconhecido. Uma consulta vazia não é tratada como estoque zero, e uma resposta do assistente não é tratada como alteração gravada. Mensagens de erro da API e do aparelho são traduzidas para frases curtas, com orientação sobre o que fazer; por exemplo, a perda de comunicação com o submódulo durante um giro gera a orientação de verificar energia e contatos.
 
 A interface adota as WCAG 2.2 como referência: controles identificados por texto e por rótulo acessível, estados comunicados por texto além da cor, contraste elevado nos elementos principais e áreas de toque amplas. A conformidade com as diretrizes depende de avaliação específica, ainda não realizada. \cite{WCAG22}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Painel em tela larga, com a navegação reorganizada em barra horizontal}\label{fig:app_desktop}
 \includegraphics[width=0.9\textwidth,keepaspectratio]{Figuras/App/15_painel_desktop.jpg}
-\fonte{Captura do aplicativo Care no perfil de demonstração, com dados fictícios (nov. 2026).}
+\fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\section{Verificação do aplicativo}
-O aplicativo possui testes automatizados com Vitest e Testing Library, que cobrem componentes, estados e a comunicação com a API simulada. A entrega menciona rodadas históricas de 27 arquivos e 359 casos no Care e de 43 arquivos e 240 casos na suíte geral. Esses recortes não substituem a rodada posterior de 25 de novembro e não são somados a ela. \cite{DC_NICOLAS2026,DC_VALIDACAO2026} A verificação de tipos é feita pelo compilador TypeScript. Os resultados da versão final estão consolidados no Capítulo~\ref{cap:resultados}.
+\noindent
 
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
-\pendencia{APP01}{Dezesseis capturas incorporadas com identificação de perfil, dados fictícios e respostas roteirizadas. Confirmar release/hash publicado do webapp e da API. A entrega cita webapp 2aa391ad e API 2d07bd78 em 18/11 e republicação posterior; não assumir esses hashes como finais.}
+\subsection{Verificação do aplicativo}
+O aplicativo possui testes automatizados com Vitest e Testing Library, que cobrem componentes, estados e a comunicação com a API simulada. A verificação de tipos é feita pelo compilador TypeScript. Os resultados das rodadas identificadas são apresentados na Seção~\ref{cap:resultados}.
+
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
+\pendencia{APP01}{Dezesseis capturas incorporadas com identificação de perfil, dados fictícios e respostas roteirizadas. Confirmar versão e identificador do código publicado do webapp e da API. O desenvolvimento cita webapp 2aa391ad e API 2d07bd78 em 18/11 e republicação posterior; não assumir esses resumos criptográficos como finais.}
 \pendencia{APP02}{Login fotografado sem credenciais. Completar evidências autenticadas de emissão, validação, renovação, expiração, logout e acesso negado; os prints da Demonstração não comprovam esses caminhos.}
-\pendencia{APP03}{Conferir autorização final com dois pacientes no mesmo aparelho e conta operadora compartilhada. Testar telas, observações reservadas e assistente; a entrega aponta paciente fixo no MCP apesar da seleção na interface.}
 \pendencia{APP04}{Corrigir ou justificar as falhas remanescentes e registrar versão/log final. Não substituir 363 casos de 25/11 por 359 de um recorte anterior nem somar suítes com escopos sobrepostos. Completar integração autenticada e falhas de rede.}
 \pendencia{APP05}{Capturas das funções principais incorporadas; permanecem a avaliação de usabilidade/acessibilidade com método, autorizações, tarefas e achados, e a eventual captura de voz real sem roteirização.}

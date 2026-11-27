@@ -1,104 +1,114 @@
-\chapter{Programação embarcada}\label{cap:embarcados}
+\section{Programação embarcada}\label{cap:embarcados}
 O firmware executa as funções locais do intermediário e do submódulo. A divisão foi adotada para manter acionamento, leitura e limites de segurança independentes da disponibilidade do servidor. A Raspberry Pi coordena as operações, mas não transmite individualmente cada fase do motor.
 
-\section{Organização e inicialização}
+\subsection{Organização e inicialização}
 Os programas compartilham definições de comunicação e utilizam perfis específicos para cada papel. O intermediário administra os canais luminosos; o submódulo administra motor e sensor. A inicialização recupera a configuração persistente e estabelece a identidade da unidade, incluindo papel, instância, endereço e local de operação.
 
 Um identificador de inicialização permite distinguir uma resposta do ciclo atual de um estado anterior ao reinício. Essa distinção é necessária porque um comando antigo não deve ser admitido automaticamente após a perda da continuidade do processo. O estado persistente complementa a identificação de comandos e sustenta a recuperação.
 
-\section{Protocolo DC1}
-O protocolo DC1 utiliza quadros de 32 bytes sobre I²C, com marcadores, versão, identificadores, campos de operação e CRC-8 de polinômio 0x07. A validação do quadro precede sua admissão. Além da integridade dos bytes, são verificadas as condições de papel, identidade e estado que permitem executar a operação. \cite{DC_COMPILADO}
+\subsection{Protocolo DC1}
+O protocolo DC1 utiliza quadros de 32 bytes sobre I²C, com marcadores, versão, identificadores, campos de operação e CRC-8 de polinômio 0x07. A validação do quadro precede sua admissão. Além da integridade dos bytes, são verificadas as condições de papel, identidade e estado que permitem executar a operação. 
 
 A Figura~\ref{fig:transacao_dc1} apresenta a sequência coordenada pela central. A intenção é registrada antes do envio; em seguida, o controle acompanha o token no estado da placa e registra o desfecho. A perda da resposta não autoriza repetir um novo movimento: primeiro é necessário consultar e reconciliar a operação.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Reserva durável, envio e acompanhamento de um comando DC1}\label{fig:transacao_dc1}
-\includegraphics[width=0.86\textwidth,height=0.72\textheight,keepaspectratio]{Figuras/SharePoint/transacao_dc1.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.86\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/transacao_dc1.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
+
+\noindent
 
 
 O reconhecimento elétrico do I²C apenas participa da transferência. A admissão do comando e a conclusão do mecanismo são respostas da aplicação. Essa separação permite informar falha de comunicação, recusa por estado e resultado físico desconhecido sem reuni-los em um único erro.
 
-\section{Execução e publicação de estado}
+\subsection{Execução e publicação de estado}
 As rotinas de comunicação recebem e disponibilizam quadros, enquanto o laço principal processa comandos e atualiza as saídas. A Figura~\ref{fig:firmware_estrutura} mostra a organização entre fila, núcleos de decisão, persistência e fotografia do estado. Dessa forma, o processamento da aplicação não precisa ocorrer integralmente dentro da rotina de retorno do barramento.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Organização do firmware: comunicação, processamento e atuação}\label{fig:firmware_estrutura}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/firmware_estrutura.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/firmware_estrutura.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
+
+\noindent
 
 
 A cópia publicada do estado permite que a central consulte uma resposta preparada. No submódulo, o controle do prazo do movimento também dispõe de temporização local. Contadores de quadros inválidos, descartes e falhas de persistência apoiam o diagnóstico, mas não substituem os ensaios de comunicação e atuação na montagem.
 
-\section{Controle do movimento e recuperação}
+\subsection{Controle do movimento e recuperação}
 O executor organiza a sequência de fases, os limites e a parada. Antes da atuação, verifica se há operação anterior pendente. O resultado conserva a identidade do movimento para que a central possa reconhecê-lo mesmo quando a comunicação for interrompida. A Figura~\ref{fig:estados_motor} apresenta as transições entre prontidão, execução e resultados retidos.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Estados do submódulo para execução e reconhecimento de movimentos}\label{fig:estados_motor}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/estados_motor.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/estados_motor.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
+
+\noindent
 
 
 Os estados de término, aborto, erro e interrupção são mantidos até o reconhecimento pertinente. Esse comportamento impede que uma nova solicitação apague o contexto necessário para interpretar o movimento anterior. A recuperação combina leitura da placa e registros duráveis; quando não há evidência suficiente, o estado continua incerto em vez de ser convertido em sucesso.
 
-\section{Leitura óptica e calibração}
-A leitura do TCRT5000 é relacionada à posição do disco. O procedimento de calibração utiliza a variação do sinal entre material e cavidade para definir referências de busca. A validade do perfil depende do conjunto utilizado, incluindo sensor, disco, reservatório e alinhamento. Desde a versão 0.7.11, a faixa de vazio considera também a leitura parada na cavidade de referência, inferior à leitura durante o movimento. \cite{DC_VALIDACAO2026} A contagem de fases descreve o movimento comandado e não elimina a necessidade de observar o efeito físico.
+\subsection{Leitura óptica e calibração}
+A leitura do TCRT5000 é relacionada à posição do disco. O procedimento de calibração utiliza a variação do sinal entre material e cavidade para definir referências de busca. A validade do perfil depende do conjunto utilizado, incluindo sensor, disco, reservatório e alinhamento. Desde a versão 0.7.11, a faixa de vazio considera também a leitura parada na cavidade de referência, inferior à leitura durante o movimento.  A contagem de fases descreve o movimento comandado e não elimina a necessidade de observar o efeito físico.
 
 A consulta do ADC utiliza uma sequência própria de seleção, leitura e restauração do estado, apresentada na Figura~\ref{fig:consulta_adc}. O controle conserva a exclusão do barramento durante essa troca, de modo que a leitura não seja confundida com a resposta de outra operação.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Sequência de consulta de amostra do ADC pelo controlador da central}\label{fig:consulta_adc}
-\includegraphics[width=0.86\textwidth,height=0.70\textheight,keepaspectratio]{Figuras/SharePoint/consulta_adc.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.86\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/consulta_adc.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
+\noindent
 
-\section{Atualização pelo barramento}
-A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação. O manifesto vincula imagem, papel, endereço físico, local e ciclo de inicialização; o SHA-256 verifica integridade na partição inativa. A imagem da ESP32 não possui assinatura criptográfica, diferentemente da release da Raspberry. \cite{DC_VALIDACAO2026}
 
-\begin{figure}[htbp]
+\subsection{Atualização pelo barramento}
+A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação. O manifesto vincula imagem, papel, endereço físico, local e ciclo de inicialização; o SHA-256 verifica integridade na partição inativa. A imagem da ESP32 não possui assinatura criptográfica, diferentemente da release da Raspberry. 
+
+\begin{figure}[H]
 \centering
 \caption{Estrutura de atualização das ESP32 pelo barramento I²C}\label{fig:ota_blocos}
-\includegraphics[width=0.98\textwidth,height=0.66\textheight,keepaspectratio]{Figuras/SharePoint/ota_blocos.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/ota_blocos.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
+
+\noindent
 
 
 A sequência da Figura~\ref{fig:ota_sequencia} separa preparação, envio, finalização, reinício e confirmação. Ativar uma imagem e comprovar sua inicialização são etapas diferentes. A retenção do estado de manutenção evita que a interrupção da sessão seja interpretada como liberação para uma operação incompatível.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \caption{Transferência, ativação e confirmação de uma atualização de firmware}\label{fig:ota_sequencia}
-\includegraphics[width=0.77\textwidth,height=0.76\textheight,keepaspectratio]{Figuras/SharePoint/ota_sequencia.png}
-\fonte{Elaboração dos autores (2026).}
+\includegraphics[width=0.77\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/ota_sequencia.png}
+\fonte{Autoria própria (2026).}
 \end{figure}
 
+\noindent
 
-A configuração instalada deve ser identificada por versão e manifesto de gravação. Essa identificação conecta o firmware às rotinas da central, apresentadas no capítulo seguinte, e aos testes de interrupção, duplicata e recuperação.
 
-\section{Calibração ativa, persistência de posição e retomada}
-O modelo ativo extraído em 26 de novembro foi criado em 7 de novembro de 2026, às 23h24 de Brasília, com SUB01 0.6.1, reservatório e fita preta. Os centros são 0, 814, 1.639, 2.451 e 3.266 fases; os intervalos 814, 825, 812, 815 e 830 totalizam 4.096 fases. A faixa de vazio é 1.556 a 2.920 contagens e a de ocupado, 1 a 1.139. O espaço entre as faixas evita classificar leituras intermediárias como decisão segura; essas faixas pertencem ao perfil e não são uma taxa experimental de acerto. \cite{DC_VALIDACAO2026}
+A configuração instalada deve ser identificada por versão e manifesto de gravação. Essa identificação conecta o firmware às rotinas da central, apresentadas no item seguinte, e aos testes de interrupção, duplicata e recuperação.
 
-A calibração passou a considerar também a leitura parada do furo de referência, pois o valor parado era inferior ao observado em movimento. Na varredura, atrasos de acesso ao cartão, consulta do observador e abertura de banco foram retirados do caminho crítico; os pulsos dos LEDs internos deixaram de concorrer com as leituras durante localização e calibração. Os registros iniciais posteriores apontam lacunas de 10 a 15 fases, diante do limite local de 40; não constituem uma distribuição de todas as execuções. \cite{DC_VALIDACAO2026}
+\subsection{Calibração ativa, persistência de posição e retomada}
+A calibração relaciona posições e leituras, incluindo amostragem parada na cavidade de referência. Durante a varredura, acesso ao cartão, observadores e abertura de bancos são evitados no caminho crítico; a sinalização interna não deve concorrer com a aquisição. Os valores obtidos e suas limitações são apresentados na Seção~\ref{cap:resultados}.
 
-A posição fica no arquivo \texttt{slot\_pose.json}. Antes do movimento é marcada como em andamento; após o reconhecimento, a referência é atualizada pela contagem devolvida pelo firmware. A restauração depende da identidade da placa, versão, modelo, calibração e encerramento conhecido da sessão anterior. Movimento sem contagem confirmada, troca incompatível ou referência inconsistente impedem sua reutilização. Giro manual, travamento com perda de passos e erro acumulado do período permanecem limites dessa estratégia sem encoder. \cite{DC_VALIDACAO2026}
+A posição fica no arquivo \texttt{slot\_pose.json}. Antes do movimento é marcada como em andamento; após o reconhecimento, a referência é atualizada pela contagem devolvida pelo firmware. A restauração depende da identidade da placa, versão, modelo, calibração e encerramento conhecido da sessão anterior. Movimento sem contagem confirmada, troca incompatível ou referência inconsistente impedem sua reutilização. Giro manual, travamento com perda de passos e erro acumulado do período permanecem limites dessa estratégia sem encoder. 
 
-Na configuração documentada, a saída está uma cavidade à frente do sensor: o ciclo avança 820 fases e retorna para releitura. Se a unidade permanecer retida, podem ocorrer até duas tentativas com balanço de $-80/+80$ fases e pausa de 0,5 s, respeitando o tempo disponível da sessão. O retorno do sensor a vazio não mede a queda no coletor. A pergunta ``Quantos caíram?'' e a resposta humana permanecem independentes; a redução do estoque não deve ser inferida apenas da câmera ou do ADC. \cite{DC_VALIDACAO2026}
+Na configuração documentada, a saída está uma cavidade à frente do sensor: o ciclo avança 820 fases e retorna para releitura. Se a unidade permanecer retida, podem ocorrer até duas tentativas com balanço de $-80/+80$ fases e pausa de 0,5 s, respeitando o tempo disponível da sessão. O retorno do sensor a vazio não mede a queda no coletor. A pergunta ``Quantos caíram?'' e a resposta humana permanecem independentes; a redução do estoque não deve ser inferida apenas da câmera ou do ADC. 
 
-\section{Manutenção e sinalização na configuração atual}
-No Oficial, uma saída sem resposta bloqueia novos giros, mas não os testes sem motor nem a liberação sem giro. A liberação de uma dispensação em revisão não executa movimento e pode invalidar a posição, exigindo posterior localização com disco vazio. No Simulado há regras de apresentação mais permissivas; seus resultados não demonstram por si só a eficácia das travas do Oficial. \cite{DC_VALIDACAO2026}
+\subsection{Manutenção e sinalização na configuração atual}
+No Oficial, uma saída sem resposta bloqueia novos giros, mas não os testes sem motor nem a liberação sem giro. A liberação de uma dispensação em revisão não executa movimento e pode invalidar a posição, exigindo posterior localização com disco vazio. No Simulado há regras de apresentação mais permissivas; seus resultados não demonstram por si só a eficácia das travas do Oficial. 
 
-Os sinais são gerados pelo runtime. A instalação de versões posteriores a 0.7.7 remove a antiga pendência de instalar os sinais, mas não substitui sua inspeção visual. A observação de que o âmbar aparenta vermelho na montagem é uma limitação concreta de distinção de estados. A troca do LED da câmera foi observada; a sinalização azul em todo fluxo real de captura ainda exige conferência. Os avisos da agenda real permaneciam não acionados na configuração de fechamento. \cite{DC_VALIDACAO2026}
+O runtime coordena sinais de processamento, sucesso, atenção e falha. A inspeção considera a cor aparente na montagem, a identificação textual e a coerência entre aplicativo, central e intermediário; a instalação de uma versão não comprova a percepção correta dos sinais.
 
-\section*{\textcolor{DCPendente}{Complementações necessárias}}
-\pendencia{EMB01}{Fornecer código/release final, hashes, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.}
+\subsection*{\textcolor{DCPendente}{Complementações necessárias}}
+\pendencia{EMB01}{Fornecer código/release final, resumos criptográficos, dependências e manifesto de gravação por placa; papel, instância, endereço, site, boot ID e versão lida após reinício.}
 \pendencia{EMB02}{Completar tabela de estados, operações, códigos de erro e limites efetivamente ativos na versão final. Relacionar cada estado às saídas seguras e condições de recuperação.}
 \pendencia{EMB03}{Perfil ativo e intervalos incorporados. Completar referência angular independente, restauração física após desligamento, deslocamento manual e desempenho de localização na configuração final.}
 \pendencia{EMB04}{Fornecer relatórios de bancada de motor/sensor, duplicatas, perda de comunicação, reinício durante movimento, falha de persistência e recuperação. Separar teste simulado de execução física e identificar denominadores.}
