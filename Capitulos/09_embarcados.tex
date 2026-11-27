@@ -9,7 +9,7 @@ Um identificador de inicialização permite distinguir uma resposta do ciclo atu
 \subsection{Protocolo DC1}
 O protocolo DC1 utiliza quadros de 32 bytes sobre I²C, com marcadores, versão, identificadores, campos de operação e CRC-8 de polinômio 0x07. A validação do quadro precede sua admissão. Além da integridade dos bytes, são verificadas as condições de papel, identidade e estado que permitem executar a operação. 
 
-A Figura~\ref{fig:transacao_dc1} apresenta a sequência coordenada pela central. A intenção é registrada antes do envio; em seguida, o controle acompanha o token no estado da placa e registra o desfecho. A perda da resposta não autoriza repetir um novo movimento: primeiro é necessário consultar e reconciliar a operação.
+\chamadafigura{A Figura~\ref{fig:transacao_dc1} apresenta a sequência coordenada pela central. A intenção é registrada antes do envio; em seguida, o controle acompanha o token no estado da placa e registra o desfecho. A perda da resposta não autoriza repetir um novo movimento: primeiro é necessário consultar e reconciliar a operação.}
 
 \begin{figure}[H]
 \centering
@@ -18,13 +18,11 @@ A Figura~\ref{fig:transacao_dc1} apresenta a sequência coordenada pela central.
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 O reconhecimento elétrico do I²C apenas participa da transferência. A admissão do comando e a conclusão do mecanismo são respostas da aplicação. Essa separação permite informar falha de comunicação, recusa por estado e resultado físico desconhecido sem reuni-los em um único erro.
 
 \subsection{Execução e publicação de estado}
-As rotinas de comunicação recebem e disponibilizam quadros, enquanto o laço principal processa comandos e atualiza as saídas. A Figura~\ref{fig:firmware_estrutura} mostra a organização entre fila, núcleos de decisão, persistência e fotografia do estado. Dessa forma, o processamento da aplicação não precisa ocorrer integralmente dentro da rotina de retorno do barramento.
+\chamadafigura{As rotinas de comunicação recebem e disponibilizam quadros, enquanto o laço principal processa comandos e atualiza as saídas. A Figura~\ref{fig:firmware_estrutura} mostra a organização entre fila, núcleos de decisão, persistência e fotografia do estado. Dessa forma, o processamento da aplicação não precisa ocorrer integralmente dentro da rotina de retorno do barramento.}
 
 \begin{figure}[H]
 \centering
@@ -33,13 +31,11 @@ As rotinas de comunicação recebem e disponibilizam quadros, enquanto o laço p
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 A cópia publicada do estado permite que a central consulte uma resposta preparada. No submódulo, o controle do prazo do movimento também dispõe de temporização local. Contadores de quadros inválidos, descartes e falhas de persistência apoiam o diagnóstico, mas não substituem os ensaios de comunicação e atuação na montagem.
 
 \subsection{Controle do movimento e recuperação}
-O executor organiza a sequência de fases, os limites e a parada. Antes da atuação, verifica se há operação anterior pendente. O resultado conserva a identidade do movimento para que a central possa reconhecê-lo mesmo quando a comunicação for interrompida. A Figura~\ref{fig:estados_motor} apresenta as transições entre prontidão, execução e resultados retidos.
+\chamadafigura{O executor organiza a sequência de fases, os limites e a parada. Antes da atuação, verifica se há operação anterior pendente. O resultado conserva a identidade do movimento para que a central possa reconhecê-lo mesmo quando a comunicação for interrompida. A Figura~\ref{fig:estados_motor} apresenta as transições entre prontidão, execução e resultados retidos.}
 
 \begin{figure}[H]
 \centering
@@ -48,15 +44,13 @@ O executor organiza a sequência de fases, os limites e a parada. Antes da atua�
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 Os estados de término, aborto, erro e interrupção são mantidos até o reconhecimento pertinente. Esse comportamento impede que uma nova solicitação apague o contexto necessário para interpretar o movimento anterior. A recuperação combina leitura da placa e registros duráveis; quando não há evidência suficiente, o estado continua incerto em vez de ser convertido em sucesso.
 
 \subsection{Leitura óptica e calibração}
 A leitura do TCRT5000 é relacionada à posição do disco. O procedimento de calibração utiliza a variação do sinal entre material e cavidade para definir referências de busca. A validade do perfil depende do conjunto utilizado, incluindo sensor, disco, reservatório e alinhamento. Desde a versão 0.7.11, a faixa de vazio considera também a leitura parada na cavidade de referência, inferior à leitura durante o movimento.  A contagem de fases descreve o movimento comandado e não elimina a necessidade de observar o efeito físico.
 
-A consulta do ADC utiliza uma sequência própria de seleção, leitura e restauração do estado, apresentada na Figura~\ref{fig:consulta_adc}. O controle conserva a exclusão do barramento durante essa troca, de modo que a leitura não seja confundida com a resposta de outra operação.
+\chamadafigura{A consulta do ADC utiliza uma sequência própria de seleção, leitura e restauração do estado, apresentada na Figura~\ref{fig:consulta_adc}. O controle conserva a exclusão do barramento durante essa troca, de modo que a leitura não seja confundida com a resposta de outra operação.}
 
 \begin{figure}[H]
 \centering
@@ -65,11 +59,9 @@ A consulta do ADC utiliza uma sequência própria de seleção, leitura e restau
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 \subsection{Atualização pelo barramento}
-A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação. O manifesto vincula imagem, papel, endereço físico, local e ciclo de inicialização; o SHA-256 verifica integridade na partição inativa. A imagem da ESP32 não possui assinatura criptográfica, diferentemente da release da Raspberry. 
+\chamadafigura{A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a imagem de firmware. A estrutura reúne o cliente da central, os registros de manutenção e as partições de atualização da placa, conforme a Figura~\ref{fig:ota_blocos}. A transferência é segmentada e acompanhada por verificações antes da ativação. O manifesto vincula imagem, papel, endereço físico, local e ciclo de inicialização; o SHA-256 verifica integridade na partição inativa. A imagem da ESP32 não possui assinatura criptográfica, diferentemente da release da Raspberry.}
 
 \begin{figure}[H]
 \centering
@@ -78,10 +70,8 @@ A manutenção das ESP32 utiliza o mesmo barramento modular para transferir a im
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-
-A sequência da Figura~\ref{fig:ota_sequencia} separa preparação, envio, finalização, reinício e confirmação. Ativar uma imagem e comprovar sua inicialização são etapas diferentes. A retenção do estado de manutenção evita que a interrupção da sessão seja interpretada como liberação para uma operação incompatível.
+\chamadafigura{A sequência da Figura~\ref{fig:ota_sequencia} separa preparação, envio, finalização, reinício e confirmação. Ativar uma imagem e comprovar sua inicialização são etapas diferentes. A retenção do estado de manutenção evita que a interrupção da sessão seja interpretada como liberação para uma operação incompatível.}
 
 \begin{figure}[H]
 \centering
@@ -89,8 +79,6 @@ A sequência da Figura~\ref{fig:ota_sequencia} separa preparação, envio, final
 \includegraphics[width=0.77\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/ota_sequencia.png}
 \fonte{Autoria própria (2026).}
 \end{figure}
-
-\noindent
 
 
 A configuração instalada deve ser identificada por versão e manifesto de gravação. Essa identificação conecta o firmware às rotinas da central, apresentadas no item seguinte, e aos testes de interrupção, duplicata e recuperação.

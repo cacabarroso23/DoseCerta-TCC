@@ -1,0 +1,61 @@
+DOSECERTA — REGISTRO DA REVISÃO INTEGRAL — 27/11/2026
+
+MUDANÇAS NOS FONTES
+1. Estrutura ativa: pré-textuais; introdução; fundamentação/estado da arte;
+   metodologia com integração e método de testes; resultados/discussão;
+   considerações finais; referências; apêndices, incluindo desenhos V75.
+2. Comandos de listas/sumário preservados e nomes em português definidos.
+   Rotina multipassagem para verificar estabilização e entradas auxiliares.
+3. Chamadas de figuras revistas fora dos ambientes e, nos casos ajustados,
+   antes deles, após parágrafos completos; imagens com limites de largura
+   e altura. Figuras 7–10 conferidas pela ordem da árvore ativa.
+4. Duas imagens fotográficas refeitas/recortadas e inspecionadas separadamente
+   do PDF. Operações registradas em RECORTES_FOTOGRAFIAS.json. Fontes das
+   figuras e ajustes de legenda revisados; acabamento final requer compilação.
+5. Tabelas com colunas proporcionais e margens internas descontadas;
+   nomes técnicos longos receberam pontos de quebra quando ajustados.
+   Os controles não asseguram ausência de extravasamento no PDF.
+6. Mecânica: inclinação nominal V75 de 30 graus da vertical, dimensões e
+   peças documentadas; separação entre cota nominal e medida física.
+7. Inventário eletrônico ampliado com componentes identificados; variantes,
+   quantidades e características sem confirmação continuam pendentes.
+8. Histórico do agente separado da configuração final e da efetivamente
+   usada pelo Care. Distinção entre aprovação no serviço, confirmação por
+   diálogo, solicitação de escrita e efeito persistido.
+9. Método e resultados da avaliação textual do agente incorporados,
+   com configurações, denominadores, falha temporal e reteste limitado.
+   Não se apresenta esse teste como avaliação de voz ou ensaio físico.
+10. Contagens de inspeção do banco deslocadas para resultados; método
+    explica procedimentos sem apresentar essas contagens como validação.
+11. Referências regeneradas a partir de 15 chaves citadas ativamente.
+    Material interno é evidência do desenvolvimento, não publicação externa.
+12. Testes físicos: explicação direta da contagem independente (comparar
+    pedido com o que uma pessoa contou no coletor, não com o estado da tela).
+13. Escopo de um paciente e identidade fixa no MCP preservado. Outro usuário
+    e isolamento multipaciente tratados como trabalhos futuros.
+14. 87 pendências mantidas em vermelho; TXT/JSON separados gerados pelos
+    próprios comandos ativos. Três encerramentos registrados com motivos.
+15. README, instruções iniciais e registro de validação atualizados. Dados
+    e históricos anteriores preservados, identificados como históricos.
+
+CONTROLES E LIMITES
+- Checagem estática: zero erros/avisos nos controles implementados.
+- 36 fontes TeX ativos; 102 rótulos; 121 referências internas; 59 figuras.
+- Sintaxe Python: aprovada nos três scripts.
+- Casos unitários dos controles de compilação: aprovados; são fixtures
+  temporárias, não uma compilação ou execução de testes do produto.
+- compilar_banca.py: tentativa terminou com código 2, pdfLaTeX indisponível.
+- Sem PDF novo: listas preenchidas, paginação, margens, posição final,
+  recortes e extravasamentos NÃO foram certificados.
+
+USO
+Importe o ZIP completo em projeto novo; main.tex e pdfLaTeX; recompile
+DO ZERO. Não misture com versões anteriores. Reveja o PDF inteiro e as
+pendências antes da banca. Localmente: python3 compilar_banca.py.
+
+INTEGRIDADE E PROVENIÊNCIA
+ARQUIVOS_ALTERADOS_REVISAO.json compara com o backup antes desta revisão.
+REVISAO_INTEGRAL.patch contém diferenças textuais; arquivos binários
+alterados estão discriminados no inventário. Use o ZIP, não apenas o patch.
+MANIFESTO_REVISAO_SHA256.json verifica os arquivos entregues, exceto ele
+próprio. O Markdown editado foi preservado byte a byte nesta finalização.

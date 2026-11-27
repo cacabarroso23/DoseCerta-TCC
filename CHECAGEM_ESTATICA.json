@@ -1,16 +1,17 @@
 {
   "arquivos_tex_incluidos": 36,
-  "rotulos": 98,
-  "referencias_internas": 113,
+  "rotulos": 102,
+  "referencias_internas": 121,
   "figuras": 59,
-  "citacoes_distintas": 11,
-  "pendencias_abertas": 88,
+  "citacoes_distintas": 15,
+  "pendencias_abertas": 87,
   "pendencias_encerradas": {
     "MEC01": "Encerrada: revisão final V75 fornecida pela autora fixa o eixo do disco a 30 graus da vertical. Dimensões nominais incorporadas; inspeção física permanece em MEC03.",
-    "APP03": "Encerrada por delimitação de escopo informada pela autora: um paciente por cadastro; MCP usa identidade fixa. Testes multipaciente propostos nas considerações finais."
+    "APP03": "Encerrada por delimitação de escopo informada pela autora: um paciente por cadastro; MCP usa identidade fixa. Testes multipaciente propostos nas considerações finais.",
+    "AG05": "Encerrada por incorporação: avaliação textual de 26/11, com 21 cenários, dez repetições, revisão humana e resultados N1 a N4. Voz e integrações não avaliadas permanecem em AG06."
   },
   "erros": [],
   "avisos": [],
-  "compilacao_pdf": "NAO_EXECUTADA_COMPILADOR_INDISPONIVEL",
+  "compilacao_pdf": "NAO_EXECUTADA_POR_ESTA_ROTINA",
   "limite": "Não avalia posicionamento final, listas preenchidas nem extravasamento no PDF. Executar compilar_banca.py e revisão visual."
 }

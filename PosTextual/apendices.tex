@@ -1,9 +1,9 @@
 \chapter{Protocolos e rastreabilidade dos ensaios}\label{ap:ensaios}
 \section{Critério de leitura}
-A matriz abaixo relaciona evidências disponíveis e lacunas de aceite. ``Parcial'' não é atendimento integral nem porcentagem de conclusão. Os critérios de aceitação discutidos no Capítulo~\ref{cap:requisitos} permanecem dependentes de protocolo e aprovação; a matriz usa os mesmos identificadores e conserva a diferença entre operação registrada e saída física. 
+A matriz abaixo relaciona evidências disponíveis e lacunas de aceite. ``Parcial'' não é atendimento integral nem porcentagem de conclusão. Os critérios de aceitação discutidos no Seção~\ref{cap:requisitos} permanecem dependentes de protocolo e aprovação; a matriz usa os mesmos identificadores e conserva a diferença entre operação registrada e saída física. 
 
 {\small\setlength{\tabcolsep}{3pt}
-\begin{longtable}{p{0.12\textwidth}p{0.37\textwidth}p{0.40\textwidth}}
+\begin{longtable}{p{\dimexpr0.12\linewidth-2\tabcolsep\relax}p{\dimexpr0.37\linewidth-2\tabcolsep\relax}p{\dimexpr0.40\linewidth-2\tabcolsep\relax}}
 \caption{Requisitos, evidências disponíveis e aceite ainda necessário}\label{tab:ap-matriz}\\
 \hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endfirsthead
 \hline\textbf{ID} & \textbf{Evidência disponível} & \textbf{Lacuna de aceite}\\\hline\endhead
@@ -29,8 +29,8 @@ RNF07 & Fotos dos encaixes e quatro contatos & Inserção energizada, continuida
 RNF08 & Interface Care e sinais com apoio de texto & Tarefas autorizadas, acessibilidade e compreensão\\\hline
 RF13-APP & Care, suítes históricas e 16 capturas demonstrativas & Sessão válida/expirada, versão e tarefas autenticadas\\\hline
 RF14-VIS & Método de visão documentado & Avaliar sequências rotuladas da versão final\\\hline
-RF15-AG & Histórico e proposta v28 ainda a confirmar & Confirmação técnica, contexto do paciente único e efeitos persistidos\\\hline
-RNF09-IA & Limites de finalidade descritos & Casos adversariais e avaliação humana do agente e da visão\\\hline
+RF15-AG & v28: 210 conversas, 0/80 tentativas de escrita antes da confirmação & Corrigir horário no caminho do Care; áudio real e efeitos persistidos\\\hline
+RNF09-IA & Agente: 40/40 casos de saúde; 20/20 recusas de escopo & Ampliar cenários adversariais, áudio e avaliação da visão\\\hline
 RNF10-DADOS & Registros locais e centrais com origem & Matriz de acesso, retenção e auditoria de todas as observações\\\hline
 \end{longtable}\noindent Fonte: Autoria própria (2026).\par}
 
@@ -38,7 +38,7 @@ RNF10-DADOS & Registros locais e centrais com origem & Matriz de acesso, retenç
 O protocolo a seguir é um instrumento para uma campanha controlada, ainda sujeito à aprovação dos critérios e da amostragem. Não é apresentado como ensaio executado. Não autoriza ingestão de medicamentos ou intervenção em produção; utiliza unidades de bancada e procedimentos seguros definidos previamente.
 
 \section{Configuração antes de cada bloco}
-Antes do primeiro ensaio de cada bloco deverão ser registrados: o ambiente do servidor e a política de travas da central; as versões do runtime, dos firmwares do intermediário e do submódulo, do aplicativo e da API; o submódulo e a posição utilizados; o comprimido de teste (tipo, diâmetro, espessura e massa medidos); a revisão do disco e a inclinação montada; o estoque inicial contado manualmente; os responsáveis pela operação, pela contagem e pelas fotografias. A montagem deverá ser fotografada com escala..
+Antes do primeiro ensaio de cada bloco deverão ser registrados: o ambiente do servidor e a política de travas da central; as versões do runtime, dos firmwares do intermediário e do submódulo, do aplicativo e da API; o submódulo e a posição utilizados; o comprimido de teste (tipo, diâmetro, espessura e massa medidos); a revisão do disco e a inclinação montada; o estoque inicial contado manualmente; os responsáveis pela operação, pela contagem e pelas fotografias. A montagem deverá ser fotografada com escala.
 
 \section{Procedimento de um ensaio de dispensação}
 \begin{enumerate}
@@ -55,7 +55,7 @@ Antes do primeiro ensaio de cada bloco deverão ser registrados: o ambiente do s
 Três travamentos consecutivos interrompem o bloco; após qualquer ajuste mecânico, inicia-se novo bloco identificado, preservando todos os resultados e motivos de interrupção do anterior. Reiniciar não autoriza apagar as tentativas desfavoráveis. Ensaios sem contagem ou sem fotografia são considerados inválidos e reportados como tal.
 
 \section{Blocos e critérios de aceitação}
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.06\textwidth}p{0.4\textwidth}p{0.07\textwidth}p{0.37\textwidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.06\linewidth-2\tabcolsep\relax}p{\dimexpr0.4\linewidth-2\tabcolsep\relax}p{\dimexpr0.07\linewidth-2\tabcolsep\relax}p{\dimexpr0.37\linewidth-2\tabcolsep\relax}}
 \caption{Blocos e critérios propostos, ainda não aprovados nem executados}\label{tab:ap-blocos}\\
 \hline\textbf{Bloco} & \textbf{Ensaio} & \textbf{N} & \textbf{Critério}\\\hline\endfirsthead
 \hline\textbf{Bloco} & \textbf{Ensaio} & \textbf{N} & \textbf{Critério}\\\hline\endhead

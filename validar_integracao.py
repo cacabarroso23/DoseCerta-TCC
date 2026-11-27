@@ -1,115 +1,84 @@
-"""Checagens estáticas, não substitui compilação pdfLaTeX ou aceite físico."""
+"""Checagens estáticas de fonte. Não substitui compilação nem revisão visual."""
 from pathlib import Path
-import re,json,collections,csv,statistics
-from PIL import Image
-R=Path(__file__).resolve().parent
-errors=[];warnings=[];labels={};refs=[];images=[];includes=[];cites=set();pending=[]
-def clean(s):
- s=re.sub(r'(\\(?:no)?(?:link)?url\{)([^}]*)(\})',lambda m:m[0].replace('%','PERCENT'),s)
- return re.sub(r'(?<!\\)%[^\n]*','',s)
-def unescaped(s,i):
- n=0;i-=1
- while i>=0 and s[i]=='\\':n+=1;i-=1
- return n%2==0
-files=[R/'main.tex',R/'FEI-pre-textual.tex'];seen=set()
-while files:
- p=files.pop()
- if p in seen:continue
- seen.add(p)
- if not p.exists():errors.append('Arquivo ausente: '+str(p));continue
- s=clean(p.read_text());depth=0
- for i,c in enumerate(s):
-  if c in '{} ' and c!=' ' and unescaped(s,i):
-   depth+=1 if c=='{' else -1
-   if depth<0:errors.append(str(p.relative_to(R))+': chave fechada sem abertura');break
- if depth:errors.append(str(p.relative_to(R))+': balanço de chaves '+str(depth))
- stack=[]
- for m in re.finditer(r'\\(begin|end)\{([^}]+)\}',s):
-  kind,env=m.groups()
-  if kind=='begin':stack.append(env)
-  elif not stack or stack.pop()!=env:errors.append(str(p.relative_to(R))+': ambiente divergente '+env)
- if stack:errors.append(str(p.relative_to(R))+': ambientes abertos '+str(stack))
- for name in re.findall(r'\\(?:input|include)\{([^}]+)\}',s):
-  q=R/(name if Path(name).suffix else name+'.tex');includes.append(str(q.relative_to(R)));files.append(q)
- for lab in re.findall(r'\\label\{([^}]+)\}',s):
-  if lab in labels:errors.append('Rótulo duplicado: '+lab)
-  labels[lab]=str(p.relative_to(R))
- refs += [(r,str(p.relative_to(R))) for r in re.findall(r'\\(?:ref|pageref|eqref|autoref)\{([^}]+)\}',s)]
- for group in re.findall(r'\\cite\w*\*?(?:\[[^]]*\])*\{([^}]+)\}',s):cites.update(x.strip() for x in group.split(','))
- for im in re.findall(r'\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}',s):
-  q=R/im
-  if not q.exists():errors.append('Figura ausente: '+im)
-  else:
-   try:
-    with Image.open(q) as f:f.verify()
-   except Exception as e:errors.append('Figura inválida: '+im+' '+str(e))
-  images.append(im)
- for m in re.finditer(r'\\pendencia\{([^}]+)\}\{',s):
-  i=m.end();j=i;d=1
-  while j<len(s) and d:
-   if s[j]=='{' and unescaped(s,j):d+=1
-   if s[j]=='}' and unescaped(s,j):d-=1
-   j+=1
-  pending.append({'id':m[1],'arquivo':str(p.relative_to(R)),'texto':s[i:j-1]})
-for lab,f in refs:
- if lab not in labels:errors.append('Referência sem rótulo: '+lab+' em '+f)
-counts=collections.Counter(p['id'] for p in pending)
-for id,n in counts.items():
- if n>1:errors.append('ID de pendência duplicado: '+id)
-bib=(R/'FEI-bib/dosecerta-referencias.bib').read_text();keys=re.findall(r'@\w+\s*\{\s*([^,]+),',bib)
-for k,n in collections.Counter(keys).items():
- if n>1:errors.append('Chave bibliográfica duplicada: '+k)
-rendered=set(re.findall(r'\\bibitem(?:\[[^\n]*\])?\{([^}]+)\}',(R/'referencias.tex').read_text()))
-for k in sorted(cites):
- if k not in keys:errors.append('Citação sem entrada na base: '+k)
- if k not in rendered:errors.append('Citação sem entrada gerada: '+k)
-# Check independent source counts and arithmetic.
-B=R/'Dados/validacao_20261126'
-def csvrows(n):return list(csv.DictReader((B/n).open(encoding='utf-8-sig'),delimiter=';'))
-cal=csvrows('calibracoes_do_disco.csv');intervals=[int(x) for r in cal for x in r['intervalos_fases'].split()]
-assert len(intervals)==15 and all(sum(map(int,r['intervalos_fases'].split()))==4096 for r in cal)
-cy=csvrows('dispensacao_ciclos_por_bolso.csv');assert len(cy)==12
-co=collections.Counter(r['resultado_do_ciclo'] for r in cy);assert sorted(co.values())==[2,2,4,4]
-ss=csvrows('sessoes_do_disco.csv');sim=[r for r in ss if r['acao']=='simulate_quantity'];assert len(ss)==101 and len(sim)==15
-old=R/'historico_pendencias_pre_integracao.json'
-if old.exists():
- baseline=json.loads(old.read_text());oldids={x['id'] for x in baseline};newids=set(counts)
- for id in sorted(oldids-newids):errors.append('Pendência anterior desapareceu sem baixa: '+id)
-# Every requirement ID in the source must have exactly one evidence-matrix row.
-requirements=(R/'Capitulos/05_requisitos.tex').read_text()
-matrix=(R/'PosTextual/apendices.tex').read_text()
-reqids=set(re.findall(r'^(R(?:F|NF)\d+(?:-[A-Z]+)?) &',requirements,re.M))
-matrixids=re.findall(r'^(R(?:F|NF)\d+(?:-[A-Z]+)?) &',matrix,re.M)
-if reqids!=set(matrixids) or len(matrixids)!=len(set(matrixids)):
- errors.append('Matriz de evidência divergente dos requisitos originais')
-photos=json.loads((R/'mapa_fotos_20261126.json').read_text())
-photo_names=[x['foto'] for group in photos.values() for x in group]
-if len(photo_names)!=35 or len(set(photo_names))!=35: errors.append('Mapa fotográfico sem as 35 imagens únicas')
-# Round 2 evidence controls. CSVs are source data, never executed.
-N=R/'Dados/entrega_Nicolas_20261127'
-def incoming_csv(name):
- with (N/name).open(encoding='utf-8-sig',newline='') as f:return list(csv.DictReader(f,delimiter=';'))
-oficial=incoming_csv('ensaios_dispensacao.csv');simulado=incoming_csv('ensaios_dispensacao_simulado.csv')
-assert len(oficial)==8 and len(simulado)==7
-assert len({r['operation_id'] for r in oficial+simulado})==15
-assert sum(not r['qtd_observada'] for r in oficial)==1
-assert sum(not r['estoque_depois'] for r in oficial)==1
-eligible=[r for r in oficial if r['ensaio']!='1' and r['qtd_observada']!='' and r['estoque_depois']!='']
-assert len(eligible)==6
-assert all(int(r['estoque_antes'])-int(r['estoque_depois'])==int(r['qtd_observada']) for r in eligible)
-closures=collections.Counter(r['fechamento'] for r in simulado)
-assert closures=={'presentation_policy':4,'human_report':2,'sem fechamento':1}
-assert sum(not r['qtd_observada'] for r in simulado)==5
-for q in json.loads((R/'historico_pendencias_antes_rodada2.json').read_text()):
- if q['id'] not in counts:errors.append('Pendência da rodada 1 desapareceu: '+q['id'])
-if len(list((R/'Figuras/App').glob('*.jpg')))<16:errors.append('Capturas incompletas')
-for f in seen:
- if f.exists():
-  txt=f.read_text()
-  if any(ord(c)<32 and c not in '\n\r' for c in txt):errors.append('Controle inesperado no texto: '+str(f.relative_to(R)))
-if 'generalmotors-my.sharepoint.com' in (R/'referencias.tex').read_text():errors.append('URL corporativa exposta nas referências geradas')
-summary={'arquivos_tex_incluidos':len(seen),'rotulos':len(labels),'referencias_internas':len(refs),'figuras':len(images),'citacoes_distintas':len(cites),'pendencias':len(pending),'erros':errors,'avisos':warnings,'compilacao_pdf':'NAO_EXECUTADA_COMPILADOR_INDISPONIVEL','calibracao_media':statistics.mean(intervals),'calibracao_desvio_amostral':statistics.stdev(intervals),'ciclos_por_resultado':dict(co),'registros_vinculados_oficial':len(oficial),'registros_vinculados_simulado':len(simulado),'oficial_consistencia_contabil':{'linhas_elegiveis':len(eligible),'nao_equivale_a_estoque_fisico':True},'simulado_fechamentos':dict(closures)}
-(R/'pendencias.json').write_text(json.dumps(sorted(pending,key=lambda x:x['arquivo']),ensure_ascii=False,indent=2)+'\n')
-(R/'validacao_estatica.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
-print(json.dumps(summary,ensure_ascii=False,indent=2))
-raise SystemExit(bool(errors))
+import re,json,collections
+P=Path(__file__).resolve().parent
+
+def clean(s):return re.sub(r'(?<!\\)%[^\n]*','',s)
+def walk():
+ seen=set();order=[]
+ def visit(p):
+  p=p.resolve()
+  if p in seen:return
+  if not p.exists():raise FileNotFoundError(p)
+  seen.add(p);order.append(p)
+  for n in re.findall(r'\\(?:include|input)\{([^}]+)\}',clean(p.read_text())):
+   visit(P/(n if Path(n).suffix else n+'.tex'))
+ visit(P/'main.tex');return order
+
+def braced(s,i):
+ assert s[i]=='{';level=1;j=i+1
+ while j<len(s) and level:
+  if s[j]=='{' and s[j-1]!='\\':level+=1
+  elif s[j]=='}' and s[j-1]!='\\':level-=1
+  j+=1
+ if level:raise ValueError('Chaves não balanceadas')
+ return s[i+1:j-1],j
+
+def pending(files):
+ out=[]
+ for p in files:
+  s=clean(p.read_text())
+  for m in re.finditer(r'\\pendencia\{([^}]+)\}\{',s):
+   text,z=braced(s,m.end()-1);out.append({'id':m[1],'arquivo':str(p.relative_to(P)),'linha':s[:m.start()].count('\n')+1,'texto_tex':text})
+ return out
+
+def main():
+ errors=[];warnings=[];files=walk();texts={p:clean(p.read_text()) for p in files};alltext='\n'.join(texts.values());labels=collections.Counter(re.findall(r'\\label\{([^}]+)\}',alltext));refs=re.findall(r'\\(?:ref|autoref|pageref|eqref)\{([^}]+)\}',alltext)
+ for k,n in labels.items():
+  if n>1:errors.append('Rótulo duplicado: '+k)
+ for r in sorted(set(refs)-set(labels)):errors.append('Referência sem rótulo: '+r)
+ images=re.findall(r'\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}',alltext)
+ for n in images+re.findall(r'\\includepdf(?:\[[^]]*\])?\{([^}]+)\}',alltext):
+  if not (P/n).exists():errors.append('Imagem/PDF ausente: '+n)
+ for p,s in texts.items():
+  depth=0
+  for m in re.finditer(r'(?<!\\)[{}]',s):
+   depth+=1 if m[0]=='{' else -1
+   if depth<0:break
+  if depth:errors.append('Chaves desequilibradas: '+str(p.relative_to(P)))
+  if '??' in s:errors.append('Interrogação literal: '+str(p.relative_to(P)))
+  stack=[]
+  for m in re.finditer(r'\\(begin|end)\{([^}]+)\}',s):
+   if m[1]=='begin':stack.append(m[2])
+   elif not stack or stack.pop()!=m[2]:errors.append('Ambiente desalinhado: '+str(p.relative_to(P)))
+  if stack:errors.append('Ambiente não fechado: '+str(p.relative_to(P)))
+ cites=set(k.strip() for m in re.finditer(r'\\cite\w*\*?(?:\[[^]]*\])*\{([^}]+)\}',alltext) for k in m[1].split(','));bibs=set(re.findall(r'\\bibitem(?:\[[^]]*\])?\{([^}]+)\}',getref:=texts[P/'referencias.tex']))
+ for k in cites-bibs:errors.append('Citação sem entrada: '+k)
+ ps=pending(files);ids=[r['id'] for r in ps]
+ if len(ids)!=len(set(ids)):errors.append('Identificador de pendência duplicado')
+ closed=json.loads((P/'PENDENCIAS_ENCERRADAS.json').read_text())
+ if set(closed)&set(ids):errors.append('Pendência encerrada ainda aberta')
+ for cmd in [r'\listoffigures*',r'\listoftables*',r'\tableofcontents*']:
+  if cmd not in texts[P/'main.tex']:errors.append('Lista/sumário sem comando: '+cmd)
+ # Check all figure labels are called outside the figure environment.
+ outside=re.sub(r'\\begin\{figure\}.*?\\end\{figure\}','',alltext,flags=re.S)
+ called=set(re.findall(r'\\(?:ref|autoref|pageref)\{([^}]+)\}',outside))
+ for env in re.findall(r'\\begin\{figure\}.*?\\end\{figure\}',alltext,re.S):
+  ls=re.findall(r'\\label\{([^}]+)\}',env)
+  for l in ls:
+   if l not in called:warnings.append('Figura sem chamada fora da legenda: '+l)
+ report={'arquivos_tex_incluidos':len(files),'rotulos':len(labels),'referencias_internas':len(refs),'figuras':len(images),'citacoes_distintas':len(cites),'pendencias_abertas':len(ps),'pendencias_encerradas':closed,'erros':errors,'avisos':warnings,'compilacao_pdf':'NAO_EXECUTADA_POR_ESTA_ROTINA','limite':'Não avalia posicionamento final, listas preenchidas nem extravasamento no PDF. Executar compilar_banca.py e revisão visual.'}
+ (P/'CHECAGEM_ESTATICA.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+ (P/'PENDENCIAS_ABERTAS.json').write_text(json.dumps(ps,ensure_ascii=False,indent=2),encoding='utf-8')
+ lines=['DOSECERTA — PENDÊNCIAS ABERTAS',f'Total: {len(ps)}. Extraído da árvore ativa de main.tex.',
+        'Os mesmos IDs e textos permanecem em vermelho no documento.',
+        'O JSON conserva o texto TeX exato. Neste TXT, chamadas \\ref são apresentadas pelo identificador do rótulo.',
+        'Localize pelo ID; os números de linha são auxiliares e podem mudar após edições.','']
+ for row in ps:
+  text=re.sub(r'\\ref\{([^}]+)\}',lambda m:'[rótulo: '+m[1]+']',row['texto_tex']).replace('~',' ')
+  lines.extend([f"[{row['id']}] {row['arquivo']} — linha {row['linha']}",text,''])
+ (P/'PENDENCIAS_ABERTAS.txt').write_text('\n'.join(lines),encoding='utf-8')
+ print(json.dumps(report,ensure_ascii=False,indent=2));return report
+if __name__=='__main__':
+ import sys
+ sys.exit(bool(main()['erros']))

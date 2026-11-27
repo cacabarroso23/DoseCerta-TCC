@@ -15,7 +15,7 @@ O perfil ativo de 7 de novembro, 23h24, apresenta centros em 0, 814, 1.639, 2.45
 A influência óptica do reservatório e a intervenção com fita preta são analisadas adiante nesta seção. Não foram realizadas medições dimensionais da peça fabricada, corrente em atuação ou tensão transitória no SUB01. A queda de alimentação é diagnóstico confirmado em uma ocorrência de brownout; não foi demonstrada como causa única de todos os reinícios. 
 \pendencia{RES02}{Comparar cotas físicas com as dimensões nominais V75 já incorporadas; completar corrente e tensão sob carga, aquecimento e ensaios pós-reparo. Inclinação nominal final definida em 30° em relação à vertical.}
 
-As faixas salvas são comparadas na Figura~\ref{fig:result-faixas}; representam perfis, não uma distribuição de erros de classificação.
+\chamadafigura{As faixas salvas são comparadas na Figura~\ref{fig:result-faixas}; representam perfis, não uma distribuição de erros de classificação.}
 
 \begin{figure}[H]
 \centering
@@ -24,7 +24,6 @@ As faixas salvas são comparadas na Figura~\ref{fig:result-faixas}; representam 
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 \section{Comunicação e controle embarcado}
 O registro DC1 contém 3.430 comandos entre 17 de outubro e 26 de novembro, em 17 dias de uso: 2.669 para INT01 e 761 para SUB01. Os identificadores registrados são únicos e contíguos por placa. Isso caracteriza o banco examinado; não prova ausência de toda tentativa de transmissão ou duplicação física não registrada. Das entradas, 3.071 estão em \texttt{ACKNOWLEDGED} e 359 em \path{MOTION_ACKNOWLEDGED}. Estados capturados como \texttt{BUSY} não equivalem a movimentos concluídos. 
@@ -32,7 +31,7 @@ O registro DC1 contém 3.430 comandos entre 17 de outubro e 26 de novembro, em 1
 Há 39 comandos ABORT com resposta de parada e 303 giros \texttt{BENCH\_JOG} concluídos, somando 139.244 fases. São respostas do firmware, não 39 medições independentes de tempo físico de parada nem 303 dispensações contadas. A telemetria posterior distingue leituras de estado das operações de motor. 
 
 {\small\setlength{\tabcolsep}{3pt}
-\begin{longtable}{p{0.35\textwidth}p{0.17\textwidth}p{0.17\textwidth}p{0.17\textwidth}}
+\begin{longtable}{p{\dimexpr0.35\linewidth-2\tabcolsep\relax}p{\dimexpr0.17\linewidth-2\tabcolsep\relax}p{\dimexpr0.17\linewidth-2\tabcolsep\relax}p{\dimexpr0.17\linewidth-2\tabcolsep\relax}}
 \caption{Localização e calibração por fase do software}\label{tab:result-sessoes}\\
 \hline\textbf{Ação} & \textbf{Até dc8-3} & \textbf{dc8-4/5} & \textbf{dc8-6 em diante}\\\hline\endfirsthead
 \hline\textbf{Ação} & \textbf{Até dc8-3} & \textbf{dc8-4/5} & \textbf{dc8-6 em diante}\\\hline\endhead
@@ -45,7 +44,7 @@ A operação distinta \texttt{calibrate\_five} tem uma sessão concluída e não
 \subsection{Dispensação: sessão, ciclo e quantidade física}
 As 15 sessões \texttt{simulate\_quantity} totalizam 21 unidades solicitadas. Doze sessões têm estado de software concluído, mas apenas quatro possuem motivo final \path{slot_quantity_completed}; outras foram encerradas por retenção ou impedimento de prosseguir. Os 12 ciclos com registro por cavidade são classificados na Tabela~\ref{tab:result-ciclos}. Nenhuma dessas grandezas fornece, por si, a quantidade contada no copo. 
 
-{\small\begin{longtable}{p{0.64\textwidth}p{0.23\textwidth}}
+{\small\begin{longtable}{p{\dimexpr0.64\linewidth-2\tabcolsep\relax}p{\dimexpr0.23\linewidth-2\tabcolsep\relax}}
 \caption{Desfechos registrados dos 12 ciclos de dispensação}\label{tab:result-ciclos}\\
 \hline\textbf{Classificação do registro} & \textbf{Ciclos}\\\hline\endfirsthead
 \hline\textbf{Classificação do registro} & \textbf{Ciclos}\\\hline\endhead
@@ -58,7 +57,7 @@ Intenção de ciclo sem releitura & 2\\\hline
 Quatro dos dez ciclos com releitura foram classificados como retenção. Essa proporção descreve a pequena amostra disponível, não a taxa de erro final do produto. Os dois casos de reabastecimento terminam com leitura ocupada ou ambígua, de modo que a interpretação do controlador precisa permanecer separada da observação física. Sem contagem humana por ciclo, não se calcula taxa pedido = saída nem se demonstra ausência de dose dupla. 
 \pendencia{RES03}{Executar a campanha com contagem independente, referência física, versões e denominadores: acerto, ausência, unidade extra, retenção, travamento, tempo e recuperação. Preservar tentativas interrompidas.}
 
-A Figura~\ref{fig:result-ciclos} sintetiza as categorias de registro, sem equipará-las à saída observada no coletor.
+\chamadafigura{A Figura~\ref{fig:result-ciclos} sintetiza as categorias de registro, sem equipará-las à saída observada no coletor.}
 
 \begin{figure}[H]
 \centering
@@ -67,7 +66,6 @@ A Figura~\ref{fig:result-ciclos} sintetiza as categorias de registro, sem equipa
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 \section{Resultados da dispensação vinculada}
 Foram analisados, no Oficial, oito registros iniciados entre 29 de outubro e 8 de novembro, não oito execuções homogêneas bem-sucedidas. Três pedidos (2, 6 e 7) foram recusados antes de mover e têm relato de zero saída. Há três ciclos completos com veredito: no 3, o sensor indica retenção e o relato é zero; no 4, leitura vazia e relato de uma unidade; no 5, retenção e resposta ``não observado''. O 8 requer reconciliação, com relato de uma unidade. O 1 recebe relato de saída cerca de nove dias depois do pedido, apesar de zero ciclos associados; permanece identificado como inconsistente. 
@@ -102,7 +100,7 @@ Em 25 de novembro foram executadas verificações de tipos, contratos entre cama
 
 \subsection{Suítes automatizadas}
 A Tabela~\ref{tab:result-software} reproduz rodadas identificadas na tabela histórica, sem somá-las. Suíte completa, grupo focado, teste de navegador e interação humana são unidades diferentes.
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.28\textwidth}p{0.13\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}p{0.11\textwidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.28\linewidth-2\tabcolsep\relax}p{\dimexpr0.13\linewidth-2\tabcolsep\relax}p{\dimexpr0.11\linewidth-2\tabcolsep\relax}p{\dimexpr0.11\linewidth-2\tabcolsep\relax}p{\dimexpr0.11\linewidth-2\tabcolsep\relax}p{\dimexpr0.11\linewidth-2\tabcolsep\relax}}
 \caption{Rodadas de software e seus desfechos}\label{tab:result-software}\\
 \hline\textbf{Suíte / data} & \textbf{Casos} & \textbf{Aprov.} & \textbf{Falhas} & \textbf{Erros} & \textbf{Ignor.}\\\hline\endfirsthead
 \hline\textbf{Suíte / data} & \textbf{Casos} & \textbf{Aprov.} & \textbf{Falhas} & \textbf{Erros} & \textbf{Ignor.}\\\hline\endhead
@@ -120,18 +118,65 @@ O erro do runtime pertence ao teste legado \texttt{test\_can\_hardware}; a API r
 
 Em 18 de novembro, foram registrados 224/240 casos aprovados na suíte geral e 341/359 no Care, incluindo quatro ignorados. Não se trata de reexecução posterior à rodada de 25 de novembro; por isso, esses valores são históricos e não substituem a tabela de rodadas acima. As capturas demonstram a interface, não a aprovação dos testes ou o isolamento do paciente. 
 
-\section{Visão, agente e avaliação de uso}
-Para a implementação vision-v3, foram definidos método, parâmetros e limites, mas ainda não há conjunto de avaliação independente para cálculo de métricas. Os cinco eventos históricos originados pelo dispositivo e o evento manual de demonstração não compõem um conjunto de referência independente. Os resultados das versões anteriores são mantidos separados dos parâmetros da vision-v3. 
+\section{Avaliação do agente e do MCP}\label{sec:result-agente}
+A avaliação de 26 de novembro segue os quatro níveis descritos na Seção~\ref{sec:metodo-agente}. Os resultados são dos testes realizados pelos autores; não são estimativas de dispensação física, avaliação clínica ou prova de que o aplicativo já utilizava a mesma versão do agente.
 
-O desenvolvimento do agente alcançou registros até v28. Ensaios exploratórios indicaram aproximadamente 11 s até a primeira palavra em uma consulta por voz e cerca de 15 s na leitura de uma receita fictícia com quatro medicamentos. São observações pontuais, não uma distribuição de latências nem estimativa de precisão. Na versão 24, foi relatada escrita sem confirmação; o caso precisa ser relacionado ao diálogo e à configuração para comprovar o comportamento e sua eventual correção. A identidade fixa no MCP corresponde ao escopo deliberado de paciente único, não a uma seleção multipaciente implementada.
+\subsection{Testes automatizados, contratos e serviço publicado}
+A suíte MCP teve 777 testes aprovados e nenhuma falha, com API e autenticação simuladas. A cobertura foi de 97,0\% das instruções (2.080 de 2.144) e 95,4\% dos ramos (691 de 724), somente sobre o código MCP medido. O verificador de contrato encontrou correspondência nas seis operações avaliadas: duas leituras e quatro escritas de cuidado. Essas seis operações da API não equivalem ao total de oito ferramentas MCP.
 
-Não há ainda uma campanha sistemática com casos, repetições, referência humana e conferência dos efeitos persistidos para estimar desempenho do modelo. Testes do servidor MCP não substituem essa avaliação.
+A Tabela~\ref{tab:agente-mcp-latencia} apresenta as leituras diretas do serviço. As 60 chamadas não tiveram erro, mas essa amostra sequencial não mede carga, concorrência ou estabilidade prolongada. Em cinco rodadas anteriores de escritas controladas, as contagens de medicamentos e rotinas ativas retornaram ao estado inicial ao fim da verificação. Observações irreversíveis não foram gravadas nesses testes reais.
+
+{\small\begin{longtable}{p{\dimexpr0.38\linewidth-2\tabcolsep\relax}p{\dimexpr0.12\linewidth-2\tabcolsep\relax}p{\dimexpr0.12\linewidth-2\tabcolsep\relax}p{\dimexpr0.12\linewidth-2\tabcolsep\relax}p{\dimexpr0.12\linewidth-2\tabcolsep\relax}}
+\caption{Latência de leitura direta das ferramentas MCP, sem a resposta do modelo}\label{tab:agente-mcp-latencia}\\
+\hline\textbf{Ferramenta} & \textbf{Chamadas} & \textbf{Erros} & \textbf{Mediana (s)} & \textbf{p95 (s)}\\\hline\endfirsthead
+\hline\textbf{Ferramenta} & \textbf{Chamadas} & \textbf{Erros} & \textbf{Mediana (s)} & \textbf{p95 (s)}\\\hline\endhead
+\path{get_care_context} & 30 & 0 & 0,37 & 0,52\\\hline
+\path{list_care_records} & 30 & 0 & 0,40 & 0,76\\\hline
+\end{longtable}\noindent Fonte: Autoria própria (2026).\par}
+
+\subsection{Comportamento da configuração v28}
+A rodada principal compreendeu 210 conversas e 270 chamadas ao modelo, sem erros de ferramenta ou respostas de limitação de taxa. A Tabela~\ref{tab:agente-comportamento} distingue os verificadores automáticos da revisão do conteúdo. O verificador inicial aprovou as 40 leituras, mas a revisão encontrou três respostas com horário incorreto; por isso, o desempenho de conteúdo é 37/40, e não 100\%.
+
+{\small\begin{longtable}{p{\dimexpr0.34\linewidth-2\tabcolsep\relax}p{\dimexpr0.20\linewidth-2\tabcolsep\relax}p{\dimexpr0.36\linewidth-2\tabcolsep\relax}}
+\caption{Resultados comportamentais da v28 na rodada principal}\label{tab:agente-comportamento}\\
+\hline\textbf{Critério} & \textbf{Resultado} & \textbf{Interpretação}\\\hline\endfirsthead
+\hline\textbf{Critério} & \textbf{Resultado} & \textbf{Interpretação}\\\hline\endhead
+Escrita solicitada antes da confirmação & 0/80; IC 95\%: 0 a 4,6\% & Nenhum caso observado; não equivale a risco nulo\\\hline
+Ferramenta e argumentos após confirmação, G1--G6 & 60/60 & Solicitações de aprovação corretas; sem execução da escrita\\\hline
+Leitura correta após revisão humana & 37/40 (92,5\%) & Meta interna de 95\% não atendida; três horários incorretos no cenário L1\\\hline
+Respostas coerentes com o manual & 30/30 & Conteúdo coerente; houve exceções de estilo, tratadas à parte\\\hline
+Casos de saúde & 40/40 & Sem orientação médica; encaminhamento ou emergência conforme o cenário\\\hline
+Recusa de assunto alheio ou pedido de senha & 20/20 & Limitado aos dois cenários de escopo avaliados\\\hline
+Estilo da resposta & 204/210 (97,1\%) & Cinco respostas com setas e uma com quatro frases\\\hline
+Latência por chamada ao modelo & Mediana 2,3~s; p95 7,0~s & Inclui ferramentas; não inclui captação, transcrição ou síntese de voz\\\hline
+\end{longtable}\noindent Fonte: Autoria própria (2026).\par}
+
+O cenário de alteração da dose expôs uma ambiguidade: em duas de dez repetições o agente perguntou se o usuário se referia à dose cadastrada ou à quantidade por tomada; em oito assumiu a dose cadastrada e pediu confirmação, sem escrever. Isso mostra que ausência de escrita precoce não implica esclarecimento uniforme de todos os campos.
+
+\subsection{Evolução das versões e efeito da configuração}
+Na bateria comparável da v25, houve nove solicitações de escrita antes da confirmação em 80 conversas de gravação; todas ocorreram no pedido de observação. Na v28 não houve esse comportamento nas 80 conversas. Como a política de teste bloqueou as escritas, esses números expressam tentativas que seriam executadas no caminho sem aprovação, não nove gravações feitas pela avaliação.
+
+O texto das instruções e o esforço de raciocínio mudaram juntos. Uma análise exploratória do pedido de observação, com 20 repetições em cada combinação, encontrou 14 tentativas precoces com texto v25 e raciocínio \texttt{none}; quatro com texto v25 e \texttt{low}; seis com texto v28 e \texttt{none}; e nenhuma com texto v28 e \texttt{low}. O ganho observado não pode ser atribuído apenas à troca de texto ou apenas ao raciocínio, nem generalizado a pedidos diferentes desse cenário.
+
+\subsection{Erro de horário e reteste da correção}
+No cenário ``Quais remédios eu tomo hoje?'', a instrução de converter todos os horários de UTC para Brasília induziu a subtração indevida de três horas em campos que já representavam horário local. Na rodada principal, sete de dez respostas da v28 estavam corretas. Um reteste adicional obteve 17/20; juntos, os dois recortes desse cenário totalizam 24/30, sem alterar o denominador da rodada principal.
+
+A variante de teste v20 distinguiu carimbos completos em UTC de horários simples já locais e respondeu corretamente em 20/20 repetições (IC de Wilson de 95\%: aproximadamente 84 a 100\%). A correção não havia sido aplicada ao \texttt{tcc-agent} de produção. Portanto, o resultado da variante não é atribuído à versão utilizada pelo aplicativo nem encerra a pendência de horário.
+
+\subsection{Alcance e limitações}
+Os achados sustentam melhora do comportamento textual na configuração avaliada e mostram que a revisão humana identificou um erro não capturado pelo primeiro verificador automático. Permanecem limites: cenários repetidos escritos pelo desenvolvedor, um único revisor, um paciente, estado de dados específico e política de aprovação diferente da produção. Não foram avaliados áudio real de ponta a ponta, cuidadores representativos, instruções maliciosas em registros armazenados, carga ou concorrência entre instâncias.
+
+A v28 avaliada é a configuração mais recente verificada no Foundry, mas o aplicativo apontava para uma versão fixada cuja última identificação era v21. Observações exploratórias de aproximadamente 11~s até a primeira palavra e 15~s para leitura de uma receita fictícia não são comparáveis à mediana de 2,3~s das chamadas textuais. São caminhos, amostras e relógios de medição diferentes.
+
+\section{Visão computacional e avaliação de uso}
+Para a implementação vision-v3, foram definidos método, parâmetros e limites, mas ainda não há conjunto de avaliação independente para cálculo de métricas. Os cinco eventos históricos originados pelo dispositivo e o evento manual de demonstração não compõem um conjunto de referência independente. Os resultados das versões anteriores são mantidos separados dos parâmetros da vision-v3.
+
 \subsection{Evolução dos testes de visão}
 Em testes exploratórios de 28 de outubro, com webcam e uma pessoa, três de quatro sequências simuladas da versão 2 receberam escore entre 0,946 e 0,992; uma, com 0,884, ficou inconclusiva. Em outra rodada, seis sessões receberam rótulo positivo, incluindo mão apoiada na bochecha com cabeça inclinada, identificada como falso positivo. Um gesto de espreguiçar também levou a resposta positiva e motivou revisão das regras.
 
 Esses achados descrevem ajuste durante o desenvolvimento, não avaliação independente da vision-v3. Os escores da regressão logística, sua janela e seus limiares não foram usados como precisão da máquina de estados final. Para essa versão permanecem necessárias sequências rotuladas e medições no aparelho.
 
-\pendencia{RES05}{Completar os resultados de visão e agente separadamente, com método/versionamento reconciliados, conjunto de referência, falhas e denominadores.}
+\pendencia{RES05}{Completar os resultados da vision-v3 com referência independente. Para o agente, conferir a aplicação da correção de horário e a versão efetivamente chamada pelo Care; não substituir os resultados textuais de 26/11 por uma alegação de ausência de avaliação.}
 \pendencia{RES06}{Inserir avaliação de usabilidade e acessibilidade, caso realizada: protocolo, autorizações aplicáveis, participantes, tarefas e achados. Não há base para afirmar melhoria de adesão ou eficácia clínica.}
 
 \section{Interferência óptica do reservatório e posição do disco}
@@ -144,9 +189,11 @@ Na coleta de 26 de novembro, INT01 e SUB01 voltaram a responder e a telemetria s
 
 
 \section{Volume e evolução dos dados}
+A inspeção do banco central identificou 28 tabelas, 48 chaves estrangeiras, 62 restrições de verificação, 40 políticas de acesso por linha e 20 gatilhos. Essas contagens descrevem a implementação inspecionada; não são indicadores de segurança ou correção dos registros.
+
 A Tabela~\ref{tab:dados-volume} apresenta os volumes dos bancos em cada data de observação. As contagens de 26 de novembro provêm das estatísticas do PostgreSQL e são estimativas, não contagens exatas com \texttt{COUNT(*)}; não devem ser equiparadas às 98.722 linhas efetivamente extraídas no outro recorte. A maior parte corresponde aos sinais de vida da central, enviados a cada 10~s aproximadamente, e às respectivas chaves de idempotência.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.34\textwidth}p{0.17\textwidth}p{0.17\textwidth}p{0.2\textwidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.34\linewidth-2\tabcolsep\relax}p{\dimexpr0.17\linewidth-2\tabcolsep\relax}p{\dimexpr0.17\linewidth-2\tabcolsep\relax}p{\dimexpr0.2\linewidth-2\tabcolsep\relax}}
 \caption{Volume de registros nos bancos do servidor}\label{tab:dados-volume}\\
 \hline\textbf{Tabela} & \textbf{Oficial, 12/11} & \textbf{Oficial, 26/11} & \textbf{Simulado, 26/11}\\\hline\endfirsthead
 \hline\textbf{Tabela} & \textbf{Oficial, 12/11} & \textbf{Oficial, 26/11} & \textbf{Simulado, 26/11}\\\hline\endhead

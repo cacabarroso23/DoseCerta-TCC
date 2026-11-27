@@ -4,7 +4,7 @@ A arquitetura foi organizada para separar a execução física das tarefas de re
 \subsection{Organização física}
 O dispositivo é composto por unidade central, intermediário e submódulos dosadores. A configuração de expansão prevê dois intermediários, cada um com quatro posições. Cada submódulo armazena um medicamento e contém seu mecanismo, motor, sensor e ESP32. A bancada de referência reúne uma central, um intermediário INT01 e um submódulo SUB01; a capacidade de expansão não é apresentada como conjunto completo ensaiado.
 
-A Raspberry Pi Zero 2 W concentra agenda, registros, comunicação externa e periféricos centrais. O intermediário distribui alimentação e barramento e controla a sinalização de suas posições. O submódulo produz a sequência de acionamento e realiza a leitura óptica. A Figura~\ref{fig:blocos_fisicos} mostra essa organização e os componentes associados.
+\chamadafigura{A Raspberry Pi Zero 2 W concentra agenda, registros, comunicação externa e periféricos centrais. O intermediário distribui alimentação e barramento e controla a sinalização de suas posições. O submódulo produz a sequência de acionamento e realiza a leitura óptica. A Figura~\ref{fig:blocos_fisicos} mostra essa organização e os componentes associados.}
 
 \begin{figure}[H]
 \centering
@@ -13,13 +13,11 @@ A Raspberry Pi Zero 2 W concentra agenda, registros, comunicação externa e per
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 \subsection{Conexão entre os módulos}
 A interface modular utiliza quatro vias: +5 V, GND, SDA e SCL. A alimentação e o barramento atravessam o intermediário e chegam aos encaixes, sem criação de um segundo barramento para cada submódulo. A Raspberry Pi atua como único controlador I²C; intermediário e submódulos respondem diretamente a seus endereços.
 
-O intermediário, portanto, não roteia os comandos. Sua função elétrica de passagem das quatro vias é distinta de sua função lógica de controlar os LEDs. A Figura~\ref{fig:barramento_compartilhado} apresenta essa topologia. Como os encaixes compartilham o mesmo nó, o endereço identifica a unidade que respondeu, mas não revela automaticamente sua posição física.
+\chamadafigura{O intermediário, portanto, não roteia os comandos. Sua função elétrica de passagem das quatro vias é distinta de sua função lógica de controlar os LEDs. A Figura~\ref{fig:barramento_compartilhado} apresenta essa topologia. Como os encaixes compartilham o mesmo nó, o endereço identifica a unidade que respondeu, mas não revela automaticamente sua posição física.}
 
 \begin{figure}[H]
 \centering
@@ -28,15 +26,13 @@ O intermediário, portanto, não roteia os comandos. Sua função elétrica de p
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 A associação entre identidade, encaixe e medicamento é registrada com confirmação do usuário. Essa separação permite retirar um submódulo sem tratar seu endereço como sinônimo de conteúdo ou localização. A sinalização dos encaixes apoia esse procedimento e é detalhada na Seção~\ref{cap:eletrica}.
 
 \subsection{Divisão entre borda e servidor}
 A central conserva agenda e registros operacionais em SQLite. O servidor oferece a API e mantém os dados compartilhados em PostgreSQL. O Care utiliza o serviço de autenticação para iniciar a sessão e encaminha as operações do cuidado à API, que aplica as regras de negócio. A central também se comunica com a API, sem acesso direto ao banco central.
 
-A Figura~\ref{fig:arquitetura_borda_nuvem} apresenta essa divisão. As caixas de entrada e saída locais permitem registrar comandos e eventos antes da transmissão. O vínculo entre solicitação e resultado é mantido durante a sincronização, evitando que a reconexão seja interpretada como autorização para repetir um efeito físico.
+\chamadafigura{A Figura~\ref{fig:arquitetura_borda_nuvem} apresenta essa divisão. As caixas de entrada e saída locais permitem registrar comandos e eventos antes da transmissão. O vínculo entre solicitação e resultado é mantido durante a sincronização, evitando que a reconexão seja interpretada como autorização para repetir um efeito físico.}
 
 \begin{figure}[H]
 \centering
@@ -44,8 +40,6 @@ A Figura~\ref{fig:arquitetura_borda_nuvem} apresenta essa divisão. As caixas de
 \includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/arquitetura_borda_nuvem.png}
 \fonte{Autoria própria (2026).}
 \end{figure}
-
-\noindent
 
 
 \subsection{Fluxo funcional}

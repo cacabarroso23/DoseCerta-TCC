@@ -2,7 +2,7 @@
 A organização elétrica acompanha a divisão modular do aparelho. A central distribui alimentação e coordena o barramento; o intermediário controla a sinalização; e o submódulo reúne o acionamento e a leitura óptica. O projeto separa os ramais de potência de 5 V da lógica de 3,3 V e mantém referência de terra comum.
 
 \subsection{Distribuição da alimentação}
-Foi prevista uma fonte regulada de 5 V com capacidade nominal de 10 A. A distribuição utiliza ramais para a Raspberry Pi, o buzzer e a cadeia de módulos. No submódulo, a alimentação atende à ESP32 e à placa de acionamento do motor, enquanto o circuito óptico utiliza a referência de 3,3 V. A Figura~\ref{fig:distribuicao_alimentacao} apresenta a organização funcional. 
+\chamadafigura{Foi prevista uma fonte regulada de 5 V com capacidade nominal de 10 A. A distribuição utiliza ramais para a Raspberry Pi, o buzzer e a cadeia de módulos. No submódulo, a alimentação atende à ESP32 e à placa de acionamento do motor, enquanto o circuito óptico utiliza a referência de 3,3 V. A Figura~\ref{fig:distribuicao_alimentacao} apresenta a organização funcional.}
 
 \begin{figure}[H]
 \centering
@@ -11,13 +11,11 @@ Foi prevista uma fonte regulada de 5 V com capacidade nominal de 10 A. A distrib
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 A corrente nominal da fonte não corresponde ao consumo do aparelho. A avaliação do fornecimento considera queda de tensão e corrente durante repouso, comunicação e atuação. O retorno comum também precisa manter referência adequada entre os sinais, evitando que o acionamento do motor comprometa as leituras e o barramento.
 
 \subsection{Unidade central}
-A Raspberry Pi Zero 2 W utiliza GPIO2 para SDA e GPIO3 para SCL, com lógica de 3,3 V. A central também reúne o módulo de relógio HW-084 com DS3231M, o buzzer e os sinais luminosos. A utilização do RTC exige habilitação no Linux e bateria compatível. Seu estado no ensaio é apresentado na Seção~\ref{cap:resultados}.  A Figura~\ref{fig:circuito_central} apresenta as ligações por função. A interface de quatro vias deve ser identificada por continuidade, pois uma relação textual de sinais não determina sua ordem física no conector.
+\chamadafigura{A Raspberry Pi Zero 2 W utiliza GPIO2 para SDA e GPIO3 para SCL, com lógica de 3,3 V. A central também reúne o módulo de relógio HW-084 com DS3231M, o buzzer e os sinais luminosos. A utilização do RTC exige habilitação no Linux e bateria compatível. Seu estado no ensaio é apresentado na Seção~\ref{cap:resultados}.  A Figura~\ref{fig:circuito_central} apresenta as ligações por função. A interface de quatro vias deve ser identificada por continuidade, pois uma relação textual de sinais não determina sua ordem física no conector.}
 
 \begin{figure}[H]
 \centering
@@ -26,10 +24,8 @@ A Raspberry Pi Zero 2 W utiliza GPIO2 para SDA e GPIO3 para SCL, com lógica de 
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-
-O buzzer é alimentado pelo ramal de 5 V e chaveado pelo transistor 2N7000. O GPIO17 atua na porta, e o resistor de 10 k\ensuremath{\Omega} entre porta e fonte mantém a condição de desligamento. A Figura~\ref{fig:buzzer} detalha esse estágio. A identificação dos terminais e a condução com 3,3 V devem ser conferidas para o componente instalado.
+\chamadafigura{O buzzer é alimentado pelo ramal de 5 V e chaveado pelo transistor 2N7000. O GPIO17 atua na porta, e o resistor de 10 k\ensuremath{\Omega} entre porta e fonte mantém a condição de desligamento. A Figura~\ref{fig:buzzer} detalha esse estágio. A identificação dos terminais e a condução com 3,3 V devem ser conferidas para o componente instalado.}
 
 \begin{figure}[H]
 \centering
@@ -38,11 +34,9 @@ O buzzer é alimentado pelo ramal de 5 V e chaveado pelo transistor 2N7000. O GP
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 \subsection{Submódulo dosador}
-No submódulo, a ESP32 controla o 28BYJ-48 por meio da placa ULN2003 e lê o TCRT5000 no ADC1. Os sinais do motor utilizam GPIO27, GPIO26, GPIO25 e GPIO33, e a leitura óptica utiliza GPIO32. O barramento chega aos GPIO13 e GPIO14. A Figura~\ref{fig:circuito_submodulo} reúne essas ligações.
+\chamadafigura{No submódulo, a ESP32 controla o 28BYJ-48 por meio da placa ULN2003 e lê o TCRT5000 no ADC1. Os sinais do motor utilizam GPIO27, GPIO26, GPIO25 e GPIO33, e a leitura óptica utiliza GPIO32. O barramento chega aos GPIO13 e GPIO14. A Figura~\ref{fig:circuito_submodulo} reúne essas ligações.}
 
 \begin{figure}[H]
 \centering
@@ -51,13 +45,11 @@ No submódulo, a ESP32 controla o 28BYJ-48 por meio da placa ULN2003 e lê o TCR
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 O emissor infravermelho utiliza resistor de 220\ensuremath{\Omega}; o fototransistor é lido com resistor de 10 k\ensuremath{\Omega} para 3,3 V. A leitura é interpretada em conjunto com o movimento e a calibração, não como um detector independente de ingestão. O acionamento do motor utiliza a alimentação de potência, sem retirar corrente das saídas lógicas do microcontrolador.
 
 \subsection{Intermediário e sinalização}
-O intermediário utiliza quatro LEDs RGB 5050, associados aos canais L1 a L4. Os sinais são chaveados por dois ULN2003A, com resistores de 330\ensuremath{\Omega} nos canais de cor. A Figura~\ref{fig:circuito_intermediario} apresenta a topologia funcional, e a Tabela~\ref{tab:eletrica-gpio} relaciona os GPIO. 
+\chamadafigura{O intermediário utiliza quatro LEDs RGB 5050, associados aos canais L1 a L4. Os sinais são chaveados por dois ULN2003A, com resistores de 330\ensuremath{\Omega} nos canais de cor. A Figura~\ref{fig:circuito_intermediario} apresenta a topologia funcional, e a Tabela~\ref{tab:eletrica-gpio} relaciona os GPIO.}
 
 \begin{figure}[H]
 \centering
@@ -66,10 +58,8 @@ O intermediário utiliza quatro LEDs RGB 5050, associados aos canais L1 a L4. Os
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-
-{\small\begin{longtable}{p{0.22\textwidth}p{0.22\textwidth}p{0.22\textwidth}p{0.22\textwidth}}
+{\small\begin{longtable}{p{\dimexpr0.22\linewidth-2\tabcolsep\relax}p{\dimexpr0.22\linewidth-2\tabcolsep\relax}p{\dimexpr0.22\linewidth-2\tabcolsep\relax}p{\dimexpr0.22\linewidth-2\tabcolsep\relax}}
 \caption{GPIO dos canais luminosos do intermediário}\label{tab:eletrica-gpio}\\
 \hline\textbf{Canal} & \textbf{Vermelho} & \textbf{Verde} & \textbf{Azul}\\\hline\endfirsthead
 \hline\textbf{Canal} & \textbf{Vermelho} & \textbf{Verde} & \textbf{Azul}\\\hline\endhead
@@ -79,7 +69,7 @@ L3 & 22 & 21 & 19\\\hline
 L4 & 18 & 17 & 16\\\hline
 \end{longtable}\noindent Fonte: Autoria própria (2026).\par}
 
-A disposição dos encaixes e dos canais é mostrada na Figura~\ref{fig:encaixes_intermediario}. Cada posição fica entre dois LEDs, permitindo identificá-la pelo par adjacente. Assim, a confirmação visual de uma posição não depende de um LED instalado no submódulo.
+\chamadafigura{A disposição dos encaixes e dos canais é mostrada na Figura~\ref{fig:encaixes_intermediario}. Cada posição fica entre dois LEDs, permitindo identificá-la pelo par adjacente. Assim, a confirmação visual de uma posição não depende de um LED instalado no submódulo.}
 
 \begin{figure}[H]
 \centering
@@ -87,8 +77,6 @@ A disposição dos encaixes e dos canais é mostrada na Figura~\ref{fig:encaixes
 \includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/encaixes_intermediario.png}
 \fonte{Autoria própria (2026).}
 \end{figure}
-
-\noindent
 
 
 \subsection{Barramento, contatos e verificações}
@@ -99,7 +87,7 @@ A seleção de capacitores, proteções e condutores deve considerar a montagem 
 \subsection{Lista técnica da montagem e orçamento}
 A Tabela~\ref{tab:materiais-instalados} organiza a lista técnica por função. A configuração de bancada considerada utiliza uma central, um INT01 e um SUB01. Quantidades de expansão, itens apenas orçados e alterações ainda propostas não são apresentados como instalação efetiva. Onde falta identificação comercial ou contagem, a lacuna é mantida explicitamente.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.21\textwidth}p{0.31\textwidth}p{0.36\textwidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.21\linewidth-2\tabcolsep\relax}p{\dimexpr0.31\linewidth-2\tabcolsep\relax}p{\dimexpr0.36\linewidth-2\tabcolsep\relax}}
 \caption{Lista técnica dos elementos da montagem de referência}\label{tab:materiais-instalados}\\
 \hline\textbf{Unidade} & \textbf{Elemento / quantidade} & \textbf{Função e identificação}\\\hline\endfirsthead
 \hline\textbf{Unidade} & \textbf{Elemento / quantidade} & \textbf{Função e identificação}\\\hline\endhead
@@ -110,11 +98,12 @@ Central & Cabo flexível da câmera / 1 & Ligação CSI; comprimento e adaptaç�
 Central & HW-084 com DS3231M / 1 & Referência temporal; bateria e habilitação a conferir\\\hline
 Alimentação & Fonte de 5 V / 1 & Alimentação do conjunto; corrente nominal da unidade instalada a confirmar\\\hline
 Intermediário & ESP32 INT01 / 1 & Sinalização e identificação; endereço I²C \texttt{0x20}\\\hline
-Intermediário & LED RGB 5050 comum, 6 terminais / 4 & Associação dos encaixes; dois ULN2003A e resistores de 330~$\Omega$\\\hline
+Intermediário & LED RGB 5050 comum, 6 terminais / 4 & Associação dos encaixes; resistores de 330~$\Omega$ por canal\\\hline
+Intermediário & ULN2003A / 2 & Chaveamento dos canais dos quatro LEDs RGB\\\hline
 Submódulo & ESP32 SUB01 / 1 & Motor, sensor e controle local; endereço \texttt{0x30}\\\hline
 Submódulo & Motor 28BYJ-48 / 1 & Acionamento do disco; ligação ao estágio ULN2003\\\hline
 Submódulo & Placa ULN2003 / 1 & Interface de potência das bobinas\\\hline
-Submódulo & Sensor TCRT5000 / 1 & Leitura reflexiva da cavidade\\\hline
+Submódulo & Sensor TCRT5000 / 1 & Leitura reflexiva da cavidade; resistor de 220~$\Omega$ no emissor e de 10~k$\Omega$ no fototransistor\\\hline
 Sinalização & Buzzer / 1; MOSFET 2N7000 / 1 & Acionamento no GPIO17, resistor de 10 k$\Omega$ entre porta e fonte; conferir modelo do buzzer\\\hline
 Interface modular & Contatos pogo e chicote de quatro vias & +5 V, GND, SDA e SCL; conferir quantidade de contatos e bitolas instaladas\\\hline
 Montagem elétrica & Resistores de 220~$\Omega$, 330~$\Omega$ e 10 k$\Omega$ & Sensor, LEDs e polarização conforme esquema; conferir contagem e potência instaladas\\\hline
@@ -125,7 +114,7 @@ A capacidade nominal da fonte não é o consumo medido. Capacitores sugeridos pa
 \pendencia{ELE-BOM}{Conferir a lista instalada: fabricante/modelo, quantidades, marcações, capacidade do cartão e fonte, variante de câmera/RTC, resistores, transistores, contatos, bitolas e fixadores; apurar custo efetivo sem substituir por orçamento.}
 
 \subsection{Correspondência com a montagem fotografada}
-A Figura~\ref{fig:central_interna_2026} mostra o interior da central, a Raspberry Pi, o cabo da câmera e o módulo de relógio. A fotografia do RTC comprova sua presença física no conjunto registrado, mas não confirma habilitação, acerto nem manutenção do tempo após retirada da alimentação principal. 
+\chamadafigura{A Figura~\ref{fig:central_interna_2026} mostra o interior da central, a Raspberry Pi, o cabo da câmera e o módulo de relógio. A fotografia permite localizar o RTC e suas conexões na central. A habilitação, o ajuste e a retenção de tempo após retirada da alimentação são verificados por ensaio, descrito na Seção~\ref{cap:testes}; seus resultados não são deduzidos da presença do componente.}
 
 \begin{figure}[H]
 \centering
@@ -134,9 +123,8 @@ A Figura~\ref{fig:central_interna_2026} mostra o interior da central, a Raspberr
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-As Figuras~\ref{fig:int_fisico_2026} e~\ref{fig:int_chicote_2026} permitem relacionar os encaixes, indicadores e chicote à descrição funcional. O I²C comum identifica a placa, não a posição física do encaixe; a associação continua dependente de cadastro e confirmação humana. A orientação dos canais não foi deduzida das cores aparentes nas fotos.
+\chamadafigura{As Figuras~\ref{fig:int_fisico_2026} e~\ref{fig:int_chicote_2026} permitem relacionar os encaixes, indicadores e chicote à descrição funcional. O I²C comum identifica a placa, não a posição física do encaixe; a associação continua dependente de cadastro e confirmação humana. A orientação dos canais não foi deduzida das cores aparentes nas fotos.}
 
 \begin{figure}[H]
 \centering
@@ -145,7 +133,6 @@ As Figuras~\ref{fig:int_fisico_2026} e~\ref{fig:int_chicote_2026} permitem relac
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 \begin{figure}[H]
 \centering
@@ -154,9 +141,8 @@ As Figuras~\ref{fig:int_fisico_2026} e~\ref{fig:int_chicote_2026} permitem relac
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-A Figura~\ref{fig:sub_eletronica_2026} documenta ESP32, motor e placa de acionamento do submódulo. Esses registros vinculam a descrição aos componentes montados, sem substituir medições de tensão, corrente ou temperatura sob carga.
+\chamadafigura{A Figura~\ref{fig:sub_eletronica_2026} documenta ESP32, motor e placa de acionamento do submódulo. Esses registros vinculam a descrição aos componentes montados, sem substituir medições de tensão, corrente ou temperatura sob carga.}
 
 \begin{figure}[H]
 \centering
@@ -165,7 +151,6 @@ A Figura~\ref{fig:sub_eletronica_2026} documenta ESP32, motor e placa de acionam
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 \subsection*{\textcolor{DCPendente}{Complementações necessárias}}
 \pendencia{ELE01}{Informar marca/modelo da fonte instalada, etiqueta, regulação, fusíveis, aterramento, proteção e cabeamento. Medir tensão na Pi e nos módulos, queda de tensão, corrente em repouso/atuação e aquecimento. Não tratar 10 A como consumo.}
@@ -176,4 +161,4 @@ A Figura~\ref{fig:sub_eletronica_2026} documenta ESP32, motor e placa de acionam
 \pendencia{ELE06}{Identificar RTC e bateria realmente instalados; conferir carga e compatibilidade da placa, habilitação no Linux, leitura de /dev/rtc0 e teste após desligamento sem rede. A bateria do RTC não alimenta a Pi.}
 \pendencia{ELE07}{Fechar ensaios de buzzer, LEDs centrais, chaveamento, aquecimento, reinício e interferência em conjunto. Inserir esquema final, registros dos instrumentos e condições; confirmar capacitores/proteções acrescentados nos reparos.}
 \pendencia{BOM01}{Conciliar os orçamentos XLSX e XLSM/contrato com compras, doações e fretes; o valor anterior de R\$ 2.512,55 não foi localizado e não é adotado. Não preencher custo realizado com orçamento.}
-\pendencia{BOM02}{Completar a lista técnica instalada com sensores, conectores pogo, resistores, drivers de LEDs, buzzer/MOSFET, RTC, bateria, cabos, proteções e demais itens. Conferir a troca de WS2812B cotado pelo RGB comum documentado.}
+\pendencia{BOM02}{Conferir fisicamente as quantidades e preencher os campos ainda desconhecidos do inventário: fabricante/variante do RTC, bateria e seu circuito, tipo e número de contatos pogo, cabos, proteções e componentes acrescidos nos reparos. A lista já incorpora sensor, resistores, drivers RGB e buzzer/MOSFET identificados; não foi mantido WS2812B apenas por constar na compra.}

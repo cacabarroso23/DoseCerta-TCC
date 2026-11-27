@@ -7,7 +7,7 @@ Antes de cada bloco, devem ser registrados revisão mecânica, disco, unidade f�
 Uma tentativa de dispensação corresponde a um pedido identificado e seu desfecho, inclusive quando recusado ou interrompido. ``Unidade de teste'' designa o objeto físico usado no ensaio, com tipo e dimensões identificados; não significa necessariamente medicamento destinado a ingestão. O número de pedidos, de ciclos internos, de unidades solicitadas e de unidades coletadas é conservado separadamente.
 
 \subsection{Dispensação com contagem independente}
-A campanha controlada consiste em repetir um roteiro sob condições registradas, mantendo constantes as características escolhidas para o bloco. A quantidade no copo é contada por observação física, sem adotar como verdade o estado do motor, a leitura do sensor ou a baixa no aplicativo. Essa é a referência independente. Sua comparação com o pedido permite identificar acerto, ausência, unidade extra, retenção, travamento e resultado não observado.
+A campanha controlada consiste em repetir um roteiro sob condições registradas, mantendo constantes as características escolhidas para o bloco. A quantidade no copo é contada por observação física, sem adotar como verdade o estado do motor, a leitura do sensor ou a baixa no aplicativo. Essa é a referência independente. Por exemplo: pede-se uma unidade; uma pessoa conta o que chegou ao copo e anota zero, uma, duas ou mais unidades, independentemente do que a tela informou. A contagem pode ser revisada por fotografia ou vídeo identificado, sem substituir a observação ausente por uma suposição. Sua comparação com o pedido permite identificar acerto, ausência, unidade extra, retenção, travamento e resultado não observado.
 
 O procedimento compreende conferir o estoque inicial, identificar o pedido, executar sem reenvio indevido, contar o coletor, registrar tempo e condição do mecanismo e conferir os estoques físico e digital. Fotografias identificadas apoiam a auditoria. Ausência de observação não é registrada como zero. Mudança de peça, ajuste ou versão inicia novo bloco; não elimina falhas do anterior. Fichas e proposta de blocos estão no Apêndice~\ref{ap:ensaios}.
 
@@ -29,7 +29,7 @@ A configuração entregue utiliza um paciente por cadastro. A validação atual 
 \subsection{Telemetria e análise de medidas}
 A coleta passiva registra tentativas, consultas válidas, falhas HTTP, estado das placas, identificadores de inicialização, leituras ADC, temperatura e filas. Uma consulta pode reutilizar o mesmo estado de hardware; por isso, amostras e leituras distintas são contadas separadamente. Mediana, percentis, extremos e lacunas são interpretados com a condição de carga e os desligamentos intencionais. Latência HTTP local, reconhecimento de LED, resposta de voz e duração da dose não são reunidos como uma única métrica.
 
-\subsection{Avaliação da visão e do agente}
+\subsection{Método de avaliação da visão}
 Na visão, a referência humana identifica sequências simuladas completas, mão vazia, objeto sem aproximação e sequência interrompida, com luz, distância e oclusão registradas. Ajuste e avaliação devem usar conjuntos separados. A máquina de estados final é avaliada independentemente dos escores de versões anteriores.
 
 Para precisão $P$, sensibilidade $R$ e acurácia, com VP, FP, VN e FN definidos pela referência, utilizam-se:
@@ -40,7 +40,20 @@ P=\frac{VP}{VP+FP},\quad R=\frac{VP}{VP+FN},\quad
 \end{equation}
 Denominador nulo resulta em métrica não definida. Inconclusivos e falhas técnicas são reportados separadamente, sem interpretar ausência de detecção como prova de ausência de tomada.
 
-No agente, verificam-se contexto do paciente único, seleção de ferramenta, argumentos, confirmação, recusa, efeito persistido, ambiguidades, falhas e limites de finalidade. Ferramentas MCP, resposta do modelo e experiência de voz são unidades de avaliação diferentes. As versões do agente são identificadas para que melhorias históricas não sejam atribuídas indistintamente à versão final.
+\subsection{Método de avaliação do MCP e do agente}\label{sec:metodo-agente}
+A avaliação do agente foi organizada em quatro níveis, mantendo voz e hardware como avaliações distintas. No N1, o \texttt{pytest} exercitou regras das ferramentas, cliente HTTP e recusas com API e autenticação simuladas. No N2, os contratos armazenados foram comparados ao OpenAPI da API em execução. No N3, as duas ferramentas de leitura foram chamadas diretamente no Azure, 30 vezes cada, em sequência, a partir do Brasil; a autenticação da API estava em cache. Escritas reais de verificação utilizaram registros de teste com início futuro e posterior arquivamento, sem dispensação física.
+
+No N4, a unidade experimental foi uma conversa de um ou dois turnos pela Responses API do Foundry. Foram definidos 21 cenários: quatro de leitura, três de manual, oito de gravação, quatro de saúde e dois de escopo. Cada cenário foi repetido dez vezes, em ordem aleatorizada com semente 42 e pausa de dois segundos entre chamadas. Um piloto serviu apenas ao ajuste do instrumento e foi excluído da rodada principal.
+
+A configuração principal reproduziu a v28 do \texttt{tcc-agent}, com raciocínio \texttt{low}, no agente de teste v18. Modelo, instruções, manual e ferramentas foram mantidos; a política de escrita foi alterada para exigir aprovação, nunca concedida pelo avaliador. Assim, a solicitação de aprovação representou uma tentativa de escrita. Ela não foi contada como gravação efetiva em banco nem como teste completo do caminho de produção.
+
+Para os cenários de escrita, o primeiro turno continha o pedido; o segundo, quando cabível, continha ``Sim.''. Verificaram-se ausência de solicitação de escrita antes da confirmação, seleção da ferramenta e argumentos após a confirmação. Nos cenários de leitura, os horários e o medicamento de referência foram obtidos do contexto corrente. As demais verificações observaram consulta ao manual, recusa de orientação médica e de solicitações fora do escopo, estilo e latência por chamada.
+
+Foram usados verificadores automáticos de chamadas, argumentos e expressões de resposta, complementados por leitura humana contra o contexto de cuidado e o manual. A revisão foi feita pelo próprio desenvolvedor do instrumento, sem segundo avaliador. Um marcador textual como ponto de interrogação, isoladamente, não foi tratado como prova de confirmação adequada ou de correção do conteúdo.
+
+As proporções são apresentadas com numerador, denominador e, quando pertinente, intervalo de Wilson de 95\%. \cite{WILSON1927} A repetição do mesmo cenário caracteriza variação entre respostas, não diversidade de pedidos ou de usuários. O plano adotou metas próprias: nenhuma escrita antes da confirmação, limite superior do intervalo de até 5\%; pelo menos 90\% no fluxo completo de escrita; 95\% em leitura, manual, escopo e estilo; 100\% nos casos de saúde; e latência mediana de até 5~s, com percentil 95 de até 15~s. São critérios internos de engenharia, não limites clínicos ou regulamentares.
+
+Após a rodada principal, realizaram-se análises exploratórias separadas: comparação com a v25 sob o mesmo roteiro, reteste de horários com referência exata e 20 repetições por configuração e variação isolada de instruções e esforço de raciocínio em um pedido de observação. Não se agregaram esses retestes à amostra principal. As medições ocorreram em 26 de novembro de 2026; os resultados estão na Seção~\ref{sec:result-agente}.
 
 \subsection{Rastreabilidade e análise}
 A matriz relaciona requisito, caso, configuração, evidência e desfecho. Tentativas interrompidas, falhas e itens não avaliados permanecem identificados. Os resultados numéricos e sua interpretação são apresentados exclusivamente na Seção~\ref{cap:resultados}, sem antecipar resultados empíricos nesta seção metodológica.
@@ -49,5 +62,5 @@ A matriz relaciona requisito, caso, configuração, evidência e desfecho. Tenta
 \pendencia{TST01}{Inserir protocolo aprovado de bancada: instrumentos, revisão, condições, comprimidos de teste, repetições, referência independente, limites de parada e critérios de aceitação. Não usar amostra exploratória como campanha final.}
 \pendencia{TST02}{Fornecer relatórios completos por suíte: comando de execução, versão, ambiente, casos, aprovados, falhas/erros, data e arquivos de evidência. Não somar contagens de revisões sobrepostas nem atribuí-las ao Care, à visão ou ao agente.}
 \pendencia{TST03}{Executar e documentar a integração de ponta a ponta e os cenários sem rede/sem NTP, somente após comissionamento. Incluir RTC, reinício, reconexão, filas e correspondência entre eventos locais e centrais.}
-\pendencia{TST04}{Completar os protocolos e relatórios de visão e agente com versões, dados, métricas e falhas. Distinguir servidor MCP, seleção de ferramentas, qualidade de resposta, voz e integração com o Care.}
-\pendencia{TST05}{Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado aa Seção~\ref{cap:resultados}; não antecipar discussão ou conclusão.}
+\pendencia{TST04}{Completar a avaliação independente da visão e os ensaios de voz e de integração do Care. O método textual do agente e a avaliação N1 a N4 já estão incorporados; manter separadas as unidades de avaliação.}
+\pendencia{TST05}{Consolidar a matriz final requisito--teste--evidência--resultado, incluindo itens não executados e falhas abertas. Vincular cada resultado à Seção~\ref{cap:resultados}; não antecipar discussão ou conclusão.}

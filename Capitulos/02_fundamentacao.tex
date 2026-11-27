@@ -1,4 +1,4 @@
-\section{Fundamentação teórica}\label{sec:conceitos}
+\section{Conceitos que sustentam o projeto}\label{sec:conceitos}
 A concepção do DoseCerta combina um mecanismo de separação de unidades com recursos de controle, comunicação e acompanhamento. Esta seção apresenta os princípios necessários para compreender essas escolhas. A aplicação de cada princípio ao protótipo é desenvolvida nos itens metodológicos.
 
 \subsection{Polifarmácia e organização da rotina medicamentosa}
@@ -30,7 +30,7 @@ A calibração relaciona leitura e posição do disco. Ao localizar as transiç�
 \subsection{Sistemas distribuídos e barramento I²C}
 A distribuição do controle permite manter a geração das fases e a leitura do sensor próximas ao mecanismo, enquanto a central cuida de agenda, persistência e rede. Essa organização reduz a quantidade de sinais que percorrem o conjunto, mas exige uma interface de comunicação definida entre as unidades.
 
-O I²C utiliza duas linhas compartilhadas: SDA, para dados, e SCL, para relógio. As linhas são liberadas para o nível alto por resistores de elevação e podem ser conduzidas ao nível baixo pelos dispositivos. A Figura~\ref{fig:i2c_dreno_aberto} apresenta esse princípio. O dimensionamento dos resistores e o comportamento dos contatos influenciam os tempos de subida e a integridade dos sinais. \cite{NXP_I2C}
+\chamadafigura{O I²C utiliza duas linhas compartilhadas: SDA, para dados, e SCL, para relógio. As linhas são liberadas para o nível alto por resistores de elevação e podem ser conduzidas ao nível baixo pelos dispositivos. A Figura~\ref{fig:i2c_dreno_aberto} apresenta esse princípio. O dimensionamento dos resistores e o comportamento dos contatos influenciam os tempos de subida e a integridade dos sinais. \cite{NXP_I2C}}
 
 \begin{figure}[H]
 \centering
@@ -39,10 +39,8 @@ O I²C utiliza duas linhas compartilhadas: SDA, para dados, e SCL, para relógio
 \fonte{Autoria própria, com base em NXP Semiconductors (2021).}
 \end{figure}
 
-\noindent
 
-
-Uma transferência reúne condição de início, endereço, direção, dados e reconhecimentos. Na leitura, o controlador encerra a recepção com o reconhecimento negativo final e a condição de parada. A Figura~\ref{fig:i2c_temporizacao} mostra a aplicação dessas etapas a uma transferência de 32 bytes. O reconhecimento elétrico indica participação na transferência; não equivale à conclusão de uma operação física. \cite{NXP_I2C}
+\chamadafigura{Uma transferência reúne condição de início, endereço, direção, dados e reconhecimentos. Na leitura, o controlador encerra a recepção com o reconhecimento negativo final e a condição de parada. A Figura~\ref{fig:i2c_temporizacao} mostra a aplicação dessas etapas a uma transferência de 32 bytes. O reconhecimento elétrico indica participação na transferência; não equivale à conclusão de uma operação física. \cite{NXP_I2C}}
 
 \begin{figure}[H]
 \centering
@@ -50,8 +48,6 @@ Uma transferência reúne condição de início, endereço, direção, dados e r
 \includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/i2c_temporizacao.png}
 \fonte{Autoria própria, com base em NXP Semiconductors (2021).}
 \end{figure}
-
-\noindent
 
 
 Acima da transferência elétrica, o protocolo da aplicação identifica comandos, versões e resultados. O CRC auxilia a detecção de corrupção acidental do quadro, enquanto os identificadores permitem relacionar uma resposta à solicitação correta. Nenhum desses mecanismos, isoladamente, oferece autenticação criptográfica.
@@ -75,11 +71,10 @@ As WCAG 2.2 oferecem critérios para conteúdo perceptível, operável, compreen
 
 No processamento visual, modelos pré-treinados de pontos faciais e das mãos fornecem coordenadas para critérios geométricos e temporais; não classificam clinicamente uma tomada de medicamento. \cite{MEDIAPIPE_FACE,MEDIAPIPE_HAND}
 
-O agente de IA acrescenta uma forma de interação em linguagem natural. Entretanto, interpretar um pedido, consultar dados e executar uma escrita são etapas diferentes. As regras de negócio permanecem na API, e ações que alteram o cuidado precisam de contexto suficiente e de confirmação. De forma semelhante, a visão computacional produz observações sobre imagens, não comprovação clínica de ingestão. Essas distinções orientam as interfaces apresentadas nas Seções~\ref{cap:visao} e~\ref{cap:agente}.
+A revisão de \citeonline{LARANJO2018} identifica aplicações de agentes conversacionais em saúde e ressalta limitações de avaliação de eficácia e segurança. Esses achados justificam verificar comportamento e finalidade da interface, sem equiparar fluência textual a confiabilidade clínica. O agente de IA acrescenta uma forma de interação em linguagem natural. Entretanto, interpretar um pedido, consultar dados e executar uma escrita são etapas diferentes. As regras de negócio permanecem na API, e ações que alteram o cuidado precisam de contexto suficiente e de confirmação. De forma semelhante, a visão computacional produz observações sobre imagens, não comprovação clínica de ingestão. Essas distinções orientam as interfaces apresentadas nas Seções~\ref{cap:visao} e~\ref{cap:agente}.
 
 \subsection{Conservação após retirada da embalagem primária}
 A transferência de um medicamento do blister para um reservatório modifica sua condição de acondicionamento. A impressão de uma tampa não demonstra, por si só, barreira à umidade, proteção à luz ou compatibilidade do polímero com a formulação. A elegibilidade de cada medicamento e o tempo fora da embalagem exigem avaliação farmacêutica e informação do fabricante; não se estabelece um prazo genérico de permanência no DoseCerta.
 
 \pendencia{ARM01}{Validar com profissional farmacêutico a elegibilidade e o armazenamento; medir umidade, temperatura, barreira e estabilidade da configuração fabricada. Conferir fontes primárias e enquadramento regulatório sem transpor prazos hospitalares ou estrangeiros para uso doméstico.}
 
-\subsection*{\textcolor{DCPendente}{Complementações necessárias}}

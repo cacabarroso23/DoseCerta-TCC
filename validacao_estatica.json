@@ -1,74 +1,35 @@
-"""Checagens estáticas de fonte. Não substitui compilação nem revisão visual."""
-from pathlib import Path
-import re,json,collections
-P=Path(__file__).resolve().parent
-
-def clean(s):return re.sub(r'(?<!\\)%[^\n]*','',s)
-def walk():
- seen=set();order=[]
- def visit(p):
-  p=p.resolve()
-  if p in seen:return
-  if not p.exists():raise FileNotFoundError(p)
-  seen.add(p);order.append(p)
-  for n in re.findall(r'\\(?:include|input)\{([^}]+)\}',clean(p.read_text())):
-   visit(P/(n if Path(n).suffix else n+'.tex'))
- visit(P/'main.tex');return order
-
-def braced(s,i):
- assert s[i]=='{';level=1;j=i+1
- while j<len(s) and level:
-  if s[j]=='{' and s[j-1]!='\\':level+=1
-  elif s[j]=='}' and s[j-1]!='\\':level-=1
-  j+=1
- if level:raise ValueError('Chaves não balanceadas')
- return s[i+1:j-1],j
-
-def pending(files):
- out=[]
- for p in files:
-  s=clean(p.read_text())
-  for m in re.finditer(r'\\pendencia\{([^}]+)\}\{',s):
-   text,z=braced(s,m.end()-1);out.append({'id':m[1],'arquivo':str(p.relative_to(P)),'linha':s[:m.start()].count('\n')+1,'texto_tex':text})
- return out
-
-def main():
- errors=[];warnings=[];files=walk();texts={p:clean(p.read_text()) for p in files};alltext='\n'.join(texts.values());labels=collections.Counter(re.findall(r'\\label\{([^}]+)\}',alltext));refs=re.findall(r'\\(?:ref|autoref|pageref|eqref)\{([^}]+)\}',alltext)
- for k,n in labels.items():
-  if n>1:errors.append('Rótulo duplicado: '+k)
- for r in sorted(set(refs)-set(labels)):errors.append('Referência sem rótulo: '+r)
- images=re.findall(r'\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}',alltext)
- for n in images+re.findall(r'\\includepdf(?:\[[^]]*\])?\{([^}]+)\}',alltext):
-  if not (P/n).exists():errors.append('Imagem/PDF ausente: '+n)
- for p,s in texts.items():
-  depth=0
-  for m in re.finditer(r'(?<!\\)[{}]',s):
-   depth+=1 if m[0]=='{' else -1
-   if depth<0:break
-  if depth:errors.append('Chaves desequilibradas: '+str(p.relative_to(P)))
-  if '??' in s:errors.append('Interrogação literal: '+str(p.relative_to(P)))
-  stack=[]
-  for m in re.finditer(r'\\(begin|end)\{([^}]+)\}',s):
-   if m[1]=='begin':stack.append(m[2])
-   elif not stack or stack.pop()!=m[2]:errors.append('Ambiente desalinhado: '+str(p.relative_to(P)))
-  if stack:errors.append('Ambiente não fechado: '+str(p.relative_to(P)))
- cites=set(k.strip() for m in re.finditer(r'\\cite\w*\*?(?:\[[^]]*\])*\{([^}]+)\}',alltext) for k in m[1].split(','));bibs=set(re.findall(r'\\bibitem(?:\[[^]]*\])?\{([^}]+)\}',getref:=texts[P/'referencias.tex']))
- for k in cites-bibs:errors.append('Citação sem entrada: '+k)
- ps=pending(files);ids=[r['id'] for r in ps]
- if len(ids)!=len(set(ids)):errors.append('Identificador de pendência duplicado')
- closed=json.loads((P/'PENDENCIAS_ENCERRADAS.json').read_text())
- if set(closed)&set(ids):errors.append('Pendência encerrada ainda aberta')
- for cmd in [r'\listoffigures*',r'\listoftables*',r'\tableofcontents*']:
-  if cmd not in texts[P/'main.tex']:errors.append('Lista/sumário sem comando: '+cmd)
- # Check all figure labels are called outside the figure environment.
- outside=re.sub(r'\\begin\{figure\}.*?\\end\{figure\}','',alltext,flags=re.S)
- called=set(re.findall(r'\\(?:ref|autoref|pageref)\{([^}]+)\}',outside))
- for env in re.findall(r'\\begin\{figure\}.*?\\end\{figure\}',alltext,re.S):
-  ls=re.findall(r'\\label\{([^}]+)\}',env)
-  for l in ls:
-   if l not in called:warnings.append('Figura sem chamada fora da legenda: '+l)
- report={'arquivos_tex_incluidos':len(files),'rotulos':len(labels),'referencias_internas':len(refs),'figuras':len(images),'citacoes_distintas':len(cites),'pendencias_abertas':len(ps),'pendencias_encerradas':closed,'erros':errors,'avisos':warnings,'compilacao_pdf':'NAO_EXECUTADA_COMPILADOR_INDISPONIVEL','limite':'Não avalia posicionamento final, listas preenchidas nem extravasamento no PDF. Executar compilar_banca.py e revisão visual.'}
- (P/'CHECAGEM_ESTATICA.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));(P/'PENDENCIAS_ABERTAS.json').write_text(json.dumps(ps,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False,indent=2));return report
-if __name__=='__main__':
- import sys
- sys.exit(bool(main()['erros']))
+{
+  "arquivos_tex_incluidos": 37,
+  "rotulos": 98,
+  "referencias_internas": 113,
+  "figuras": 59,
+  "citacoes_distintas": 11,
+  "pendencias": 88,
+  "erros": [
+    "Pendência anterior desapareceu sem baixa: APP03",
+    "Pendência anterior desapareceu sem baixa: MEC01",
+    "Pendência da rodada 1 desapareceu: MEC01",
+    "Pendência da rodada 1 desapareceu: APP03"
+  ],
+  "avisos": [],
+  "compilacao_pdf": "NAO_EXECUTADA_COMPILADOR_INDISPONIVEL",
+  "calibracao_media": 819.2,
+  "calibracao_desvio_amostral": 11.213512257221515,
+  "ciclos_por_resultado": {
+    "slot_unit_retained": 4,
+    "slot_verified_empty": 4,
+    "slot_cycle_intent": 2,
+    "slot_dropped_refilled": 2
+  },
+  "registros_vinculados_oficial": 8,
+  "registros_vinculados_simulado": 7,
+  "oficial_consistencia_contabil": {
+    "linhas_elegiveis": 6,
+    "nao_equivale_a_estoque_fisico": true
+  },
+  "simulado_fechamentos": {
+    "presentation_policy": 4,
+    "human_report": 2,
+    "sem fechamento": 1
+  }
+}

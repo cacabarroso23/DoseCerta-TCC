@@ -1,0 +1,35 @@
+{
+  "figura_prototipo_impresso": {
+    "arquivo": "Figuras/SharePoint/prototipo_montado.png",
+    "operacao": "Fundo azul periférico removido do recorte anterior e margens aparadas. Pixels da janela frontal preservados."
+  },
+  "figura_tres_vistas": [
+    {
+      "original": "01_conjunto_frente.jpg",
+      "recorte_pixels": [
+        85,
+        410,
+        710,
+        1200
+      ]
+    },
+    {
+      "original": "02_conjunto_tres_quartos_esquerda.jpg",
+      "recorte_pixels": [
+        10,
+        350,
+        730,
+        1150
+      ]
+    },
+    {
+      "original": "03_conjunto_sem_tampa_sub_encaixado.jpg",
+      "recorte_pixels": [
+        10,
+        440,
+        738,
+        1320
+      ]
+    }
+  ]
+}

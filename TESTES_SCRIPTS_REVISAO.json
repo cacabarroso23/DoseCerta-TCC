@@ -1,0 +1,10 @@
+{
+  "tipo": "Testes unitários com arquivos temporários; não execução do LaTeX ou do DoseCerta",
+  "sintaxe_python": "3 scripts aprovados",
+  "verificacoes": [
+    "Listas e PDF ausentes são detectados",
+    "Presença de entradas é reconhecida sem certificar visualização",
+    "Erros fatais, referências indefinidas, recompilação e extravasamentos são sinalizados"
+  ],
+  "resultado": "APROVADO"
+}

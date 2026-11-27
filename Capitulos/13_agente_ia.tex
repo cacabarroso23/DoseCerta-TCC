@@ -2,29 +2,33 @@
 O agente complementa o Care com consultas e solicitações em linguagem natural, por texto e voz. O desenvolvimento ocorreu ao longo de um ano e acompanhou mudanças nas plataformas disponíveis. As configurações intermediárias são apresentadas como etapas de engenharia, e não como alternativas simultaneamente ativas na versão final. O agente não prescreve, escolhe doses nem substitui o responsável pelo tratamento.
 
 \subsection{Evolução durante o desenvolvimento}
-A concepção inicial utilizou Microsoft Copilot Studio. O trabalho evoluiu para Microsoft Foundry, com separação inicial entre o agente de conversa e um agente de teste de ferramentas MCP. Em 3 de novembro, a configuração de referência mantinha conversa v5 e teste MCP v8 em caminhos distintos. A Figura~\ref{fig:agente_arquitetura} representa essa etapa e explica por que acesso a ferramentas e conversa por voz foram verificados separadamente.
+\chamadafigura{A concepção inicial utilizou Microsoft Copilot Studio. O trabalho evoluiu para Microsoft Foundry, com separação inicial entre o agente de conversa e um agente de teste de ferramentas MCP. Nos registros iniciais, a conversa v5 e o teste MCP v8 eram apresentados em caminhos separados. A integração mudou durante novembro: o agente de conversa passou a incluir MCP a partir da v18, em 3 de novembro. A separação da figura deve, portanto, ser lida como decisão intermediária, não como retrato de todo aquele mês. A Figura~\ref{fig:agente_arquitetura} representa essa etapa e explica por que acesso a ferramentas e conversa por voz foram verificados separadamente.}
 
 \begin{figure}[H]\centering
 \caption{Etapa intermediária: agente de conversa e agente de teste MCP separados}\label{fig:agente_arquitetura}
 \includegraphics[width=0.94\textwidth,height=0.57\textheight,keepaspectratio]{Figuras/SharePoint/agente_arquitetura.png}
 \fonte{Autoria própria (2026).}
-\par{\footnotesize Nota: configuração histórica de 3 de novembro, não representação da integração final.\par}
+\par{\footnotesize Nota: representação de uma etapa intermediária. Em novembro, o agente de conversa também passou a dispor de MCP; o diagrama não descreve a configuração v28 avaliada.\par}
 \end{figure}
 
-\noindent
 
 Posteriormente, o aplicativo incorporou o servidor MCP ao caminho do agente e utilizou Azure Voice Live para interação em tempo real. A Tabela~\ref{tab:13-versoes} relaciona as versões registradas até v28, a mais recente identificada no desenvolvimento. O identificador da versão do agente não equivale ao nome público do modelo de linguagem: instruções, ferramentas e modelo precisam ser identificados separadamente.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.1\textwidth}p{0.17\textwidth}p{0.63\textwidth}}
-\caption{Evolução das versões do agente no aplicativo}\label{tab:13-versoes}\\
-\hline\textbf{Versão} & \textbf{Uso no app} & \textbf{Características}\\\hline\endfirsthead
-\hline\textbf{Versão} & \textbf{Uso no app} & \textbf{Características}\\\hline\endhead
-5 & até 12/11 & Pesquisa em arquivos de referência; sem acesso aos dados do paciente\\\hline
-21 & 12/11 & Pesquisa em arquivos e servidor MCP com consulta ao contexto de cuidado; respostas curtas\\\hline
-24 e 25 & 12/11 a 25/11 & Ferramentas de escrita descritas nas instruções, com regra de confirmar em dois turnos\\\hline
-28 & desde 25/11 & Responde somente sobre o DoseCerta; esforço de raciocínio baixo; escolha automática de ferramentas\\\hline
-\end{longtable}}{\small\noindent Fonte: Autoria própria (2026).\par}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.20\linewidth-2\tabcolsep\relax}p{\dimexpr0.20\linewidth-2\tabcolsep\relax}p{\dimexpr0.50\linewidth-2\tabcolsep\relax}}
+\caption{Marcos de desenvolvimento e identificação das configurações do agente}\label{tab:13-versoes}\\
+\hline\textbf{Etapa/configuração} & \textbf{Período} & \textbf{Caracterização}\\\hline\endfirsthead
+\hline\textbf{Etapa/configuração} & \textbf{Período} & \textbf{Caracterização}\\\hline\endhead
+Concepção e exploração & Ao longo do projeto & Proposta no Copilot Studio e migração para o Foundry; revisão das interfaces conforme a evolução das tecnologias disponíveis\\\hline
+Agente de teste v1--v8 & Setembro a início de novembro & Desenvolvimento incremental de ferramentas, edição, leituras e aprovação de escritas\\\hline
+\texttt{tcc-agent} v18 e seguintes & Desde 03/11 & Inclusão do MCP no agente associado à conversa; a separação inicial deixa de representar todas as configurações\\\hline
+Versão indicada pelo Care & v21, conferida em 12/11 & Versão fixada no caminho de voz; não relida na avaliação de 26/11\\\hline
+\texttt{tcc-agent} v24/v25 & Novembro & Instruções elaboradas em 12/11; v25 usada na comparação, com raciocínio \texttt{none}\\\hline
+\texttt{tcc-agent} v28 & Publicada em 25/11 & Configuração avaliada em 26/11, com raciocínio \texttt{low}; não se presume que o Care já a utilizasse\\\hline
+Agente de teste v18/v19 & Avaliação de 26/11 & Espelhos da v28 e da v25, respectivamente; política de aprovação diferente para impedir escritas\\\hline
+Agente de teste v20 & Reteste de horário & Variante da v28 com instrução temporal corrigida, sem publicação comprovada no agente de produção\\\hline
+\end{longtable}\noindent Fonte: Autoria própria (2026).\par}
 
+As versões dos dois agentes possuem numerações próprias: a v18 do agente de teste espelha a v28 do agente de conversa, enquanto a v18 do agente de conversa marca uma etapa anterior da integração. O modelo foi registrado no ambiente como \texttt{gpt-6-luna}; esse identificador de implantação não é tratado como denominação pública verificada do fornecedor. A identificação da configuração reúne agente, versão, modelo, instruções, esforço de raciocínio, manual e política de aprovação.
 
 \subsection{Arquitetura integrada e contexto do paciente}
 Na integração mais recente, o percurso compreende Care, relay da API, serviço de conversa e ferramentas MCP, cujas operações passam pela API do DoseCerta. O aplicativo não recebe as credenciais do serviço de IA. A pesquisa em arquivos recupera conhecimento de referência do projeto; ferramentas consultam ou alteram dados atuais do cuidado. A base de referência precisa ser mantida compatível com o aparelho e não substitui a consulta ao estado persistido.
@@ -34,7 +38,7 @@ Para viabilizar a integração acadêmica, foi adotado um paciente por cadastro.
 \subsection{Ferramentas e operações}
 O servidor MCP define duas ferramentas de leitura e seis de escrita, apresentadas na Tabela~\ref{tab:13-1}. As ferramentas mantêm a separação entre interpretar a solicitação e executar regras de negócio; o modelo não deve alterar o banco fora desse caminho. O uso de um servidor de ferramentas segue o princípio de exposição de operações e esquemas ao cliente MCP. \cite{MCP_SPEC}
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.44\textwidth}p{0.12\textwidth}p{0.32\textwidth}}\caption{Ferramentas do servidor MCP do agente}\label{tab:13-1}\\
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.44\linewidth-2\tabcolsep\relax}p{\dimexpr0.12\linewidth-2\tabcolsep\relax}p{\dimexpr0.32\linewidth-2\tabcolsep\relax}}\caption{Ferramentas do servidor MCP do agente}\label{tab:13-1}\\
 \hline
 \textbf{Ferramenta} & \textbf{Tipo} & \textbf{Papel}\\\hline
 \endfirsthead\hline
@@ -52,26 +56,24 @@ O servidor MCP define duas ferramentas de leitura e seis de escrita, apresentada
 
 
 \subsection{Confirmação e execução de alterações}
-O fluxo de escrita é projetado para consultar o contexto, esclarecer ambiguidades, apresentar ação e argumentos e obter confirmação antes de executar. A Figura~\ref{fig:agente_aprovacao} representa esse comportamento esperado. A aprovação na figura é um controle a verificar em cada integração; uma orientação no prompt não equivale a uma trava imposta pelo servidor.
+\chamadafigura{O fluxo de escrita é projetado para consultar o contexto, esclarecer ambiguidades, apresentar ação e argumentos e obter confirmação antes de executar. A Figura~\ref{fig:agente_aprovacao} representa o caminho com aprovação no Foundry empregado no agente de teste. O losango representa o esclarecimento do pedido; o bloco de aprovação representa uma autorização do serviço, não a confirmação em linguagem natural do usuário. Na configuração de teste, as ferramentas de escrita exigem aprovação no Foundry, e o avaliador não a concede. Na configuração v28 de produção, a política MCP é \texttt{never}: não existe essa interrupção de aprovação do serviço. Nesse caminho, a exigência de confirmar em dois turnos depende das instruções e do comportamento do modelo, não de uma trava imposta pelo MCP. A figura descreve o procedimento pretendido, não uma garantia de execução em todas as versões.}
 
 \begin{figure}[H]\centering
-\caption{Fluxo projetado de confirmação e execução de alterações pelo agente}\label{fig:agente_aprovacao}
+\caption{Caminho com aprovação no Foundry utilizado no agente de teste}\label{fig:agente_aprovacao}
 \includegraphics[width=0.94\textwidth,height=0.56\textheight,keepaspectratio]{Figuras/SharePoint/agente_aprovacao.png}
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-As etapas de desenvolvimento incluíram diferentes caminhos de aprovação no serviço e no relay. Na avaliação, uma escrita só é considerada concluída após verificar o efeito persistido; aprovação, recusa, falha técnica e resultado desconhecido são resultados distintos. As limitações observadas e as confirmações ainda necessárias são apresentadas na Seção~\ref{cap:resultados}.
+As etapas de desenvolvimento incluíram diferentes caminhos de aprovação no serviço e no relay. Nos testes reais de integração, uma escrita só é considerada concluída após conferir o efeito persistido. Na avaliação comportamental, por segurança, a solicitação de aprovação é usada como indicador de que o agente tentaria escrever; não ocorre gravação. Aprovação solicitada, confirmação do usuário, efeito persistido, recusa e falha técnica são observações distintas. As limitações observadas e as confirmações ainda necessárias são apresentadas na Seção~\ref{cap:resultados}.
 
 \subsection{Voz, anexos e continuidade dos caminhos manuais}
 O Care disponibiliza texto, ditado e conversa de voz em tempo real. Fotografias e PDFs de receitas são preparados no navegador e enviados ao serviço de IA, diferentemente da visão local do gesto. A transcrição e a resposta não são, por si, confirmação de cadastro ou de tomada. As operações de cuidado continuam disponíveis pelas telas do aplicativo, permitindo conferir os efeitos e prosseguir sem depender da interpretação do agente.
 
 \subsection*{\textcolor{DCPendente}{Complementações necessárias}}
-\pendencia{AG01}{Confirmar com Thiago modelo, parâmetros, exportação sanitizada e versão efetivamente chamada pelo aplicativo. Os registros de desenvolvimento identificam v28 desde 25/11 e usa rótulo interno gpt-6-luna, diferente de gpt-5.6-luna no registro anterior; nenhum deles foi promovido a identificação pública de modelo sem comprovação.}
-\pendencia{AG02}{Conferir as oito ferramentas e o caminho de aprovação: ensaio exploratório relata escrita sem confirmação na v24 e relay sem tratamento de aprovação. Obter evidências de aprovação/recusa e autorização no servidor; usar apenas dados fictícios em ambiente autorizado.}
-\pendencia{AG03}{Inventariar o conteúdo efetivo do armazenamento vetorial: fontes, revisão, atualização e avaliação da recuperação, incluindo manual atual. Não assumir base atualizada por existir \texttt{file\_search}.}
-\pendencia{AG04}{Anexar diálogos sanitizados e registros de chamadas/efeitos persistidos em ambiente de teste; identificar resultado parcial, erro, restauração e limpeza dos dados de teste.}
-\pendencia{AG05}{Definir e executar conjunto de avaliação do agente: casos, repetições, referência humana, critérios, falhas clínicas e resultados. Contagens de testes do MCP não são desempenho do modelo.}
-\pendencia{AG06}{Documentar permissões, rotação de chaves, limites de acesso, retenção e proteção contra instruções maliciosas em dados. Distinguir controles verificáveis de orientações do prompt.}
-\pendencia{AG07}{Confirmar a cronologia do agente ao longo do ano e sua configuração final, distinguindo versões intermediárias e integração mais recente. Registrar a identidade fixa do paciente como decisão de escopo; não exigir propagação multipaciente no desenvolvimento atual.}
+\pendencia{AG01}{Conferir a versão efetivamente chamada pelo Care na defesa. A avaliação identifica a v28 do tcc-agent; o último registro do caminho de voz indica v21. Confirmar também o identificador de implantação do modelo e seus parâmetros, sem o promover a nome comercial não verificado.}
+\pendencia{AG02}{Aplicar a correção de fuso no agente usado pelo aplicativo e repetir o cenário de leitura de horários e a bateria completa. A correção teve reteste apenas no agente de teste. Verificar confirmação por voz sem depender exclusivamente das instruções.}
+\pendencia{AG03}{Auditar a atualização do manual indexado, inclusive instruções de voz e caminhos com setas; a recuperação do manual foi avaliada, mas é preciso conferir sua compatibilidade com a configuração final.}
+\pendencia{AG04}{Preservar os resumos e diálogos sanitizados da avaliação e conferir registros reais de integração, limpeza dos dados de teste e efeitos persistidos; não publicar texto com dados pessoais.}
+\pendencia{AG06}{Completar voz com áudio real, injeção de instruções por conteúdo armazenado, segunda revisão humana, cuidadores representativos, concorrência entre instâncias e análise de permissões e chaves. A avaliação textual não cobre esses casos.}
+\pendencia{AG07}{Completar, se disponíveis, os marcos da etapa inicial do ano e fixar a configuração da apresentação. O histórico de setembro a novembro e os resultados de 26/11 já estão incorporados.}

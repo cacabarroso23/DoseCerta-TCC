@@ -7,7 +7,7 @@ O mesmo código-fonte é compilado em três perfis, definidos no momento do empa
 A separação por perfis busca manter as funções de teste fora do uso real e permite apresentar a interface com dados fictícios. As diferenças entre os perfis estão reunidas em um único módulo de configuração; as telas são as mesmas. As capturas utilizam dados fictícios: o login foi obtido no perfil Oficial; as demais telas usam a Demonstração ou uma cópia local de apresentação. Os três prints do assistente têm respostas roteirizadas, como explicitado na legenda, e não comprovam execução do agente. 
 
 \subsection{Da referência visual ao protótipo navegável}
-A primeira etapa utilizou o Google Stitch para elaborar a composição visual, apresentada na Figura~\ref{fig:app_stitch}, com destaque para a próxima dose e os indicadores do painel. Em seguida, o Google AI Studio foi utilizado para experimentar navegação, animações e alertas com relógio acelerado e ocorrências simuladas. A sequência da Figura~\ref{fig:app_etapas} resume a passagem do desenho à aplicação integrada, na qual os estados em memória foram substituídos por operações autenticadas na API.
+\chamadafigura{A primeira etapa utilizou o Google Stitch para elaborar a composição visual, apresentada na Figura~\ref{fig:app_stitch}, com destaque para a próxima dose e os indicadores do painel. Em seguida, o Google AI Studio foi utilizado para experimentar navegação, animações e alertas com relógio acelerado e ocorrências simuladas. A sequência da Figura~\ref{fig:app_etapas} resume a passagem do desenho à aplicação integrada, na qual os estados em memória foram substituídos por operações autenticadas na API.}
 
 \begin{figure}[H]
 \centering
@@ -16,7 +16,6 @@ A primeira etapa utilizou o Google Stitch para elaborar a composição visual, a
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 \begin{figure}[H]
 \centering
@@ -25,10 +24,9 @@ A primeira etapa utilizou o Google Stitch para elaborar a composição visual, a
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 \subsection{Arquitetura do frontend}
-O frontend foi implementado em React com TypeScript, empacotado com Vite e estilizado com Tailwind CSS. A interface organiza componentes e estados de apresentação, enquanto a API FastAPI concentra validação, autorização e persistência. A Figura~\ref{fig:app_camadas} apresenta essa separação e as interfaces com o aparelho e com o assistente. 
+\chamadafigura{O frontend foi implementado em React com TypeScript, empacotado com Vite e estilizado com Tailwind CSS. A interface organiza componentes e estados de apresentação, enquanto a API FastAPI concentra validação, autorização e persistência. A Figura~\ref{fig:app_camadas} apresenta essa separação e as interfaces com o aparelho e com o assistente.}
 
 \begin{figure}[H]
 \centering
@@ -37,14 +35,13 @@ O frontend foi implementado em React com TypeScript, empacotado com Vite e estil
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 A implementação descrita associa às operações de escrita uma chave de idempotência gerada no navegador. Se a resposta se perde e a solicitação é reenviada, o servidor reconhece a chave e devolve o resultado original, em vez de criar um segundo registro. O mesmo princípio, descrito na Seção~\ref{cap:backend}, busca impedir duplicação quando o reenvio mantém a mesma identidade; não prova por si que duas solicitações independentes não produzam dois comandos. A conversa com o assistente utiliza um canal WebSocket com a API, que atua como intermediária entre o aplicativo e o serviço de voz; o aplicativo nunca recebe as credenciais do serviço de IA.
 
 O aplicativo é responsivo. No celular, a navegação fica em abas no topo e o assistente em um botão flutuante; em telas largas, as mesmas funções se reorganizam em uma barra horizontal, como na Figura~\ref{fig:app_desktop}.
 
 \subsection{Autenticação, visões e pacientes}
-O acesso exige login com e-mail e senha (Figura~\ref{fig:app_login_painel}). O serviço de identidade emite um token de sessão, enviado em cada solicitação à API; a API valida o token e verifica as permissões no contexto do paciente único cadastrado. A sessão identifica a conta autenticada, não necessariamente a pessoa física em uma conta compartilhada. A avaliação de autenticação considera sessão válida, expiração e recusa de credenciais inválidas dentro desse escopo. 
+\chamadafigura{O acesso exige login com e-mail e senha (Figura~\ref{fig:app_login_painel}). O serviço de identidade emite um token de sessão, enviado em cada solicitação à API; a API valida o token e verifica as permissões no contexto do paciente único cadastrado. A sessão identifica a conta autenticada, não necessariamente a pessoa física em uma conta compartilhada. A avaliação de autenticação considera sessão válida, expiração e recusa de credenciais inválidas dentro desse escopo.}
 
 \begin{figure}[H]
 \centering
@@ -58,9 +55,8 @@ O acesso exige login com e-mail e senha (Figura~\ref{fig:app_login_painel}). O s
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
-A interface oferece três visões: cuidador, familiar e paciente (Figura~\ref{fig:app_visoes}). São formas de apresentação do mesmo contexto, não três contas independentes. Na visão do paciente, o painel utiliza a expressão ``Seu dia''. A configuração final foi deliberadamente limitada a um paciente por cadastro para viabilizar a integração e os entregáveis. O MCP utiliza a identidade desse paciente fixo; não se apresenta seleção multipaciente nem isolamento entre pacientes como função entregue. Uma extensão com múltiplos pacientes exigiria propagação explícita do contexto e testes próprios de autorização.
+\chamadafigura{A interface oferece três visões: cuidador, familiar e paciente (Figura~\ref{fig:app_visoes}). São formas de apresentação do mesmo contexto, não três contas independentes. Na visão do paciente, o painel utiliza a expressão ``Seu dia''. A configuração final foi deliberadamente limitada a um paciente por cadastro para viabilizar a integração e os entregáveis. O MCP utiliza a identidade desse paciente fixo; não se apresenta seleção multipaciente nem isolamento entre pacientes como função entregue. Uma extensão com múltiplos pacientes exigiria propagação explícita do contexto e testes próprios de autorização.}
 
 \begin{figure}[H]
 \centering
@@ -74,10 +70,9 @@ A interface oferece três visões: cuidador, familiar e paciente (Figura~\ref{fi
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
 \subsection{Organização dos dados de cuidado}
-O modelo preserva o vínculo entre paciente, medicamento, horário e evento. Atividades do dia a dia e observações possuem registros próprios, e o inventário associa cada medicamento a um compartimento do aparelho. A Figura~\ref{fig:app_dados} apresenta um recorte conceitual dessa organização; a estrutura completa do banco é descrita na Seção~\ref{sec:dados_rastreabilidade}.
+\chamadafigura{O modelo preserva o vínculo entre paciente, medicamento, horário e evento. Atividades do dia a dia e observações possuem registros próprios, e o inventário associa cada medicamento a um compartimento do aparelho. A Figura~\ref{fig:app_dados} apresenta um recorte conceitual dessa organização; a estrutura completa do banco é descrita na Seção~\ref{sec:dados_rastreabilidade}.}
 
 \begin{figure}[H]
 \centering
@@ -86,13 +81,12 @@ O modelo preserva o vínculo entre paciente, medicamento, horário e evento. Ati
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
 A distinção entre planejar e registrar evita que uma alteração de horário seja interpretada como tomada realizada. Cada registro conserva sua origem (o aparelho, uma pessoa ou o sistema) e seu autor. O mesmo princípio orienta a apresentação do histórico e das notificações.
 
 \subsection{Funções principais}
 \subsubsection{Painel e rotinas}
-O painel (Figura~\ref{fig:app_login_painel}b) prioriza a próxima dose, com tempo restante, o resumo das tomadas do dia, o último registro, a próxima atividade e a última observação. A aba Rotinas separa os medicamentos das atividades do dia a dia, navegáveis por data (Figura~\ref{fig:app_rotinas}). Cada horário mostra um de oito estados: programada, tomada registrada, não tomada, não administrada, horário perdido, verificação inconclusiva, sem atualização e resultado a conferir. Um horário vencido nunca é convertido em tomada; a ausência de informação aparece como tal.
+\chamadafigura{O painel (Figura~\ref{fig:app_login_painel}b) prioriza a próxima dose, com tempo restante, o resumo das tomadas do dia, o último registro, a próxima atividade e a última observação. A aba Rotinas separa os medicamentos das atividades do dia a dia, navegáveis por data (Figura~\ref{fig:app_rotinas}). Cada horário mostra um de oito estados: programada, tomada registrada, não tomada, não administrada, horário perdido, verificação inconclusiva, sem atualização e resultado a conferir. Um horário vencido nunca é convertido em tomada; a ausência de informação aparece como tal.}
 
 \begin{figure}[H]
 \centering
@@ -106,10 +100,9 @@ O painel (Figura~\ref{fig:app_login_painel}b) prioriza a próxima dose, com temp
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
 \subsubsection{Observações e notificações}
-As observações registram relatos do cuidado, com autor, horário e visibilidade (compartilhada ou reservada). As notificações reúnem registros e avisos recentes; limpar a lista afeta apenas a visualização de quem limpou e não apaga os registros (Figura~\ref{fig:app_notas}).
+\chamadafigura{As observações registram relatos do cuidado, com autor, horário e visibilidade (compartilhada ou reservada). As notificações reúnem registros e avisos recentes; limpar a lista afeta apenas a visualização de quem limpou e não apaga os registros (Figura~\ref{fig:app_notas}).}
 
 \begin{figure}[H]
 \centering
@@ -123,10 +116,9 @@ As observações registram relatos do cuidado, com autor, horário e visibilidad
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
 \subsubsection{Aparelho e estoque}
-A janela do aparelho informa o último retorno recebido da central, permite verificar a conexão e lista os medicamentos por posição com a quantidade em estoque (Figura~\ref{fig:app_aparelho}). A reposição é registrada pelo usuário; a baixa automática ocorre apenas quando a saída de uma unidade é confirmada, como descrito na Seção~\ref{sec:app_dispensacao}.
+\chamadafigura{A janela do aparelho informa o último retorno recebido da central, permite verificar a conexão e lista os medicamentos por posição com a quantidade em estoque (Figura~\ref{fig:app_aparelho}). A reposição é registrada pelo usuário; a baixa automática ocorre apenas quando a saída de uma unidade é confirmada, como descrito na Seção~\ref{sec:app_dispensacao}.}
 
 \begin{figure}[H]
 \centering
@@ -140,10 +132,9 @@ A janela do aparelho informa o último retorno recebido da central, permite veri
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
 \subsubsection{Manual tridimensional e guia de primeiro acesso}
-O manual apresenta a montagem do aparelho em 16 etapas sobre um modelo tridimensional que pode ser girado, além de uma tabela dos sinais luminosos e sonoros e das instruções de conexão. O guia de primeiro acesso percorre as funções do aplicativo e pode ser reaberto pelas configurações (Figura~\ref{fig:app_manual}). O carregamento do modelo 3D é feito apenas quando o manual é aberto, para não atrasar a abertura do painel.
+\chamadafigura{O manual apresenta a montagem do aparelho em 16 etapas sobre um modelo tridimensional que pode ser girado, além de uma tabela dos sinais luminosos e sonoros e das instruções de conexão. O guia de primeiro acesso percorre as funções do aplicativo e pode ser reaberto pelas configurações (Figura~\ref{fig:app_manual}). O carregamento do modelo 3D é feito apenas quando o manual é aberto, para não atrasar a abertura do painel.}
 
 \begin{figure}[H]
 \centering
@@ -157,7 +148,6 @@ O manual apresenta a montagem do aparelho em 16 etapas sobre um modelo tridimens
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
 \subsection{Assistente no aplicativo}
 O assistente abre em tela própria e utiliza o paciente único configurado como contexto da conversa. A pessoa pode escrever, ditar a mensagem pelo microfone ou iniciar uma conversa por voz em tempo real, na qual a transcrição aparece enquanto se fala. Cada resposta pode ser copiada ou ouvida novamente. A Figura~\ref{fig:app_assistente} mostra uma consulta à rotina e o envio de uma receita.
@@ -179,7 +169,6 @@ O anexo aceita foto da câmera, imagem da galeria ou arquivo PDF. Antes de sair 
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: dados fictícios e respostas roteirizadas para apresentação da interface; não constituem avaliação do agente.\par}
 \end{figure}
 
-\noindent
 
 \subsection{Integração com o aparelho: dispensação vinculada}\label{sec:app_dispensacao}
 Para os ensaios com o protótipo, o aplicativo oferece um fluxo de dispensação vinculada a um paciente, a um medicamento e a uma posição do aparelho. O fluxo separa quatro momentos, cada um com registro próprio no banco de dados:
@@ -204,7 +193,6 @@ A interface adota as WCAG 2.2 como referência: controles identificados por text
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: captura da interface com dados fictícios, utilizada para apresentar as funções.\par}
 \end{figure}
 
-\noindent
 
 \subsection{Verificação do aplicativo}
 O aplicativo possui testes automatizados com Vitest e Testing Library, que cobrem componentes, estados e a comunicação com a API simulada. A verificação de tipos é feita pelo compilador TypeScript. Os resultados das rodadas identificadas são apresentados na Seção~\ref{cap:resultados}.

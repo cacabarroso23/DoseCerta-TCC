@@ -30,7 +30,7 @@ Essa organização distingue a aprovação de uma alteração em ambiente de tes
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
+
 \subsection{Ferramentas e ambientes}
 A modelagem e a impressão 3D foram utilizadas na construção mecânica.
 O controle dos módulos emprega ESP32, enquanto a central executa serviços Python em Linux na Raspberry Pi Zero 2 W.
@@ -44,7 +44,7 @@ Durante a elaboração deste trabalho, foram consultados e utilizados diferentes
 Esses recursos foram empregados de forma complementar em atividades de pesquisa, consulta técnica, organização de informações, documentação e desenvolvimento do projeto, conforme as necessidades identificadas ao longo de sua execução.
 A concepção, as decisões técnicas, a condução dos trabalhos e a avaliação dos resultados são de responsabilidade dos autores.
 \subsection{Identificação das versões}
-Além da versão legível, pode-se registrar um resumo criptográfico (\emph{hash}), como SHA-256: uma sequência calculada a partir do conteúdo do arquivo. Sua comparação ajuda a identificar se dois arquivos têm o mesmo conteúdo ou se houve alteração. Um hash não é senha, criptografia do arquivo ou assinatura de autoria; a verificação de autenticidade de uma atualização exige também um mecanismo de confiança, como assinatura digital.
+Além da versão legível, registra-se, quando disponível, um resumo criptográfico (\emph{hash}), como SHA-256: uma sequência calculada a partir do conteúdo do arquivo. Sua comparação ajuda a identificar se dois arquivos têm o mesmo conteúdo ou se houve alteração. Um hash não é senha, criptografia do arquivo ou assinatura de autoria; a verificação de autenticidade de uma atualização exige também um mecanismo de confiança, como assinatura digital. \cite{NIST_SHA} Por exemplo, calcular o SHA-256 antes de enviar uma atualização e recalculá-lo após o recebimento permite verificar se os conteúdos conferem. O valor precisa ser obtido de uma referência confiável; um atacante que substitua o arquivo e o resumo não é impedido por essa comparação isolada.
 
 
 \subsection{Estratégia de verificação}
@@ -57,7 +57,7 @@ Os critérios quantitativos e a matriz de correspondência são apresentados jun
 \subsection{Privacidade e aspectos éticos}
 As demonstrações do aplicativo utilizam dados fictícios.
 Credenciais, chaves e dados pessoais não integram a documentação pública do projeto.
-O tratamento de imagens e de informações de saúde exige delimitar finalidade, acesso e retenção.
+O tratamento de imagens e de informações de saúde exige delimitar finalidade, acesso e retenção. Dados referentes à saúde, quando vinculados a uma pessoa natural, são dados pessoais sensíveis segundo a LGPD. \cite{LGPD}
 Uma eventual avaliação com participantes deve seguir as autorizações e o enquadramento definidos pela instituição antes da coleta.
 \subsection{Registro e análise dos ensaios}
 Cada tentativa foi identificada por operação, condição inicial, versões, entrada, resposta do sistema e observação humana, quando disponível. Registros de software, observação física e resultados de testes automatizados foram analisados separadamente. A confirmação de um comando não foi utilizada como referência da quantidade coletada.

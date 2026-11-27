@@ -2,7 +2,7 @@
 A execução local e o servidor atendem a responsabilidades complementares. A central precisa coordenar o aparelho com os recursos disponíveis na borda; o servidor precisa validar operações e manter o histórico compartilhado. A comunicação entre ambos utiliza identidades e registros duráveis para conservar a continuidade do fluxo.
 
 \subsection{Serviços da central}
-Na Raspberry Pi, o runtime coordena agenda, comunicação com os módulos, sinalização e sincronização. Serviços específicos tratam provisionamento, câmera e interface com a visão. A Figura~\ref{fig:runtime_processos} apresenta esses processos e os pontos de troca. A separação permite controlar o acesso aos recursos compartilhados, especialmente barramento e câmera.
+\chamadafigura{Na Raspberry Pi, o runtime coordena agenda, comunicação com os módulos, sinalização e sincronização. Serviços específicos tratam provisionamento, câmera e interface com a visão. A Figura~\ref{fig:runtime_processos} apresenta esses processos e os pontos de troca. A separação permite controlar o acesso aos recursos compartilhados, especialmente barramento e câmera.}
 
 \begin{figure}[H]
 \centering
@@ -10,8 +10,6 @@ Na Raspberry Pi, o runtime coordena agenda, comunicação com os módulos, sinal
 \includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/runtime_processos.png}
 \fonte{Autoria própria (2026).}\par{\footnotesize Nota: organização de processos na etapa histórica de desenvolvimento do runtime 0.7.7.\par}
 \end{figure}
-
-\noindent
 
 
 As tarefas de tempo mais restrito permanecem nas ESP32. A central decide quando solicitar uma operação e acompanha seu resultado, enquanto cada placa aplica os limites locais. Essa divisão evita depender do escalonamento do Linux ou da conexão externa para produzir cada fase do motor.
@@ -22,7 +20,7 @@ O SQLite conserva configuração, agenda e registros da operação. As caixas de
 A execução de uma agenda sem internet exige referência temporal confiável, configuração válida, módulos associados e mecanismo pronto. A central deve bloquear a atuação quando essas condições não forem satisfeitas. A continuidade local, portanto, é uma condição do sistema completo, e não uma propriedade obtida apenas pela presença do banco embarcado.
 
 \subsection{Sinalização e identificação da posição}
-A sinalização combina canais da central e do intermediário. No intermediário, cada encaixe é indicado por dois LEDs adjacentes: a posição 1 utiliza L1 e L2; a posição 2, L2 e L3; a posição 3, L3 e L4; e a posição 4, L4 e L1. A Figura~\ref{fig:sinalizacao_posicao} apresenta o exemplo da segunda posição.
+\chamadafigura{A sinalização combina canais da central e do intermediário. No intermediário, cada encaixe é indicado por dois LEDs adjacentes: a posição 1 utiliza L1 e L2; a posição 2, L2 e L3; a posição 3, L3 e L4; e a posição 4, L4 e L1. A Figura~\ref{fig:sinalizacao_posicao} apresenta o exemplo da segunda posição.}
 
 \begin{figure}[H]
 \centering
@@ -31,13 +29,11 @@ A sinalização combina canais da central e do intermediário. No intermediário
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 A associação é confirmada pelo usuário e registrada no sistema. O estado luminoso auxilia a identificação, mas a interface deve apresentar instrução textual equivalente. Processamento, sucesso, atenção e falha precisam conservar significados consistentes entre as etapas da operação.
 
 \subsection{Configuração de rede por Bluetooth}
-O provisionamento permite configurar o aparelho pelo celular, sem teclado ou monitor conectados à central. O fluxo associa aplicativo, API e dispositivo para estabelecer o contexto autorizado de configuração. A sequência da Figura~\ref{fig:provisionamento_ble} separa abertura do canal, desafio, verificação e transmissão da credencial de rede.
+\chamadafigura{O provisionamento permite configurar o aparelho pelo celular, sem teclado ou monitor conectados à central. O fluxo associa aplicativo, API e dispositivo para estabelecer o contexto autorizado de configuração. A sequência da Figura~\ref{fig:provisionamento_ble} separa abertura do canal, desafio, verificação e transmissão da credencial de rede.}
 
 \begin{figure}[H]
 \centering
@@ -46,15 +42,13 @@ O provisionamento permite configurar o aparelho pelo celular, sem teclado ou mon
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 A senha da rede não deve ser enviada antes da verificação prevista no fluxo. A recuperação das redes conhecidas também precisa preservar a identidade e os registros do aparelho. Essas operações pertencem à manutenção da conectividade e não devem produzir, por consequência, novo comando de dispensação.
 
 \subsection{API, autenticação e persistência central}
 A API FastAPI concentra validação de entrada, autorização e regras do cuidado. O PostgreSQL mantém os vínculos entre paciente, medicamento, agenda, inventário e eventos. O Supabase hospedado no servidor fornece PostgreSQL e autenticação. O Care utiliza o Supabase para identidade; as leituras e escritas do cuidado passam pela API, que acessa o PostgreSQL com consultas parametrizadas. O PostgREST não é o caminho usado pela API de negócio e o serviço de tempo real não integra a composição documentada. A conta autorizada é única: as visões de cuidador, familiar e paciente não constituem isolamento por pessoa, e a atuação física exige a visão de cuidador. 
 
-A publicação utiliza HTTPS e serviços em contêineres. O proxy recebe as conexões externas e as encaminha ao gateway do projeto, que distribui os caminhos para aplicativo e API. A Figura~\ref{fig:implantacao_servidor} mostra essa organização e as redes internas. O banco não é acessado diretamente pelo aparelho.
+\chamadafigura{A publicação utiliza HTTPS e serviços em contêineres. O proxy recebe as conexões externas e as encaminha ao gateway do projeto, que distribui os caminhos para aplicativo e API. A Figura~\ref{fig:implantacao_servidor} mostra essa organização e as redes internas. O banco não é acessado diretamente pelo aparelho.}
 
 \begin{figure}[H]
 \centering
@@ -63,11 +57,9 @@ A publicação utiliza HTTPS e serviços em contêineres. O proxy recebe as cone
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
-
 
 \subsection{Ciclo de um comando}
-Uma solicitação admitida na API recebe identidade e estado próprios. A central obtém o comando, registra-o na caixa de entrada e realiza as verificações locais antes da execução. O retorno é conservado na caixa de saída e enviado ao servidor, permitindo ao aplicativo acompanhar o desfecho. A Figura~\ref{fig:comando_ponta_a_ponta} apresenta o percurso completo.
+\chamadafigura{Uma solicitação admitida na API recebe identidade e estado próprios. A central obtém o comando, registra-o na caixa de entrada e realiza as verificações locais antes da execução. O retorno é conservado na caixa de saída e enviado ao servidor, permitindo ao aplicativo acompanhar o desfecho. A Figura~\ref{fig:comando_ponta_a_ponta} apresenta o percurso completo.}
 
 \begin{figure}[H]
 \centering
@@ -76,10 +68,8 @@ Uma solicitação admitida na API recebe identidade e estado próprios. A centra
 \fonte{Autoria própria (2026).}
 \end{figure}
 
-\noindent
 
-
-O acompanhamento distingue solicitação enfileirada, entrega, reconhecimento e aplicação. Falha, expiração e cancelamento também possuem significado próprio. A Figura~\ref{fig:estados_comando} mostra as transições utilizadas para representar esse ciclo. O recebimento de uma solicitação na API, portanto, não deve ser apresentado ao usuário como conclusão da ação física.
+\chamadafigura{O acompanhamento distingue solicitação enfileirada, entrega, reconhecimento e aplicação. Falha, expiração e cancelamento também possuem significado próprio. A Figura~\ref{fig:estados_comando} mostra as transições utilizadas para representar esse ciclo. O recebimento de uma solicitação na API, portanto, não deve ser apresentado ao usuário como conclusão da ação física.}
 
 \begin{figure}[H]
 \centering
@@ -87,8 +77,6 @@ O acompanhamento distingue solicitação enfileirada, entrega, reconhecimento e 
 \includegraphics[width=0.94\textwidth,height=0.58\textheight,keepaspectratio]{Figuras/SharePoint/estados_comando.png}
 \fonte{Autoria própria (2026).}
 \end{figure}
-
-\noindent
 
 
 \subsection{Reconciliação e integração}

@@ -6,7 +6,7 @@ A escolha de manter dois bancos decorre do requisito de operação local (RNF01)
 \subsubsection{Banco local da central}
 O banco local foi configurado para operar em modo WAL (\emph{write-ahead logging}) com sincronização completa a cada transação (\texttt{synchronous = FULL}), chaves estrangeiras ativas e verificação de integridade na inicialização. A Tabela~\ref{tab:dados-local} resume suas tabelas. As restrições de domínio ficam no próprio esquema: posição do módulo entre 1 e 2, encaixe entre 1 e 4, quantidade por dose positiva, intervalo mínimo não negativo e janelas de tolerância coerentes.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.24\textwidth}p{0.66\textwidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.24\linewidth-2\tabcolsep\relax}p{\dimexpr0.66\linewidth-2\tabcolsep\relax}}
 \caption{Tabelas do banco local da central (SQLite)}\label{tab:dados-local}\\
 \hline\textbf{Tabela} & \textbf{Função}\\\hline\endfirsthead
 \hline\textbf{Tabela} & \textbf{Função}\\\hline\endhead
@@ -22,16 +22,16 @@ O banco local foi configurado para operar em modo WAL (\emph{write-ahead logging
 O estado \emph{incerto} de uma execução é o ponto central da recuperação. Se a energia cai ou a comunicação com o submódulo se perde durante um giro, a execução não é marcada como concluída nem como falha. Ela permanece incerta, e a central não aceita novo movimento naquela posição até que a situação seja reconciliada com a leitura do submódulo ou com a confirmação humana. Esse comportamento é esperado na política rigorosa; o ambiente de apresentação admite exceções e deve ser avaliado separadamente. Registros de recusa e de reconciliação não provam a recuperação física em toda falha de energia.
 
 \subsubsection{Banco central}
-O esquema consultado possui 28 tabelas, 48 chaves estrangeiras, 62 restrições de verificação, 40 políticas de acesso por linha e 20 gatilhos. Essas contagens estruturais não constituem auditoria de segurança; privilégios da API podem contornar RLS. A Tabela~\ref{tab:dados-central} agrupa as tabelas por função.
+O esquema organiza as entidades por função e utiliza vínculos, restrições, políticas de acesso por linha e gatilhos. A arquitetura desses controles não constitui auditoria de segurança; privilégios da API podem contornar RLS. A Tabela~\ref{tab:dados-central} agrupa as tabelas por função.
 
-{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{0.2\textwidth}p{0.4\textwidth}p{0.3\textwidth}}
+{\small\setlength{\tabcolsep}{3pt}\begin{longtable}{p{\dimexpr0.2\linewidth-2\tabcolsep\relax}p{\dimexpr0.4\linewidth-2\tabcolsep\relax}p{\dimexpr0.3\linewidth-2\tabcolsep\relax}}
 \caption{Tabelas do banco central agrupadas por função}\label{tab:dados-central}\\
 \hline\textbf{Grupo} & \textbf{Tabelas} & \textbf{Função}\\\hline\endfirsthead
 \hline\textbf{Grupo} & \textbf{Tabelas} & \textbf{Função}\\\hline\endhead
 Pessoas e acesso & \texttt{patient}, \path{patient_responsible}, \texttt{app\_user\_profile}, \path{device_caregiver_access} & Pacientes, responsáveis e quem pode ver o quê\\\hline
 Tratamento & \texttt{medication}, \path{medication_schedule}, \texttt{intake\_event} & Medicamentos, horários e registros de tomada\\\hline
 Rotina de cuidado & \texttt{care\_activity}, \texttt{care\_observation}, \texttt{care\_review}, \texttt{care\_preference}, \texttt{care\_notice\_read} & Atividades, relatos e leitura de avisos\\\hline
-Aparelho & \texttt{device}, \texttt{device\_level}, \texttt{device\_module}, \texttt{device\_compartment}, \path{device_compartment_inventory}, \path{device_patient_assignment} & Topologia física, posições, estoque e vínculo com pacientes\\\hline
+Aparelho & \texttt{device}, \texttt{device\_level}, \texttt{device\_module}, \path{device_compartment}, \path{device_compartment_inventory}, \path{device_patient_assignment} & Topologia física, posições, estoque e vínculo com pacientes\\\hline
 Identidade do aparelho & \texttt{device\_credential}, \path{device_claim_token}, \path{device_config_revision} & Credenciais, pareamento e versões de configuração\\\hline
 Operação e auditoria & \texttt{device\_command}, \texttt{device\_status}, \texttt{domain\_event}, \texttt{api\_idempotency} & Comandos, sinais de vida, eventos e chaves de idempotência\\\hline
 Simulação & \path{device_simulation_profile}, \path{device_simulation_action}, \path{device_simulation_artifact} & Aparelho simulado para desenvolvimento\\\hline

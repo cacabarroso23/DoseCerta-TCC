@@ -1,0 +1,246 @@
+{
+  "base": "backup anterior à revisão integral",
+  "arquivos": [
+    {
+      "arquivo": "00_LEIA_PRIMEIRO_ENTREGA_ATUALIZADA.txt",
+      "estado": "alterado",
+      "sha256": "5a75ec59a77aa9a0ea4702a1123426c665d43f374e4afd6483bb8c5c05da01ea",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "CHECAGEM_ESTATICA.json",
+      "estado": "alterado",
+      "sha256": "a0343212634f93eec1248920ebfe7cd6d21ee81cf40140a1e92bf7655b0a82f4",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/02_fundamentacao.tex",
+      "estado": "alterado",
+      "sha256": "f87414f9c11ef0d3cf038b0cc7a3c48b59c1c1c2b97e117aeb98b2b7ca784c3c",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/03_estado_da_arte.tex",
+      "estado": "alterado",
+      "sha256": "142bec806fde14b2baa8d55615acf95f72519d8079eccdb9eb3ff89527e44540",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/04_metodologia.tex",
+      "estado": "alterado",
+      "sha256": "b526656417d8adabded611aa6ea8d3aa202552956a909e1911a52a15ff90ebc2",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/05_consideracoes_finais.tex",
+      "estado": "novo",
+      "sha256": "da81437f7dd3c2e6eda6ddb11db3682f5455757a9b7ca0ca3b4f0c5fc3c4f444",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/05_requisitos.tex",
+      "estado": "alterado",
+      "sha256": "8f16c40babe7480ee8eaf8dd46044395ac2223839fbe66217f58f5e8afe401d2",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/06_arquitetura.tex",
+      "estado": "alterado",
+      "sha256": "e2b73b96c5432caf61627c790d686a473977869cd46c45610a6d54b576544d04",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/07_projeto_mecanico.tex",
+      "estado": "alterado",
+      "sha256": "4700458ae710297ed451a77eaa3782fb34534b47e08e549de865a6c1d209836c",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/08_projeto_eletronico.tex",
+      "estado": "alterado",
+      "sha256": "04b8eaccefcf6e25e767d481bc548dc3983514b725b3fb98b7dcc35edeaff3ab",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/09_embarcados.tex",
+      "estado": "alterado",
+      "sha256": "4c159fb516936e6f8a982ca4f98c94ab0cc20c345bddb300d69d7d9d8bc3b0ef",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/10_backend.tex",
+      "estado": "alterado",
+      "sha256": "cc2716e2039379171d3e2a400269de44a78a2e547e2dadc3f9cfcdf56bf745de",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/10b_dados_rastreabilidade.tex",
+      "estado": "alterado",
+      "sha256": "85aff43c7be0e8f8267ab510942fbf5ae4dcfe89d972e2eb21971b181b95cdfe",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/11_aplicativo.tex",
+      "estado": "alterado",
+      "sha256": "9f06f06fc5ec030826f6907b85423f393777e1644c226f008138c268b1c8f30e",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/12_visao_computacional.tex",
+      "estado": "alterado",
+      "sha256": "e123adbff639a82c6ee62d3a8571e0ade9e2b4ce8a0935e0d6365dd3e03dfd03",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/13_agente_ia.tex",
+      "estado": "alterado",
+      "sha256": "27d078f4c87985a3e49d669b6ab313cbdd5d0c2cdcccaaef4632c2adea7780c3",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/14_testes.tex",
+      "estado": "alterado",
+      "sha256": "c64838e914d0146bca93c57463f4d79bd8a32629b82018a643e6d991e437d7f3",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/15_resultados.tex",
+      "estado": "alterado",
+      "sha256": "1b00a238d991607b367a2dfd676de03e5c3c0972f835f9053c04d8d0da8e4d6c",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/16_discussao.tex",
+      "estado": "alterado",
+      "sha256": "7574a5a81dba3b8b9c36a91c0971f6c84e2ecd4b8b1fe5b999ee62cb79d0957e",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/17_conclusao.tex",
+      "estado": "alterado",
+      "sha256": "f59e125ceb5b8cb81189a16bfb5fb7194534e5c39e38d73ea1da8abd8671fa4a",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/tabela_ensaios.tex",
+      "estado": "alterado",
+      "sha256": "603d53627c245354f47570b9521f96d3c80095624c00fb36b82f206374f14065",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Capitulos/tabela_ensaios_simulado.tex",
+      "estado": "alterado",
+      "sha256": "52ec84fdd84f180a1fee7c7a5468fb4b8c62fb9522d5aba3a73e5ac3e219fa17",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "FEI-bib/dosecerta-referencias.bib",
+      "estado": "alterado",
+      "sha256": "9fa5cf40494905adf0cff64851f5c436c3a4713e942fed97ece05e20726344a8",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "Figuras/SharePoint/prototipo_montado.png",
+      "estado": "alterado",
+      "sha256": "5b36b72ba44b054fb36c21971c3dab0175eaafb07674081e8a06c11b713aede1",
+      "tipo": "binário; usar arquivo do ZIP"
+    },
+    {
+      "arquivo": "Figuras/Validacao20261126/conjunto.jpg",
+      "estado": "alterado",
+      "sha256": "dc980be59da616fecc56d78fcc97f2092061b5e2d85d4f557f6f0bc9a24169e2",
+      "tipo": "binário; usar arquivo do ZIP"
+    },
+    {
+      "arquivo": "PENDENCIAS_ABERTAS.json",
+      "estado": "alterado",
+      "sha256": "dd71d4dc60ed5f676aede676aacd3df272cb6a33bee83f94687b4e868ec65648",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "PENDENCIAS_ABERTAS.txt",
+      "estado": "alterado",
+      "sha256": "5b63c9a05f14810089e329a63d3a29bb0c72ae8a75c97f16a216969f226776a0",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "PENDENCIAS_ENCERRADAS.json",
+      "estado": "alterado",
+      "sha256": "711e2303e036316d00eb33673e7c909685402d9433136cc38396e7d30beeb196",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "PosTextual/apendices.tex",
+      "estado": "alterado",
+      "sha256": "3e4fa67567eb3de86fa4d0c659a8319d08a96da659a34dd9a000ac9a4fbd8acf",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "PreTextual/abstract.tex",
+      "estado": "alterado",
+      "sha256": "2f14feab5e9e3fab85769d24b83047d3e47d9adac1e460db478bc7c0915df370",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "PreTextual/resumo.tex",
+      "estado": "alterado",
+      "sha256": "e1bc2cb4a3b1f052db5d7e2b88ce67fef836d0378487a48a663b12508778e7d9",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "README.md",
+      "estado": "alterado",
+      "sha256": "c3247c47c90a9443a7c54ad16bd916b2c55921a76e99e111ac78df9aa4ceb3c6",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "RECORTES_FOTOGRAFIAS.json",
+      "estado": "novo",
+      "sha256": "442ca846af3988bd17fdbec622ffdb153e3626f989232be52374ac3c7c608044",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "REVISAO_INTEGRAL_20261127.txt",
+      "estado": "novo",
+      "sha256": "48ab4c721ccceb88a40b69f9f4b790d3826b1b5e0ee1486df01e1bd253989441",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "TESTES_SCRIPTS_REVISAO.json",
+      "estado": "novo",
+      "sha256": "bf88517415f22e92aa755346548e0b0d5041a293598eb693f86a4127c13a4150",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "VALIDACAO_E_COMPILACAO.md",
+      "estado": "alterado",
+      "sha256": "1e1d28fa728f6b99003696ee0911becfe9920a35bda50c74cea586f74118c379",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "compilar_banca.py",
+      "estado": "alterado",
+      "sha256": "b6767ff0ce25281cbad291a86bce406bf105cdd18767511b29b0e6daf179b459",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "main.tex",
+      "estado": "alterado",
+      "sha256": "6ababda18e7572b93b4cddfc9ff210598cd582d259d61bd132263e088cc23996",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "referencias.tex",
+      "estado": "alterado",
+      "sha256": "000652a965ff07d7ca7bc7566c47a764b74180dc62baed4187ac39777623084a",
+      "tipo": "texto"
+    },
+    {
+      "arquivo": "validar_integracao.py",
+      "estado": "alterado",
+      "sha256": "415d906b3d452ad1a31c594cc5d80039259d82cca3f8b49daef74556b966bd27",
+      "tipo": "texto"
+    }
+  ],
+  "markdown_editado_sha256": "f6aec025f1f725f32faff9df452a78024c4c9e9deca04c6695f2ca54718dcb24"
+}

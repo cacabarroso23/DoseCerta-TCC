@@ -1,25 +1,34 @@
-DOSECERTA — PACOTE ATUALIZADO — 27/11/2026
+DOSECERTA — REVISÃO INTEGRAL — 27/11/2026
 
-Este é o projeto completo revisado, não apenas um patch. Os históricos das rodadas anteriores foram preservados; este arquivo e CHECAGEM_ESTATICA.json descrevem a entrega atual.
+Projeto completo para importar em um NOVO projeto do Overleaf.
+O ZIP tem main.tex na raiz: selecione esse arquivo e pdfLaTeX.
+Recompile do zero e aguarde a estabilização das listas e referências.
+Não execute BibTeX/Biber: referências já geradas em referencias.tex.
 
-COMO USAR
-Importe o conteúdo da pasta DoseCerta_TCC_trabalho em um novo projeto do Overleaf. Selecione main.tex como arquivo principal e pdfLaTeX como compilador. Recompile do zero e repita até estabilizar listas e referências. Não execute BibTeX/Biber: a bibliografia utilizada está em referencias.tex.
-Localmente, com TeX Live/MiKTeX e Python 3, execute python3 compilar_banca.py (Windows: python compilar_banca.py).
+ESTADO ATUAL
+- Cinco capítulos principais, referências e dois apêndices.
+- Revisão de chamadas de figuras, dimensões de tabelas, inventário,
+  descrição das versões do agente, método de testes e resultados.
+- V75: eixo nominal a 30 graus da vertical; cotas não são medições físicas.
+- Um paciente por cadastro; identidade fixa no MCP. Ampliação e isolamento
+  multipaciente ficam como trabalho futuro.
+- Markdown editado pela autora preservado sem alterações.
+- 87 pendências abertas em vermelho e em PENDENCIAS_ABERTAS.txt/.json.
+- MEC01, APP03 e AG05 encerradas com justificativa em arquivo separado.
 
-CONTEÚDO
-- Fontes LaTeX completos, classe, bibliografia, figuras e dados de apoio.
-- Cinco capítulos principais: introdução, base teórica, método integrado, resultados/discussão e conclusão.
-- Comandos de listas de figuras/tabelas e sumário; chamadas e rótulos de figuras revisados.
-- Documentacao/: ficha técnica e desenhos V75; inclinação nominal do eixo a 30 graus da vertical incorporada.
-- Pendências mantidas em vermelho; PENDENCIAS_ABERTAS.txt e PENDENCIAS_ABERTAS.json contêm a lista atual separada (88 itens).
-- PENDENCIAS_ENCERRADAS.json registra as baixas MEC01 e APP03.
-- Escopo: um paciente por cadastro; MCP com identidade fixa; isolamento multipaciente fica como trabalho futuro.
-- dosecerta_pedidos_finais_grupo.md: última versão editada pela autora, copiada sem alterações.
-- compilar_banca.py/.bat/.sh: rotinas para compilar e verificar estabilidade de referências, listas e extravasamentos.
+VERIFICAÇÕES EXECUTADAS
+Zero erros e zero avisos estáticos: 36 arquivos TeX ativos,
+102 rótulos, 121 referências internas, 59 figuras e 15 citações distintas.
+Sintaxe dos três scripts Python e testes unitários dos controles aprovados.
+ZIP com verificação de integridade e manifesto SHA-256.
 
-VALIDAÇÃO E LIMITES
-Checagem estática executada: zero erros e zero avisos; 98 rótulos, 113 referências internas, 59 figuras e 11 citações distintas. Esses controles de fonte não garantem o resultado visual.
-Não há compilador LaTeX neste ambiente: NÃO foi gerado PDF atualizado. Paginação, listas efetivamente preenchidas, posição final das figuras e extravasamentos ainda exigem compilação e revisão visual. Não entregar à banca sem essas etapas.
+LIMITAÇÃO OBRIGATÓRIA
+Não há pdfLaTeX disponível neste ambiente. NÃO foi gerado PDF atualizado.
+Não foram verificadas a paginação final, listas efetivamente preenchidas,
+legibilidade, recortes e extravasamentos no PDF. Não entregar à banca sem
+compilar e conferir visualmente. Ausência de erros estáticos não equivale
+a compilação aprovada, conformidade integral ou validação clínica.
 
-HISTÓRICO
-README.md, relatórios das rodadas anteriores, patches e inventários antigos são mantidos como histórico. Para o estado atual, use CHECAGEM_ESTATICA.json e PENDENCIAS_ABERTAS.*. Os arquivos pendencias.json e validacao_estatica.json correspondem a controles anteriores; não substituem os relatórios atuais em maiúsculas.
+Consulte README.md, REVISAO_INTEGRAL_20261127.txt e
+VALIDACAO_E_COMPILACAO.md. Relatórios antigos preservados são históricos;
+prevalecem CHECAGEM_ESTATICA.json e PENDENCIAS_ABERTAS.*.
